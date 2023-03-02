@@ -22,7 +22,8 @@ class IsAdmin
         }
         else
         {
-            return "404 REQUEST";
+            auth()->logout();
+            return redirect('/login');
         }
     }
 }
