@@ -80,6 +80,12 @@ class ComplaintController extends Controller
         }
 
     }
+    public function agent_wise_complaints()
+    {
+        $town_id = auth('api')->user()->agent->town_id;
+        $complaint = Complaints::with('town')->where('town_id', $town_id)->get();
+        return $complaint;
+    }
     public function destroy($id)
     {
 

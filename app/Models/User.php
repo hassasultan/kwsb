@@ -54,4 +54,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(MobileAgent::class,'id','user_id');
+    }
 }
