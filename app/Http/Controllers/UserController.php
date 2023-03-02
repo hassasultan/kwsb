@@ -23,7 +23,14 @@ class UserController extends Controller
     }
     public function index()
     {
-        $user = User::where('id','!=', auth()->user()->id)->get();
+        if(auth()->user()->role == 2)
+        {
+            $user = User::where('role',3)->get();
+        }
+        else
+        {
+            $user = User::where('id','!=', auth()->user()->id)->get();
+        }
         return view('pages.user.index',compact('user'));
     }
     public function create()
