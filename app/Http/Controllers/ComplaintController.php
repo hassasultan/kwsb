@@ -90,6 +90,21 @@ class ComplaintController extends Controller
         $complaint = Complaints::with('town')->where('town_id', $town_id)->get();
         return $complaint;
     }
+    public function agent_complaints_update(Request $request)
+    {
+        $complaint = Complaints::find($request->id);
+        $complaint->status = $request->status;
+        if($request->has('before_image'))
+        {
+            $complaint->before_image = $this->before($request->before_image);
+        }
+        if($request->has('after_image'))
+        {
+            $complaint->after_image = $this->after($request->after_image);
+        }
+        $complaint->save();
+        return response()->json(["message"=>"Your Given Information Addedd Successfully..."]);
+    }
     public function detail($id)
     {
         $complaint = Complaints::with('town','town.agents')->find($id);

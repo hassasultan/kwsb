@@ -25,5 +25,6 @@ Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::get('/agent-complaints', [ComplaintController::class, 'agent_wise_complaints']);
+    Route::post('/agent-complaints/update', [ComplaintController::class, 'agent_complaints_update']);
 
 });
