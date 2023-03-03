@@ -25,6 +25,7 @@ class MobileAgentController extends Controller
     }
     public function index()
     {
+        // dd("check");
         $agent = MobileAgent::all();
         return view('pages.agent.index',compact('agent'));
     }
@@ -82,8 +83,10 @@ class MobileAgentController extends Controller
         }
 
     }
-    public function destroy($id)
+    public function detail($id)
     {
-
+        $agent = MobileAgent::with('town','town.complaints')->find($id);
+        // dd($agent->toArray());
+        return view('pages.agent.details',compact('agent'));
     }
 }

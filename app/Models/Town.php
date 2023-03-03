@@ -14,4 +14,12 @@ class Town extends Model
         "subtown",
         "status",
     ];
+    public function agents()
+    {
+        return $this->hasMany(MobileAgent::class,'town_id','id');
+    }
+    public function complaints()
+    {
+        return $this->hasMany(Complaints::class,'town_id','id');
+    }
 }

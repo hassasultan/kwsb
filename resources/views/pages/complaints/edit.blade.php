@@ -29,6 +29,14 @@
                         </select>
                     </div>
                     <div class="form-group col-12 p-3">
+                        <label>Select Type*</label>
+                        <select name="type_id" class="select2-multiple form-control fs-14  h-50px" required>
+                            @foreach ($type as $row)
+                                <option value="{{ $row->id }}" @if($row->id == $complaint->type_id) selected @endif>{{ $row->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-12 p-3">
                         <label>Title*</label>
                         <input type="text" class="form-control border-bottom border-1 border-dark"
                         placeholder="Enter Sub Town Here..." name="title" required  value="{{ old('title',$complaint->title) }}"/>
@@ -37,6 +45,21 @@
                         <label>Description*</label>
                         <textarea class="form-control border-bottom border-1 border-dark"
                         placeholder="Enter Description Here..." name="description" required >{{ old('description',$complaint->description) }}</textarea>
+                    </div>
+                    <div class="form-group col-12 p-3">
+                        <label>Customer Name</label>
+                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                        placeholder="Enter Customer Name Here..." name="customer_name"   value="{{ old('customer_name',$complaint->customer_name) }}"/>
+                    </div>
+                    <div class="form-group col-12 p-3">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-control border-bottom border-1 border-dark"
+                        placeholder="Enter Phone Number Here..." name="phone"   value="{{ old('phone',$complaint->phone) }}"/>
+                    </div>
+                    <div class="form-group col-12 p-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control border-bottom border-1 border-dark"
+                        placeholder="Enter Email Here..." name="email"   value="{{ old('email',$complaint->email) }}"/>
                     </div>
                     <div class="form-group col-12 p-3">
                         <label>Picture</label>

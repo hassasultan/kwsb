@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MobileAgent;
 use App\Models\Town;
+use App\Models\ComplaintType;
 use App\Models\User;
 use App\Models\Complaints;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class ComplaintController extends Controller
     public function create()
     {
         $town = Town::all();
-        return view('pages.complaints.create',compact('town'));
+        $type = ComplaintType::all();
+        return view('pages.complaints.create',compact('town','type'));
 
     }
     public function store(Request $request)
@@ -57,7 +59,9 @@ class ComplaintController extends Controller
     {
         $complaint = Complaints::find($id);
         $town = Town::all();
-        return view('pages.complaints.edit',compact('complaint','town'));
+        $type = ComplaintType::all();
+
+        return view('pages.complaints.edit',compact('complaint','town','type'));
 
     }
     public function update(Request $request,$id)
@@ -86,8 +90,10 @@ class ComplaintController extends Controller
         $complaint = Complaints::with('town')->where('town_id', $town_id)->get();
         return $complaint;
     }
-    public function destroy($id)
+    public function detail($id)
     {
+        $complaint = Complaints::with('town','town.agents')->find($id);
+        return view('pages.complaints.details',compact('complaint'));
 
     }
 }

@@ -9,10 +9,7 @@
           <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
             <div class="row">
                 <div class="col-6">
-                    <h6 class="text-white text-capitalize ps-3">Complaint List</h6>
-                </div>
-                <div class="col-6 text-end">
-                    <a class="btn bg-gradient-dark mb-0 mr-3" href="{{ route('compaints-management.create') }}"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;<i class="fa fa-user"></i></a>
+                    <h6 class="text-white text-capitalize ps-3">{{ $agent->user->name }}'s' Complaint List</h6>
                 </div>
             </div>
           </div>
@@ -27,12 +24,12 @@
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title Description</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Picture</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
-                  <th class="text-secondary opacity-7">Action</th>
+                  {{-- <th class="text-secondary opacity-7">Action</th> --}}
                 </tr>
               </thead>
               <tbody>
                 {{-- @if(count($user) > 0) --}}
-                    @foreach ($complaint as $key => $row)
+                    @foreach ($agent->town->complaints as $key => $row)
                         <tr>
                             <td>
                                 <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }} {{ $row->town->subtown }}</p>
@@ -52,7 +49,7 @@
                                     Not Available
                                 @endif
                             </td>
-                            <td class="align-middle">
+                            {{-- <td class="align-middle">
                                 <a href="{{ route('compaints-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                 Edit
                                 </a>
@@ -60,7 +57,7 @@
                                     Assigned
                                     </a>
 
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 {{-- @else
