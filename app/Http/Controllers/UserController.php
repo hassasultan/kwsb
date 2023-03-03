@@ -40,12 +40,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $valid = $this->validator($request->all());
-        if($valid->valid())
+        if($valid->validate())
         {
             $user = User::create(['name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
             'password' => Hash::make($request->password),]);
+            $user->role = $request->role;
+            $user->save();
             return redirect()->route('user-management.index')->with('success', 'Record created successfully.');
         }
         else
