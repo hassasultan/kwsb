@@ -7,6 +7,7 @@ use App\Models\Town;
 use App\Models\ComplaintType;
 use App\Models\User;
 use App\Models\Complaints;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
@@ -29,11 +30,21 @@ class ComplaintController extends Controller
         $complaint = Complaints::all();
         return view('pages.complaints.index',compact('complaint'));
     }
-    public function create()
+    public function create(Request $request)
     {
         $town = Town::all();
         $type = ComplaintType::all();
-        return view('pages.complaints.create',compact('town','type'));
+        $customer = NULL;
+        if($request->has('search'))
+        {
+            $customer = Customer::where('customer_id',$request->search)->first();
+            if($customer == null)
+            {
+                return redirect()->back()->with('error', "Customer Not Found...");
+            }
+        }
+
+        return view('pages.complaints.create',compact('customer','town','type'));
 
     }
     public function store(Request $request)

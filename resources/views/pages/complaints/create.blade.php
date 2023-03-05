@@ -15,60 +15,121 @@
                 </div>
                 <div class="card-body px-4 pb-2">
                     <h5>Give Complaint Informarion...</h5>
+                    <form role="form" method="get" action="{{ route('compaints-management.create') }}"
+                        enctype="multipart/form-data">
+                        <div class="row">
+
+                            <div class="form-group col-8 p-3">
+                                <label>Customer Number</label>
+                                <input type="text" class="form-control border-bottom border-1 border-dark"
+                                    placeholder="Enter Customer Number for search ..." name="search" required
+                                    value="{{ old('search') }}" />
+                                <button type="submit"
+                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                    @if ($customer != null)
+                        <div class="card-body px-4 pb-2 border border-2 border-dark">
+                            <h5>Customer Informarion...</h5>
+                            <div class="row">
+                                <div class="form-group col-12 p-3">
+                                    <label>Customer #*</label>
+                                    <input type="text" class="form-control border-bottom border-1 border-dark"
+                                        value="{{ $customer->customer_id }}" disabled />
+                                </div>
+                                <div class="form-group col-12 p-3">
+                                    <label>Customer Name*</label>
+                                    <input type="text" class="form-control border-bottom border-1 border-dark"
+                                        value="{{ $customer->customer_name }}" disabled />
+                                </div>
+                                <div class="form-group col-12 p-3">
+                                    <label>Town*</label>
+                                    <input type="text" class="form-control border-bottom border-1 border-dark"
+                                        value="{{ $customer->town }}" disabled />
+                                </div>
+                                <div class="form-group col-12 p-3">
+                                    <label>Sub Town*</label>
+                                    <input type="text" class="form-control border-bottom border-1 border-dark"
+                                        value="{{ $customer->sub_town }}" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="form-group col-12 p-3">
-                                <label>Select Town*</label>
-                                <select name="town_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                    @foreach ($town as $row)
-                                        <option value="{{ $row->id }}">{{ $row->town }} ({{ $row->subtown }})</option>
-                                    @endforeach
-                                </select>
+
+                            <div class="card-body px-4 pb-2 border border-2 border-dark mt-3">
+                                <h5>Focal Person Informarion...</h5>
+                                <div class="row">
+                                    <div class="form-group col-12 p-3">
+                                        <label>Person Name</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Person  Name Here..." name="customer_name"
+                                            value="{{ old('customer_name') }}" />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Person Phone Number</label>
+                                        <input type="tel" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Phone Number Here..." name="phone"
+                                            value="{{ old('phone') }}" />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Person Email</label>
+                                        <input type="email" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Email Here..." name="email" value="{{ old('email') }}" />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Select Type*</label>
-                                <select name="type_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                    @foreach ($type as $row)
-                                        <option value="{{ $row->id }}">{{ $row->title }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="card-body px-4 pb-2 border border-2 border-dark mt-3">
+                                <h5>Complaint Informarion...</h5>
+                                <div class="row">
+                                    <div class="form-group col-12 p-3">
+                                        <label>Select Town*</label>
+                                        <select name="town_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            @foreach ($town as $row)
+                                                <option value="{{ $row->id }}">{{ $row->town }}
+                                                    ({{ $row->subtown }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" name="customer_id"
+                                            value="@if (isset($customer->customer_id)) {{ $customer->id }} @endif" />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Select Type*</label>
+                                        <select name="type_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            @foreach ($type as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    {{-- <div class="form-group col-12 p-3">
+                                        <label>Title*</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Sub Town Here..." name="title" required
+                                            value="{{ old('title') }}" />
+                                    </div> --}}
+                                    <div class="form-group col-12 p-3">
+                                        <label>Description*</label>
+                                        <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
+                                            name="description" required>{{ old('description') }}</textarea>
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Picture</label>
+                                        <input type="file" class="form-control border-bottom border-1 border-dark"
+                                            name="image" value="{{ old('image') }}" />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Title*</label>
-                                <input type="text" class="form-control border-bottom border-1 border-dark"
-                                placeholder="Enter Sub Town Here..." name="title" required  value="{{ old('title') }}"/>
-                            </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Description*</label>
-                                <textarea class="form-control border-bottom border-1 border-dark"
-                                placeholder="Enter Description Here..." name="description" required >{{ old('description') }}</textarea>
-                            </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Customer Name</label>
-                                <input type="text" class="form-control border-bottom border-1 border-dark"
-                                placeholder="Enter Customer Name Here..." name="customer_name"   value="{{ old('customer_name') }}"/>
-                            </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control border-bottom border-1 border-dark"
-                                placeholder="Enter Phone Number Here..." name="phone"   value="{{ old('phone') }}"/>
-                            </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Email</label>
-                                <input type="email" class="form-control border-bottom border-1 border-dark"
-                                placeholder="Enter Email Here..." name="email"   value="{{ old('email') }}"/>
-                            </div>
-                            <div class="form-group col-12 p-3">
-                                <label>Picture</label>
-                                <input type="file" class="form-control border-bottom border-1 border-dark"
-                                     name="image" value="{{ old('image') }}" />
-                            </div>
-                            <div class="text-center">
-                                <button type="submit"
-                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Create</button>
-                            </div>
+                            @if ($customer != null)
+                                <div class="text-center">
+                                    <button type="submit"
+                                        class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Create</button>
+                                </div>
+                            @endif
                         </div>
 
                     </form>
