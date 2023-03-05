@@ -6,8 +6,8 @@
           <li class="breadcrumb-item text-sm">
               <a class="navbar-brand m-0" href=" {{route('home')}}" target="_blank">
                 <img src="{{ asset('assets/img/unnamed.png') }}" width="80px" class="img-fluid" alt="main_logo">
-                <span class="ms-1 font-weight-bold text-dark">Hydrant Management Portal</span>
-                
+                <span class="ms-1 font-weight-bold text-dark">Complaint Management Portal</span>
+
               </a>
           </li>
           <!--<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>-->

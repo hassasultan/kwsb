@@ -6,8 +6,8 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href=" {{ route('home') }}" target="_blank">
             <img src="{{ asset('assets/img/unnamed.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">HMP</span>
-            <p class="text-white">Hydrant Management Portal</p>
+            <span class="ms-1 font-weight-bold text-white">CMP</span>
+            <p class="text-white">Complaint Management Portal</p>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -80,39 +80,57 @@
             @endif
             @if (auth()->user()->role != 1)
                 <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('user-management.index')) active bg-gradient-primary @endif"
+                        href="{{ route('user-management.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">User Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
+                        href="{{ route('town-management.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Town Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('agent-management.index')) active bg-gradient-primary @endif"
+                        href="{{ route('agent-management.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Mobile Agent Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('customer-management.index')) active bg-gradient-primary @endif"
                         href="{{ route('customer-management.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
-                        <span class="nav-link-text ms-1">Customer Management</span>
+                        <span class="nav-link-text ms-1">Customers Management</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('hydrant.truck.list')) bg-gradient-primary active  @endif"
-                        href="{{ route('hydrant.truck.list') }}">
+                    <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
+                        href="{{ route('compaints-type-management.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
-                        <span class="nav-link-text ms-1">Water Tanker</span>
+                        <span class="nav-link-text ms-1">CT Management</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('hydrant.order.list')) active bg-gradient-primary @endif"
-                        href="{{ route('hydrant.order.list') }}">
+                    <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
+                        href="{{ route('compaints-management.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
-                        <span class="nav-link-text ms-1">Order</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('hydrant.billing.list')) active bg-gradient-primary @endif "
-                        href="{{ route('hydrant.billing.list') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Billing</span>
+                        <span class="nav-link-text ms-1">Complaints Management</span>
                     </a>
                 </li>
             @endif
