@@ -98,12 +98,12 @@ class ComplaintController extends Controller
     public function agent_wise_complaints()
     {
         $town_id = auth('api')->user()->agent->town_id;
-        $complaint = Complaints::with('town')->where('town_id', $town_id)->get();
+        $complaint = Complaints::with('town','customer','type')->where('town_id', $town_id)->get();
         return $complaint;
     }
     public function agent_complaints_update(Request $request)
     {
-        $complaint = Complaints::find($request->id);
+        $complaint = Complaints::with('town','customer','type')->find($request->id);
         $complaint->status = $request->status;
         if($request->has('before_image'))
         {
