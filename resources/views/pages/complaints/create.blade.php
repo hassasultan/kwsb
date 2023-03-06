@@ -29,41 +29,40 @@
                             </div>
                         </div>
                     </form>
-                    @if ($customer != null)
-                        <div class="card-body px-4 pb-2 border border-2 border-dark">
-                            <h5>Customer Informarion...</h5>
-                            <div class="row">
-                                <div class="form-group col-12 p-3">
-                                    <label>Customer #*</label>
-                                    <input type="text" class="form-control border-bottom border-1 border-dark"
-                                        value="{{ $customer->customer_id }}" disabled />
-                                </div>
-                                <div class="form-group col-12 p-3">
-                                    <label>Customer Name*</label>
-                                    <input type="text" class="form-control border-bottom border-1 border-dark"
-                                        value="{{ $customer->customer_name }}" disabled />
-                                </div>
-                                <div class="form-group col-12 p-3">
-                                    <label>Town*</label>
-                                    <input type="text" class="form-control border-bottom border-1 border-dark"
-                                        value="{{ $customer->town }}" disabled />
-                                </div>
-                                <div class="form-group col-12 p-3">
-                                    <label>Sub Town*</label>
-                                    <input type="text" class="form-control border-bottom border-1 border-dark"
-                                        value="{{ $customer->sub_town }}" disabled />
+
+                    <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                        <div class="row">
+                            <div class="col-6 card-body px-4 pb-2 ">
+                                <div class="row border border-2 border-dark p-2">
+                                    <h5>Customer Informarion...</h5>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Customer #*</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="@if ($customer != null){{ $customer->customer_id }}@endif" disabled />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Customer Name*</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="@if ($customer != null){{ $customer->customer_name }}@endif" disabled />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Town*</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="@if ($customer != null){{ $customer->town }}@endif" disabled />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Sub Town*</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="@if ($customer != null){{ $customer->sub_town }}@endif" disabled />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                    <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
 
-                            <div class="card-body px-4 pb-2 border border-2 border-dark mt-3">
-                                <h5>Focal Person Informarion...</h5>
-                                <div class="row">
+                            <div class="col-6 card-body px-4 pb-2 ">
+                                <div class="row  border border-2 border-dark p-2">
+                                    <h5>Focal Person Informarion...</h5>
                                     <div class="form-group col-12 p-3">
                                         <label>Person Name</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
@@ -83,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body px-4 pb-2 border border-2 border-dark mt-3">
+                            <div class="col-12 card-body px-4 pb-2 border border-2 border-dark mt-3">
                                 <h5>Complaint Informarion...</h5>
                                 <div class="row">
                                     <div class="form-group col-12 p-3">
