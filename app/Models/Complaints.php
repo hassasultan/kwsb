@@ -22,6 +22,7 @@ class Complaints extends Model
         "status",
         "before_image",
         "after_image",
+        "agent_description"
     ];
     public function town()
     {

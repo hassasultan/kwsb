@@ -130,6 +130,10 @@ class ComplaintController extends Controller
         {
             $complaint->after_image = $this->after($request->after_image);
         }
+        if($request->has('agent_description'))
+        {
+            $complaint->agent_description = $request->agent_description;
+        }
         $complaint->save();
         return response()->json(["message"=>"Your Given Information Addedd Successfully..."]);
     }
