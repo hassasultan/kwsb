@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white @if (Route::is('home') || Route::is('hydrant.home')) active  bg-gradient-primary @endif"
+                <a class="nav-link text-white @if (Route::is('home')) active  bg-gradient-primary @endif"
                     href=" {{ route('home') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
@@ -25,7 +25,7 @@
             @if (auth()->user()->role == 1)
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('user-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('user-management.index') }}">
+                        href="{{ url('admin/user-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -34,7 +34,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('town-management.index') }}">
+                        href="{{ url('admin/town-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -43,7 +43,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('agent-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('agent-management.index') }}">
+                        href="{{ url('admin/agent-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -52,7 +52,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('customer-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('customer-management.index') }}">
+                        href="{{ url('admin/customer-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -61,7 +61,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('compaints-type-management.index') }}">
+                        href="{{ url('admin/compaints-type-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -70,7 +70,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('compaints-management.index') }}">
+                        href="{{ url('admin/compaints-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -90,7 +90,7 @@
                 </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('town-management.index') }}">
+                        href="{{ url('system/town-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -108,7 +108,7 @@
                 </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('customer-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('customer-management.index') }}">
+                        href="{{ url('system/customer-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -117,7 +117,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('compaints-type-management.index') }}">
+                        href="{{ url('system/compaints-type-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -126,7 +126,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('compaints-management.index') }}">
+                        href="{{ url('system/compaints-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
