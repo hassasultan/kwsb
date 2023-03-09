@@ -101,6 +101,15 @@ class ComplaintController extends Controller
         $complaint = Complaints::with('town','customer','type')->where('town_id', $town_id)->get();
         return $complaint;
     }
+    public function agent_wise_complaints_count()
+    {
+        $town_id = auth('api')->user()->agent->town_id;
+        $data['total_complaint'] = Complaints::with('town','customer','type')->where('town_id', $town_id)->count();
+        $data['total_complaint_pending'] = Complaints::where('status',0)->where('town_id', $town_id)->count();
+        $data['total_complaint_complete'] = Complaints::where('status',1)->where('town_id', $town_id)->count();
+
+        return $data;
+    }
     public function agent_complaints_update(Request $request)
     {
         $complaint = Complaints::with('town','customer','type')->find($request->id);
