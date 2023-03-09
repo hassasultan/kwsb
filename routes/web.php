@@ -41,3 +41,13 @@ Route::prefix('/admin')->group(function (){
     });
 });
 
+Route::prefix('/system')->group(function (){
+    Route::middleware(['IsSystemUser'])->group(function () {
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('/town-management', TownController::class);
+        Route::resource('/compaints-management', ComplaintController::class);
+        Route::resource('/compaints-type-management', ComplaintTypeController::class);
+        Route::resource('/customer-management', CustomerController::class);
+        Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
+    });
+});

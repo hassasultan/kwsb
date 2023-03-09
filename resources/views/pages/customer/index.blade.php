@@ -23,11 +23,11 @@
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Customer#</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name / Phone</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Town SubTown</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
-                  <th class="text-secondary opacity-7">Action</th>
+                  {{-- <th class="text-secondary opacity-7">Action</th> --}}
                 </tr>
               </thead>
               <tbody>
@@ -39,6 +39,7 @@
                             </td>
                             <td class="align-middle text-center text-sm">
                                 <p class="text-xs text-secondary mb-0">{{ $row->customer_name }}</p>
+                                <p class="text-xs text-secondary mb-0">{{ $row->phone }}</p>
                             </td>
                             <td class="align-middle text-center text-sm">
                                 <p class="text-xs text-secondary mb-0">{{ $row->town }}  -  {{ $row->sub_town }}</p>
@@ -46,11 +47,11 @@
                             <td class="align-middle text-center text-sm">
                                 <p class="text-xs text-secondary mb-0">{{ $row->address }}</p>
                             </td>
-                            <td class="align-middle">
+                            {{-- <td class="align-middle">
                                 <a href="{{ route('customer-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                 Edit
                                 </a>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 {{-- @else

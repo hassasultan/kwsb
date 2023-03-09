@@ -48,6 +48,25 @@
         float: right;
         margin-right: 10px;
     }
+    .form-control:disabled
+    {
+        background-color: #202940 !important;
+    }
+    .select2-container--default .select2-selection--single
+    {
+        background-color: #202940 !important;
+        color: #fff !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered
+    {
+        color: #fff !important;
+
+    }
+    .select2-dropdown
+    {
+        background-color: #202940 !important;
+
+    }
 </style>
 <body>
     <div id="app">

@@ -25,6 +25,11 @@
                                 placeholder="Enter Name Here..." name="customer_name" required  value="{{ old('customer_name') }}"/>
                             </div>
                             <div class="form-group col-12 p-3">
+                                <label>Customer Phone*</label>
+                                <input type="tel" class="form-control border-bottom border-1 border-dark"
+                                placeholder="Enter Phone Number Here..." name="phone" required  value="{{ old('phone') }}"/>
+                            </div>
+                            <div class="form-group col-12 p-3">
                                 <label>Town*</label>
                                 <input type="text" class="form-control border-bottom border-1 border-dark"
                                 placeholder="Enter Town Here..." name="town" required  value="{{ old('town') }}"/>
