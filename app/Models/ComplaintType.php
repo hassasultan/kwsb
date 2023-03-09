@@ -16,6 +16,6 @@ class ComplaintType extends Model
     ];
     public function complaints()
     {
-       return $this->hasMany(Complaints::class,'town_id','id');
+       return $this->hasMany(Complaints::class,'type_id','id');
     }
 }
