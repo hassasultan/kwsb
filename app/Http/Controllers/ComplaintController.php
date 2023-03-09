@@ -107,6 +107,7 @@ class ComplaintController extends Controller
         $data['total_complaint'] = Complaints::with('town','customer','type')->where('town_id', $town_id)->count();
         $data['total_complaint_pending'] = Complaints::where('status',0)->where('town_id', $town_id)->count();
         $data['total_complaint_complete'] = Complaints::where('status',1)->where('town_id', $town_id)->count();
+        $data['type'] = ComplaintType::with('complaints')->whereHas('complaints', fn ($query) => $query->count())->get(['title','complaints']);
 
         return $data;
     }
