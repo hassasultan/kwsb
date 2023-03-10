@@ -13,6 +13,10 @@
         width: 40px !important;
         height: 40px !important;
     }
+    #piechart_3d > div
+    {
+        background-color: #202940 !important;
+    }
 
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -88,10 +92,12 @@ $.ajax({
         google.charts.load("current", {packages:["corechart"]});
         google.charts.setOnLoadCallback(drawChart2);
         let result2 = data['result'];
-        console.log(result2);
+        let result = data['type_count'];
+        // console.log(result2);
         function drawChart2() {
 
             var dataNew = google.visualization.arrayToDataTable(result2);
+            var data = google.visualization.arrayToDataTable(result);
             // console.log(dataNew);
 
             var options = {
@@ -101,6 +107,8 @@ $.ajax({
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart_3d2'));
             chart.draw(dataNew, options);
+            var chart2 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            chart2.draw(data, options);
         }
     })
     .fail(function(error) {
@@ -221,7 +229,12 @@ $.ajax({
                         @endforeach
                     </div>
                 </div> --}}
-                <div class="col-12">
+                <div class="col-6">
+                    <h3>Complaints Type</h3>
+                    <div id="piechart_3d"></div>
+                </div>
+                <div class="col-6">
+                    <h3>Complaints Status</h3>
                     <div id="piechart_3d2"></div>
                 </div>
             </div>

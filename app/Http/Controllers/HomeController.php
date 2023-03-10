@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaints;
+use App\Models\ComplaintType;
 use App\Models\MobileAgent;
 use Illuminate\Http\Request;
 class HomeController extends Controller
@@ -31,11 +32,15 @@ class HomeController extends Controller
         $result[0] = ['Clicks','Viewers'];
         $result[1] = ['Pending',$complaintsPending];
         $result[2] = ['Complete',$complaintsComplete];
-        // foreach ($complaints as $key => $value) {
-        //     $result[++$key] = ['Pending', (int)count($value)];
-        // }
+        $type = ComplaintType::with('complaints')->get();
+        $resultNew[0] = ['Clicks','Viewers'];
+        foreach($type as $key => $row)
+        {
+            $resultNew[++$key] = [$row->title, (int)count($row->complaints)];
+        }
         if($request->has('status') && $request->status == "api")
         {
+            $data['type_count'] = $resultNew;
             $data['result'] = $result;
             return $data;
         }
