@@ -120,7 +120,7 @@ $.ajax({
 }, 3000);
 
   </script>
-  @if (auth()->user()->role == 1)
+  {{-- @if (auth()->user()->role == 1) --}}
   <div class="row dash-count">
     <div class="col-xl-2 col-sm-4 mb-xl-0 mb-4">
         <div class="card">
@@ -181,8 +181,8 @@ $.ajax({
         </div>
     </div>
     @endforeach --}}
-</div>
-<hr/>
+    </div>
+    <hr/>
     <div class="row p-4">
         {{-- <div class="col-6 border border-top-0 border-3 border-bottom-0 border-start-0 border-light mt-2 p-4">
             <div class="row">
@@ -241,7 +241,7 @@ $.ajax({
         </div>
     </div>
 
-  @else
+  {{-- @else --}}
     {{-- <div class="row dash-count">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
@@ -309,7 +309,7 @@ $.ajax({
         @endforeach
     </div> --}}
 
-  @endif
+  {{-- @endif --}}
   {{-- <div class="row p-4">
     <div class="col-12 bg-gradient-primary  text-center p-2">
         <h5 class="text-white">Today Orders</h5>
