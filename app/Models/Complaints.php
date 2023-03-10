@@ -12,6 +12,7 @@ class Complaints extends Model
     protected $fillable = [
         "town_id",
         "type_id",
+        "prio_id",
         "customer_id",
         "title",
         "description",
@@ -35,5 +36,9 @@ class Complaints extends Model
     public function type()
     {
        return $this->belongsTo(ComplaintType::class,'type_id','id');
+    }
+    public function prio()
+    {
+       return $this->belongsTo(Priorities::class,'prio_id','id');
     }
 }

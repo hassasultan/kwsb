@@ -23,7 +23,7 @@
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Town</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Complaint Type</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Complaint Type / Priority</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title Description</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Picture</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
@@ -39,10 +39,11 @@
                             </td>
                             <td>
                                 <p class="text-xs font-weight-bold mb-0">{{ $row->type?->title }} </p>
+                                <p class="text-xs font-weight-bold mb-0">{{ $row->prio?->title }} </p>
                             </td>
                             <td class="align-middle text-center text-sm">
                                 <p class="text-xs text-secondary mb-0">{{ $row->title }}</p>
-                                <p class="text-xs text-secondary mb-0">{{ $row->description }}</p>
+                                {{-- <p class="text-xs text-secondary mb-0">{{ $row->description }}</p> --}}
 
                             </td>
                             <td class="align-middle text-center text-sm">

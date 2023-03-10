@@ -8,6 +8,8 @@ use App\Models\ComplaintType;
 use App\Models\User;
 use App\Models\Complaints;
 use App\Models\Customer;
+use App\Models\Priorities;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
@@ -34,6 +36,7 @@ class ComplaintController extends Controller
     {
         $town = Town::all();
         $type = ComplaintType::all();
+        $prio = Priorities::all();
         $customer = NULL;
         if($request->has('search'))
         {
@@ -44,7 +47,7 @@ class ComplaintController extends Controller
             }
         }
 
-        return view('pages.complaints.create',compact('customer','town','type'));
+        return view('pages.complaints.create',compact('customer','town','type','prio'));
 
     }
     public function store(Request $request)
@@ -98,14 +101,14 @@ class ComplaintController extends Controller
     public function agent_wise_complaints()
     {
         $town_id = auth('api')->user()->agent->town_id;
-        $complaint = Complaints::with('town','customer','type')->where('town_id', $town_id)->get();
+        $complaint = Complaints::with('town','customer','type','prio')->where('town_id', $town_id)->get();
         return $complaint;
     }
     public function agent_wise_complaints_count()
     {
         $typeCount = array();
         $town_id = auth('api')->user()->agent->town_id;
-        $data['total_complaint'] = Complaints::with('town','customer','type')->where('town_id', $town_id)->count();
+        $data['total_complaint'] = Complaints::with('town','customer','type','prio')->where('town_id', $town_id)->count();
         $data['total_complaint_pending'] = Complaints::where('status',0)->where('town_id', $town_id)->count();
         $data['total_complaint_complete'] = Complaints::where('status',1)->where('town_id', $town_id)->count();
         $type = ComplaintType::with('complaints')->whereHas('complaints',function($query)use($town_id){

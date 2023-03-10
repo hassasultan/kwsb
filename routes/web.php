@@ -4,6 +4,7 @@ use App\Http\Controllers\MobileAgentController;
 use App\Http\Controllers\TownController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\PrioritiesController;
 use App\Http\Controllers\ComplaintTypeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
@@ -34,6 +35,7 @@ Route::prefix('/admin')->group(function (){
         Route::get('/agent-management/details/{id}',[MobileAgentController::class,'detail'])->name('agent-management.details');
         Route::resource('/town-management', TownController::class);
         Route::resource('/compaints-management', ComplaintController::class);
+        Route::resource('/priorities-management', PrioritiesController::class);
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
         Route::resource('/customer-management', CustomerController::class);
@@ -48,6 +50,8 @@ Route::prefix('/system')->group(function (){
         Route::resource('/compaints-management', ComplaintController::class);
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::resource('/customer-management', CustomerController::class);
+        Route::resource('/priorities-management', PrioritiesController::class);
+
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
     });
 });

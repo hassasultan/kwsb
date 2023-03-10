@@ -105,6 +105,14 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Select Priority*</label>
+                                        <select name="prio_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            @foreach ($prio as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     {{-- <div class="form-group col-12 p-3">
                                         <label>Title*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
