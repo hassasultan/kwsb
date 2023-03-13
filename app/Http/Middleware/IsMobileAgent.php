@@ -24,12 +24,13 @@ class IsMobileAgent
             }
             else
             {
-                return response()->json("UnAuthorize");
+                return response()->json(["UnAuthorize"], 401);
             }
         }
         else
         {
-            return response()->json("UnAuthorize");
+            return response()->json(["UnAuthorize"], 401);
+
         }
     }
 }
