@@ -37,7 +37,7 @@
                         @foreach ($complaint as $key => $row)
                             <tr>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }} {{ $row->town->subtown }}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }} ({{ $row->subtown?->title }})</p>
                                 </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0">{{ $row->type?->title }} </p>

@@ -31,6 +31,10 @@ class Complaints extends Model
     {
        return $this->belongsTo(Town::class,'town_id','id');
     }
+    public function subtown()
+    {
+       return $this->belongsTo(SubTown::class,'sub_town_id','id');
+    }
     public function customer()
     {
        return $this->belongsTo(Customer::class,'customer_id','id');
