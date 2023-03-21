@@ -22,7 +22,8 @@
             <table id="example1" class="table table-bordered align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">SubTow</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Town</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">SubTown</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                   <th class="text-secondary opacity-7">Action</th>
                 </tr>
@@ -31,6 +32,9 @@
                 {{-- @if(count($user) > 0) --}}
                     @foreach ($subtown as $key => $row)
                         <tr>
+                            <td>
+                                <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }}</p>
+                            </td>
                             <td>
                                 <p class="text-xs font-weight-bold mb-0">{{ $row->title }}</p>
                             </td>
