@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body px-4 pb-2">
                     <h5>Give Sub Town Informarion...</h5>
-                    <form role="form" method="POST" action="{{ route('subtype-management.store') }}"
+                    <form role="form" method="POST" action="{{ route('subtown-management.store') }}"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row">
