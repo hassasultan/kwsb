@@ -50,9 +50,10 @@
                                 <p class="text-xs text-secondary mb-0">{{ count($row->hydrant->vehicles) }}</p>
                             </td> --}}
                             <td class="align-middle">
-                                {{-- <a href="{{ route('user-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{{ route('agent-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">
                                 Edit
-                                </a> --}}
+                                </a>
+                                |
                                 <a href="{{ route('agent-management.details',$row->id) }}" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">
                                     Assigned Complaints
                                     </a>

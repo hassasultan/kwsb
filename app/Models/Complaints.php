@@ -20,6 +20,7 @@ class Complaints extends Model
         "phone",
         "email",
         "image",
+        "source",
         "status",
         "before_image",
         "after_image",

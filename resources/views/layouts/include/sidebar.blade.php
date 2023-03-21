@@ -42,6 +42,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('subtown-management.index')) active bg-gradient-primary @endif"
+                        href="{{ url('admin/subtown-management') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">SubTown Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('agent-management.index')) active bg-gradient-primary @endif"
                         href="{{ url('admin/agent-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -68,6 +77,18 @@
                         <span class="nav-link-text ms-1">Priorities Management</span>
                     </a>
                 </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
+                        href="{{ url('admin/compaints-management') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Complaints Management</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
                         href="{{ url('admin/compaints-type-management') }}">
@@ -77,13 +98,14 @@
                         <span class="nav-link-text ms-1">CT Management</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/compaints-management') }}">
+                    <a class="nav-link text-white @if (Route::is('subtype-management.index')) active bg-gradient-primary @endif"
+                        href="{{ url('admin/subtype-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
-                        <span class="nav-link-text ms-1">Complaints Management</span>
+                        <span class="nav-link-text ms-1">SubType Management</span>
                     </a>
                 </li>
             @endif
@@ -133,6 +155,7 @@
                         <span class="nav-link-text ms-1">Priorities Management</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
                         href="{{ url('system/compaints-type-management') }}">
@@ -140,6 +163,15 @@
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
                         <span class="nav-link-text ms-1">CT Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('subtype-management.index')) active bg-gradient-primary @endif"
+                        href="{{ url('admin/subtype-management') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">SubType Management</span>
                     </a>
                 </li>
                 <li class="nav-item">

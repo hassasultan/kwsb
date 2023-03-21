@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MobileAgent;
+use App\Models\SubTown;
 use App\Models\Town;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class MobileAgentController extends Controller
         return Validator::make($data, [
             'user_id' => ['required', 'numeric', 'exists:users,id'],
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
+            'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
             'address' => ['required', 'string'],
         ]);
     }
@@ -33,7 +35,8 @@ class MobileAgentController extends Controller
     {
         $user = User::where('role', 3)->get();
         $town = Town::all();
-        return view('pages.agent.create',compact('user','town'));
+        $subtown = SubTown::all();
+        return view('pages.agent.create',compact('user','town','subtown'));
 
     }
     public function store(Request $request)
@@ -60,7 +63,9 @@ class MobileAgentController extends Controller
         $agent = MobileAgent::find($id);
         $user = User::where('role', 3)->get();
         $town = Town::all();
-        return view('pages.agent.edit',compact('user','agent','town'));
+        $subtown = SubTown::all();
+
+        return view('pages.agent.edit',compact('user','agent','town','subtown'));
 
     }
     public function update(Request $request,$id)
@@ -68,10 +73,10 @@ class MobileAgentController extends Controller
         $valid = $this->validator($request->all());
         if($valid->valid())
         {
-            $data = $request->all();
+            $data = $request->except(['_method','_token']);
             if($request->has('avatar') && $request->avatar != NULL)
             {
-                $data['avatar'] = $this->MobileAgentImage($request->MobileAgentImage);
+                $data['avatar'] = $this->MobileAgentImage($request->avatar);
             }
             MobileAgent::where('id',$id)->update($data);
             return redirect()->route('agent-management.index')->with('success', 'Record created successfully.');

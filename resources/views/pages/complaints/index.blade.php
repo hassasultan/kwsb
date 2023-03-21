@@ -27,6 +27,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Complaint Type / Priority</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Picture</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Source</th>
                       {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                       <th class="text-secondary opacity-7">Action</th>
                     </tr>
@@ -53,6 +54,9 @@
                                     @else
                                         Not Available
                                     @endif
+                                </td>
+                                <td class="text-center">
+                                    <p class="text-xs font-weight-bold mb-0">{{ $row->source }}</p>
                                 </td>
                                 <td class="align-middle">
                                     {{-- <a href="{{ route('compaints-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">

@@ -9,10 +9,10 @@
           <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
             <div class="row">
                 <div class="col-6">
-                    <h6 class="text-white text-capitalize ps-3">Town List</h6>
+                    <h6 class="text-white text-capitalize ps-3">SubTown List</h6>
                 </div>
                 <div class="col-6 text-end">
-                    <a class="btn bg-gradient-dark mb-0 mr-3" href="{{ route('town-management.create') }}"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;<i class="fa fa-user"></i></a>
+                    <a class="btn bg-gradient-dark mb-0 mr-3" href="{{ route('subtown-management.create') }}"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;<i class="fa fa-user"></i></a>
                 </div>
             </div>
           </div>
@@ -22,24 +22,20 @@
             <table id="example1" class="table table-bordered align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Town</th>
-                  {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sub Town</th> --}}
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">SubTow</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                   <th class="text-secondary opacity-7">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {{-- @if(count($user) > 0) --}}
-                    @foreach ($town as $key => $row)
+                    @foreach ($subtown as $key => $row)
                         <tr>
                             <td>
-                                <p class="text-xs font-weight-bold mb-0">{{ $row->town }}</p>
+                                <p class="text-xs font-weight-bold mb-0">{{ $row->title }}</p>
                             </td>
-                            {{-- <td class="align-middle text-center text-sm">
-                                <p class="text-xs text-secondary mb-0">{{ $row->subtown }}</p>
-                            </td> --}}
                             <td class="align-middle">
-                                <a href="{{ route('town-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{{ route('subtown-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                 Edit
                                 </a>
                             </td>
