@@ -29,6 +29,14 @@
                         </select>
                     </div>
                     <div class="form-group col-12 p-3">
+                        <label>Select SubTown*</label>
+                        <select name="sub_town_id" class="select2-multiple form-control fs-14  h-50px" required>
+                            @foreach ($subtown as $row)
+                                <option value="{{ $row->id }}" @if($row->id == $agent->sub_town_id) selected @endif>({{ $row->town->town }}) {{ $row->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-12 p-3">
                         <label>Select Type*</label>
                         <select name="type_id" class="select2-multiple form-control fs-14  h-50px" required>
                             @foreach ($type as $row)

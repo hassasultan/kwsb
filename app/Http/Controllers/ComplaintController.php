@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Complaints;
 use App\Models\Customer;
 use App\Models\Priorities;
+use App\Models\SubTown;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -23,6 +24,7 @@ class ComplaintController extends Controller
     {
         return Validator::make($data, [
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
+            'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
         ]);
@@ -37,6 +39,7 @@ class ComplaintController extends Controller
         $town = Town::all();
         $type = ComplaintType::all();
         $prio = Priorities::all();
+        $subtown = SubTown::all();
         $customer = NULL;
         if($request->has('search'))
         {
@@ -47,7 +50,7 @@ class ComplaintController extends Controller
             }
         }
 
-        return view('pages.complaints.create',compact('customer','town','type','prio'));
+        return view('pages.complaints.create',compact('customer','town','type','prio','subtown'));
 
     }
     public function store(Request $request)
@@ -74,8 +77,8 @@ class ComplaintController extends Controller
         $complaint = Complaints::find($id);
         $town = Town::all();
         $type = ComplaintType::all();
-
-        return view('pages.complaints.edit',compact('complaint','town','type'));
+        $subtown = SubTown::all();
+        return view('pages.complaints.edit',compact('complaint','town','type','subtown'));
 
     }
     public function update(Request $request,$id)
