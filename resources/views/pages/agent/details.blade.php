@@ -29,22 +29,22 @@
               </thead>
               <tbody>
                 {{-- @if(count($user) > 0) --}}
-                    @foreach ($agent->town->complaints as $key => $row)
+                    @foreach ($agent->assignedComplaints as $key => $row)
                         <tr>
                             <td>
-                                <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }} {{ $row->town->subtown }}</p>
+                                <p class="text-xs font-weight-bold mb-0">{{ $row->complaints->town->town }} {{ $row->complaints->town->subtown }}</p>
                             </td>
                             <td>
-                                <p class="text-xs font-weight-bold mb-0">{{ $row->type?->title }} </p>
+                                <p class="text-xs font-weight-bold mb-0">{{ $row->complaints->type?->title }} </p>
                             </td>
                             <td class="align-middle text-center text-sm">
-                                <p class="text-xs text-secondary mb-0">{{ $row->title }}</p>
-                                <p class="text-xs text-secondary mb-0">{{ $row->description }}</p>
+                                <p class="text-xs text-secondary mb-0">{{ $row->complaints->title }}</p>
+                                <p class="text-xs text-secondary mb-0">{{ $row->complaints->description }}</p>
 
                             </td>
                             <td class="align-middle text-center text-sm">
                                 @if ($row->image != NULL)
-                                    <img src="{{ asset('public/storage/'.$row->image) }}" class="img-fluid" style="width: 70px; height: 70px;"/>
+                                    <img src="{{ asset('public/storage/'.$row->complaints->image) }}" class="img-fluid" style="width: 70px; height: 70px;"/>
                                 @else
                                     Not Available
                                 @endif

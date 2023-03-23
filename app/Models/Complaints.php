@@ -47,4 +47,8 @@ class Complaints extends Model
     {
        return $this->belongsTo(Priorities::class,'prio_id','id');
     }
+    public function assignedComplaints()
+    {
+       return $this->belongsTo(ComplaintAssignAgent::class,'id','complaint_id');
+    }
 }

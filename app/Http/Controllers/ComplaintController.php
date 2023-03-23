@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ComplaintAssignAgent;
 use App\Models\MobileAgent;
 use App\Models\Town;
 use App\Models\ComplaintType;
@@ -10,7 +11,6 @@ use App\Models\Complaints;
 use App\Models\Customer;
 use App\Models\Priorities;
 use App\Models\SubTown;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
@@ -148,5 +148,21 @@ class ComplaintController extends Controller
         $complaint = Complaints::with('town','town.agents')->find($id);
         return view('pages.complaints.details',compact('complaint'));
 
+    }
+    public function assign_complaint($agentId,$complaintId)
+    {
+        $check = ComplaintAssignAgent::where('complaint_id',$complaintId)->where('agent_id',$agentId)->first();
+        if($check == null)
+        {
+            $check = ComplaintAssignAgent::create([
+                'complaint_id' => $complaintId,
+                'agent_id' => $agentId,
+            ]);
+        }
+        else
+        {
+            return redirect()->back()->with('error',"Already Assigned this Complaint...!");
+        }
+        return redirect()->route('agent-management.details',$agentId);
     }
 }

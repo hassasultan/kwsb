@@ -62,9 +62,16 @@
                                     {{-- <a href="{{ route('compaints-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                     </a> --}}
-                                    <a href="{{ route('compaints-management.details',$row->id) }}" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">
-                                        Assigned
+                                    @if ($row->assignedComplaints == null)
+                                        <a href="{{ route('compaints-management.details',$row->id) }}" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">
+                                            Assign
+                                            </a>
+
+                                    @else
+                                        <a href="{{ route('agent-management.details',$row->id) }}" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">
+                                            Already Assigned
                                         </a>
+                                    @endif
 
                                 </td>
                             </tr>

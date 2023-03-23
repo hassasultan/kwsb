@@ -26,7 +26,7 @@
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Town</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
-                  {{-- <th class="text-secondary opacity-7">Action</th> --}}
+                  <th class="text-secondary opacity-7">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,11 +49,11 @@
                             {{-- <td class="align-middle text-center text-sm">
                                 <p class="text-xs text-secondary mb-0">{{ count($row->hydrant->vehicles) }}</p>
                             </td> --}}
-                            {{-- <td class="align-middle">
-                                <a href="{{ route('user-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                Edit
+                            <td class="align-middle">
+                                <a href="{{ route('complaints.assign',[$row->id,$complaint->id]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                Assign Complaint
                                 </a>
-                            </td> --}}
+                            </td>
                         </tr>
                     @endforeach
                 {{-- @else

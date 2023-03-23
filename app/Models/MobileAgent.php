@@ -25,4 +25,8 @@ class MobileAgent extends Model
     {
         return $this->belongsTo(Town::class,'town_id','id');
     }
+    public function assignedComplaints()
+    {
+        return $this->hasMany(ComplaintAssignAgent::class,'agent_id','id');
+    }
 }

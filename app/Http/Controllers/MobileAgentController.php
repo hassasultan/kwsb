@@ -90,7 +90,7 @@ class MobileAgentController extends Controller
     }
     public function detail($id)
     {
-        $agent = MobileAgent::with('town','town.complaints')->find($id);
+        $agent = MobileAgent::with('assignedComplaints','assignedComplaints.complaints','assignedComplaints.complaints.town')->find($id);
         // dd($agent->toArray());
         return view('pages.agent.details',compact('agent'));
     }
