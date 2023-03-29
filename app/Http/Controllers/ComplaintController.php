@@ -15,6 +15,8 @@ use App\Models\SubTown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 
 class ComplaintController extends Controller
 {
@@ -61,6 +63,9 @@ class ComplaintController extends Controller
         if($valid->valid())
         {
             $data = $request->all();
+            $prefix = "COMPLAINT-";
+            $CompNum = IdGenerator::generate(['table' => 'complaint','field' => 'comp_num', 'length' => 14, 'prefix' =>$prefix]);
+            $data['comp_num'] = $CompNum;
             if($request->has('image') && $request->image != NULL)
             {
                 $data['image'] = $this->complaintImage($request->image);

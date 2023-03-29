@@ -10,6 +10,7 @@ class Complaints extends Model
     use HasFactory;
     protected $table ="complaint";
     protected $fillable = [
+        "comp_num",
         "town_id",
         "sub_town_id",
         "type_id",

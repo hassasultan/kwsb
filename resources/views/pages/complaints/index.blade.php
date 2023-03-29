@@ -23,11 +23,14 @@
                 <table id="example1" class="table table-bordered align-items-center mb-0">
                   <thead>
                     <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Compaint ID</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Town</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Complaint Type / Priority</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Picture</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created At</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Source</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                       <th class="text-secondary opacity-7">Action</th>
                     </tr>
@@ -36,6 +39,9 @@
                     {{-- @if(count($user) > 0) --}}
                         @foreach ($complaint as $key => $row)
                             <tr>
+                                <td class="w-20">
+                                    <p class="text-xs font-weight-bold mb-0">{{ $row->comp_num }}</p>
+                                </td>
                                 <td class="w-20">
                                     <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }} ({{ $row->subtown?->title }})</p>
                                 </td>
@@ -56,7 +62,17 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
+                                    <p class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y h:i:s')}}</p>
+                                </td>
+                                <td class="text-center">
                                     <p class="text-xs font-weight-bold mb-0">{{ $row->source }}</p>
+                                </td>
+                                <td class="text-center">
+                                    @if ($row->status == 1)
+                                        <span class="badge bg-success">Completed</span>
+                                    @else
+                                        <span class="badge bg-danger">Pending</span>
+                                    @endif
                                 </td>
                                 <td class="align-middle">
                                     {{-- <a href="{{ route('compaints-management.edit',$row->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
