@@ -44,6 +44,9 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
         Route::resource('/customer-management', CustomerController::class);
+        Route::get('/subtown/by/town', [SubTownController::class, 'get_subtown'])->name('subtown.by.town');
+        Route::get('/subtype/by/type', [SubTypeController::class, 'get_subtype'])->name('subtype.by.type');
+
 
     });
 });

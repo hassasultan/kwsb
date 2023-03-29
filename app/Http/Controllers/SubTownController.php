@@ -66,6 +66,12 @@ class SubTownController extends Controller
         }
 
     }
+    public function get_subtown(Request $request)
+    {
+        $subtown = SubTown::where('town_id',$request->town_id)->get();
+        return $subtown;
+
+    }
     public function destroy($id)
     {
 

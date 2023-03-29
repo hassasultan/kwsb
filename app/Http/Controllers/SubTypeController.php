@@ -65,6 +65,12 @@ class SubTypeController extends Controller
         }
 
     }
+    public function get_subtype(Request $request)
+    {
+        $subtype = SubType::where('type_id',$request->type_id)->get();
+        return $subtype;
+
+    }
     public function destroy($id)
     {
 

@@ -6,6 +6,7 @@ use App\Models\ComplaintAssignAgent;
 use App\Models\MobileAgent;
 use App\Models\Town;
 use App\Models\ComplaintType;
+use App\Models\SubType;
 use App\Models\User;
 use App\Models\Complaints;
 use App\Models\Customer;
@@ -38,6 +39,7 @@ class ComplaintController extends Controller
     {
         $town = Town::all();
         $type = ComplaintType::all();
+        $subtype = SubType::all();
         $prio = Priorities::all();
         $subtown = SubTown::all();
         $customer = NULL;
@@ -50,7 +52,7 @@ class ComplaintController extends Controller
             }
         }
 
-        return view('pages.complaints.create',compact('customer','town','type','prio','subtown'));
+        return view('pages.complaints.create',compact('customer','town','type','prio','subtown','subtype'));
 
     }
     public function store(Request $request)

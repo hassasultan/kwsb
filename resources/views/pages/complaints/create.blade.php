@@ -87,7 +87,7 @@
                                 <div class="row">
                                     <div class="form-group col-12 p-3">
                                         <label>Select Town*</label>
-                                        <select name="town_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                        <select name="town_id" id="town_id" class="select2-multiple form-control fs-14  h-50px" required>
                                             @foreach ($town as $row)
                                                 <option value="{{ $row->id }}">{{ $row->town }}
 
@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Select SubTown*</label>
-                                        <select name="sub_town_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                        <select name="sub_town_id" id="sub_town_id" class="select2-multiple form-control fs-14  h-50px" required>
                                             @foreach ($subtown as $row)
                                                 <option value="{{ $row->id }}">({{ $row->town->town }})  {{ $row->title }}</option>
                                             @endforeach
@@ -107,8 +107,16 @@
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Select Type*</label>
-                                        <select name="type_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                        <select name="type_id" id="type_id" class="select2-multiple form-control fs-14  h-50px" required>
                                             @foreach ($type as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Select Sub Type*</label>
+                                        <select name="subtype_id" id="subtype_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            @foreach ($subtype as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                             @endforeach
                                         </select>
@@ -160,3 +168,52 @@
         </div>
     </div>
 @endsection
+@section('bottom_script')
+    <script>
+        $("#town_id").on("change",function(){
+            var town_id = $(this).val();
+            $.ajax({
+                type: "get",
+                url: "{{ route('subtown.by.town') }}",
+                data: {
+                    'town_id':town_id,
+                },
+                success: function (data) {
+                    $("#sub_town_id").html("");
+                    var your_html = "";
+                        $.each(data, function (key, val) {
+                            console.log(val);
+                            your_html += "<option value="+val['id']+">" +  val['title'] + "</option>"
+                        });
+                    $("#sub_town_id").append(your_html); //// For Append
+                },
+                error: function() {
+                    console.log(data);
+                }
+            });
+        });
+        $("#type_id").on("change",function(){
+            var type_id = $(this).val();
+            $.ajax({
+                type: "get",
+                url: "{{ route('subtype.by.type') }}",
+                data: {
+                    'type_id':type_id,
+                },
+                success: function (data) {
+                    $("#subtype_id").html("");
+                    var your_html = "";
+                        $.each(data, function (key, val) {
+                            console.log(val);
+                            your_html += "<option value="+val['id']+">" +  val['title'] + "</option>"
+                        });
+                    $("#subtype_id").append(your_html); //// For Append
+                },
+                error: function() {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+@endsection
+

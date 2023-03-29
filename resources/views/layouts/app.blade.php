@@ -42,7 +42,10 @@
         border: 1px solid #000 !important;
 
     }
-
+    input , textarea, i , p , h1 , h2, h3, h4, h5,h6, span {
+        color: #fff !important;
+        opacity: 1 !important;
+    }
     #example1_filter {
         position: relative;
         float: right;
@@ -235,6 +238,7 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
+@yield('bottom_script')
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

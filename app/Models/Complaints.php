@@ -13,6 +13,7 @@ class Complaints extends Model
         "town_id",
         "sub_town_id",
         "type_id",
+        "subtype_id",
         "prio_id",
         "customer_id",
         "title",
@@ -42,6 +43,10 @@ class Complaints extends Model
     public function type()
     {
        return $this->belongsTo(ComplaintType::class,'type_id','id');
+    }
+    public function subtype()
+    {
+       return $this->belongsTo(SubType::class,'subtype_id','id');
     }
     public function prio()
     {
