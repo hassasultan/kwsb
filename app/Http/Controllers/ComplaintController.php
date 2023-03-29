@@ -30,6 +30,7 @@ class ComplaintController extends Controller
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
             'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
             'title' => ['required', 'string'],
+            'source' => ['required', 'string'],
             'description' => ['required', 'string'],
         ]);
     }
