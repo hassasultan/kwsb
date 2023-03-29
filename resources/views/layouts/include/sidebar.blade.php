@@ -33,6 +33,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('source-management.index')) active bg-gradient-primary @endif"
+                        href="{{ url('admin/source-management') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Source Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
                         href="{{ url('admin/town-management') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -119,6 +128,15 @@
                         <span class="nav-link-text ms-1">User Management</span>
                     </a>
                 </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white @if (Route::is('source-management.index')) active bg-gradient-primary @endif"
+                        href="{{ url('admin/source-management') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt_long</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Source Management</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
                         href="{{ url('system/town-management') }}">

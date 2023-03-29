@@ -9,6 +9,7 @@ use App\Models\ComplaintType;
 use App\Models\SubType;
 use App\Models\User;
 use App\Models\Complaints;
+use App\Models\Source;
 use App\Models\Customer;
 use App\Models\Priorities;
 use App\Models\SubTown;
@@ -44,6 +45,7 @@ class ComplaintController extends Controller
         $subtype = SubType::all();
         $prio = Priorities::all();
         $subtown = SubTown::all();
+        $source = Source::all();
         $customer = NULL;
         if($request->has('search'))
         {
@@ -54,7 +56,7 @@ class ComplaintController extends Controller
             }
         }
 
-        return view('pages.complaints.create',compact('customer','town','type','prio','subtown','subtype'));
+        return view('pages.complaints.create',compact('customer','town','type','prio','subtown','subtype','source'));
 
     }
     public function store(Request $request)

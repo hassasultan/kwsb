@@ -132,8 +132,9 @@
                                     <div class="form-group col-12 p-3">
                                         <label>Select Source*</label>
                                         <select name="source" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option value="whatsapp">Whatsapp</option>
-                                            <option value="new campain on facebook">New Campain on Facebook</option>
+                                            @foreach ($source as $row)
+                                                <option value="{{ $row->title }}">{{ $row->title }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     {{-- <div class="form-group col-12 p-3">

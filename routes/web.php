@@ -8,6 +8,7 @@ use App\Http\Controllers\PrioritiesController;
 use App\Http\Controllers\ComplaintTypeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SubTownController;
 use App\Http\Controllers\SubTypeController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,7 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/compaints-management', ComplaintController::class);
         Route::resource('/priorities-management', PrioritiesController::class);
         Route::resource('/subtype-management', SubTypeController::class);
+        Route::resource('/source-management', SourceController::class);
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
         Route::resource('/customer-management', CustomerController::class);
@@ -59,6 +61,7 @@ Route::prefix('/system')->group(function (){
         Route::resource('/compaints-management', ComplaintController::class);
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::resource('/subtype-management', SubTypeController::class);
+        Route::resource('/source-management', SourceController::class);
 
         Route::resource('/customer-management', CustomerController::class);
         Route::resource('/priorities-management', PrioritiesController::class);
