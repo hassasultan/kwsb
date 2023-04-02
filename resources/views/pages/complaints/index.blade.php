@@ -24,6 +24,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Compaint ID</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Customer Numner</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Town</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Complaint Type / Priority</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title Description</th>
@@ -41,6 +42,13 @@
                             <tr>
                                 <td class="w-20">
                                     <p class="text-xs font-weight-bold mb-0">{{ $row->comp_num }}</p>
+                                </td>
+                                <td class="w-20">
+                                    @if ($row->customer_id != 0)
+                                        <p class="text-xs font-weight-bold mb-0">{{ $row->customer->customer_id }}</p>
+                                    @else
+                                        <p class="text-xs font-weight-bold mb-0">{{ $row->customer_num }}</p>
+                                    @endif
                                 </td>
                                 <td class="w-20">
                                     <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }} ({{ $row->subtown?->title }})</p>

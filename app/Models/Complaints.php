@@ -17,6 +17,7 @@ class Complaints extends Model
         "subtype_id",
         "prio_id",
         "customer_id",
+        "customer_num",
         "title",
         "description",
         "customer_name",

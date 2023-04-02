@@ -62,6 +62,12 @@
 
                             <div class="col-6 card-body px-4 pb-2 ">
                                 <div class="row  border border-2 border-dark p-2">
+                                    <div class="form-group col-12 p-3">
+                                        <label>Customer #</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Customer Number Here..." name="customer_num"
+                                            value="{{ old('customer_num') }}" />
+                                    </div>
                                     <h5>Focal Person Informarion...</h5>
                                     <div class="form-group col-12 p-3">
                                         <label>Person Name</label>
@@ -94,8 +100,10 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <input type="hidden" name="customer_id"
+                                        @if ($customer != null)
+                                            <input type="hidden" name="customer_id"
                                             value="@if (isset($customer->customer_id)) {{ $customer->id }} @endif" />
+                                        @endif
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Select SubTown*</label>
@@ -155,12 +163,12 @@
                                     </div>
                                 </div>
                             </div>
-                            @if ($customer != null)
+                            {{-- @if ($customer != null) --}}
                                 <div class="text-center">
                                     <button type="submit"
                                         class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Create</button>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
                         </div>
 
                     </form>
