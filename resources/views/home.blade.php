@@ -496,7 +496,7 @@ $.ajax({
                     }
                 },
 
-                series: [type]
+                series: type
             });
         });
     </script>

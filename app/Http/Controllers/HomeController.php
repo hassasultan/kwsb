@@ -54,10 +54,10 @@ class HomeController extends Controller
         }
         foreach($type as $key => $row)
         {
-            $typeComp['name'] = $row->title;
-            $typeComp['data'] = [(int)count($row->complaints)];
+            $typeComp[$key]['name'] = $row->title;
+            $typeComp[$key]['data'] = [(int)count($row->complaints)];
         }
-
+        // dd($typeComp);
         return view('home',compact('totalComplaints','totalAgents','allTown','typeComp'));
     }
 }
