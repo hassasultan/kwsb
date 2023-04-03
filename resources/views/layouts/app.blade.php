@@ -42,7 +42,7 @@
         border: 1px solid #000 !important;
 
     }
-    input , textarea, i , p , h1 , h2, h3, h4, h5,h6, span {
+    input , textarea, p , h1 , h2, h3, h4, h5,h6, span {
         color: #fff !important;
         opacity: 1 !important;
     }
@@ -192,6 +192,7 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
+
     <!-- select2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- select2 -->
@@ -243,5 +244,6 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets/js/material-dashboard.min.js?v=3.0.0') }}"></script>
+
 </body>
 </html>

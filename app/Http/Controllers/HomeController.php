@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Complaints;
 use App\Models\ComplaintType;
 use App\Models\MobileAgent;
+use App\Models\Town;
 use Illuminate\Http\Request;
 class HomeController extends Controller
 {
@@ -25,6 +26,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $allTown = array();
         $totalComplaints = Complaints::count();
         $totalAgents = MobileAgent::count();
         $complaintsPending = Complaints::where('status',0)->count();
@@ -34,6 +36,12 @@ class HomeController extends Controller
         $result[2] = ['Complete',$complaintsComplete];
         $type = ComplaintType::with('complaints')->get();
         $resultNew[0] = ['Clicks','Viewers'];
+        $town = Town::get('town');
+        foreach($town as $row)
+        {
+            array_push($allTown,$row->town);
+        }
+        // dd($allTown);
         foreach($type as $key => $row)
         {
             $resultNew[++$key] = [$row->title, (int)count($row->complaints)];
@@ -44,7 +52,12 @@ class HomeController extends Controller
             $data['result'] = $result;
             return $data;
         }
+        foreach($type as $key => $row)
+        {
+            $typeComp['name'] = $row->title;
+            $typeComp['data'] = [(int)count($row->complaints)];
+        }
 
-        return view('home',compact('totalComplaints','totalAgents'));
+        return view('home',compact('totalComplaints','totalAgents','allTown','typeComp'));
     }
 }

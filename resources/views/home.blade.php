@@ -19,7 +19,59 @@
     }
 
 </style>
+<style>
+    #container2 {
+        height: 400px;
+    }
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+</style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script type="text/javascript">
 // setInterval(function () {
 
@@ -110,6 +162,8 @@ $.ajax({
             var chart2 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
             chart2.draw(data, options);
         }
+
+
     })
     .fail(function(error) {
         console.log(error);
@@ -236,6 +290,10 @@ $.ajax({
                 <div class="col-6">
                     <h3>Complaints Status</h3>
                     <div id="piechart_3d2"></div>
+                </div>
+                <div class="col-12">
+                    <h3>Complaints Flow</h3>
+                    <div id="container2"></div>
                 </div>
             </div>
         </div>
@@ -402,5 +460,45 @@ $.ajax({
 </div> --}}
 
 
-
 @endsection
+@section("bottom_script")
+
+    <script>
+        $(document).ready(function(){
+            var cat = @json($allTown);
+            var type = @json($typeComp);
+            console.log(type);
+            Highcharts.chart('container2', {
+                chart: {
+                    type: 'column'
+                },
+
+                title: {
+                    text: 'Laravel 9 Group Column Chart Using Highcharts - Websolutionstuff'
+                },
+
+                xAxis: {
+                    categories: cat
+                },
+
+                yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                    text: 'Count medals'
+                    }
+                },
+
+                tooltip: {
+                    formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y;
+                    }
+                },
+
+                series: [type]
+            });
+        });
+    </script>
+@endsection
+
