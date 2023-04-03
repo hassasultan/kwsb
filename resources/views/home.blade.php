@@ -467,7 +467,7 @@ $.ajax({
         $(document).ready(function(){
             var cat = @json($allTown);
             var type = @json($typeComp);
-            console.log(type);
+            console.log(cat);
             Highcharts.chart('container2', {
                 chart: {
                     type: 'column'
