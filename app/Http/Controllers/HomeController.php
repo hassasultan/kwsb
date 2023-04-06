@@ -54,10 +54,14 @@ class HomeController extends Controller
         }
         foreach($type as $key => $row)
         {
+            // $comId = $row->complaints->id;
+            // $newTown = Town::with('complaints',function($query) use($comId){
+            //     $query->where('id',$comId);
+            // })->get();
+            // dd($newTown->toArray());
             $typeComp[$key]['name'] = $row->title;
             $typeComp[$key]['data'] = [(int)count($row->complaints)];
         }
-        // dd($typeComp);
         return view('home',compact('totalComplaints','totalAgents','allTown','typeComp'));
     }
 }

@@ -204,6 +204,9 @@ $.ajax({
 
         </div>
     </div>
+    <div class="col-xl-12 col-sm-14  text-end">
+        <a class="btn btn-primary mb-0" href="{{ route('compaints-management.create') }}" target="_blank">+ Add New Complaint</a>
+    </div>
     {{-- <div class="col-xl-2 col-sm-4 mb-xl-0 mb-4">
         <div class="card">
         <div class="card-header p-3 pt-2">

@@ -23,6 +23,8 @@ class Complaints extends Model
         "customer_name",
         "phone",
         "email",
+        "address",
+        "landmark",
         "image",
         "source",
         "status",

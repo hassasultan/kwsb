@@ -36,14 +36,14 @@
                         <div class="row">
                             <div class="col-6 card-body px-4 pb-2 ">
                                 <div class="row border border-2 border-dark p-2">
-                                    <h5>Customer Informarion...</h5>
+                                    <h5>Consumer Informarion...</h5>
                                     <div class="form-group col-12 p-3">
-                                        <label>Customer #*</label>
+                                        <label>Consumer #*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
                                             value="@if ($customer != null){{ $customer->customer_id }}@endif" disabled />
                                     </div>
                                     <div class="form-group col-12 p-3">
-                                        <label>Customer Name*</label>
+                                        <label>Consumer Name*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
                                             value="@if ($customer != null){{ $customer->customer_name }}@endif" disabled />
                                     </div>
@@ -63,9 +63,9 @@
                             <div class="col-6 card-body px-4 pb-2 ">
                                 <div class="row  border border-2 border-dark p-2">
                                     <div class="form-group col-12 p-3">
-                                        <label>Customer #</label>
+                                        <label>Consumer #</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Customer Number Here..." name="customer_num"
+                                            placeholder="Enter Consumer Number Here..." name="customer_num"
                                             value="{{ old('customer_num') }}" />
                                     </div>
                                     <h5>Focal Person Informarion...</h5>
@@ -85,6 +85,16 @@
                                         <label>Person Email</label>
                                         <input type="email" class="form-control border-bottom border-1 border-dark"
                                             placeholder="Enter Email Here..." name="email" value="{{ old('email') }}" />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Person Address</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Address Here..." name="address" value="{{ old('address') }}" />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Person Nearest Land Mark</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            placeholder="Enter Nearest Land Mark Here..." name="landmark" value="{{ old('landmark') }}" />
                                     </div>
                                 </div>
                             </div>

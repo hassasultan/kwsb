@@ -24,12 +24,14 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Compaint ID</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Customer Numner</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Consumer Number</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Consumer Name</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">Town</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Complaint Type / Priority</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Picture</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created At</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Resolve Date</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Source</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
@@ -48,6 +50,13 @@
                                         <p class="text-xs font-weight-bold mb-0">{{ $row->customer->customer_id }}</p>
                                     @else
                                         <p class="text-xs font-weight-bold mb-0">{{ $row->customer_num }}</p>
+                                    @endif
+                                </td>
+                                <td class="w-20">
+                                    @if ($row->customer_id != 0)
+                                        <p class="text-xs font-weight-bold mb-0">{{ $row->customer->customer_name }}</p>
+                                    @else
+                                        <p class="text-xs font-weight-bold mb-0">{{ $row->customer_name }}</p>
                                     @endif
                                 </td>
                                 <td class="w-20">
@@ -71,6 +80,13 @@
                                 </td>
                                 <td class="text-center">
                                     <p class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y h:i:s')}}</p>
+                                </td>
+                                <td class="text-center">
+                                    @if ($row->status == 1)
+                                        <p class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($row->updated_at)->format('d/m/Y h:i:s')}}</p>
+                                    @else
+                                        <span class="bg-danger">Yet Not Reslove</span>
+                                    @endif
                                 </td>
                                 <td class="text-center">
                                     <p class="text-xs font-weight-bold mb-0">{{ $row->source }}</p>

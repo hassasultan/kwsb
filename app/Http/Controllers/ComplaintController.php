@@ -36,7 +36,8 @@ class ComplaintController extends Controller
     }
     public function index()
     {
-        $complaint = Complaints::all();
+        $complaint = Complaints::OrderBy('id','DESC')->get();
+        // dd($complaint->toArray());
         return view('pages.complaints.index',compact('complaint'));
     }
     public function create(Request $request)
