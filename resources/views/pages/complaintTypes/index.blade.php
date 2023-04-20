@@ -18,6 +18,26 @@
           </div>
         </div>
         <div class="card-body px-0 pb-2">
+            <div class="p-4">
+                <h5>Generate Report</h5>
+                <form role="form" method="get" action="{{ route('compaints-reports.reports') }}" enctype="multipart/form-data">
+                    <div class="row">
+
+                        <div class="form-group col-4">
+                            <label>From Date</label>
+                            <input type="date" class="form-control border-bottom" placeholder="Enter Customer Title..." name="from_date" value="{{ old('title') }}" required/>
+                        </div>
+                        <div class="form-group col-4">
+                            <label>To Date</label>
+                            <input type="date" class="form-control border-bottom" placeholder="Enter Customer Title..." name="to_date" value="{{ old('title') }}" required/>
+                        </div>
+                        <div class="form-group col-4">
+                            <button type="submit" class="btn bg-gradient-primary btn-lg ">Create</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
           <div class=" p-0">
             <table id="example1" class="table table-bordered align-items-center mb-0">
               <thead>

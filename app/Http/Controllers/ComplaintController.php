@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use DB;
 
 
 class ComplaintController extends Controller
@@ -175,5 +176,29 @@ class ComplaintController extends Controller
             return redirect()->back()->with('error',"Already Assigned this Complaint...!");
         }
         return redirect()->route('agent-management.details',$agentId);
+    }
+    public function generate_report(Request $request)
+    {
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        // $comp = Complaints::with('type')->whereDate('created_at','>=',$dateS)->whereDate('created_at','<=',$dateE)->orderBy('created_at')
+        // ->get()->groupBy('type_id');
+        $comp = Complaints::with('type')
+            ->whereDate('created_at','>=',$dateS)
+            ->whereDate('created_at','<=',$dateE)
+            ->orderBy('type_id','ASC')
+            ->get()
+            ->groupBy([ function ($post) {
+                return $post->created_at->format('Y-m-d');
+            },'type_id']);
+
+        $type = ComplaintType::get();
+        //     ->groupBy([function ($post) {
+        //         return $post->created_at->format('Y-m-d');
+        //     }, '']);
+
+        // dd($comp);
+        // dd($comp->toArray());
+        return view('pages.complaints.report',compact('comp','type'));
     }
 }

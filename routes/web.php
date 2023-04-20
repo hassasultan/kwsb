@@ -48,6 +48,7 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/customer-management', CustomerController::class);
         Route::get('/subtown/by/town', [SubTownController::class, 'get_subtown'])->name('subtown.by.town');
         Route::get('/subtype/by/type', [SubTypeController::class, 'get_subtype'])->name('subtype.by.type');
+        Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
 
 
     });
@@ -60,6 +61,8 @@ Route::prefix('/system')->group(function (){
         Route::resource('/subtown-management', SubTownController::class);
         Route::resource('/compaints-management', ComplaintController::class);
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
+        Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
+
         Route::resource('/subtype-management', SubTypeController::class);
         Route::resource('/source-management', SourceController::class);
 
