@@ -195,6 +195,7 @@ class ComplaintController extends Controller
         ->select('type_id', DB::raw('date(created_at) as date'), DB::raw('count(*) as num_complaints'))
         ->whereBetween('created_at', [$dateS, $dateE])
         ->groupBy('type_id', 'date')
+        ->orderBy('date','ASC')
         ->get();
 
         $type = ComplaintType::get();
