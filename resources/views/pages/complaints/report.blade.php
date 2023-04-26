@@ -53,7 +53,7 @@
                             <b>From {{ \Carbon\Carbon::parse($dateS)->format('d F Y')}} to {{ \Carbon\Carbon::parse($dateE)->format('d F Y')}}</b>
                         </div>
 
-                        <div class="table table-responsive mt-4">
+                        <div class="table mt-4">
                             <table class="table  table-striped">
                                 <thead>
                                     <tr style="background-color:#5b9bd5; color: #FFF !important;">
