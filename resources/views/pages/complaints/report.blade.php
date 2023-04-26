@@ -40,7 +40,7 @@
             <div class="bg-white m-auto">
                 <div class="row">
                     <div class="col-5">
-                        <img src="{{ asset('assets/img/unnamed.png') }}" class="img-fluid" alt="main_logo">
+                        <img src="{{ asset('assets/img/unnamed.png') }}" class="img-fluid" alt="main_logo" style="width: 200px;">
                     </div>
                     <div class="col-7 text-end" style=" padding-top:2.4rem;">
                         <h5 class=" fs-1">KW&SB-CMP</h5>
@@ -50,61 +50,43 @@
                     </div>
                     <div class="col-12 mt-2">
                         <div class="text-center mt-4">
-                            <b>From {{ \Carbon\Carbon::now()->format('d F Y')}} to {{ \Carbon\Carbon::now()->format('d F Y')}}</b>
+                            <b>From {{ \Carbon\Carbon::parse($dateS)->format('d F Y')}} to {{ \Carbon\Carbon::parse($dateE)->format('d F Y')}}</b>
                         </div>
 
                         <div class="table table-responsive mt-4">
                             <table class="table  table-striped">
-                                {{-- <thead style="background-color:#5b9bd5; color: #FFF;">
-                                    <tr>
-                                      <th scope="col">Date</th>
-                                      @foreach ($type as $row)
-                                        <th scope="col">{{ $row->title }}</th>
-                                      @endforeach
-                                    </tr> --}}
-                                {{-- </thead> --}}
-                                <tbody>
-                                        <tr style="background-color:#5b9bd5; color: #FFF !important;">
-                                            <th scope="col" style="color: #FFF !important">Date</th>
-                                            @foreach ($type as $key => $row)
-
-                                            <th scope="col"  style="color: #FFF !important">{{ $row->title }}</th>
-                                            @endforeach
-                                        </tr>
-                                        @php
-                                            $index = 0;
-                                            $counter = 0;
-                                        @endphp
-                                        @foreach ($comp as $key => $row)
-                                            <tr @if($index%2 == 0) style="background-color:#deeaf6;" @endif>
-                                                <th scope="row">{{ $key}}</th>
-                                                @foreach($row as $key1 => $value)
-                                                    @foreach ($type as $key2 => $item)
-                                                        @if($item->id == $key1)
-                                                            {{-- <td>@dump($key1)</td> --}}
-                                                            <td>{{count($value)}}</td>
-                                                        {{-- @else
-                                                        <td>0</td> --}}
-
-                                                        @endif
-                                                    @endforeach
-
-                                                @endforeach
-                                                @if(count($row) < count($type))
-                                                    <td>0</td>
-                                                @endif
-                                                {{-- <td>@dump($value->toArray())</td> --}}
-
-                                            </tr>
-                                            
-                                                @php
-                                                    $index++;
-                                                @endphp
+                                <thead>
+                                    <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                                        <th>Date</th>
+                                        @foreach (array_unique(array_column($complaints->toArray(), 'type_id')) as $complaintTypeId)
+                                            <th>{{ $complaints->firstWhere('type_id', $complaintTypeId)->type->title }}</th>
                                         @endforeach
-
-
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($complaints->groupBy('date') as $date => $complaintsByDate)
+                                        <tr>
+                                            <td>{{ $date }}</td>
+                                            @foreach ($complaints->pluck('type')->unique('id') as $complaintType)
+                                                @php
+                                                    $count = $complaintsByDate->where('type_id', $complaintType->id)->sum('num_complaints');
+                                                @endphp
+                                                <td>{{ $count ?? 0 }}</td>
+                                            @endforeach
+                                            {{-- @foreach (array_unique(array_column($complaintsByDate->toArray(), 'type_id')) as $complaintTypeId)
+                                                <td>{{ $complaintsByDate->where('type_id', $complaintTypeId)->sum('num_complaints') }}</td>
+                                            @endforeach --}}
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td><strong>Total</strong></td>
+                                        @foreach (array_unique(array_column($complaints->toArray(), 'type_id')) as $complaintTypeId)
+                                        <td><b>{{ $complaints->where('type_id', $complaintTypeId)->sum('num_complaints') }}</b></td>
+                                        @endforeach
+                                    </tr>
                                 </tbody>
                             </table>
+
                         </div>
 
                     </div>

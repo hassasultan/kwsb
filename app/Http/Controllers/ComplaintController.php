@@ -183,14 +183,19 @@ class ComplaintController extends Controller
         $dateE = $request->to_date;
         // $comp = Complaints::with('type')->whereDate('created_at','>=',$dateS)->whereDate('created_at','<=',$dateE)->orderBy('created_at')
         // ->get()->groupBy('type_id');
-        $comp = Complaints::with('type')
-            ->whereDate('created_at','>=',$dateS)
-            ->whereDate('created_at','<=',$dateE)
-            ->orderBy('type_id','ASC')
-            ->get()
-            ->groupBy([ function ($post) {
-                return $post->created_at->format('Y-m-d');
-            },'type_id']);
+        // $comp = Complaints::with('type')
+        //     ->whereDate('created_at','>=',$dateS)
+        //     ->whereDate('created_at','<=',$dateE)
+        //     ->orderBy('type_id','ASC')
+        //     ->get()
+        //     ->groupBy([ function ($post) {
+        //         return $post->created_at->format('Y-m-d');
+        //     },'type_id']);
+        $complaints = Complaints::with('type')
+        ->select('type_id', DB::raw('date(created_at) as date'), DB::raw('count(*) as num_complaints'))
+        ->whereBetween('created_at', [$dateS, $dateE])
+        ->groupBy('type_id', 'date')
+        ->get();
 
         $type = ComplaintType::get();
         //     ->groupBy([function ($post) {
@@ -198,7 +203,7 @@ class ComplaintController extends Controller
         //     }, '']);
 
         // dd($comp);
-        // dd($comp->toArray());
-        return view('pages.complaints.report',compact('comp','type'));
+        // dd($complaints->toArray());
+        return view('pages.complaints.report',compact('complaints','type','dateS','dateE'));
     }
 }
