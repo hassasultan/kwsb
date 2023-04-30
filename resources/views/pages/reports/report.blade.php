@@ -51,6 +51,22 @@
                     <div class="col-12 mt-2">
                         <div class="text-center mt-4">
                             <b>From {{ \Carbon\Carbon::parse($dateS)->format('d F Y')}} to {{ \Carbon\Carbon::parse($dateE)->format('d F Y')}}</b>
+                            <br/>
+                            @if ($town != null)
+                            <b>Town : {{ $town->town }}</b>
+                            @endif
+                            @if ($type != null)
+                            <b>Complaint Type : {{ $type->title }}</b>
+                            @endif
+                            @if ($source != null)
+                            <b>Source : {{ $source }}</b>
+                            @endif
+                            @if ($prio != null)
+                            <b>Priority : {{ $prio->title }}</b>
+                            @endif
+                            @if ($consumer != null)
+                            <b>Consumer Number : {{ $consumer }}</b>
+                            @endif
                         </div>
 
                         <div class="table mt-4">

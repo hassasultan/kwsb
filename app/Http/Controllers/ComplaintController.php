@@ -177,10 +177,24 @@ class ComplaintController extends Controller
         }
         return redirect()->route('agent-management.details',$agentId);
     }
+    public function report()
+    {
+        $town = Town::all();
+        $type = ComplaintType::get();
+        $prio = Priorities::get();
+        $source = Complaints::get()->groupBy('source');
+        return view('pages.reports.index',compact('town','type','prio','source'));
+
+    }
     public function generate_report(Request $request)
     {
         $dateS = $request->from_date;
         $dateE = $request->to_date;
+        $town = null;
+        $type = null;
+        $prio = null;
+        $source = null;
+        $consumer = null;
         // $comp = Complaints::with('type')->whereDate('created_at','>=',$dateS)->whereDate('created_at','<=',$dateE)->orderBy('created_at')
         // ->get()->groupBy('type_id');
         // $comp = Complaints::with('type')
@@ -191,20 +205,53 @@ class ComplaintController extends Controller
         //     ->groupBy([ function ($post) {
         //         return $post->created_at->format('Y-m-d');
         //     },'type_id']);
-        $complaints = Complaints::with('type')
+        $complaints = Complaints::with('type','customer')
         ->select('type_id', DB::raw('date(created_at) as date'), DB::raw('count(*) as num_complaints'))
-        ->whereBetween('created_at', [$dateS, $dateE])
-        ->groupBy('type_id', 'date')
+        ->whereBetween('created_at', [$dateS, $dateE]);
+        if($request->has('town_id'))
+        {
+            $complaints = $complaints->where('town_id',$request->town_id);
+            $town = Town::find($request->town_id);
+            // dd($town->toArray());
+        }
+        if($request->has('type_id'))
+        {
+            $complaints = $complaints->where('type_id',$request->type_id);
+            $type = ComplaintType::find($request->type_id);
+            // dd($town->toArray());
+        }
+        if($request->has('prio_id'))
+        {
+            $complaints = $complaints->where('prio_id',$request->prio_id);
+            $prio = Priorities::find($request->prio_id);
+            // dd($town->toArray());
+        }
+        if($request->has('customer_id'))
+        {
+            $cust = $request->customer_id;
+            $complaints = $complaints->WhereHas('customer',function($query)use($cust){
+                $query->where('customer_id',$cust);
+            })->orwhere('customer_num',$request->customer_id);
+            $consumer = $cust;
+            // dd($town->toArray());
+        }
+        if($request->has('source'))
+        {
+            $complaints = $complaints->where('source',$request->source);
+            $source = $request->source;
+            // dd($town->toArray());
+        }
+        $complaints = $complaints->groupBy('type_id', 'date')
         ->orderBy('date','ASC')
         ->get();
 
-        $type = ComplaintType::get();
+        // $type = ComplaintType::get();
         //     ->groupBy([function ($post) {
         //         return $post->created_at->format('Y-m-d');
         //     }, '']);
 
         // dd($comp);
         // dd($complaints->toArray());
-        return view('pages.complaints.report',compact('complaints','type','dateS','dateE'));
+        return view('pages.reports.report',compact('complaints','type','dateS','dateE','town','consumer','source','prio'));
     }
 }
