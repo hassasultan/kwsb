@@ -237,7 +237,10 @@ class ComplaintController extends Controller
         }
         if($request->has('source'))
         {
-            $complaints = $complaints->where('source',$request->source);
+            if($request->source != "all")
+            {
+                $complaints = $complaints->where('source',$request->source);
+            }
             $source = $request->source;
             // dd($town->toArray());
         }

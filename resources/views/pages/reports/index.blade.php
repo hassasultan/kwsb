@@ -140,9 +140,9 @@
                             <div class="form-group col-3">
                                 <label>Select Source</label>
                                 <select name="source" id="source" class="select2-multiple form-control fs-14  h-50px" >
+                                    <option value="all">All</option>
                                     @foreach ($source as $key => $row)
                                         <option value="{{ $key }}">{{ $key }}
-
                                         </option>
                                     @endforeach
                                 </select>
