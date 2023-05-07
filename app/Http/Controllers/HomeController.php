@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaints;
+use App\Models\Customer;
 use App\Models\ComplaintType;
 use App\Models\MobileAgent;
 use App\Models\Town;
@@ -31,6 +32,7 @@ class HomeController extends Controller
         $totalAgents = MobileAgent::count();
         $complaintsPending = Complaints::where('status',0)->count();
         $complaintsComplete = Complaints::where('status',1)->count();
+        $total_customer = Customer::count();
         $result[0] = ['Clicks','Viewers'];
         $result[1] = ['Pending',$complaintsPending];
         $result[2] = ['Complete',$complaintsComplete];
@@ -62,6 +64,6 @@ class HomeController extends Controller
             $typeComp[$key]['name'] = $row->title;
             $typeComp[$key]['data'] = [(int)count($row->complaints)];
         }
-        return view('home',compact('totalComplaints','totalAgents','allTown','typeComp'));
+        return view('home',compact('totalComplaints','totalAgents','allTown','typeComp','total_customer'));
     }
 }

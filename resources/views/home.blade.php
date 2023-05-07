@@ -204,6 +204,20 @@ $.ajax({
 
         </div>
     </div>
+    <div class="col-xl-2 col-sm-4 mb-xl-0 mb-4">
+        <div class="card">
+        <div class="card-header p-3 pt-2">
+            <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="text-end pt-1">
+            <p class="text-sm mb-0 text-capitalize">Total Customers</p>
+            <h3 class="mb-0">{{$total_customer}}</h3>
+            </div>
+        </div>
+
+        </div>
+    </div>
     <div class="col-xl-12 col-sm-14  text-end">
         <a class="btn btn-primary mb-0" href="{{ route('compaints-management.create') }}" target="_blank">+ Add New Complaint</a>
     </div>
