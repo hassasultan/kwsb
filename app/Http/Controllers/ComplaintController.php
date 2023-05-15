@@ -123,6 +123,7 @@ class ComplaintController extends Controller
     {
         $typeCount = array();
         $town_id = auth('api')->user()->agent->town_id;
+        $data['agent'] = MobileAgent::with('assignedComplaints','assignedComplaints.complaints','assignedComplaints.complaints.town')->find(auth('api')->user()->agent->id);
         $data['total_complaint'] = Complaints::with('town','customer','type','prio')->where('town_id', $town_id)->count();
         $data['total_complaint_pending'] = Complaints::where('status',0)->where('town_id', $town_id)->count();
         $data['total_complaint_complete'] = Complaints::where('status',1)->where('town_id', $town_id)->count();
