@@ -484,14 +484,40 @@ $.ajax({
         $(document).ready(function(){
             var cat = @json($allTown);
             var type = @json($typeComp);
-            console.log(cat);
+            // console.log(type);
+            var seriesData = [];
+
+            // Perform a loop to generate the series data dynamically
+            for (var i = 0; i < type.length; i++) {
+                console.log(type[i]);
+                var series = {
+                name: type[i].name,
+                data: []
+                };
+
+                // Generate random data for each series
+                for (var j = 0; j < type.length; j++) {
+                    if (type[i].data[j] !== 'undefined') {
+                        var value = type[i].data[j];
+                        series.data.push(value);
+                    }
+                    else
+                    {
+                        var value = 0;
+                        series.data.push(value);
+                    }
+                }
+
+                // Add the series to the seriesData array
+                seriesData.push(series);
+            }
             Highcharts.chart('container2', {
                 chart: {
                     type: 'column'
                 },
 
                 title: {
-                    text: 'Laravel 9 Group Column Chart Using Highcharts - Websolutionstuff'
+                    text: 'Complaints High Chart'
                 },
 
                 xAxis: {
@@ -512,8 +538,14 @@ $.ajax({
                         this.series.name + ': ' + this.y;
                     }
                 },
-
-                series: type
+                // series: [{
+                // name: 'Series 1',
+                // data: [5, 10, 15]
+                // }, {
+                // name: 'Series 2',
+                // data: [8, 12, 7]
+                // }]
+                series: seriesData
             });
         });
     </script>
