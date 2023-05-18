@@ -496,17 +496,26 @@ $.ajax({
                 };
 
                 // Generate random data for each series
-                for (var j = 0; j < type.length; j++) {
-                    if (type[i].data[j] !== 'undefined') {
-                        var value = type[i].data[j];
-                        series.data.push(value);
+                for (var j = 0; j <= type[i].data.length; j++) {
+
+                    if (type[i].data[j] == undefined) {
+                        // var value = 0;
+                        // series.data.push(value);
+                        console.log(type[i].data[j]);
                     }
                     else
                     {
-                        var value = 0;
+                        var value = type[i].data[j];
                         series.data.push(value);
                     }
+                    // }
+                    // else
+                    // {
+                    //     var value = 0;
+                    //     series.data.push(value);
+                    // }
                 }
+                console.log(series);
 
                 // Add the series to the seriesData array
                 seriesData.push(series);

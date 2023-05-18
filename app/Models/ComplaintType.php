@@ -20,6 +20,16 @@ class ComplaintType extends Model
     {
        return $this->hasMany(Complaints::class,'type_id','id');
     }
+    public function town()
+    {
+        return $this->belongsToMany(
+            Town::class,
+            Complaints::class,
+            'type_id',
+            'town_id',
+        );
+    //    return $this->hasMany(Complaints::class,'type_id','id');
+    }
     public function complaintsLatest($date,$type_id)
     {
         $created_at = explode(' ',$date);

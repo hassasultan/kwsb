@@ -22,4 +22,14 @@ class Town extends Model
     {
         return $this->hasMany(Complaints::class,'town_id','id');
     }
+    public function comp_type()
+    {
+        return $this->belongsToMany(
+            ComplaintType::class,
+            Complaints::class,
+            'town_id',
+            'type_id',
+        );
+    //    return $this->hasMany(Complaints::class,'type_id','id');
+    }
 }
