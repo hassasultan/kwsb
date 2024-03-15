@@ -1,0 +1,325 @@
+@import "node_modules/bootstrap/scss/bootstrap-grid.scss";
+
+
+/* collapsed layout with sidebar */
+.rtl {
+  /* force float properties */
+  .float-left {
+    float:right !important;
+  }
+  .float-right {
+    float: left !important;
+  }
+  /* fix border */
+  .border-right {
+    border-right-width: 0 !important;
+    border-left: 1px solid $border-color !important;
+  }
+
+  .dropdown-menu-right {
+    left: 0 !important;
+    right: auto !important;
+
+    .dropdown-item {
+      text-align: left;
+    }
+  }
+
+  .navbar-nav {
+    padding-right: 0;
+
+    .nav-item {
+      float: none;
+    }
+
+    .nav-link {
+      text-align: right;
+    }
+    .dropdown-menu {
+      .nav-item {
+        .dropdown-toggle {
+          &::after {
+            right: auto;
+            left: .5em;
+            content: "\e92f";
+          }
+        }
+      }
+    }
+  }
+  /* fix pr-0 dropdown */
+  .topnav {
+    .nav-item.dropdown {
+      .dropdown-toggle {
+        margin-right: 1rem;
+      }
+    }
+  }
+  /* update search form */
+  .searchform {
+    margin-right: 1.5rem !important;
+    .form-control {
+      padding-left: .5em;
+      padding-right: 2em;
+    }
+    &::before {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  &.vertical {
+    &.collapsed,
+    &.condensed {
+      .sidebar-left {
+          min-width: 5rem;
+          width: 5rem;
+
+          .navbar-nav {
+            .nav-item {
+              .nav-link {
+                text-align: center;
+              }
+            }
+          }
+      }
+      .main-content,
+      .topnav {
+        margin-right: 5rem;
+      }
+    }
+  }
+  &.vertical,
+  &.vertical.hover,
+  &.condensed.open {
+    .sidebar-left {
+      right: 0;
+      width: 16rem;
+      min-width: 16rem;
+
+      .navbar-nav {
+         .nav-item {
+            width: 100%;
+            &:after {
+              right: -1rem;
+            }
+
+            .nav-link {
+              text-align: right;
+            }
+
+            > ul {
+              .nav-link {
+                padding-left: .5rem;
+                padding-right: 3.5rem;
+              }
+            }
+          }
+          
+        }
+      } //sidebar-left
+      .topnav,
+      .main-content {
+        margin-left: 0;
+        margin-right: 16rem;
+      }
+  }
+  .vertnav {
+    .badge {
+      float: left;
+    }
+    .dropdown-toggle::after {
+      float: left;
+    }
+  }
+  .boxed,
+  .boxed.hover {
+
+    .sidebar-left {
+      position: absolute;
+      right: 0;
+    }
+  }
+  /* secondary sidebar */
+  &.vertical {
+    &.secondary {
+      .main-content {
+        margin-left: 0rem !important;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        margin-right: 20rem !important;
+      }
+      .sidebar-left {
+        .secondary-nav {
+          left: auto;
+          right: 4.2rem;
+        }
+        .nav-bottom {
+          .nav-link {
+            text-align: center !important;
+          }
+        }
+        .toggle-secondary {
+          left: auto;
+          right: 19rem;
+        }
+      }
+     
+      &.toggled {
+        .main-content {
+          margin-left: 0 !important;
+          margin-right: 4.2rem !important;
+        }
+        .toggle-secondary {
+          right: 5rem;
+        }
+      }
+    }
+  }
+  
+  /* timeline */
+  .timeline {
+    .timeline-item {
+
+      &::before {
+        right: 10px;
+      }
+      &::after {
+        right: 15px;
+      }
+    }
+  }
+
+  /* wizard */
+  .wizard {
+    > .steps {
+      > ul > li {
+        float: right;
+      }
+    }
+    .actions {
+      text-align: left;
+    }
+    &.vertical {
+      > .steps {
+        float: right;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .rtl {
+    &.vertical,
+    &.vertical.hover,
+    &.vertical.condensed {
+      .sidebar-left {
+        min-width: 0;
+        width: 0;
+
+        .navbar,
+        .navbar-nav {
+          .nav-item {
+            width: 100%;
+          }
+        }
+      }
+      .topnav,
+      .main-content {
+        margin-right: 0;
+      }
+    }
+
+    &.vertical {
+      &.collapsed,
+      &.condensed.open {
+        .sidebar-left {
+          min-width: 16rem;
+          width: 16rem;
+
+          .navbar-nav {
+            .nav-link {
+                text-align: right;
+            }
+            // > .nav-item {
+            //   > ul.collapse  {
+            //     padding-right: 1.2rem !important;
+            //   }
+            // }
+          }
+        }
+        .topnav,
+        .main-content {
+          margin-right: 0;
+        }
+      }
+    }
+
+    &.horizontal {
+      .navbar-slide {
+        right: 0;
+        margin-right: 0 !important;
+
+        .navbar-nav  {
+          .nav-item {
+            width: 100%;
+
+            .dropdown-toggle::after {
+              float: left;
+              right: auto;
+            }
+          }
+          .dropdown-menu {
+            .nav-item  {
+              .dropdown-toggle::after {
+                left: 0;
+                content: "\e92e";
+              }
+            }
+          }
+        }
+      }
+    }
+
+      /* secondary sidebar */
+    &.vertical {
+      &.secondary {
+        .main-content {
+          margin-left: 0rem !important;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          margin-right: 0 !important;
+        }
+        .sidebar-left {
+          .secondary-nav {
+            left: auto;
+            right: 0
+          }
+          .toggle-secondary {
+            left: auto;
+            right: 1.5rem;
+          }
+        }
+      
+        &.toggled {
+          .main-content {
+            margin-left: 0 !important;
+            margin-right: 20rem !important;
+          }
+          .sidebar-left {
+            .primary-nav {
+              left: auto;
+              right: 0;
+            }
+            .secondary-nav {
+              right: 4.2rem;
+            }
+          }
+          .toggle-secondary {
+            right: 5rem;
+          }
+        }
+      }
+    }
+  } // rtl
+}

@@ -1,0 +1,382 @@
+.h1, .h2, .h3, .h4, .h5, .h6,
+h1, h2, h3, h4, h5, h6 {
+  color: $headings-color
+}
+
+.text-muted {
+  color: $gray-400 !important;
+}
+/* add hover effect to element */
+.hoverable {
+  &:hover{
+    // cursor: pointer;
+    background-color: $light;
+  }
+}
+
+/* customize dropdown hover backgroud */
+.dropdown-toggle {
+  &:hover,
+  &:focus {
+    background-color: $body-bg
+  }
+}
+/* opposite background color with theme */
+.bg-inverse {
+  background: $gray-800;
+}
+.bg-gradient {
+  background: $primary linear-gradient(0deg, darken($primary, 10%), $primary) repeat-x !important
+}
+
+svg.navbar-brand-img {
+  fill : $primary;
+}
+
+.navbar-light {
+  .navbar-nav {
+    .nav-link {
+      // color: $headings-color;
+
+      &:hover,
+      &:focus,
+      &.active  {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+  }
+}
+
+.navbar-dark {
+  .navbar-nav {
+    .nav-link {
+      color: $gray-100;
+      &:hover,
+      &:focus,
+      &.active  {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+  }
+  .dropdown-menu {
+    background: $dark;
+    border-color: transparent;
+
+    .nav-link {
+      color: $gray-100;
+    }
+  }
+  svg.navbar-brand-img {
+    fill : $white
+  }
+}
+
+/* inverse navbar */
+.navbar-inverse {
+  .navbar-nav {
+    .nav-link {
+      color: $gray-100;
+      &:hover,
+      &:focus,
+      &.active  {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+  }
+  .dropdown-menu {
+    background: $dark;
+    border-color: $dark;
+
+    .nav-link {
+      color: $gray-100;
+    }
+  }
+  svg.navbar-brand-img {
+    fill : $white
+  }
+  .searchform {
+    ::placeholder,
+    .form-control {
+      color: $white;  
+    }
+    color: $white;  
+  }
+}
+
+/* nav-link color for secondary-nav */
+.vertical {
+  &.secondary {
+    .sidebar-left {
+      .primary-nav {
+        &.navbar-dark,
+        &.navbar-inverse {
+          .nav-link {
+            &:hover,
+            &:focus,
+            &.active  {
+              background-color: $card-bg;
+              color: $primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* horizontal navbar */
+.horznav  {
+  &.navbar-dark {
+    &.bg-primary,
+    &.bg-gradient {
+      .nav-link {
+        &:hover,
+        &:focus,
+        &.active  {
+          background-color: lighten($primary, 10%);
+          color: $white;
+        }
+      }
+      .dropdown-menu {
+        background: $primary;
+      }
+      .searchform {
+        ::placeholder,
+        .form-control {
+          color: $white;  
+        }
+        color: $white;  
+      }
+    }
+    &.bg-gradient {
+      background: $primary linear-gradient(-90deg, darken($primary, 10%), $primary) repeat-x !important
+    }
+  }
+}
+
+/* tabs */
+.nav-tabs {
+  .nav-link {
+    color: $gray-500;
+    &.active {
+        color: $primary;
+        border-color: $primary;
+    }
+  }
+}
+
+
+/* wrapper */
+.headerbg {
+  .navbar-toggler-icon,
+  .page-title {
+    color: $white;
+  }
+  .wrapper {
+    &:before {
+      background: darken($primary, 30%);
+    }
+  }
+}
+.vertnav {
+  .dropdown-toggle::after {
+    color: $gray-500;
+  }
+}
+.custom-select {
+  background: $white;
+}
+
+/* quill */
+.ql-toolbar {
+  &.ql-snow {
+    border-color: $input-border-color;
+  }
+  .ql-picker-label {
+    color: $body-color;
+  }
+  .ql-stroke {
+    stroke: $body-color;
+  }
+  .ql-fill {
+    fill : $body-color;
+  }
+}
+.ql-container {
+  &.ql-snow {
+    border-color: $input-border-color;
+  }
+}
+
+/* table */
+.table {
+  color: $body-color;
+  thead {
+    th {
+      color: $gray-400;
+    }
+  }
+  tbody {
+    tr {
+      th {
+        color: $headings-color;
+      }
+    }
+  }
+  tr.collapse {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+/* custom table striped */
+.table-striped {
+  tbody {
+    tr:nth-of-type(even) {
+      background-color: $card-bg;
+    }
+  }
+}
+
+.table-hover {
+  tbody {
+    tr {
+      &:hover {
+        background-color: $table-hover-bg;
+      }
+    }
+  }
+}
+
+/* custom modal */
+.modal{
+  &.fade.modal-slide {
+     .modal-dialog {
+       background: $white;
+     }
+  }
+  &.fade.modal-full {
+    &.show {
+      background: rgba(red($body-bg), green($body-bg), blue($body-bg), 0.9);
+    }
+  }
+}
+
+/* apexchart */
+.apexcharts-canvas {
+  &.apexcharts-theme-dark {
+    background: transparent !important;
+  }
+}
+
+/* Calendar */
+.fc-bootstrap {
+  th,
+  td {
+    border-color: $border-color;
+    background: $card-bg;
+  }
+  td {
+    &.fc-today {
+      background: $body-bg;
+    }
+  }
+  .fc-toolbar {
+    .btn {
+      color: $body-color;
+      background-color: $card-bg;
+      border-color: $border-color;
+
+      &.active {
+        color: $white;
+        background-color: $primary;
+        border-color: $primary;
+      }
+    }
+  }
+  .fc-event {
+    color: $card-bg;
+    background-color: lighten($success, 10%);
+    border-color: $green;
+    &:hover {
+      color: $card-bg;
+    }
+  }
+}
+
+
+
+/* svg gauge */
+.gauge-container > .gauge .dial {
+  stroke: $border-color;
+}
+.gauge-container > .gauge .value {
+  stroke: $primary;
+  color: $border-color;
+}
+
+.gauge-container.g3 > .gauge .dial {
+  fill: $border-color;
+}
+
+.gauge-container.g4 > .gauge .value-text {
+  fill: $body-color;
+}
+.gauge-container.g4 .value-text {
+  color: $body-color;
+}
+
+/* file manager */
+.file-panel {
+  .selected {
+    background-color: $secondary;
+    .fname strong {
+      color: $gray-100;
+    }
+  }
+}
+
+
+
+@include media-breakpoint-down(md) {
+  .horizontal {
+    .horznav {
+      .dropdown-menu {
+        background-color: transparent !important;
+      }
+      .navbar-toggler-icon {
+        color: $gray-600;
+      }
+      .navbar-slide {
+        background: $card-bg;
+      }
+      &.bg-gradient {
+        .navbar-toggler-icon {
+          color: $white;
+        }
+        .navbar-slide {
+          background: $primary linear-gradient(0deg, darken($primary, 10%), $primary) repeat-x !important
+        }
+      }
+      &.bg-inverse {
+        .navbar-toggler-icon {
+          color: $white;
+        }
+        .navbar-slide {
+          background: $gray-800;
+        }
+      }
+      &.bg-primary {
+        .navbar-toggler-icon {
+          color: $white;
+        }
+        .navbar-slide {
+          background: $primary;
+        }
+      }
+    }
+  }
+}

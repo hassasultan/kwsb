@@ -1,0 +1,103 @@
+// custom color darkmode
+$darken-30 : $gray-600;
+$darken-35 : $gray-700;
+$darken-40 : $gray-800;
+$darken-42 : $gray-900;
+
+$light:         $darken-35;
+$dark:          $darken-42;
+
+$font-size-base: .875rem;
+// $line-height-base: 1.6;
+$font-family-sans-serif: 'Barlow', sans-serif;
+$font-weight-normal: 400;
+$font-weight-bold : 500;
+$font-weight-bolder : 600;
+$headings-color: $gray-300;
+
+$body-bg: $darken-42;
+$body-color: $gray-300;
+$border-color: darken($gray-800, 5);
+
+$hr-border-color: darken($gray-800, 5);
+$enable-caret : false;
+
+$border-radius:               .25rem;
+$border-radius-lg:            .5rem;
+$border-radius-sm:            .15rem;
+
+$enable-responsive-font-sizes:true;
+/* navbar */
+$navbar-light-hover-color : $primary;
+$navbar-light-active-color : $gray-300;
+
+/* card */
+$card-bg : $darken-40;
+$card-border-color: transparent;
+
+/* buttons */
+$btn-border-radius-lg:        $border-radius;
+
+/* form */
+$input-color: $body-color;
+$input-border-color : $darken-30;
+$input-bg : $darken-40;
+$input-disabled-bg : $darken-30;
+
+$input-group-addon-bg: $darken-40;
+$input-group-addon-border-color: $darken-30;
+
+$custom-control-indicator-border-color:  $darken-35;
+$custom-select-color : $body-color;
+/* table */
+$table-accent-bg : $darken-35;
+$table-hover-bg : $primary;
+
+/* paging */
+$pagination-color: $gray-500;
+$pagination-border-color: transparent;
+$pagination-bg: transparent;
+
+$pagination-active-color:$gray-100;
+$pagination-active-bg: $primary;
+
+$pagination-hover-color:$gray-100;
+$pagination-hover-bg: $secondary;
+$pagination-hover-border-color:$secondary;
+
+$pagination-disabled-bg : transparent;
+$pagination-disabled-border-color: transparent;
+
+/* tabs */
+$nav-tabs-link-active-bg : transparent;
+$nav-tabs-link-active-border-color : $secondary;
+$nav-tabs-link-hover-border-color : $secondary;
+$nav-pills-link-active-bg : $primary;
+
+/* dropdown */
+$dropdown-bg:$border-color;
+$dropdown-color : $body-color;
+$dropdown-link-color : $body-color;
+$dropdown-border-color:$border-color;
+
+/* list group */
+$list-group-bg : $darken-40;
+$list-group-border-color:$border-color;
+
+/* modal */
+$modal-content-bg : $darken-35;
+
+/* tabs */
+$nav-tabs-border-color : $border-color;
+
+/* progress */
+$progress-bg : $darken-40;
+
+/* misc */
+$close-text-shadow : none;
+$close-color : $gray-300;
+$shadow-color : rgba(darken($gray-800, 5), .1);
+
+$box-shadow-sm:               0 .125rem .25rem $shadow-color;
+$box-shadow:                  0 .5rem 1rem $shadow-color;
+$box-shadow-lg:               0 .75rem 3rem $shadow-color;

@@ -1,0 +1,400 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+table.dataTable {
+	clear: both;
+	margin-top: 6px !important;
+	margin-bottom: 6px !important;
+	max-width: none !important;
+	border-collapse: separate !important;
+	border-spacing: 0;
+	td {
+		-webkit-box-sizing: content-box;
+		box-sizing: content-box;
+	}
+	th {
+		-webkit-box-sizing: content-box;
+		box-sizing: content-box;
+	}
+	td.dataTables_empty {
+		text-align: center;
+	}
+	th.dataTables_empty {
+		text-align: center;
+	}
+	thead {
+		>tr {
+			>th.sorting_asc {
+				padding-right: 30px;
+			}
+			>th.sorting_desc {
+				padding-right: 30px;
+			}
+			>th.sorting {
+				padding-right: 30px;
+			}
+			>td.sorting_asc {
+				padding-right: 30px;
+			}
+			>td.sorting_desc {
+				padding-right: 30px;
+			}
+			>td.sorting {
+				padding-right: 30px;
+			}
+			>th {
+				&:active {
+					outline: none;
+				}
+			}
+			>td {
+				&:active {
+					outline: none;
+				}
+			}
+		}
+		.sorting {
+			cursor: pointer;
+			position: relative;
+			&:before {
+				position: absolute;
+				top: .7em;
+				bottom: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e931";
+			}
+			&:after {
+				position: absolute;
+				bottom: 1em;
+    			top: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e92e";
+			}
+		}
+		.sorting_asc {
+			cursor: pointer;
+			position: relative;
+			&:before {
+				position: absolute;
+				top: .7em;
+    			bottom: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e931";
+				opacity: 1;
+				color: $primary;
+			}
+			&:after {
+				position: absolute;
+				bottom: 1em;
+    			top: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e92e";
+			}
+		}
+		.sorting_desc {
+			cursor: pointer;
+			position: relative;
+			&:before {
+				position: absolute;
+				top: .7em;
+    			bottom: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e931";
+			}
+			&:after {
+				position: absolute;
+				bottom: 1em;
+    			top: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e92e";
+				opacity: 1;
+				color: $primary;
+			}
+		}
+		.sorting_asc_disabled {
+			cursor: pointer;
+			position: relative;
+			&:before {
+				position: absolute;
+				top: .7em;
+    			bottom: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e931";
+				opacity: 0;
+			}
+			&:after {
+				position: absolute;
+				bottom: 1em;
+    			top: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e92e";
+			}
+		}
+		.sorting_desc_disabled {
+			cursor: pointer;
+			position: relative;
+			&:before {
+				position: absolute;
+				top: .7em;
+    			bottom: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e931";
+			}
+			&:after {
+				position: absolute;
+				bottom: 1em;
+    			top: 1.4em;
+				display: block;
+				opacity: 0.5;
+				right: 1em;
+				font-family: "feather";
+				content: "\e92e";
+				opacity: 0;
+			}
+		}
+	}
+}
+table.dataTable.nowrap {
+	th {
+		white-space: nowrap;
+	}
+	td {
+		white-space: nowrap;
+	}
+}
+div.dataTables_wrapper {
+	div.dataTables_length {
+		label {
+			font-weight: normal;
+			text-align: left;
+			white-space: nowrap;
+		}
+		select {
+			width: auto;
+			display: inline-block;
+		}
+	}
+	div.dataTables_filter {
+		text-align: right;
+		label {
+			font-weight: normal;
+			white-space: nowrap;
+			text-align: left;
+		}
+		input {
+			margin-left: 0.5em;
+			display: inline-block;
+			width: auto;
+		}
+	}
+	div.dataTables_info {
+		white-space: nowrap;
+	}
+	div.dataTables_paginate {
+		margin: 0;
+		white-space: nowrap;
+		text-align: right;
+		ul.pagination {
+			margin: 2px 0;
+			white-space: nowrap;
+			justify-content: flex-end;
+		}
+	}
+	div.dataTables_processing {
+		position: absolute;
+		top: 1.4em;
+		left: 50%;
+		width: 200px;
+		margin-left: -100px;
+		margin-top: -26px;
+		text-align: center;
+		padding: 1em 0;
+	}
+}
+div.dataTables_scrollHead {
+	table.dataTable {
+		margin-bottom: 0 !important;
+	}
+	table.table-bordered {
+		border-bottom-width: 0;
+	}
+}
+div.dataTables_scrollBody {
+	table {
+		border-top: none;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		thead {
+			.sorting {
+				&:before {
+					display: none;
+				}
+				&:after {
+					display: none;
+				}
+			}
+			.sorting_asc {
+				&:before {
+					display: none;
+				}
+				&:after {
+					display: none;
+				}
+			}
+			.sorting_desc {
+				&:before {
+					display: none;
+				}
+				&:after {
+					display: none;
+				}
+			}
+		}
+		tbody {
+			tr {
+				&:first-child {
+					th {
+						border-top: none;
+					}
+					td {
+						border-top: none;
+					}
+				}
+			}
+		}
+	}
+}
+div.dataTables_scrollFoot {
+	>.dataTables_scrollFootInner {
+		box-sizing: content-box;
+		>table {
+			margin-top: 0 !important;
+			border-top: none;
+		}
+	}
+}
+table.dataTable.table-sm {
+	>thead {
+		>tr {
+			>th {
+				&:not(.sorting_disabled) {
+					padding-right: 20px;
+				}
+			}
+		}
+	}
+	.sorting {
+		&:before {
+			top: 5px;
+			right: 0.85em;
+		}
+		&:after {
+			top: 5px;
+		}
+	}
+	.sorting_asc {
+		&:before {
+			top: 5px;
+			right: 0.85em;
+		}
+		&:after {
+			top: 5px;
+		}
+	}
+	.sorting_desc {
+		&:before {
+			top: 5px;
+			right: 0.85em;
+		}
+		&:after {
+			top: 5px;
+		}
+	}
+}
+table.table-bordered.dataTable {
+	border-right-width: 0;
+	th {
+		border-left-width: 0;
+		&:last-child {
+			border-right-width: 1px;
+			border-right-width: 1px;
+		}
+	}
+	td {
+		border-left-width: 0;
+		&:last-child {
+			border-right-width: 1px;
+			border-right-width: 1px;
+		}
+	}
+	tbody {
+		th {
+			border-bottom-width: 0;
+		}
+		td {
+			border-bottom-width: 0;
+		}
+	}
+}
+div.table-responsive {
+	>div.dataTables_wrapper {
+		>div.row {
+			margin: 0;
+			>div[class^="col-"] {
+				&:first-child {
+					padding-left: 0;
+				}
+				&:last-child {
+					padding-right: 0;
+				}
+			}
+		}
+	}
+}
+@media screen and (max-width: 767px) {
+	div.dataTables_wrapper {
+		div.dataTables_length {
+			text-align: center;
+		}
+		div.dataTables_filter {
+			text-align: center;
+		}
+		div.dataTables_info {
+			text-align: center;
+		}
+		div.dataTables_paginate {
+			text-align: center;
+			ul.pagination {
+				justify-content: center !important;
+			}
+		}
+	}
+}
