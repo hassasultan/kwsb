@@ -1,228 +1,111 @@
-<aside
-    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
-    id="sidenav-main" style="background-color: #202940 !important;">
-    <div class="sidenav-header mb-3">
-        <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" {{ route('home') }}" target="_blank">
-            <img src="{{ asset('assets/img/unnamed.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">CMP</span>
-            <p class="text-white">Complaint Management Portal</p>
-        </a>
-    </div>
-    <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-white @if (Route::is('home')) active  bg-gradient-primary @endif"
-                    href=" {{ route('home') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
+{{-- new Sidebar Start --}}
+<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+    <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+        <i class="fe fe-x"><span class="sr-only"></span></i>
+    </a>
+    <nav class="vertnav navbar navbar-light mx-n3">
+        <!-- nav bar -->
+        <div class="w-100 mb-4 d-flex">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="../dist/index.html">
+                <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120"
+                    xml:space="preserve">
+                    <g>
+                        <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
+                        <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+                        <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+                    </g>
+                </svg>
+            </a>
+        </div>
+
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+                <a href="#dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
+                    <i class="fe fe-home fe-16"></i>
+                    <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
                 </a>
-            </li>
-            @if (auth()->user()->role == 1)
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('user-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/user-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">User Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('source-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/source-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Source Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/town-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Town Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('subtown-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/subtown-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">SubTown Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('agent-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/agent-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Mobile Agent Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('customer-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/customer-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Customers Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('priorities-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/priorities-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Priorities Management</span>
-                    </a>
-                </li>
-
-
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/compaints-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Complaints Management</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/compaints-type-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">CT Management</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('subtype-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/subtype-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">SubType Management</span>
-                    </a>
-                </li>
-            @endif
-            @if (auth()->user()->role == 2)
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('user-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('user-management.index') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">User Management</span>
-                    </a>
-                </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('source-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/source-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Source Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('town-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('system/town-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Town Management</span>
-                    </a>
-                </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('agent-management.index')) active bg-gradient-primary @endif"
-                        href="{{ route('agent-management.index') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Mobile Agent Management</span>
-                    </a>
-                </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('customer-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('system/customer-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Customers Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('priorities-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('system/priorities-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Priorities Management</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('compaints-type-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('system/compaints-type-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">CT Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('subtype-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('admin/subtype-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">SubType Management</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white @if (Route::is('compaints-management.index')) active bg-gradient-primary @endif"
-                        href="{{ url('system/compaints-management') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Complaints Management</span>
-                    </a>
-                </li>
-            @endif
-            <li class="nav-item">
-                <a class="nav-link text-white @if (Route::is('reports')) active bg-gradient-primary @endif"
-                    href="{{ url('admin/reports') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt_long</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Reports</span>
-                </a>
-            </li>
-            <li class="nav-item"><a class="nav-link text-white" href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
-                <form sytle='display:none;' id="logout-form" action="{{ route('logout') }}" method="POST"
-                    class="d-none">
-                    @csrf
-                </form>
+                <ul class="collapse list-unstyled w-100 show" id="dashboard">
+                    <li class="nav-item @if (Route::is('home')) active @endif">
+                        <a class="nav-link " href="{{ route('home') }}"><span
+                                class="ml-1 item-text">Dashboard</span></a>
+                    </li>
+                </ul>
             </li>
         </ul>
-    </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-        <div class="mx-3">
-            {{-- <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a> --}}
-        </div>
-    </div>
+        <p class="text-muted nav-heading mt-4 mb-2 pl-4">
+            <span>Components</span>
+        </p>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+                <a href="#ui-elements" data-toggle="collapse" aria-expanded="tue" class="dropdown-toggle nav-link">
+                    <i class="fe fe-box fe-16"></i>
+                    <span class="ml-3 item-text">Activities</span>
+                </a>
+                <ul class="collapse list-unstyled w-100 show" id="ui-elements">
+                    <li class="nav-item @if (Route::is('user-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/user-management') }}"><span class="ml-1 item-text">User Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('source-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/source-management') }}"><span class="ml-1 item-text">Source Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('town-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/town-management') }}"><span class="ml-1 item-text">Town Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('subtown-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/subtown-management') }}"><span class="ml-1 item-text">SubTown Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#forms" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
+                    <i class="fe fe-layers fe-16"></i>
+                    <span class="ml-3 item-text">Agents & Others</span>
+                    {{-- <span class="badge badge-pill badge-primary">New</span> --}}
+                </a>
+                <ul class="collapse list-unstyled w-100 show" id="forms">
+                    <li class="nav-item @if (Route::is('agent-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/agent-management') }}"><span class="ml-1 item-text">Agents Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('customer-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/customer-management') }}"><span class="ml-1 item-text">Customers Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('priorities-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/priorities-management') }}"><span class="ml-1 item-text">Priorities Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#tables" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
+                    <i class="fe fe-grid fe-16"></i>
+                    <span class="ml-3 item-text">Complaints Management</span>
+                </a>
+                <ul class="collapse list-unstyled w-100 show" id="tables">
+                    <li class="nav-item @if (Route::is('compaints-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/compaints-management') }}"><span class="ml-1 item-text">Complaints</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('compaints-type-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/compaints-type-management') }}"><span class="ml-1 item-text">CT Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('subtype-management.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/subtype-management') }}"><span class="ml-1 item-text">SubType</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 </aside>
+
+
+{{-- new Sidebar End --}}
+

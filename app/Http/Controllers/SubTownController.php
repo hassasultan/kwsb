@@ -18,9 +18,20 @@ class SubTownController extends Controller
             'title' => ['required', 'string'],
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $subtown = SubTown::with('town')->get();
+        $subtown = SubTown::with('town');
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $subtown = $subtown->where('title','LIKE','%'.$request->search.'%')->orWhereHas('town',function($query) use ($request) {
+                $query->where('town','LIKE','%'.$request->search.'%');
+            });
+        }
+        $subtown = $subtown->paginate(10);
+        if($request->has('type'))
+        {
+            return $subtown;
+        }
         return view('pages.subtown.index',compact('subtown'));
     }
     public function create()

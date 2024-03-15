@@ -1,0 +1,87 @@
+
+$font-size-base: .875rem;
+$font-family-sans-serif: 'Barlow', sans-serif;
+$font-weight-normal: 400;
+$font-weight-bold : 500;
+$font-weight-bolder : 600;
+
+$body-bg: $gray-100;
+$body-color: $gray-500;
+$border-color: $gray-200;
+$hr-border-color: $gray-200;
+$enable-caret : false;
+
+$headings-color: $gray-700;
+
+$border-radius:               .25rem;
+$border-radius-lg:            .5rem;
+$border-radius-sm:            .1.5rem;
+
+// $enable-rounded: false;
+$enable-responsive-font-sizes:true;
+
+/* navbar */
+$navbar-light-hover-color : $primary;
+$navbar-light-active-color : $primary;
+
+/* card */
+$card-bg : $white;
+$card-cap-bg : $white;
+$card-border-color: $border-color;
+
+/* buttons */
+$btn-border-radius-lg:        $border-radius;
+
+/* form */
+$input-border-color : $gray-200;
+$custom-control-indicator-border-color:  $gray-400;
+
+$input-group-addon-bg: $gray-100;
+$input-group-addon-border-color: $gray-200;
+
+/* table */
+$table-accent-bg : $gray-100;
+$table-hover-bg : $gray-200;
+$table-head-color : $gray-500;
+$table-head-bg : $gray-100;
+
+/* paging */
+$pagination-color: $gray-500;
+$pagination-border-color: transparent;
+$pagination-bg: transparent;
+
+$pagination-active-color:$gray-100;
+$pagination-active-bg: $primary;
+
+$pagination-hover-color:$gray-100;
+$pagination-hover-bg: $secondary;
+$pagination-hover-border-color:$secondary;
+
+$pagination-disabled-border-color: transparent;
+
+/* tabs */
+$nav-tabs-link-active-bg : transparent;
+$nav-tabs-link-active-border-color : $secondary;
+$nav-tabs-link-hover-border-color : $secondary;
+$nav-pills-link-active-bg : $primary;
+
+/* dropdown */
+$dropdown-border-color:$border-color;
+
+/* list group */
+$list-group-border-color:$border-color;
+
+/* modal */
+$modal-content-bg : $white;
+
+/* tabs */
+$nav-tabs-border-color : $border-color;
+
+/* progress */
+$progress-bg : $gray-200;
+
+$shadow-color : rgba($gray-500, .05);
+
+$box-shadow-sm:               0 .125rem .25rem $shadow-color;
+$box-shadow:                  0 .5rem 1rem $shadow-color;
+$box-shadow-lg:               0 .75rem 3rem $shadow-color;

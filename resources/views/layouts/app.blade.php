@@ -1,249 +1,488 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-<!-- Nucleo Icons -->
-<link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-<!-- Material Icons -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-<!-- CSS Files -->
-<link id="pagestyle" href="{{ asset('assets/css/material-dashboard.css?v=3.0.0') }}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-    integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+  <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+  <!-- Perfect Scrollbar CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/css/simplebar.css') }}">
+  <!-- Fonts CSS -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+    rel="stylesheet">
+  <!-- Icons CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/css/feather.css') }}">
+  <!-- Date Range Picker CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
+  <!-- App CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" disabled>
+  <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme">
+
+  <!-- Fonts -->
+  <link rel="dns-prefetch" href="//fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+  <!-- Scripts -->
+  {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
-<style>
-    .form-control-sm {
-        border: 1px solid #000 !important;
 
-    }
-    input , textarea, p , h1 , h2, h3, h4, h5,h6, span {
-        color: #fff !important;
-        opacity: 1 !important;
-    }
-    #example1_filter {
-        position: relative;
-        float: right;
-        margin-right: 10px;
-    }
-    .form-control:disabled
-    {
-        background-color: #202940 !important;
-    }
-    .select2-container--default .select2-selection--single
-    {
-        background-color: #202940 !important;
-        color: #fff !important;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered
-    {
-        color: #fff !important;
+<body class="vertical dark  ">
+  <div id="app" class="wrapper">
+    @include('layouts.include.header')
+    @include('layouts.include.sidebar')
+    <main role="main" class="main-content">
+      @if (count($errors) > 0)
+      @foreach ($errors->all() as $error)
+      <div class="alert alert-danger alert-dismissible">
+        {{ $error }}
+      </div>
+      @endforeach
+      @endif
 
-    }
-    .select2-dropdown
-    {
-        background-color: #202940 !important;
+      @if (session('error'))
+      <div class="alert alert-danger alert-dismissible">
+        {{ session('error') }}
+      </div>
+      @endif
 
-    }
-</style>
-<body>
-    <div id="app">
-        @include('layouts.include.sidebar')
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-            @include('layouts.include.header')
-            <div class="container-fluid py-4">
-                @if (count($errors) > 0)
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger alert-dismissible">
-                            {{ $error }}
-                        </div>
-                    @endforeach
-                @endif
-
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                @yield('content')
-                @include('layouts.include.footer')
+      @if (session('success'))
+      <div class="alert alert-success alert-dismissible">
+        {{ session('success') }}
+      </div>
+      @endif
+      @yield('content')
+      {{-- @include('layouts.includes.footer') --}}
+      {{-- @yield('content') --}}
+      <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-        </main>
-        <div class="fixed-plugin">
-            <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-                <i class="material-icons py-2">settings</i>
-            </a>
-            <div class="card shadow-lg">
-                <div class="card-header pb-0 pt-3">
-                    <div class="float-start">
-                        <h5 class="mt-3 mb-0">Water Pump Ui</h5>
-                        <p>See our dashboard options.</p>
+            <div class="modal-body">
+              <div class="list-group list-group-flush my-n3">
+                <div class="list-group-item">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-box fe-24"></span>
                     </div>
-                    <div class="float-end mt-4">
-                        <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-                            <i class="material-icons">clear</i>
-                        </button>
+                    <div class="col">
+                      <small><strong>Package has uploaded successfull</strong></small>
+                      <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                      <small class="badge badge-pill badge-light text-muted">1m ago</small>
                     </div>
-                    <!-- End Toggle Button -->
+                  </div>
                 </div>
-                <hr class="horizontal dark my-1">
-                <div class="card-body pt-sm-3 pt-0">
-                    <!-- Sidebar Backgrounds -->
-                    <div>
-                        <h6 class="mb-0">Sidebar Colors</h6>
+                <div class="list-group-item">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-download fe-24"></span>
                     </div>
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                        <div class="badge-colors my-2 text-start">
-                            <span class="badge filter bg-gradient-primary active" data-color="primary"
-                                onclick="sidebarColor(this)"></span>
-                            <span class="badge filter bg-gradient-dark" data-color="dark"
-                                onclick="sidebarColor(this)"></span>
-                            <span class="badge filter bg-gradient-info" data-color="info"
-                                onclick="sidebarColor(this)"></span>
-                            <span class="badge filter bg-gradient-success" data-color="success"
-                                onclick="sidebarColor(this)"></span>
-                            <span class="badge filter bg-gradient-warning" data-color="warning"
-                                onclick="sidebarColor(this)"></span>
-                            <span class="badge filter bg-gradient-danger" data-color="danger"
-                                onclick="sidebarColor(this)"></span>
-                        </div>
-                    </a>
-                    <!-- Sidenav Type -->
-                    <div class="mt-3">
-                        <h6 class="mb-0">Sidenav Type</h6>
-                        <p class="text-sm">Choose between 2 different sidenav types.</p>
+                    <div class="col">
+                      <small><strong>Widgets are updated successfull</strong></small>
+                      <div class="my-0 text-muted small">Just create new layout Index, form, table
+                      </div>
+                      <small class="badge badge-pill badge-light text-muted">2m ago</small>
                     </div>
-                    <div class="d-flex">
-                        <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark"
-                            onclick="sidebarType(this)">Dark</button>
-                        <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent"
-                            onclick="sidebarType(this)">Transparent</button>
-                        <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white"
-                            onclick="sidebarType(this)">White</button>
-                    </div>
-                    <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-                    <!-- Navbar Fixed -->
-                    <div class="mt-3 d-flex">
-                        <h6 class="mb-0">Navbar Fixed</h6>
-                        <div class="form-check form-switch ps-0 ms-auto my-auto">
-                            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed"
-                                onclick="navbarFixed(this)">
-                        </div>
-                    </div>
-                    <hr class="horizontal dark my-3">
-                    <div class="mt-2 d-flex">
-                        <h6 class="mb-0">Light / Dark</h6>
-                        <div class="form-check form-switch ps-0 ms-auto my-auto">
-                            <input class="form-check-input mt-1 ms-auto" type="checkbox"  id="dark-version"
-                                onclick="darkMode(this)">
-                        </div>
-                    </div>
-                    <hr class="horizontal dark my-sm-4">
-
+                  </div>
                 </div>
+                <div class="list-group-item">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-inbox fe-24"></span>
+                    </div>
+                    <div class="col">
+                      <small><strong>Notifications have been sent</strong></small>
+                      <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo
+                      </div>
+                      <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                    </div>
+                  </div> <!-- / .row -->
+                </div>
+                <div class="list-group-item">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-link fe-24"></span>
+                    </div>
+                    <div class="col">
+                      <small><strong>Link was attached to menu</strong></small>
+                      <div class="my-0 text-muted small">New layout has been attached to the menu
+                      </div>
+                      <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                    </div>
+                  </div>
+                </div> <!-- / .row -->
+              </div> <!-- / .list-group -->
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear
+                All</button>
+            </div>
+          </div>
         </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <!--<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>-->
-    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
-    <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
+      </div>
+      <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body px-5">
+              <div class="row align-items-center">
+                <div class="col-6 text-center">
+                  <div class="squircle bg-success justify-content-center">
+                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Control area</p>
+                </div>
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Activity</p>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Droplet</p>
+                </div>
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Upload</p>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Users</p>
+                </div>
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Settings</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main> <!-- main -->
+  </div>
+  <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+  <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+  <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+  <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/js/simplebar.min.js') }}"></script>
+  <script src='{{ asset('assets/js/daterangepicker.js') }}'></script>
+  <script src='{{ asset('assets/js/jquery.stickOnScroll.js') }}'></script>
+  <script src="{{ asset('assets/js/chroma.min.js') }}"></script>
+  <script src="{{ asset('assets/js/ifbreakpoint.js') }}"></script>
+  <script src="{{ asset('assets/js/config.js') }}"></script>
+  <script src="{{ asset('assets/js/theme.switcher.js') }}"></script>
+  <script src="{{ asset('assets/js/d3.min.js') }}"></script>
+  <script src="{{ asset('assets/js/leaflet.js') }}"></script>
 
-    <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script> --}}
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <script src="{{ asset('assets/js/map.world.js') }}"></script>
+  <script src="{{ asset('assets/js/map.euro.js') }}"></script>
+  <script src="{{ asset('assets/js/map.us.js') }}"></script>
+  <script src="{{ asset('assets/js/maps.custom.js') }}"></script>
 
+  <script src="{{ asset('assets/js/Chart.min.js') }}"></script>
+  <script>
+    /* defind global options */
+    Chart.defaults.global.defaultFontFamily = cfFontFamily;
+    Chart.defaults.global.defaultFontColor = colors.mutedColor;
+  </script>
+  <script src="{{ asset('assets/js/gauge.min.js') }}"></script>
+  <script src="{{ asset('assets/js/jquery.sparkline.min.js') }}"></script>
 
-    <!-- select2 -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- select2 -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            // Select2 Multiple
-            $('.select2-multiple').select2({
-                placeholder: "Select",
-                allowClear: true
-            });
+  <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('assets/js/apexcharts.custom.js') }}"></script>
+  <script src='{{ asset('assets/js/jquery.dataTables.min.js') }}'></script>
+  <script src='{{ asset('assets/js/dataTables.bootstrap4.min.js') }}'></script>
+  <script>
+    $('#dataTable-1').DataTable({
+      autoWidth: true,
+      "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "bPaginate": false,
+    "bFilter": true,
+    "bSort": true,
+    "aaSorting": [
+      [1, "asc"]
+    ],
+    "aoColumnDefs": [{
+      "bSortable": false,
+      "aTargets": [0]
+    }, {
+      "bSortable": true,
+      "aTargets": [1]
+    }, {
+      "bSortable": false,
+      "aTargets": [2]
+    }],
+      "lengthMenu": [
+        [16, 32, 64, -1],
+        [16, 32, 64, "All"]
+      ]
+    });
+    $('#dataTable-2').DataTable({
+        "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "bPaginate": false,
+    "bFilter": true,
+    "bSort": true,
+    "aaSorting": [
+      [1, "asc"]
+    ],
+    "aoColumnDefs": [{
+      "bSortable": false,
+      "aTargets": [0]
+    }, {
+      "bSortable": true,
+      "aTargets": [1]
+    }, {
+      "bSortable": false,
+      "aTargets": [2]
+    }],
+      autoWidth: true,
+      lengthMenu: [
+        [16, 32, 64, -1],
+        [16, 32, 64, "All"]
+      ],
+      language: { search: '', searchPlaceholder: "Search..." },
+      order: [],
+    //   columnDefs: [
+    //     { targets: 'no-sort', orderable: false }
+    //   ],
+      dom: "<'row align-items-center'<'col-sm-12 col-md-6 text-muted mb-2'i>" + "<'col-sm-12 col-md-6 text-muted mb-2'f>>" +
+        "<'row mb-4'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-12 col-md-5 text-muted'l><'col-sm-12 col-md-7'p>>",
+    });
 
-            $('.select2-multiple2').select2({
-                placeholder: "Select",
-                allowClear: true
-            });
+    //custom search input
+    $('.dataTables_filter input').removeClass('form-control-sm');
+    $('.dataTables_filter input').addClass('form-control');
 
-            $('#dark-version').trigger("click");
+    //custom page #
+    $('.dataTables_length select').removeClass('form-control-sm');
+    $('.dataTables_length select').addClass('form-control');
 
-        });
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-    </script>
-    <script>
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
-            }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  </script>
+  <script src='{{ asset('assets/js/jquery.mask.min.js') }}'></script>
+  <script src='{{ asset('assets/js/select2.min.js') }}'></script>
+  <script src='{{ asset('assets/js/jquery.steps.min.js') }}'></script>
+  <script src='{{ asset('assets/js/jquery.validate.min.js') }}'></script>
+  <script src='{{ asset('assets/js/jquery.timepicker.js') }}'></script>
+  <script src='{{ asset('assets/js/dropzone.min.js') }}'></script>
+  <script src='{{ asset('assets/js/uppy.min.js') }}'></script>
+  <script src='{{ asset('assets/js/ion.rangeSlider.min.js') }}'></script>
+  <script src='{{ asset('assets/js/jQuery.tagify.min.js') }}'></script>
+
+  <script src='{{ asset('assets/js/quill.min.js') }}'></script>
+  <script>
+    $('.select2').select2({
+      theme: 'bootstrap4',
+    });
+    $('.select2-multi').select2({
+      multiple: true,
+      theme: 'bootstrap4',
+    });
+
+    $('.drgpicker').daterangepicker({
+      singleDatePicker: true,
+      timePicker: false,
+      showDropdowns: true,
+      locale: {
+        format: 'MM/DD/YYYY'
+      }
+    });
+
+    $('.time-input').timepicker({
+      'scrollDefault': 'now',
+      'zindex': '9999' /* fix modal open */
+    });
+
+    /** date range picker */
+    if ($('.datetimes').length) {
+      $('.datetimes').daterangepicker({
+        timePicker: true,
+        startDate: moment().startOf('hour'),
+        endDate: moment().startOf('hour').add(32, 'hour'),
+        locale: {
+          format: 'M/DD hh:mm A'
         }
-    </script>
-@yield('bottom_script')
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{ asset('assets/js/material-dashboard.min.js?v=3.0.0') }}"></script>
+      });
+    }
 
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+      $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      }
+    }, cb);
+
+    cb(start, end);
+
+    $('.input-placeholder').mask("00/00/0000", { placeholder: "__/__/____" });
+    $('.input-zip').mask('00000-000', { placeholder: "____-___" });
+    $('.input-money').mask("#.##0,00", { reverse: true });
+    $('.input-phoneus').mask('(000) 000-0000');
+    $('.input-mixed').mask('AAA 000-S0S');
+    $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
+      translation: {
+        'Z': {
+          pattern: /[0-9]/, optional: true
+        }
+      },
+      placeholder: "___.___.___.___"
+    });
+
+    // editor
+    var editor = document.getElementById('editor');
+
+    if (editor) {
+      var toolbarOptions = [
+        [{ 'font': [] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],
+        [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'align': [] }],
+
+        ['clean']                                         // remove formatting button
+      ];
+
+      var quill = new Quill(editor, {
+        modules: {
+          toolbar: toolbarOptions
+        },
+        theme: 'snow'
+      });
+    }
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict';
+      window.addEventListener('load', function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener('submit', function (event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+
+    //ion-rangeslider
+    $(".js-range-slider").ionRangeSlider({
+      type: "double",
+      min: 0,
+      max: 1000,
+      from: 200,
+      to: 500,
+      grid: true
+    });
+
+    var tinput = $('input[name=tags-jquery]').tagify({
+      whitelist: [
+        { "id": 1, "value": "some string" }
+      ]
+    })
+      .on('add', function (e, tagName) {
+        console.log('JQEURY EVENT: ', 'added', tagName)
+      })
+      .on("invalid", function (e, tagName) {
+        console.log('JQEURY EVENT: ', "invalid", e, ' ', tagName);
+      });
+
+    // get the Tagify instance assigned for this jQuery input object so its methods could be accessed
+    var jqTagify = tinput.data('tagify');
+
+  </script>
+  <script>
+    var uptarg = document.getElementById('drag-drop-area');
+    if (uptarg) {
+      var uppy = Uppy.Core()
+        .use(Uppy.Dashboard, {
+          inline: true,
+          target: uptarg,
+          proudlyDisplayPoweredByUppy: false,
+          theme: 'dark',
+          width: 770,
+          height: 210,
+          plugins: ['Webcam']
+        })
+        .use(Uppy.Tus, {
+          endpoint: 'https://master.tus.io/files/'
+        });
+
+      uppy.on('complete', (result) => {
+        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+      });
+    }
+  </script>
+  <script src="{{ asset('assets/js/apps.js') }}"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-56159088-1');
+  </script>
+  @yield('bottom_script')
 </body>
+
 </html>

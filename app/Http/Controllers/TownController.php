@@ -17,9 +17,18 @@ class TownController extends Controller
             'subtown' => ['required', 'string'],
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $town = Town::all();
+        $town = new Town();
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $town = $town->where('town','LIKE','%'.$request->search.'%');
+        }
+        $town = $town->paginate(10);
+        if($request->has('type'))
+        {
+            return $town;
+        }
         return view('pages.town.index',compact('town'));
     }
     public function create()

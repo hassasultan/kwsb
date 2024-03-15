@@ -1,0 +1,1730 @@
+$icomoon-font-family: "feather" !default;
+$icomoon-font-path: "fonts" !default;
+
+$fe-activity: "\e900";
+$fe-airplay: "\e901";
+$fe-alert-circle: "\e902";
+$fe-alert-octagon: "\e903";
+$fe-alert-triangle: "\e904";
+$fe-align-center: "\e905";
+$fe-align-justify: "\e906";
+$fe-align-left: "\e907";
+$fe-align-right: "\e908";
+$fe-anchor: "\e909";
+$fe-aperture: "\e90a";
+$fe-archive: "\e90b";
+$fe-arrow-down: "\e90c";
+$fe-arrow-down-circle: "\e90d";
+$fe-arrow-down-left: "\e90e";
+$fe-arrow-down-right: "\e90f";
+$fe-arrow-left: "\e910";
+$fe-arrow-left-circle: "\e911";
+$fe-arrow-right: "\e912";
+$fe-arrow-right-circle: "\e913";
+$fe-arrow-up: "\e914";
+$fe-arrow-up-circle: "\e915";
+$fe-arrow-up-left: "\e916";
+$fe-arrow-up-right: "\e917";
+$fe-at-sign: "\e918";
+$fe-award: "\e919";
+$fe-bar-chart: "\e91a";
+$fe-bar-chart-2: "\e91b";
+$fe-battery: "\e91c";
+$fe-battery-charging: "\e91d";
+$fe-bell: "\e91e";
+$fe-bell-off: "\e91f";
+$fe-bluetooth: "\e920";
+$fe-bold: "\e921";
+$fe-book: "\e922";
+$fe-book-open: "\e923";
+$fe-bookmark: "\e924";
+$fe-box: "\e925";
+$fe-briefcase: "\e926";
+$fe-calendar: "\e927";
+$fe-camera: "\e928";
+$fe-camera-off: "\e929";
+$fe-cast: "\e92a";
+$fe-check: "\e92b";
+$fe-check-circle: "\e92c";
+$fe-check-square: "\e92d";
+$fe-chevron-down: "\e92e";
+$fe-chevron-left: "\e92f";
+$fe-chevron-right: "\e930";
+$fe-chevron-up: "\e931";
+$fe-chevrons-down: "\e932";
+$fe-chevrons-left: "\e933";
+$fe-chevrons-right: "\e934";
+$fe-chevrons-up: "\e935";
+$fe-chrome: "\e936";
+$fe-circle: "\e937";
+$fe-clipboard: "\e938";
+$fe-clock: "\e939";
+$fe-cloud: "\e93a";
+$fe-cloud-drizzle: "\e93b";
+$fe-cloud-lightning: "\e93c";
+$fe-cloud-off: "\e93d";
+$fe-cloud-rain: "\e93e";
+$fe-cloud-snow: "\e93f";
+$fe-code: "\e940";
+$fe-codepen: "\e941";
+$fe-codesandbox: "\e942";
+$fe-coffee: "\e943";
+$fe-columns: "\e944";
+$fe-command: "\e945";
+$fe-compass: "\e946";
+$fe-copy: "\e947";
+$fe-corner-down-left: "\e948";
+$fe-corner-down-right: "\e949";
+$fe-corner-left-down: "\e94a";
+$fe-corner-left-up: "\e94b";
+$fe-corner-right-down: "\e94c";
+$fe-corner-right-up: "\e94d";
+$fe-corner-up-left: "\e94e";
+$fe-corner-up-right: "\e94f";
+$fe-cpu: "\e950";
+$fe-credit-card: "\e951";
+$fe-crop: "\e952";
+$fe-crosshair: "\e953";
+$fe-database: "\e954";
+$fe-delete: "\e955";
+$fe-disc: "\e956";
+$fe-dollar-sign: "\e957";
+$fe-download: "\e958";
+$fe-download-cloud: "\e959";
+$fe-droplet: "\e95a";
+$fe-edit: "\e95b";
+$fe-edit-2: "\e95c";
+$fe-edit-3: "\e95d";
+$fe-external-link: "\e95e";
+$fe-eye: "\e95f";
+$fe-eye-off: "\e960";
+$fe-facebook: "\e961";
+$fe-fast-forward: "\e962";
+$fe-feather: "\e963";
+$fe-figma: "\e964";
+$fe-file: "\e965";
+$fe-file-minus: "\e966";
+$fe-file-plus: "\e967";
+$fe-file-text: "\e968";
+$fe-film: "\e969";
+$fe-filter: "\e96a";
+$fe-flag: "\e96b";
+$fe-folder: "\e96c";
+$fe-folder-minus: "\e96d";
+$fe-folder-plus: "\e96e";
+$fe-framer: "\e96f";
+$fe-frown: "\e970";
+$fe-gift: "\e971";
+$fe-git-branch: "\e972";
+$fe-git-commit: "\e973";
+$fe-git-merge: "\e974";
+$fe-git-pull-request: "\e975";
+$fe-github: "\e976";
+$fe-gitlab: "\e977";
+$fe-globe: "\e978";
+$fe-grid: "\e979";
+$fe-hard-drive: "\e97a";
+$fe-hash: "\e97b";
+$fe-headphones: "\e97c";
+$fe-heart: "\e97d";
+$fe-help-circle: "\e97e";
+$fe-hexagon: "\e97f";
+$fe-home: "\e980";
+$fe-image: "\e981";
+$fe-inbox: "\e982";
+$fe-info: "\e983";
+$fe-instagram: "\e984";
+$fe-italic: "\e985";
+$fe-key: "\e986";
+$fe-layers: "\e987";
+$fe-layout: "\e988";
+$fe-life-buoy: "\e989";
+$fe-link: "\e98a";
+$fe-link-2: "\e98b";
+$fe-linkedin: "\e98c";
+$fe-list: "\e98d";
+$fe-loader: "\e98e";
+$fe-lock: "\e98f";
+$fe-log-in: "\e990";
+$fe-log-out: "\e991";
+$fe-mail: "\e992";
+$fe-map: "\e993";
+$fe-map-pin: "\e994";
+$fe-maximize: "\e995";
+$fe-maximize-2: "\e996";
+$fe-meh: "\e997";
+$fe-menu: "\e998";
+$fe-message-circle: "\e999";
+$fe-message-square: "\e99a";
+$fe-mic: "\e99b";
+$fe-mic-off: "\e99c";
+$fe-minimize: "\e99d";
+$fe-minimize-2: "\e99e";
+$fe-minus: "\e99f";
+$fe-minus-circle: "\e9a0";
+$fe-minus-square: "\e9a1";
+$fe-monitor: "\e9a2";
+$fe-moon: "\e9a3";
+$fe-more-horizontal: "\e9a4";
+$fe-more-vertical: "\e9a5";
+$fe-mouse-pointer: "\e9a6";
+$fe-move: "\e9a7";
+$fe-music: "\e9a8";
+$fe-navigation: "\e9a9";
+$fe-navigation-2: "\e9aa";
+$fe-octagon: "\e9ab";
+$fe-package: "\e9ac";
+$fe-paperclip: "\e9ad";
+$fe-pause: "\e9ae";
+$fe-pause-circle: "\e9af";
+$fe-pen-tool: "\e9b0";
+$fe-percent: "\e9b1";
+$fe-phone: "\e9b2";
+$fe-phone-call: "\e9b3";
+$fe-phone-forwarded: "\e9b4";
+$fe-phone-incoming: "\e9b5";
+$fe-phone-missed: "\e9b6";
+$fe-phone-off: "\e9b7";
+$fe-phone-outgoing: "\e9b8";
+$fe-pie-chart: "\e9b9";
+$fe-play: "\e9ba";
+$fe-play-circle: "\e9bb";
+$fe-plus: "\e9bc";
+$fe-plus-circle: "\e9bd";
+$fe-plus-square: "\e9be";
+$fe-pocket: "\e9bf";
+$fe-power: "\e9c0";
+$fe-printer: "\e9c1";
+$fe-radio: "\e9c2";
+$fe-refresh-ccw: "\e9c3";
+$fe-refresh-cw: "\e9c4";
+$fe-repeat: "\e9c5";
+$fe-rewind: "\e9c6";
+$fe-rotate-ccw: "\e9c7";
+$fe-rotate-cw: "\e9c8";
+$fe-rss: "\e9c9";
+$fe-save: "\e9ca";
+$fe-scissors: "\e9cb";
+$fe-search: "\e9cc";
+$fe-send: "\e9cd";
+$fe-server: "\e9ce";
+$fe-settings: "\e9cf";
+$fe-share: "\e9d0";
+$fe-share-2: "\e9d1";
+$fe-shield: "\e9d2";
+$fe-shield-off: "\e9d3";
+$fe-shopping-bag: "\e9d4";
+$fe-shopping-cart: "\e9d5";
+$fe-shuffle: "\e9d6";
+$fe-sidebar: "\e9d7";
+$fe-skip-back: "\e9d8";
+$fe-skip-forward: "\e9d9";
+$fe-slack: "\e9da";
+$fe-slash: "\e9db";
+$fe-sliders: "\e9dc";
+$fe-smartphone: "\e9dd";
+$fe-smile: "\e9de";
+$fe-speaker: "\e9df";
+$fe-square: "\e9e0";
+$fe-star: "\e9e1";
+$fe-stop-circle: "\e9e2";
+$fe-sun: "\e9e3";
+$fe-sunrise: "\e9e4";
+$fe-sunset: "\e9e5";
+$fe-tablet: "\e9e6";
+$fe-tag: "\e9e7";
+$fe-target: "\e9e8";
+$fe-terminal: "\e9e9";
+$fe-thermometer: "\e9ea";
+$fe-thumbs-down: "\e9eb";
+$fe-thumbs-up: "\e9ec";
+$fe-toggle-left: "\e9ed";
+$fe-toggle-right: "\e9ee";
+$fe-tool: "\e9ef";
+$fe-trash: "\e9f0";
+$fe-trash-2: "\e9f1";
+$fe-trello: "\e9f2";
+$fe-trending-down: "\e9f3";
+$fe-trending-up: "\e9f4";
+$fe-triangle: "\e9f5";
+$fe-truck: "\e9f6";
+$fe-tv: "\e9f7";
+$fe-twitch: "\e9f8";
+$fe-twitter: "\e9f9";
+$fe-type: "\e9fa";
+$fe-umbrella: "\e9fb";
+$fe-underline: "\e9fc";
+$fe-unlock: "\e9fd";
+$fe-upload: "\e9fe";
+$fe-upload-cloud: "\e9ff";
+$fe-user: "\ea00";
+$fe-user-check: "\ea01";
+$fe-user-minus: "\ea02";
+$fe-user-plus: "\ea03";
+$fe-user-x: "\ea04";
+$fe-users: "\ea05";
+$fe-video: "\ea06";
+$fe-video-off: "\ea07";
+$fe-voicemail: "\ea08";
+$fe-volume: "\ea09";
+$fe-volume-1: "\ea0a";
+$fe-volume-2: "\ea0b";
+$fe-volume-x: "\ea0c";
+$fe-watch: "\ea0d";
+$fe-wifi: "\ea0e";
+$fe-wifi-off: "\ea0f";
+$fe-wind: "\ea10";
+$fe-x: "\ea11";
+$fe-x-circle: "\ea12";
+$fe-x-octagon: "\ea13";
+$fe-x-square: "\ea14";
+$fe-youtube: "\ea15";
+$fe-zap: "\ea16";
+$fe-zap-off: "\ea17";
+$fe-zoom-in: "\ea18";
+$fe-zoom-out: "\ea19";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('../#{$icomoon-font-path}/#{$icomoon-font-family}.eot?29jl7i');
+  src:  url('../#{$icomoon-font-path}/#{$icomoon-font-family}.eot?29jl7i#iefix') format('embedded-opentype'),
+    url('../#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?29jl7i') format('truetype'),
+    url('../#{$icomoon-font-path}/#{$icomoon-font-family}.woff?29jl7i') format('woff'),
+    url('../#{$icomoon-font-path}/#{$icomoon-font-family}.svg?29jl7i##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.fe {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fe {
+  &-32 {font-size: 32px;}
+  &-24 {font-size: 24px;}
+  &-16 {font-size: 16px;}
+  &-12 {font-size:12px;}
+}
+
+.fe-activity {
+  &:before {
+    content: $fe-activity;
+  }
+}
+.fe-airplay {
+  &:before {
+    content: $fe-airplay;
+  }
+}
+.fe-alert-circle {
+  &:before {
+    content: $fe-alert-circle;
+  }
+}
+.fe-alert-octagon {
+  &:before {
+    content: $fe-alert-octagon;
+  }
+}
+.fe-alert-triangle {
+  &:before {
+    content: $fe-alert-triangle;
+  }
+}
+.fe-align-center {
+  &:before {
+    content: $fe-align-center;
+  }
+}
+.fe-align-justify {
+  &:before {
+    content: $fe-align-justify;
+  }
+}
+.fe-align-left {
+  &:before {
+    content: $fe-align-left;
+  }
+}
+.fe-align-right {
+  &:before {
+    content: $fe-align-right;
+  }
+}
+.fe-anchor {
+  &:before {
+    content: $fe-anchor;
+  }
+}
+.fe-aperture {
+  &:before {
+    content: $fe-aperture;
+  }
+}
+.fe-archive {
+  &:before {
+    content: $fe-archive;
+  }
+}
+.fe-arrow-down {
+  &:before {
+    content: $fe-arrow-down;
+  }
+}
+.fe-arrow-down-circle {
+  &:before {
+    content: $fe-arrow-down-circle;
+  }
+}
+.fe-arrow-down-left {
+  &:before {
+    content: $fe-arrow-down-left;
+  }
+}
+.fe-arrow-down-right {
+  &:before {
+    content: $fe-arrow-down-right;
+  }
+}
+.fe-arrow-left {
+  &:before {
+    content: $fe-arrow-left;
+  }
+}
+.fe-arrow-left-circle {
+  &:before {
+    content: $fe-arrow-left-circle;
+  }
+}
+.fe-arrow-right {
+  &:before {
+    content: $fe-arrow-right;
+  }
+}
+.fe-arrow-right-circle {
+  &:before {
+    content: $fe-arrow-right-circle;
+  }
+}
+.fe-arrow-up {
+  &:before {
+    content: $fe-arrow-up;
+  }
+}
+.fe-arrow-up-circle {
+  &:before {
+    content: $fe-arrow-up-circle;
+  }
+}
+.fe-arrow-up-left {
+  &:before {
+    content: $fe-arrow-up-left;
+  }
+}
+.fe-arrow-up-right {
+  &:before {
+    content: $fe-arrow-up-right;
+  }
+}
+.fe-at-sign {
+  &:before {
+    content: $fe-at-sign;
+  }
+}
+.fe-award {
+  &:before {
+    content: $fe-award;
+  }
+}
+.fe-bar-chart {
+  &:before {
+    content: $fe-bar-chart;
+  }
+}
+.fe-bar-chart-2 {
+  &:before {
+    content: $fe-bar-chart-2;
+  }
+}
+.fe-battery {
+  &:before {
+    content: $fe-battery;
+  }
+}
+.fe-battery-charging {
+  &:before {
+    content: $fe-battery-charging;
+  }
+}
+.fe-bell {
+  &:before {
+    content: $fe-bell;
+  }
+}
+.fe-bell-off {
+  &:before {
+    content: $fe-bell-off;
+  }
+}
+.fe-bluetooth {
+  &:before {
+    content: $fe-bluetooth;
+  }
+}
+.fe-bold {
+  &:before {
+    content: $fe-bold;
+  }
+}
+.fe-book {
+  &:before {
+    content: $fe-book;
+  }
+}
+.fe-book-open {
+  &:before {
+    content: $fe-book-open;
+  }
+}
+.fe-bookmark {
+  &:before {
+    content: $fe-bookmark;
+  }
+}
+.fe-box {
+  &:before {
+    content: $fe-box;
+  }
+}
+.fe-briefcase {
+  &:before {
+    content: $fe-briefcase;
+  }
+}
+.fe-calendar {
+  &:before {
+    content: $fe-calendar;
+  }
+}
+.fe-camera {
+  &:before {
+    content: $fe-camera;
+  }
+}
+.fe-camera-off {
+  &:before {
+    content: $fe-camera-off;
+  }
+}
+.fe-cast {
+  &:before {
+    content: $fe-cast;
+  }
+}
+.fe-check {
+  &:before {
+    content: $fe-check;
+  }
+}
+.fe-check-circle {
+  &:before {
+    content: $fe-check-circle;
+  }
+}
+.fe-check-square {
+  &:before {
+    content: $fe-check-square;
+  }
+}
+.fe-chevron-down {
+  &:before {
+    content: $fe-chevron-down;
+  }
+}
+.fe-chevron-left {
+  &:before {
+    content: $fe-chevron-left;
+  }
+}
+.fe-chevron-right {
+  &:before {
+    content: $fe-chevron-right;
+  }
+}
+.fe-chevron-up {
+  &:before {
+    content: $fe-chevron-up;
+  }
+}
+.fe-chevrons-down {
+  &:before {
+    content: $fe-chevrons-down;
+  }
+}
+.fe-chevrons-left {
+  &:before {
+    content: $fe-chevrons-left;
+  }
+}
+.fe-chevrons-right {
+  &:before {
+    content: $fe-chevrons-right;
+  }
+}
+.fe-chevrons-up {
+  &:before {
+    content: $fe-chevrons-up;
+  }
+}
+.fe-chrome {
+  &:before {
+    content: $fe-chrome;
+  }
+}
+.fe-circle {
+  &:before {
+    content: $fe-circle;
+  }
+}
+.fe-clipboard {
+  &:before {
+    content: $fe-clipboard;
+  }
+}
+.fe-clock {
+  &:before {
+    content: $fe-clock;
+  }
+}
+.fe-cloud {
+  &:before {
+    content: $fe-cloud;
+  }
+}
+.fe-cloud-drizzle {
+  &:before {
+    content: $fe-cloud-drizzle;
+  }
+}
+.fe-cloud-lightning {
+  &:before {
+    content: $fe-cloud-lightning;
+  }
+}
+.fe-cloud-off {
+  &:before {
+    content: $fe-cloud-off;
+  }
+}
+.fe-cloud-rain {
+  &:before {
+    content: $fe-cloud-rain;
+  }
+}
+.fe-cloud-snow {
+  &:before {
+    content: $fe-cloud-snow;
+  }
+}
+.fe-code {
+  &:before {
+    content: $fe-code;
+  }
+}
+.fe-codepen {
+  &:before {
+    content: $fe-codepen;
+  }
+}
+.fe-codesandbox {
+  &:before {
+    content: $fe-codesandbox;
+  }
+}
+.fe-coffee {
+  &:before {
+    content: $fe-coffee;
+  }
+}
+.fe-columns {
+  &:before {
+    content: $fe-columns;
+  }
+}
+.fe-command {
+  &:before {
+    content: $fe-command;
+  }
+}
+.fe-compass {
+  &:before {
+    content: $fe-compass;
+  }
+}
+.fe-copy {
+  &:before {
+    content: $fe-copy;
+  }
+}
+.fe-corner-down-left {
+  &:before {
+    content: $fe-corner-down-left;
+  }
+}
+.fe-corner-down-right {
+  &:before {
+    content: $fe-corner-down-right;
+  }
+}
+.fe-corner-left-down {
+  &:before {
+    content: $fe-corner-left-down;
+  }
+}
+.fe-corner-left-up {
+  &:before {
+    content: $fe-corner-left-up;
+  }
+}
+.fe-corner-right-down {
+  &:before {
+    content: $fe-corner-right-down;
+  }
+}
+.fe-corner-right-up {
+  &:before {
+    content: $fe-corner-right-up;
+  }
+}
+.fe-corner-up-left {
+  &:before {
+    content: $fe-corner-up-left;
+  }
+}
+.fe-corner-up-right {
+  &:before {
+    content: $fe-corner-up-right;
+  }
+}
+.fe-cpu {
+  &:before {
+    content: $fe-cpu;
+  }
+}
+.fe-credit-card {
+  &:before {
+    content: $fe-credit-card;
+  }
+}
+.fe-crop {
+  &:before {
+    content: $fe-crop;
+  }
+}
+.fe-crosshair {
+  &:before {
+    content: $fe-crosshair;
+  }
+}
+.fe-database {
+  &:before {
+    content: $fe-database;
+  }
+}
+.fe-delete {
+  &:before {
+    content: $fe-delete;
+  }
+}
+.fe-disc {
+  &:before {
+    content: $fe-disc;
+  }
+}
+.fe-dollar-sign {
+  &:before {
+    content: $fe-dollar-sign;
+  }
+}
+.fe-download {
+  &:before {
+    content: $fe-download;
+  }
+}
+.fe-download-cloud {
+  &:before {
+    content: $fe-download-cloud;
+  }
+}
+.fe-droplet {
+  &:before {
+    content: $fe-droplet;
+  }
+}
+.fe-edit {
+  &:before {
+    content: $fe-edit;
+  }
+}
+.fe-edit-2 {
+  &:before {
+    content: $fe-edit-2;
+  }
+}
+.fe-edit-3 {
+  &:before {
+    content: $fe-edit-3;
+  }
+}
+.fe-external-link {
+  &:before {
+    content: $fe-external-link;
+  }
+}
+.fe-eye {
+  &:before {
+    content: $fe-eye;
+  }
+}
+.fe-eye-off {
+  &:before {
+    content: $fe-eye-off;
+  }
+}
+.fe-facebook {
+  &:before {
+    content: $fe-facebook;
+  }
+}
+.fe-fast-forward {
+  &:before {
+    content: $fe-fast-forward;
+  }
+}
+.fe-feather {
+  &:before {
+    content: $fe-feather;
+  }
+}
+.fe-figma {
+  &:before {
+    content: $fe-figma;
+  }
+}
+.fe-file {
+  &:before {
+    content: $fe-file;
+  }
+}
+.fe-file-minus {
+  &:before {
+    content: $fe-file-minus;
+  }
+}
+.fe-file-plus {
+  &:before {
+    content: $fe-file-plus;
+  }
+}
+.fe-file-text {
+  &:before {
+    content: $fe-file-text;
+  }
+}
+.fe-film {
+  &:before {
+    content: $fe-film;
+  }
+}
+.fe-filter {
+  &:before {
+    content: $fe-filter;
+  }
+}
+.fe-flag {
+  &:before {
+    content: $fe-flag;
+  }
+}
+.fe-folder {
+  &:before {
+    content: $fe-folder;
+  }
+}
+.fe-folder-minus {
+  &:before {
+    content: $fe-folder-minus;
+  }
+}
+.fe-folder-plus {
+  &:before {
+    content: $fe-folder-plus;
+  }
+}
+.fe-framer {
+  &:before {
+    content: $fe-framer;
+  }
+}
+.fe-frown {
+  &:before {
+    content: $fe-frown;
+  }
+}
+.fe-gift {
+  &:before {
+    content: $fe-gift;
+  }
+}
+.fe-git-branch {
+  &:before {
+    content: $fe-git-branch;
+  }
+}
+.fe-git-commit {
+  &:before {
+    content: $fe-git-commit;
+  }
+}
+.fe-git-merge {
+  &:before {
+    content: $fe-git-merge;
+  }
+}
+.fe-git-pull-request {
+  &:before {
+    content: $fe-git-pull-request;
+  }
+}
+.fe-github {
+  &:before {
+    content: $fe-github;
+  }
+}
+.fe-gitlab {
+  &:before {
+    content: $fe-gitlab;
+  }
+}
+.fe-globe {
+  &:before {
+    content: $fe-globe;
+  }
+}
+.fe-grid {
+  &:before {
+    content: $fe-grid;
+  }
+}
+.fe-hard-drive {
+  &:before {
+    content: $fe-hard-drive;
+  }
+}
+.fe-hash {
+  &:before {
+    content: $fe-hash;
+  }
+}
+.fe-headphones {
+  &:before {
+    content: $fe-headphones;
+  }
+}
+.fe-heart {
+  &:before {
+    content: $fe-heart;
+  }
+}
+.fe-help-circle {
+  &:before {
+    content: $fe-help-circle;
+  }
+}
+.fe-hexagon {
+  &:before {
+    content: $fe-hexagon;
+  }
+}
+.fe-home {
+  &:before {
+    content: $fe-home;
+  }
+}
+.fe-image {
+  &:before {
+    content: $fe-image;
+  }
+}
+.fe-inbox {
+  &:before {
+    content: $fe-inbox;
+  }
+}
+.fe-info {
+  &:before {
+    content: $fe-info;
+  }
+}
+.fe-instagram {
+  &:before {
+    content: $fe-instagram;
+  }
+}
+.fe-italic {
+  &:before {
+    content: $fe-italic;
+  }
+}
+.fe-key {
+  &:before {
+    content: $fe-key;
+  }
+}
+.fe-layers {
+  &:before {
+    content: $fe-layers;
+  }
+}
+.fe-layout {
+  &:before {
+    content: $fe-layout;
+  }
+}
+.fe-life-buoy {
+  &:before {
+    content: $fe-life-buoy;
+  }
+}
+.fe-link {
+  &:before {
+    content: $fe-link;
+  }
+}
+.fe-link-2 {
+  &:before {
+    content: $fe-link-2;
+  }
+}
+.fe-linkedin {
+  &:before {
+    content: $fe-linkedin;
+  }
+}
+.fe-list {
+  &:before {
+    content: $fe-list;
+  }
+}
+.fe-loader {
+  &:before {
+    content: $fe-loader;
+  }
+}
+.fe-lock {
+  &:before {
+    content: $fe-lock;
+  }
+}
+.fe-log-in {
+  &:before {
+    content: $fe-log-in;
+  }
+}
+.fe-log-out {
+  &:before {
+    content: $fe-log-out;
+  }
+}
+.fe-mail {
+  &:before {
+    content: $fe-mail;
+  }
+}
+.fe-map {
+  &:before {
+    content: $fe-map;
+  }
+}
+.fe-map-pin {
+  &:before {
+    content: $fe-map-pin;
+  }
+}
+.fe-maximize {
+  &:before {
+    content: $fe-maximize;
+  }
+}
+.fe-maximize-2 {
+  &:before {
+    content: $fe-maximize-2;
+  }
+}
+.fe-meh {
+  &:before {
+    content: $fe-meh;
+  }
+}
+.fe-menu {
+  &:before {
+    content: $fe-menu;
+  }
+}
+.fe-message-circle {
+  &:before {
+    content: $fe-message-circle;
+  }
+}
+.fe-message-square {
+  &:before {
+    content: $fe-message-square;
+  }
+}
+.fe-mic {
+  &:before {
+    content: $fe-mic;
+  }
+}
+.fe-mic-off {
+  &:before {
+    content: $fe-mic-off;
+  }
+}
+.fe-minimize {
+  &:before {
+    content: $fe-minimize;
+  }
+}
+.fe-minimize-2 {
+  &:before {
+    content: $fe-minimize-2;
+  }
+}
+.fe-minus {
+  &:before {
+    content: $fe-minus;
+  }
+}
+.fe-minus-circle {
+  &:before {
+    content: $fe-minus-circle;
+  }
+}
+.fe-minus-square {
+  &:before {
+    content: $fe-minus-square;
+  }
+}
+.fe-monitor {
+  &:before {
+    content: $fe-monitor;
+  }
+}
+.fe-moon {
+  &:before {
+    content: $fe-moon;
+  }
+}
+.fe-more-horizontal {
+  &:before {
+    content: $fe-more-horizontal;
+  }
+}
+.fe-more-vertical {
+  &:before {
+    content: $fe-more-vertical;
+  }
+}
+.fe-mouse-pointer {
+  &:before {
+    content: $fe-mouse-pointer;
+  }
+}
+.fe-move {
+  &:before {
+    content: $fe-move;
+  }
+}
+.fe-music {
+  &:before {
+    content: $fe-music;
+  }
+}
+.fe-navigation {
+  &:before {
+    content: $fe-navigation;
+  }
+}
+.fe-navigation-2 {
+  &:before {
+    content: $fe-navigation-2;
+  }
+}
+.fe-octagon {
+  &:before {
+    content: $fe-octagon;
+  }
+}
+.fe-package {
+  &:before {
+    content: $fe-package;
+  }
+}
+.fe-paperclip {
+  &:before {
+    content: $fe-paperclip;
+  }
+}
+.fe-pause {
+  &:before {
+    content: $fe-pause;
+  }
+}
+.fe-pause-circle {
+  &:before {
+    content: $fe-pause-circle;
+  }
+}
+.fe-pen-tool {
+  &:before {
+    content: $fe-pen-tool;
+  }
+}
+.fe-percent {
+  &:before {
+    content: $fe-percent;
+  }
+}
+.fe-phone {
+  &:before {
+    content: $fe-phone;
+  }
+}
+.fe-phone-call {
+  &:before {
+    content: $fe-phone-call;
+  }
+}
+.fe-phone-forwarded {
+  &:before {
+    content: $fe-phone-forwarded;
+  }
+}
+.fe-phone-incoming {
+  &:before {
+    content: $fe-phone-incoming;
+  }
+}
+.fe-phone-missed {
+  &:before {
+    content: $fe-phone-missed;
+  }
+}
+.fe-phone-off {
+  &:before {
+    content: $fe-phone-off;
+  }
+}
+.fe-phone-outgoing {
+  &:before {
+    content: $fe-phone-outgoing;
+  }
+}
+.fe-pie-chart {
+  &:before {
+    content: $fe-pie-chart;
+  }
+}
+.fe-play {
+  &:before {
+    content: $fe-play;
+  }
+}
+.fe-play-circle {
+  &:before {
+    content: $fe-play-circle;
+  }
+}
+.fe-plus {
+  &:before {
+    content: $fe-plus;
+  }
+}
+.fe-plus-circle {
+  &:before {
+    content: $fe-plus-circle;
+  }
+}
+.fe-plus-square {
+  &:before {
+    content: $fe-plus-square;
+  }
+}
+.fe-pocket {
+  &:before {
+    content: $fe-pocket;
+  }
+}
+.fe-power {
+  &:before {
+    content: $fe-power;
+  }
+}
+.fe-printer {
+  &:before {
+    content: $fe-printer;
+  }
+}
+.fe-radio {
+  &:before {
+    content: $fe-radio;
+  }
+}
+.fe-refresh-ccw {
+  &:before {
+    content: $fe-refresh-ccw;
+  }
+}
+.fe-refresh-cw {
+  &:before {
+    content: $fe-refresh-cw;
+  }
+}
+.fe-repeat {
+  &:before {
+    content: $fe-repeat;
+  }
+}
+.fe-rewind {
+  &:before {
+    content: $fe-rewind;
+  }
+}
+.fe-rotate-ccw {
+  &:before {
+    content: $fe-rotate-ccw;
+  }
+}
+.fe-rotate-cw {
+  &:before {
+    content: $fe-rotate-cw;
+  }
+}
+.fe-rss {
+  &:before {
+    content: $fe-rss;
+  }
+}
+.fe-save {
+  &:before {
+    content: $fe-save;
+  }
+}
+.fe-scissors {
+  &:before {
+    content: $fe-scissors;
+  }
+}
+.fe-search {
+  &:before {
+    content: $fe-search;
+  }
+}
+.fe-send {
+  &:before {
+    content: $fe-send;
+  }
+}
+.fe-server {
+  &:before {
+    content: $fe-server;
+  }
+}
+.fe-settings {
+  &:before {
+    content: $fe-settings;
+  }
+}
+.fe-share {
+  &:before {
+    content: $fe-share;
+  }
+}
+.fe-share-2 {
+  &:before {
+    content: $fe-share-2;
+  }
+}
+.fe-shield {
+  &:before {
+    content: $fe-shield;
+  }
+}
+.fe-shield-off {
+  &:before {
+    content: $fe-shield-off;
+  }
+}
+.fe-shopping-bag {
+  &:before {
+    content: $fe-shopping-bag;
+  }
+}
+.fe-shopping-cart {
+  &:before {
+    content: $fe-shopping-cart;
+  }
+}
+.fe-shuffle {
+  &:before {
+    content: $fe-shuffle;
+  }
+}
+.fe-sidebar {
+  &:before {
+    content: $fe-sidebar;
+  }
+}
+.fe-skip-back {
+  &:before {
+    content: $fe-skip-back;
+  }
+}
+.fe-skip-forward {
+  &:before {
+    content: $fe-skip-forward;
+  }
+}
+.fe-slack {
+  &:before {
+    content: $fe-slack;
+  }
+}
+.fe-slash {
+  &:before {
+    content: $fe-slash;
+  }
+}
+.fe-sliders {
+  &:before {
+    content: $fe-sliders;
+  }
+}
+.fe-smartphone {
+  &:before {
+    content: $fe-smartphone;
+  }
+}
+.fe-smile {
+  &:before {
+    content: $fe-smile;
+  }
+}
+.fe-speaker {
+  &:before {
+    content: $fe-speaker;
+  }
+}
+.fe-square {
+  &:before {
+    content: $fe-square;
+  }
+}
+.fe-star {
+  &:before {
+    content: $fe-star;
+  }
+}
+.fe-stop-circle {
+  &:before {
+    content: $fe-stop-circle;
+  }
+}
+.fe-sun {
+  &:before {
+    content: $fe-sun;
+  }
+}
+.fe-sunrise {
+  &:before {
+    content: $fe-sunrise;
+  }
+}
+.fe-sunset {
+  &:before {
+    content: $fe-sunset;
+  }
+}
+.fe-tablet {
+  &:before {
+    content: $fe-tablet;
+  }
+}
+.fe-tag {
+  &:before {
+    content: $fe-tag;
+  }
+}
+.fe-target {
+  &:before {
+    content: $fe-target;
+  }
+}
+.fe-terminal {
+  &:before {
+    content: $fe-terminal;
+  }
+}
+.fe-thermometer {
+  &:before {
+    content: $fe-thermometer;
+  }
+}
+.fe-thumbs-down {
+  &:before {
+    content: $fe-thumbs-down;
+  }
+}
+.fe-thumbs-up {
+  &:before {
+    content: $fe-thumbs-up;
+  }
+}
+.fe-toggle-left {
+  &:before {
+    content: $fe-toggle-left;
+  }
+}
+.fe-toggle-right {
+  &:before {
+    content: $fe-toggle-right;
+  }
+}
+.fe-tool {
+  &:before {
+    content: $fe-tool;
+  }
+}
+.fe-trash {
+  &:before {
+    content: $fe-trash;
+  }
+}
+.fe-trash-2 {
+  &:before {
+    content: $fe-trash-2;
+  }
+}
+.fe-trello {
+  &:before {
+    content: $fe-trello;
+  }
+}
+.fe-trending-down {
+  &:before {
+    content: $fe-trending-down;
+  }
+}
+.fe-trending-up {
+  &:before {
+    content: $fe-trending-up;
+  }
+}
+.fe-triangle {
+  &:before {
+    content: $fe-triangle;
+  }
+}
+.fe-truck {
+  &:before {
+    content: $fe-truck;
+  }
+}
+.fe-tv {
+  &:before {
+    content: $fe-tv;
+  }
+}
+.fe-twitch {
+  &:before {
+    content: $fe-twitch;
+  }
+}
+.fe-twitter {
+  &:before {
+    content: $fe-twitter;
+  }
+}
+.fe-type {
+  &:before {
+    content: $fe-type;
+  }
+}
+.fe-umbrella {
+  &:before {
+    content: $fe-umbrella;
+  }
+}
+.fe-underline {
+  &:before {
+    content: $fe-underline;
+  }
+}
+.fe-unlock {
+  &:before {
+    content: $fe-unlock;
+  }
+}
+.fe-upload {
+  &:before {
+    content: $fe-upload;
+  }
+}
+.fe-upload-cloud {
+  &:before {
+    content: $fe-upload-cloud;
+  }
+}
+.fe-user {
+  &:before {
+    content: $fe-user;
+  }
+}
+.fe-user-check {
+  &:before {
+    content: $fe-user-check;
+  }
+}
+.fe-user-minus {
+  &:before {
+    content: $fe-user-minus;
+  }
+}
+.fe-user-plus {
+  &:before {
+    content: $fe-user-plus;
+  }
+}
+.fe-user-x {
+  &:before {
+    content: $fe-user-x;
+  }
+}
+.fe-users {
+  &:before {
+    content: $fe-users;
+  }
+}
+.fe-video {
+  &:before {
+    content: $fe-video;
+  }
+}
+.fe-video-off {
+  &:before {
+    content: $fe-video-off;
+  }
+}
+.fe-voicemail {
+  &:before {
+    content: $fe-voicemail;
+  }
+}
+.fe-volume {
+  &:before {
+    content: $fe-volume;
+  }
+}
+.fe-volume-1 {
+  &:before {
+    content: $fe-volume-1;
+  }
+}
+.fe-volume-2 {
+  &:before {
+    content: $fe-volume-2;
+  }
+}
+.fe-volume-x {
+  &:before {
+    content: $fe-volume-x;
+  }
+}
+.fe-watch {
+  &:before {
+    content: $fe-watch;
+  }
+}
+.fe-wifi {
+  &:before {
+    content: $fe-wifi;
+  }
+}
+.fe-wifi-off {
+  &:before {
+    content: $fe-wifi-off;
+  }
+}
+.fe-wind {
+  &:before {
+    content: $fe-wind;
+  }
+}
+.fe-x {
+  &:before {
+    content: $fe-x;
+  }
+}
+.fe-x-circle {
+  &:before {
+    content: $fe-x-circle;
+  }
+}
+.fe-x-octagon {
+  &:before {
+    content: $fe-x-octagon;
+  }
+}
+.fe-x-square {
+  &:before {
+    content: $fe-x-square;
+  }
+}
+.fe-youtube {
+  &:before {
+    content: $fe-youtube;
+  }
+}
+.fe-zap {
+  &:before {
+    content: $fe-zap;
+  }
+}
+.fe-zap-off {
+  &:before {
+    content: $fe-zap-off;
+  }
+}
+.fe-zoom-in {
+  &:before {
+    content: $fe-zoom-in;
+  }
+}
+.fe-zoom-out {
+  &:before {
+    content: $fe-zoom-out;
+  }
+}

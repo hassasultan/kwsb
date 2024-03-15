@@ -21,15 +21,25 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
+        $user = new User();
         if(auth()->user()->role == 2)
         {
-            $user = User::where('role',3)->get();
+            $user = $user->where('role',3);
         }
         else
         {
-            $user = User::where('id','!=', auth()->user()->id)->get();
+            $user = User::where('id','!=', auth()->user()->id);
+        }
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $user = $user->where('name','LIKE','%'.$request->search.'%')->orWhere('email','LIKE','%'.$request->search.'%');
+        }
+        $user = $user->paginate(10);
+        if($request->has('type'))
+        {
+            return $user;
         }
         return view('pages.user.index',compact('user'));
     }
