@@ -35,9 +35,19 @@ class ComplaintController extends Controller
             'description' => ['required', 'string'],
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $complaint = Complaints::OrderBy('id','DESC')->get();
+        $complaint = Complaints::with('customer','town','subtown','type','prio','assignedComplaints')->OrderBy('id','DESC');
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $complaint = $complaint->where('title','LIKE','%'.$request->search.'%')->orWhere('comp_num',$request->search);
+        }
+        $complaint = $complaint->paginate(10);
+        // dd($complaint->toArray());
+        if($request->has('type'))
+        {
+            return $complaint;
+        }
         // dd($complaint->toArray());
         return view('pages.complaints.index',compact('complaint'));
     }
