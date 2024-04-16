@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 class ComplaintTypeController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $type = ComplaintType::all();
+        $type = new ComplaintType();
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $type = $type->where('title','LIKE','%'.$request->search.'%');
+        }
+        $type = $type->paginate(10);
+        if($request->has('type'))
+        {
+            return $type;
+        }
         return view('pages.complaintTypes.index',compact('type'));
     }
     public function create()

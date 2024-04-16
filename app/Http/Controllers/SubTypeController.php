@@ -17,9 +17,18 @@ class SubTypeController extends Controller
             'type_id' => ['required', 'numeric'],
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $subtype = SubType::with('type')->get();
+        $subtype = SubType::with('type');
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $subtype = $subtype->where('title','LIKE','%'.$request->search.'%');
+        }
+        $subtype = $subtype->paginate(10);
+        if($request->has('type'))
+        {
+            return $subtype;
+        }
         return view('pages.subtype.index',compact('subtype'));
     }
     public function create()

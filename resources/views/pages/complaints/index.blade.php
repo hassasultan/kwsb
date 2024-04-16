@@ -2,14 +2,61 @@
 
 @section('content')
     <style>
-        .skeleton-row {
-            background-color: #f2f2f2;
+        .skeleton-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .skeleton-row td {
-            height: 20px;
-            /* Adjust height as needed */
-            border: none;
+        .skeleton-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .skeleton-table th,
+        .skeleton-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .skeleton-item {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skeleton-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .skeleton-content {
+            padding: 20px;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            margin-bottom: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
         }
     </style>
     <div class="container-fluid">
@@ -45,8 +92,8 @@
                                 </form>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-borderless table-hover">
+                                <div class="col-sm-12 skeleton-container">
+                                    <table class="skeleton-table table table-borderless table-hover">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -78,95 +125,50 @@
                                         <tbody id="user-table-body">
                                             {{-- @if (count($user) > 0) --}}
                                             @foreach ($complaint as $key => $row)
-                                                <tr>
-                                                    <td class="w-20">
-                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->comp_num }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="w-20">
-                                                        @if ($row->customer_id != 0)
-                                                            <p class="text-xs font-weight-bold mb-0">
-                                                                {{ $row->customer->customer_id }}</p>
-                                                        @else
-                                                            <p class="text-xs font-weight-bold mb-0">
-                                                                {{ $row->customer_num }}</p>
-                                                        @endif
-                                                    </td>
-                                                    <td class="w-20">
-                                                        @if ($row->customer_id != 0)
-                                                            <p class="text-xs font-weight-bold mb-0">
-                                                                {{ $row->customer->customer_name }}</p>
-                                                        @else
-                                                            <p class="text-xs font-weight-bold mb-0">
-                                                                {{ $row->customer_name }}</p>
-                                                        @endif
-                                                    </td>
-                                                    <td class="w-20">
-                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }}
-                                                            ({{ $row->subtown?->title }})
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->type?->title }} </p>
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->prio?->title }} </p>
-                                                    </td>
-                                                    <td class="align-middle text-center text-sm">
-                                                        <p class="text-xs text-secondary mb-0">{{ $row->title }}</p>
-                                                        {{-- <p class="text-xs text-secondary mb-0">{{ $row->description }}</p> --}}
-
-                                                    </td>
-                                                    <td class="align-middle text-center text-sm">
-                                                        @if ($row->image != null)
-                                                            <img src="{{ asset('public/storage/' . $row->image) }}"
-                                                                class="img-fluid" style="width: 70px; height: 70px;" />
-                                                        @else
-                                                            Not Available
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y h:i:s') }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($row->status == 1)
-                                                            <p class="text-xs font-weight-bold mb-0">
-                                                                {{ \Carbon\Carbon::parse($row->updated_at)->format('d/m/Y h:i:s') }}
-                                                            </p>
-                                                        @else
-                                                            <span class="bg-danger">Yet Not Reslove</span>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->source }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($row->status == 1)
-                                                            <span class="badge bg-success">Completed</span>
-                                                        @else
-                                                            <span class="badge bg-danger">Pending</span>
-                                                        @endif
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        @if ($row->assignedComplaints == null)
-                                                            <a href="{{ route('compaints-management.details', $row->id) }}"
-                                                                class="text-secondary font-weight-bold text-xs m-3"
-                                                                data-toggle="tooltip" data-original-title="Edit user">
-                                                                Assign
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ route('agent-management.details', $row->id) }}"
-                                                                class="text-secondary font-weight-bold text-xs m-3"
-                                                                data-toggle="tooltip" data-original-title="Edit user">
-                                                                Already Assigned
-                                                            </a>
-                                                        @endif
-
-                                                    </td>
-                                                </tr>
+                                                @for ($i = 1; $i <= 10; $i++)
+                                                    <tr>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="skeleton-item">
+                                                            <div class="skeleton-content">
+                                                                <div class="skeleton-line" style="width: 100%;"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endfor
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -269,7 +271,8 @@
                     }
                     html += '</td>';
                     html += '<td class="w-20">';
-                    html += '<p class="text-xs font-weight-bold mb-0">' + row.town.town + ' (' + (row.subtown ? row.subtown.title : '') + ')</p>';
+                    html += '<p class="text-xs font-weight-bold mb-0">' + row.town.town + ' (' + (row.subtown ? row
+                        .subtown.title : '') + ')</p>';
                     html += '</td>';
                     html += '<td>';
                     html += '<p class="text-xs font-weight-bold mb-0">' + (row.type ? row.type.title : '') + '</p>';
@@ -280,17 +283,20 @@
                     html += '</td>';
                     html += '<td class="align-middle text-center text-sm">';
                     if (row.image != null) {
-                        html += '<img src="' + currentUrl + '/public/storage/' + row.image + '" class="img-fluid" style="width: 70px; height: 70px;" />';
+                        html += '<img src="' + currentUrl + '/public/storage/' + row.image +
+                            '" class="img-fluid" style="width: 70px; height: 70px;" />';
                     } else {
                         html += 'Not Available';
                     }
                     html += '</td>';
                     html += '<td class="text-center">';
-                    html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.created_at).format('DD/MM/YYYY hh:mm:ss') + '</p>';
+                    html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.created_at).format(
+                        'DD/MM/YYYY hh:mm:ss') + '</p>';
                     html += '</td>';
                     html += '<td class="text-center">';
                     if (row.status == 1) {
-                        html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.updated_at).format('DD/MM/YYYY hh:mm:ss') + '</p>';
+                        html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.updated_at).format(
+                            'DD/MM/YYYY hh:mm:ss') + '</p>';
                     } else {
                         html += '<span class="bg-danger">Yet Not Resolve</span>';
                     }
@@ -299,10 +305,15 @@
                     html += '<p class="text-xs font-weight-bold mb-0">' + row.source + '</p>';
                     html += '</td>';
                     html += '<td class="text-center">';
-                    html += row.status == 1 ? '<span class="badge bg-success">Completed</span>' : '<span class="badge bg-danger">Pending</span>';
+                    html += row.status == 1 ? '<span class="badge bg-success">Completed</span>' :
+                        '<span class="badge bg-danger">Pending</span>';
                     html += '</td>';
                     html += '<td class="align-middle">';
-                    html += row.assignedComplaints == null ? '<a href="' + currentUrl + '/compaints-management.details/' + row.id + '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' : '<a href="' + currentUrl + '/agent-management.details/' + row.id + '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
+                    html += row.assignedComplaints == null ? '<a href="' + currentUrl +
+                        '/compaints-management.details/' + row.id +
+                        '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
+                        '<a href="' + currentUrl + '/agent-management.details/' + row.id +
+                        '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
                     html += '</td>';
                     html += '</tr>';
                 });
