@@ -187,7 +187,7 @@
         function fetchDataOnClick(page) {
             console.log(page);
             $.ajax({
-                url: "{{ route('compaints-type-management.index') }}",
+                url: "{{ route('subtype-management.index') }}",
                 type: "GET",
                 data: {
                     type: 'ajax',
@@ -208,7 +208,7 @@
         // Function to send AJAX request on document ready
         function fetchDataOnReady() {
             $.ajax({
-                url: "{{ route('compaints-type-management.index') }}",
+                url: "{{ route('subtype-management.index') }}",
                 type: "GET",
                 data: {
                     type: 'ajax',
