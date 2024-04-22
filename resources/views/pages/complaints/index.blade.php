@@ -309,10 +309,8 @@
                         '<span class="badge bg-danger">Pending</span>';
                     html += '</td>';
                     html += '<td class="align-middle">';
-                    html += row.assignedComplaints == null ? '<a href="' + currentUrl +
-                        '/compaints-management.details/' + row.id +
-                        '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
-                        '<a href="' + currentUrl + '/agent-management.details/' + row.id +
+                    html += row.assigned_complaints == null ? '<a href="' + "{{ route('compaints-management.details', '') }}/" +row.id+ '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
+                        '<a href="{{ route("agent-management.details","") }}/' + row.assigned_complaints.id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
                     html += '</td>';
                     html += '</tr>';
