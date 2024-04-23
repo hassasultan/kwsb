@@ -49,7 +49,7 @@ Route::prefix('/admin')->group(function (){
         Route::get('/subtown/by/town', [SubTownController::class, 'get_subtown'])->name('subtown.by.town');
         Route::get('/subtype/by/type', [SubTypeController::class, 'get_subtype'])->name('subtype.by.type');
         Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
-        Route::get('/reports',[ComplaintController::class,'report'])->name('reports');
+        Route::get('/reports',[ComplaintController::class,'report'])->name('admin.reports');
 
 
     });

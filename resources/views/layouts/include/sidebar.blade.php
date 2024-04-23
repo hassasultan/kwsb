@@ -30,6 +30,10 @@
                         <a class="nav-link " href="{{ route('home') }}"><span
                                 class="ml-1 item-text">Dashboard</span></a>
                     </li>
+                    <li class="nav-item @if (Route::is('admin.reports')) active @endif">
+                        <a class="nav-link " href="{{ route('admin.reports') }}"><span
+                                class="ml-1 item-text">Reports</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>
