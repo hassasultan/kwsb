@@ -29,7 +29,7 @@ class FrontendController extends Controller
         return Validator::make($data, [
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
             'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
-            'title' => ['required', 'string'],
+            // 'title' => ['required', 'string'],
             'source' => ['required', 'string'],
             'description' => ['required', 'string'],
         ]);
