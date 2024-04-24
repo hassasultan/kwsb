@@ -41,7 +41,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body class="vertical dark  ">
+<body class="vertical" style="background-color:#fff !important ">
     <style>
         .item-required {
             color: red;
