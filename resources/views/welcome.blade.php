@@ -102,7 +102,7 @@
                                 </form> --}}
 
                                 <form role="form" method="POST" action="{{ route('front.compalaint.store') }}"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="complaint-form">
                                     @csrf
                                     {{-- <div class="col-6 card-body px-4 pb-2 ">
                                             <div class="row border border-2 border-dark p-2">
@@ -203,10 +203,6 @@
                                                 <select name="sub_town_id" id="sub_town_id"
                                                     class="form-control select2 border-dark" required>
                                                     <option selected disabled>-- Select SubTown --</option>
-                                                    {{-- @foreach ($subtown as $row)
-                                                            <option value="{{ $row->id }}">
-                                                                ({{ $row->town->town }}) {{ $row->title }}</option>
-                                                        @endforeach --}}
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -226,10 +222,6 @@
                                                 <select name="subtype_id" id="subtype_id"
                                                     class="form-control select2 border-dark" required>
                                                     <option selected disabled>-- Select SubType --</option>
-                                                    {{-- @foreach ($subtype as $row)
-                                                            <option value="{{ $row->id }}">{{ $row->title }}
-                                                            </option>
-                                                        @endforeach --}}
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -287,6 +279,29 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Congratulation you have Registered your
+                            Complaint</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Your Registered Complaint Number is <b>{{ session('success') }}</b>
+                    </div>
+                    <div class="modal-footer">
+                        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                        {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
 
     <!--   Core JS Files   -->
@@ -402,7 +417,9 @@
             console.log("check");
 
             @if (session('success'))
-                toastr.success('{{ session('success') }}');
+                toastr.success('Your Compaint has been Registered Successfully...');
+                $('#successModal').modal('show');
+                // toastr.success('{{ session('success') }}');
             @endif
             @if ($errors->any())
                 console.log("check");
@@ -413,6 +430,33 @@
         });
     </script>
     <script src='{{ asset('assets/js/quill.min.js') }}'></script>
+    <script>
+        $(document).ready(function() {
+            $('#complaint-form').submit(function(e) {
+                e.preventDefault();
+                var isEmpty = false;
+                $(this).find('input[type="text"], input[type="tel"], input[type="email"], textarea, select')
+                    .each(function() {
+                        var value = $(this).val();
+                        if (!value || value.trim() === '') {
+                            $(this).addClass('is-invalid');
+                            isEmpty = true;
+                            var fieldName = $(this).attr('name');
+                            // console.log('check');
+                            toastr.error('Please fill in ' + fieldName + ' field.');
+                        } else {
+                            $(this).removeClass('is-invalid');
+                        }
+                    });
+
+                if (isEmpty) {
+                    return false;
+                }
+                this.submit();
+            });
+        });
+    </script>
+
     <!-- select2 -->
     <script>
         $('.select2').select2({

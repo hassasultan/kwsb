@@ -72,8 +72,8 @@ class FrontendController extends Controller
             {
                 $data['image'] = $this->complaintImage($request->image);
             }
-            Complaints::create($data);
-            return redirect()->back()->with('success', 'Record created successfully.');
+            $complaint = Complaints::create($data);
+            return redirect()->back()->with('success', $complaint->comp_num);
 
         }
         else
