@@ -51,6 +51,49 @@
             display: grid;
             align-items: center;
         }
+        .skiptranslate
+        {
+            display: none !important;
+        }
+        .goog-te-combo{
+			  width: 170px;
+			  background: black;
+			  color: white;
+			  border-radius:5px;
+			  padding:3px;
+			  font-family:NexaBook;
+			  font-style: normal;
+		}
+
+		.goog-te-banner-frame.skiptranslate {
+		display: none !important;
+		} 
+		body {
+		top: 0px !important; 
+		}
+
+		.goog-logo-link {
+		display:none !important;
+		} 
+		.goog-te-gadget {
+		display:none !important;
+		} 
+		
+		.goog-te-gadget {
+		  color: transparent !important;
+		}
+		
+		#goog-gt-tt{display: none !important; top: 0px !important; } 
+		.goog-tooltip skiptranslate{display: none !important; top: 0px !important; } 
+		.activity-root { display: hide !important;} 
+		.status-message { display: hide !important;}
+		.started-activity-container { display: hide !important;}
+		
+		.goog-text-highlight { background: none !important; box-shadow: none !important;}
+		
+		#google_element{
+		  display:block;
+		}
     </style>
     <div id="app" class="wrapper">
         <div class="container-fluid p-4 bg-white  text-left " id="getPrint">
@@ -72,8 +115,19 @@
                     <div class="col-12 mt-2">
                         <div class="card my-4">
                             <div class="card-header bg-grey">
-
-                                <h5>Give Complaint Informarion...</h5>
+                                <div class="row">
+                                    <div class="col-9">
+                                        <h5>Give Complaint Informarion...</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div id="google_translate_element"></div>
+                                        <a target="_blank" class="btn btn-link  no-translate" href="./#googtrans(en|en)">English</a>
+                                        <a target="_blank" class="btn btn-link" href="./#googtrans(en|ur)">Urdu</a>
+        
+                                        {{-- <button onclick="translateTo('en')">English</button>
+                                        <button onclick="translateTo('ur')">Urdu</button> --}}
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body px-4 pb-2">
                                 {{-- {{ dd($errors) }} --}}
@@ -429,6 +483,46 @@
             @endif
         });
     </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      }
+    </script>
+    {{-- <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ur',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+            // $('#:2.container').css('display', 'none');
+        }
+
+        // Function to trigger translation to a specific language
+        function translateTo(language) {
+            var selector = 'a.VIpgJd-ZVi9od-xl07Ob-lTBxed';
+            var languageLinks = document.querySelectorAll(selector);
+            if (languageLinks.length > 0) {
+                for (var i = 0; i < languageLinks.length; i++) {
+                    var languageLink = languageLinks[i];
+                    var languageText = languageLink.querySelector('span').textContent.trim();
+                    if (languageText.toLowerCase() === language.toLowerCase()) {
+                        languageLink.click();
+                        return;
+                    }
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script> --}}
+
+    </script>
+    </script>
+
     <script src='{{ asset('assets/js/quill.min.js') }}'></script>
     <script>
         $(document).ready(function() {
