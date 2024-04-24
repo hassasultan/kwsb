@@ -46,25 +46,36 @@
         .item-required {
             color: red;
         }
+
+        .my-element {
+            display: grid;
+            align-items: center;
+        }
     </style>
     <div id="app" class="wrapper">
         <div class="container-fluid p-4 bg-white  text-left " id="getPrint">
             <div class="bg-white m-auto">
                 <div class="row">
-                    <div class="col-5 text-right">
+                    <div class="col-2 text-right">
                         <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
                             style="width: 200px;">
                     </div>
-                    <div class="col-7 text-left" style=" padding-top:2.4rem;">
-                        <h5 class=" fs-1">KW&SB-CMP</h5>
-                        <p style="font-size: 1.2rem"><span class="bg-dark text-white">COMPLAINT TYPE REPORT</span></p>
-                        <h5 style="font-size: 0.8rem"> DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                    <div class="col-10 text-left pt-3 my-element" style=" padding-top:2.4rem;">
+                        <h5 class=" fs-1">KWSC - COMPLAINT REGISTRATION
+                            <br />
+                            <span style="font-size: 0.8rem">DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
                         </h5>
+                        {{-- <p style="font-size: 1.2rem"><span class="bg-dark text-white">COMPLAINT TYPE REPORT</span></p>
+                        <h5 style="font-size: 0.8rem"> DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                        </h5> --}}
                     </div>
                     <div class="col-12 mt-2">
                         <div class="card my-4">
-                            <div class="card-body px-4 pb-2">
+                            <div class="card-header bg-grey">
+
                                 <h5>Give Complaint Informarion...</h5>
+                            </div>
+                            <div class="card-body px-4 pb-2">
                                 {{-- {{ dd($errors) }} --}}
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
@@ -93,8 +104,7 @@
                                 <form role="form" method="POST" action="{{ route('front.compalaint.store') }}"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <div class="row">
-                                        {{-- <div class="col-6 card-body px-4 pb-2 ">
+                                    {{-- <div class="col-6 card-body px-4 pb-2 ">
                                             <div class="row border border-2 border-dark p-2">
                                                 <h5>Consumer Informarion...</h5>
                                                 <div class="form-group col-md-3 p-3">
@@ -120,154 +130,153 @@
                                             </div>
                                         </div> --}}
 
-                                        {{-- <div class="col-12 card-body px-4 pb-2 ">
+                                    {{-- <div class="col-12 card-body px-4 pb-2 ">
                                             <div class="row  border border-2 border-dark p-2">
 
                                             </div>
                                         </div> --}}
-                                        <div class="col-12 card-body px-4 pb-2 border border-2 border-dark mt-3">
-                                            {{-- <h5>Complaint Informarion...</h5> --}}
-                                            <div class="row">
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Consumer # <span class="item-required">*</span></label>
-                                                    <input type="text"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        placeholder="Enter Consumer Number Here..." name="customer_num"
-                                                        value="{{ old('customer_num') }}" required />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Name<span class="item-required">*</span></label>
-                                                    <input type="text"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        placeholder="Enter Person  Name Here..." name="customer_name"
-                                                        value="{{ old('customer_name') }}" required />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Phone Number<span
-                                                            class="item-required">*</span></label>
-                                                    <input type="tel"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        placeholder="Enter Phone Number Here..." name="phone"
-                                                        value="{{ old('phone') }}" required />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Email</label>
-                                                    <input type="email"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        placeholder="Enter Email Here..." name="email"
-                                                        value="{{ old('email') }}" />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Address</label>
-                                                    <input type="text"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        placeholder="Enter Address Here..." name="address"
-                                                        value="{{ old('address') }}" />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Nearest Land Mark<span
-                                                            class="item-required">*</span></label>
-                                                    <input type="text"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        placeholder="Enter Nearest Land Mark Here..." name="landmark"
-                                                        value="{{ old('landmark') }}" required />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Select Town<span class="item-required">*</span></label>
-                                                    <select name="town_id" id="town_id"
-                                                        class="form-control select2 border-dark" required>
-                                                        <option selected disabled>-- Select Town --</option>
-                                                        @foreach ($town as $row)
-                                                            <option value="{{ $row->id }}">{{ $row->town }}
+                                    <div class="col-12 card-body ">
+                                        {{-- <h5>Complaint Informarion...</h5> --}}
+                                        <div class="row">
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Consumer # <span class="item-required">*</span></label>
+                                                <input type="text"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Consumer Number Here..." name="customer_num"
+                                                    value="{{ old('customer_num') }}" required />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Focal Person Name<span class="item-required">*</span></label>
+                                                <input type="text"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Person  Name Here..." name="customer_name"
+                                                    value="{{ old('customer_name') }}" required />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Focal Person Phone Number<span
+                                                        class="item-required">*</span></label>
+                                                <input type="tel"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Phone Number Here..." name="phone"
+                                                    value="{{ old('phone') }}" required />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Focal Person Email</label>
+                                                <input type="email"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Email Here..." name="email"
+                                                    value="{{ old('email') }}" />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Focal Person Address</label>
+                                                <input type="text"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Address Here..." name="address"
+                                                    value="{{ old('address') }}" />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Focal Person Nearest Land Mark<span
+                                                        class="item-required">*</span></label>
+                                                <input type="text"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Nearest Land Mark Here..." name="landmark"
+                                                    value="{{ old('landmark') }}" required />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select Town<span class="item-required">*</span></label>
+                                                <select name="town_id" id="town_id"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select Town --</option>
+                                                    @foreach ($town as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->town }}
 
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($customer != null)
-                                                        <input type="hidden" name="customer_id"
-                                                            value="@if (isset($customer->customer_id)) {{ $customer->id }} @endif" />
-                                                    @endif
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Select SubTown<span class="item-required">*</span></label>
-                                                    <select name="sub_town_id" id="sub_town_id"
-                                                        class="form-control select2 border-dark" required>
-                                                        <option selected disabled>-- Select SubTown --</option>
-                                                        {{-- @foreach ($subtown as $row)
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($customer != null)
+                                                    <input type="hidden" name="customer_id"
+                                                        value="@if (isset($customer->customer_id)) {{ $customer->id }} @endif" />
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select SubTown<span class="item-required">*</span></label>
+                                                <select name="sub_town_id" id="sub_town_id"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select SubTown --</option>
+                                                    {{-- @foreach ($subtown as $row)
                                                             <option value="{{ $row->id }}">
                                                                 ({{ $row->town->town }}) {{ $row->title }}</option>
                                                         @endforeach --}}
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Select Type<span class="item-required">*</span></label>
-                                                    <select name="type_id" id="type_id"
-                                                        class="form-control select2 border-dark" required>
-                                                        <option selected disabled>-- Select Type --</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select Type<span class="item-required">*</span></label>
+                                                <select name="type_id" id="type_id"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select Type --</option>
 
-                                                        @foreach ($type as $row)
-                                                            <option value="{{ $row->id }}">{{ $row->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Select Sub Type<span class="item-required">*</span></label>
-                                                    <select name="subtype_id" id="subtype_id"
-                                                        class="form-control select2 border-dark" required>
-                                                        <option selected disabled>-- Select SubType --</option>
-                                                        {{-- @foreach ($subtype as $row)
+                                                    @foreach ($type as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select Sub Type<span class="item-required">*</span></label>
+                                                <select name="subtype_id" id="subtype_id"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select SubType --</option>
+                                                    {{-- @foreach ($subtype as $row)
                                                             <option value="{{ $row->id }}">{{ $row->title }}
                                                             </option>
                                                         @endforeach --}}
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Select Priority<span class="item-required">*</span></label>
-                                                    <select name="prio_id" class="form-control select2 border-dark"
-                                                        required>
-                                                        @foreach ($prio as $row)
-                                                            <option value="{{ $row->id }}">{{ $row->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Select Source<span class="item-required">*</span></label>
-                                                    <select name="source" class="form-control select2 border-dark"
-                                                        required>
-                                                        @foreach ($source as $row)
-                                                            <option value="{{ $row->title }}">{{ $row->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                {{-- <div class="form-group col-md-3 p-3">
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select Priority<span class="item-required">*</span></label>
+                                                <select name="prio_id" class="form-control select2 border-dark"
+                                                    required>
+                                                    @foreach ($prio as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select Source<span class="item-required">*</span></label>
+                                                <select name="source" class="form-control select2 border-dark"
+                                                    required>
+                                                    @foreach ($source as $row)
+                                                        <option value="{{ $row->title }}">{{ $row->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- <div class="form-group col-md-3 p-3">
                                                     <label>Title<span class="item-required">*</span></label>
                                                     <input type="text" class="form-control border-bottom border-1 border-dark"
                                                         placeholder="Enter Sub Town Here..." name="title" required
                                                         value="{{ old('title') }}" />
                                                 </div> --}}
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Description<span class="item-required">*</span></label>
-                                                    <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
-                                                        name="description" required>{{ old('description') }}</textarea>
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <label>Picture</label>
-                                                    <input type="file"
-                                                        class="form-control border-bottom border-1 border-dark"
-                                                        name="image" value="{{ old('image') }}" />
-                                                </div>
-                                                <div class="form-group col-md-3 p-3">
-                                                    <button type="submit"
-                                                        class="btn btn-lg btn-primary btn-lg w-20 mt-4 mb-0">Create</button>
-                                                </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Description<span class="item-required">*</span></label>
+                                                <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
+                                                    name="description" required>{{ old('description') }}</textarea>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Picture</label>
+                                                <input type="file"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    name="image" value="{{ old('image') }}" />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <button type="submit"
+                                                    class="btn btn-lg btn-primary btn-lg w-20 mt-4 mb-0">Create</button>
                                             </div>
                                         </div>
-                                        {{-- @if ($customer != null) --}}
-                                        {{-- @endif --}}
                                     </div>
+                                    {{-- @if ($customer != null) --}}
+                                    {{-- @endif --}}
 
                                 </form>
                             </div>
