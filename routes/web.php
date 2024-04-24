@@ -8,6 +8,7 @@ use App\Http\Controllers\PrioritiesController;
 use App\Http\Controllers\ComplaintTypeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SubTownController;
 use App\Http\Controllers\SubTypeController;
@@ -24,8 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[HomeController::class, 'index'])->name('home');
-
+Route::get('/',[FrontendController::class, 'create_compalint'])->name('front.home');
+Route::get('/subtown/by/town', [SubTownController::class, 'get_subtown'])->name('subtown.by.town');
+Route::get('/subtype/by/type', [SubTypeController::class, 'get_subtype'])->name('subtype.by.type');
 
 Auth::routes();
 
@@ -46,8 +48,7 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
         Route::resource('/customer-management', CustomerController::class);
-        Route::get('/subtown/by/town', [SubTownController::class, 'get_subtown'])->name('subtown.by.town');
-        Route::get('/subtype/by/type', [SubTypeController::class, 'get_subtype'])->name('subtype.by.type');
+
         Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
         Route::get('/reports',[ComplaintController::class,'report'])->name('admin.reports');
 
