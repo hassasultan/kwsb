@@ -21,8 +21,8 @@
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
     <!-- App CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" disabled>
-    <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme">
+    <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" >
+    <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme" disabled>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="col-3">
                                         <div id="google_translate_element"></div>
-                                        <a target="_blank" class="btn btn-link  no-translate" href="./#googtrans(en|en)">English</a>
+                                        <a target="_blank" class="btn btn-link " href="./#googtrans(en|en)">English</a>
                                         <a target="_blank" class="btn btn-link" href="./#googtrans(en|ur)">Urdu</a>
         
                                         {{-- <button onclick="translateTo('en')">English</button>
@@ -189,15 +189,15 @@
 
                                             </div>
                                         </div> --}}
-                                    <div class="col-12 card-body ">
+                                    <div class="col-12 card-body " style="background-color: #f8f8f8;">
                                         {{-- <h5>Complaint Informarion...</h5> --}}
                                         <div class="row">
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Consumer # <span class="item-required">*</span></label>
+                                                <label>Consumer # </label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Consumer Number Here..." name="customer_num"
-                                                    value="{{ old('customer_num') }}" required />
+                                                    value="{{ old('customer_num') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Focal Person Name<span class="item-required">*</span></label>
@@ -288,7 +288,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3 p-3">
+                                            {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Select Source<span class="item-required">*</span></label>
                                                 <select name="source" class="form-control select2 border-dark"
                                                     required>
@@ -297,7 +297,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> --}}
                                             {{-- <div class="form-group col-md-3 p-3">
                                                     <label>Title<span class="item-required">*</span></label>
                                                     <input type="text" class="form-control border-bottom border-1 border-dark"
@@ -533,11 +533,14 @@
                     .each(function() {
                         var value = $(this).val();
                         if (!value || value.trim() === '') {
-                            $(this).addClass('is-invalid');
-                            isEmpty = true;
-                            var fieldName = $(this).attr('name');
-                            // console.log('check');
-                            toastr.error('Please fill in ' + fieldName + ' field.');
+                            if($(this).attr('name') != 'customer_num')
+                            {
+                                $(this).addClass('is-invalid');
+                                isEmpty = true;
+                                var fieldName = $(this).attr('name');
+                                // console.log('check');
+                                toastr.error('Please fill in ' + fieldName + ' field.');
+                            }
                         } else {
                             $(this).removeClass('is-invalid');
                         }
