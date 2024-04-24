@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[FrontendController::class, 'create_compalint'])->name('front.home');
+Route::post('/complaint/store',[FrontendController::class, 'store'])->name('front.compalaint.store');
 Route::get('/subtown/by/town', [SubTownController::class, 'get_subtown'])->name('subtown.by.town');
 Route::get('/subtype/by/type', [SubTypeController::class, 'get_subtype'])->name('subtype.by.type');
 

@@ -79,7 +79,7 @@
                                     </div>
                                 </form> --}}
 
-                                <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
+                                <form role="form" method="POST" action="{{ route('front.compalaint.store') }}"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">

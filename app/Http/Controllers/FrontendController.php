@@ -12,11 +12,28 @@ use App\Models\Priorities;
 use App\Models\SubTown;
 use App\Models\Source;
 use App\Models\Customer;
+use App\Traits\SaveImage;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use DB;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class FrontendController extends Controller
 {
     //
+    use SaveImage;
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'town_id' => ['required', 'numeric', 'exists:towns,id'],
+            'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
+            'title' => ['required', 'string'],
+            'source' => ['required', 'string'],
+            'description' => ['required', 'string'],
+        ]);
+    }
     public function create_compalint(Request $request)
     {
         $town = Town::all();
@@ -37,5 +54,27 @@ class FrontendController extends Controller
 
         return view('welcome',compact('customer','town','type','prio','subtown','subtype','source'));
 
+    }
+    public function store(Request $request)
+    {
+        $valid = $this->validator($request->all());
+        if($valid->valid())
+        {
+            $data = $request->all();
+            $prefix = "COMPLAINT-";
+            $CompNum = IdGenerator::generate(['table' => 'complaint','field' => 'comp_num', 'length' => 14, 'prefix' =>$prefix]);
+            $data['comp_num'] = $CompNum;
+            if($request->has('image') && $request->image != NULL)
+            {
+                $data['image'] = $this->complaintImage($request->image);
+            }
+            Complaints::create($data);
+            return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
+
+        }
+        else
+        {
+            return back()->with('error', $valid->errors());
+        }
     }
 }
