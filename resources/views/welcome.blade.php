@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.steps.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.timepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/quill.snow.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
@@ -41,8 +43,7 @@
 
 <body class="vertical dark  ">
     <style>
-        .item-required
-        {
+        .item-required {
             color: red;
         }
     </style>
@@ -64,6 +65,16 @@
                         <div class="card my-4">
                             <div class="card-body px-4 pb-2">
                                 <h5>Give Complaint Informarion...</h5>
+                                {{-- {{ dd($errors) }} --}}
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 {{-- <form role="form" method="get" action="{{ route('front.home') }}"
                                     enctype="multipart/form-data">
                                     <div class="row">
@@ -122,21 +133,22 @@
                                                     <input type="text"
                                                         class="form-control border-bottom border-1 border-dark"
                                                         placeholder="Enter Consumer Number Here..." name="customer_num"
-                                                        value="{{ old('customer_num') }}" required/>
+                                                        value="{{ old('customer_num') }}" required />
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
                                                     <label>Focal Person Name<span class="item-required">*</span></label>
                                                     <input type="text"
                                                         class="form-control border-bottom border-1 border-dark"
                                                         placeholder="Enter Person  Name Here..." name="customer_name"
-                                                        value="{{ old('customer_name') }}" required/>
+                                                        value="{{ old('customer_name') }}" required />
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Phone Number<span class="item-required">*</span></label>
+                                                    <label>Focal Person Phone Number<span
+                                                            class="item-required">*</span></label>
                                                     <input type="tel"
                                                         class="form-control border-bottom border-1 border-dark"
                                                         placeholder="Enter Phone Number Here..." name="phone"
-                                                        value="{{ old('phone') }}" required/>
+                                                        value="{{ old('phone') }}" required />
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
                                                     <label>Focal Person Email</label>
@@ -153,11 +165,12 @@
                                                         value="{{ old('address') }}" />
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
-                                                    <label>Focal Person Nearest Land Mark<span class="item-required">*</span></label>
+                                                    <label>Focal Person Nearest Land Mark<span
+                                                            class="item-required">*</span></label>
                                                     <input type="text"
                                                         class="form-control border-bottom border-1 border-dark"
                                                         placeholder="Enter Nearest Land Mark Here..." name="landmark"
-                                                        value="{{ old('landmark') }}" required/>
+                                                        value="{{ old('landmark') }}" required />
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
                                                     <label>Select Town<span class="item-required">*</span></label>
@@ -211,7 +224,8 @@
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
                                                     <label>Select Priority<span class="item-required">*</span></label>
-                                                    <select name="prio_id" class="form-control select2 border-dark" required>
+                                                    <select name="prio_id" class="form-control select2 border-dark"
+                                                        required>
                                                         @foreach ($prio as $row)
                                                             <option value="{{ $row->id }}">{{ $row->title }}
                                                             </option>
@@ -220,7 +234,8 @@
                                                 </div>
                                                 <div class="form-group col-md-3 p-3">
                                                     <label>Select Source<span class="item-required">*</span></label>
-                                                    <select name="source" class="form-control select2 border-dark" required>
+                                                    <select name="source" class="form-control select2 border-dark"
+                                                        required>
                                                         @foreach ($source as $row)
                                                             <option value="{{ $row->title }}">{{ $row->title }}
                                                             </option>
@@ -372,7 +387,22 @@
     <script src='{{ asset('assets/js/uppy.min.js') }}'></script>
     <script src='{{ asset('assets/js/ion.rangeSlider.min.js') }}'></script>
     <script src='{{ asset('assets/js/jQuery.tagify.min.js') }}'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("check");
 
+            @if (session('success'))
+                toastr.success('{{ session('success') }}');
+            @endif
+            @if ($errors->any())
+                console.log("check");
+                @foreach ($errors->all() as $error)
+                    toastr.error('{{ $error }}');
+                @endforeach
+            @endif
+        });
+    </script>
     <script src='{{ asset('assets/js/quill.min.js') }}'></script>
     <!-- select2 -->
     <script>
@@ -567,21 +597,22 @@
         }
     </script>
     <script>
-        $("#town_id").on("change",function(){
+        $("#town_id").on("change", function() {
             var town_id = $(this).val();
             $.ajax({
                 type: "get",
                 url: "{{ route('subtown.by.town') }}",
                 data: {
-                    'town_id':town_id,
+                    'town_id': town_id,
                 },
-                success: function (data) {
+                success: function(data) {
                     $("#sub_town_id").html("");
                     var your_html = "";
-                        $.each(data, function (key, val) {
-                            console.log(val);
-                            your_html += "<option value="+val['id']+">" +  val['title'] + "</option>"
-                        });
+                    $.each(data, function(key, val) {
+                        console.log(val);
+                        your_html += "<option value=" + val['id'] + ">" + val['title'] +
+                            "</option>"
+                    });
                     $("#sub_town_id").append(your_html); //// For Append
                 },
                 error: function() {
@@ -589,21 +620,22 @@
                 }
             });
         });
-        $("#type_id").on("change",function(){
+        $("#type_id").on("change", function() {
             var type_id = $(this).val();
             $.ajax({
                 type: "get",
                 url: "{{ route('subtype.by.type') }}",
                 data: {
-                    'type_id':type_id,
+                    'type_id': type_id,
                 },
-                success: function (data) {
+                success: function(data) {
                     $("#subtype_id").html("");
                     var your_html = "";
-                        $.each(data, function (key, val) {
-                            console.log(val);
-                            your_html += "<option value="+val['id']+">" +  val['title'] + "</option>"
-                        });
+                    $.each(data, function(key, val) {
+                        console.log(val);
+                        your_html += "<option value=" + val['id'] + ">" + val['title'] +
+                            "</option>"
+                    });
                     $("#subtype_id").append(your_html); //// For Append
                 },
                 error: function() {

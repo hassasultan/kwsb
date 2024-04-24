@@ -58,6 +58,10 @@ class FrontendController extends Controller
     public function store(Request $request)
     {
         $valid = $this->validator($request->all());
+        if ($valid->fails()) {
+            // dd($valid->errors());
+            return redirect()->back()->with('errors', $valid->errors());
+        }
         if($valid->valid())
         {
             $data = $request->all();
@@ -69,7 +73,7 @@ class FrontendController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             Complaints::create($data);
-            return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
+            return redirect()->back()->with('success', 'Record created successfully.');
 
         }
         else
