@@ -160,7 +160,7 @@
     <div id="app" class="wrapper">
         <div class="container-fluid">
             <div class="bg-dark col-12 mt-3 make-header desktop-header">
-                <div class="container">
+                {{-- <div class="container"> --}}
                     <div class="row">
                         <div class="col-md-3">
                             <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
@@ -181,10 +181,10 @@
                                 href="./#googtrans(en|ur)">Urdu</a>
                         </div>
                     </div>
-                </div>
+                {{-- </div> --}}
             </div>
             <div class="bg-dark col-12 mt-3 make-header mobile-header">
-                <div class="container-fluid">
+                {{-- <div class="container-fluid"> --}}
                     <div class="mobile-row">
                         <div class="w-20">
                             <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
@@ -205,7 +205,7 @@
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
                             href="./#googtrans(en|ur)">Urdu</a>
                     </div>
-                </div>
+                {{-- </div> --}}
             </div>
         </div>
         <div class="container-fluid p-4 bg-white  text-left " id="getPrint">
