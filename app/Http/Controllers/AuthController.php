@@ -71,7 +71,7 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
-    public function store(Request $request)
+    public function customer_register(Request $request)
     {
         $valid = $this->validator($request->all());
         if($valid->validate())
