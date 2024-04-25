@@ -306,14 +306,14 @@
                                                     value="{{ old('customer_num') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Focal Person Name<span class="item-required">*</span></label>
+                                                <label>Applicant Person Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Person  Name Here..." name="customer_name"
                                                     value="{{ old('customer_name') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Focal Person Phone Number<span
+                                                <label>Applicant Person Phone Number<span
                                                         class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
@@ -321,21 +321,21 @@
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Focal Person Email</label>
+                                                <label>Applicant Person Email</label>
                                                 <input type="email"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Email Here..." name="email"
                                                     value="{{ old('email') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Focal Person Address</label>
+                                                <label>Applicant Person Address</label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Address Here..." name="address"
                                                     value="{{ old('address') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Focal Person Nearest Land Mark<span
+                                                <label>Applicant Person Nearest Land Mark<span
                                                         class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
