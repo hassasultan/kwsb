@@ -21,7 +21,7 @@
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
     <!-- App CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" >
+    <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme">
     <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme" disabled>
 
     <!-- Fonts -->
@@ -51,63 +51,171 @@
             display: grid;
             align-items: center;
         }
-        .skiptranslate
-        {
+
+        .skiptranslate {
             display: none !important;
         }
-        .goog-te-combo{
-			  width: 170px;
-			  background: black;
-			  color: white;
-			  border-radius:5px;
-			  padding:3px;
-			  font-family:NexaBook;
-			  font-style: normal;
-		}
 
-		.goog-te-banner-frame.skiptranslate {
-		display: none !important;
-		} 
-		body {
-		top: 0px !important; 
-		}
+        .goog-te-combo {
+            width: 170px;
+            background: black;
+            color: white;
+            border-radius: 5px;
+            padding: 3px;
+            font-family: NexaBook;
+            font-style: normal;
+        }
 
-		.goog-logo-link {
-		display:none !important;
-		} 
-		.goog-te-gadget {
-		display:none !important;
-		} 
-		
-		.goog-te-gadget {
-		  color: transparent !important;
-		}
-		
-		#goog-gt-tt{display: none !important; top: 0px !important; } 
-		.goog-tooltip skiptranslate{display: none !important; top: 0px !important; } 
-		.activity-root { display: hide !important;} 
-		.status-message { display: hide !important;}
-		.started-activity-container { display: hide !important;}
-		
-		.goog-text-highlight { background: none !important; box-shadow: none !important;}
-		
-		#google_element{
-		  display:block;
-		}
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+
+        #goog-gt-tt {
+            display: none !important;
+            top: 0px !important;
+        }
+
+        .goog-tooltip skiptranslate {
+            display: none !important;
+            top: 0px !important;
+        }
+
+        .activity-root {
+            display: hide !important;
+        }
+
+        .status-message {
+            display: hide !important;
+        }
+
+        .started-activity-container {
+            display: hide !important;
+        }
+
+        .goog-text-highlight {
+            background: none !important;
+            box-shadow: none !important;
+        }
+
+        #google_element {
+            display: block;
+        }
+
+        .make-header {
+            height: 80px;
+            margin-top: 32px !important;
+        }
+        .mobile-header
+        {
+            display: none;
+        }
+        @media only screen and (max-width: 767px) {
+
+            .desktop-header
+            {
+                display: none;
+            }
+            .mobile-header
+            {
+                display: block;
+            }
+            .make-header
+            {
+                height: 120px !important;
+            }
+        }
+        .mobile-heading
+        {
+            font-size: 0.9rem;
+        }
+        .mobile-row
+        {
+            display: flex;
+        }
+        .w-20
+        {
+            max-width: 20%;
+        }
+        .w-80
+        {
+            max-width: 80%;
+        }
     </style>
     <div id="app" class="wrapper">
+        <div class="container-fluid">
+            <div class="bg-dark col-12 mt-3 make-header desktop-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                                style="width: 130px; margin-top:-30px;">
+                        </div>
+                        <div class="col-md-6 pt-3">
+                            <h5 class="fs-1 text-white">COMPLAINT REDRESSAL MECHANISM
+                                <br />
+                                <span style="font-size: 0.8rem">KW&SC  |  
+                                    {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                            </h5>
+                        </div>
+                        <div class="col-md-3 pt-3">
+                            <div id="google_translate_element"></div>
+                            <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                                href="./#googtrans(en|en)">English</a>
+                            <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                                href="./#googtrans(en|ur)">Urdu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-dark col-12 mt-3 make-header mobile-header">
+                <div class="container-fluid">
+                    <div class="mobile-row">
+                        <div class="w-20">
+                            <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                                style="width: 180px;">
+                        </div>
+                        <div class="w-80 pt-3 pl-2">
+                            <h5 class="mobile-heading text-white">COMPLAINT REDRESSAL MECHANISM
+                                <br />
+                                <span style="font-size: 0.6rem">KW&SC  |  
+                                    {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="w-100 text-right">
+                        <div id="google_translate_element"></div>
+                        <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                            href="./#googtrans(en|en)">English</a>
+                        <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                            href="./#googtrans(en|ur)">Urdu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid p-4 bg-white  text-left " id="getPrint">
             <div class="bg-white m-auto">
                 <div class="row">
                     <div class="col-2 text-right">
-                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
-                            style="width: 200px;">
+
                     </div>
                     <div class="col-10 text-left pt-3 my-element" style=" padding-top:2.4rem;">
-                        <h5 class=" fs-1">KWSC - COMPLAINT REGISTRATION
-                            <br />
-                            <span style="font-size: 0.8rem">DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
-                        </h5>
+
                         {{-- <p style="font-size: 1.2rem"><span class="bg-dark text-white">COMPLAINT TYPE REPORT</span></p>
                         <h5 style="font-size: 0.8rem"> DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
                         </h5> --}}
@@ -120,10 +228,8 @@
                                         <h5>Give Complaint Informarion...</h5>
                                     </div>
                                     <div class="col-3">
-                                        <div id="google_translate_element"></div>
-                                        <a target="_blank" class="btn btn-link " href="./#googtrans(en|en)">English</a>
-                                        <a target="_blank" class="btn btn-link" href="./#googtrans(en|ur)">Urdu</a>
-        
+
+
                                         {{-- <button onclick="translateTo('en')">English</button>
                                         <button onclick="translateTo('ur')">Urdu</button> --}}
                                     </div>
@@ -317,7 +423,7 @@
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <button type="submit"
-                                                    class="btn btn-lg btn-primary btn-lg w-20 mt-4 mb-0">Create</button>
+                                                    class="btn btn-lg btn-primary btn-lg mt-4 mb-0">Create</button>
                                             </div>
                                         </div>
                                     </div>
@@ -483,12 +589,16 @@
             @endif
         });
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
 
     <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-      }
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
     </script>
     {{-- <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -533,8 +643,7 @@
                     .each(function() {
                         var value = $(this).val();
                         if (!value || value.trim() === '') {
-                            if($(this).attr('name') != 'customer_num')
-                            {
+                            if ($(this).attr('name') != 'customer_num') {
                                 $(this).addClass('is-invalid');
                                 isEmpty = true;
                                 var fieldName = $(this).attr('name');
