@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     //
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'role' => ['required', 'numeric', 'In:4'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
     public function login(Request $request){
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -55,5 +64,23 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 999999,
             'user' => $user
         ]);
+    }
+    public function store(Request $request)
+    {
+        $valid = $this->validator($request->all());
+        if($valid->validate())
+        {
+            $user = User::create(['name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),]);
+            $user->role = $request->role;
+            $user->save();
+            return response()->jsone(['success'=> 'Record created successfully.']);
+        }
+        else
+        {
+            return response()->jsone(['error'=> $valid->errors()]);
+        }
     }
 }

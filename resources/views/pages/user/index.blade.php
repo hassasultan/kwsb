@@ -214,7 +214,7 @@
                 html += '<tr>';
                 html += '<td>' + user.name + '</td>';
                 html += '<td>' + user.email + '</td>';
-                html += '<td>' + (user.role == 2 ? 'System User' : 'Mobile Agent') + '</td>';
+                html += '<td>' + (user.role == 2 ? 'System User' : (user.role == 3 ? 'Mobile Agent' : 'Customer')) + '</td>';
                 html += '</tr>';
             });
             $('#user-table-body').html(html);
