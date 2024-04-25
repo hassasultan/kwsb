@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -16,6 +17,11 @@ class AuthController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string'],
+            'town' => ['required', 'string'],
+            'sub_town' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'customer_number' => ['required', 'string', 'customer_id', 'max:255', 'unique:customers'],
             'role' => ['required', 'numeric', 'In:4'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -76,6 +82,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),]);
             $user->role = $request->role;
             $user->save();
+            $customer = new Customer();
+            $customer->customer_id = $request->customer_number;
+            $customer->user_id = $user->id;
+            $customer->customer_name = $request->name; 
+            $customer->phone = $request->phone;
+            $customer->town = $request->town;
+            $customer->sub_town = $request->sub_town;
+            $customer->address = $request->address;
+            $customer->save();
             return response()->jsone(['success'=> 'Record created successfully.']);
         }
         else
