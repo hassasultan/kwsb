@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-use DB;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 
 class ComplaintController extends Controller
@@ -128,6 +129,17 @@ class ComplaintController extends Controller
         $town_id = auth('api')->user()->agent->town_id;
         $complaint = Complaints::with('town','customer','type','prio')->where('town_id', $town_id)->get();
         return $complaint;
+    }
+    public function type_wise_complaints()
+    {
+        $town_id = auth('api')->user()->agent->town_id;
+        $typesWithComplaintsCount = ComplaintType::withCount([
+            'complaints' => function (Builder $query) use ($town_id) {
+                $query->where('town_id', $town_id);
+            }
+        ])
+        ->get(['id', 'title']);
+        return $typesWithComplaintsCount;
     }
     public function agent_wise_complaints_count()
     {
