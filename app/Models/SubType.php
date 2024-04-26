@@ -17,4 +17,8 @@ class SubType extends Model
     {
         return $this->belongsTo(ComplaintType::class,'type_id','id');
     }
+    public function complaints()
+    {
+       return $this->hasMany(Complaints::class,'subtype_id','id');
+    }
 }

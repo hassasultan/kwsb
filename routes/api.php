@@ -28,6 +28,7 @@ Route::middleware(['IsMobileAgent'])->group(function () {
     Route::get('/agent-complaints', [ComplaintController::class, 'agent_wise_complaints']);
     Route::get('/agent-complaints/counts', [ComplaintController::class, 'agent_wise_complaints_count']);
     Route::get('/agent-complaints/counts/by/complaint-type', [ComplaintController::class, 'type_wise_complaints']);
+    Route::get('/agent-complaints/counts/by/subtype', [ComplaintController::class, 'subtype_wise_complaints']);
     Route::post('/agent-complaints/update', [ComplaintController::class, 'agent_complaints_update']);
 
 });

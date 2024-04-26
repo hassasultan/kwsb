@@ -141,6 +141,17 @@ class ComplaintController extends Controller
         ->get(['id', 'title']);
         return $typesWithComplaintsCount;
     }
+    public function subtype_wise_complaints()
+    {
+        $town_id = auth('api')->user()->agent->town_id;
+        $subtypesWithComplaintsCount = SubType::withCount([
+            'complaints' => function (Builder $query) use ($town_id) {
+                $query->where('town_id', $town_id);
+            }
+        ])
+        ->get(['id', 'title']);
+        return $subtypesWithComplaintsCount;
+    }
     public function agent_wise_complaints_count()
     {
         $typeCount = array();
