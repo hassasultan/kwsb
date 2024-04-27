@@ -31,7 +31,7 @@ Route::get('/get-subtown', [SubTownController::class, 'get_subtown']);
 Route::get('/get-town', [TownController::class, 'alltown']);
 Route::get('/get-types', [ComplaintTypeController::class, 'allTypes']);
 Route::get('/get-subtypes', [SubTypeController::class, 'get_subtype']);
-Route::get('/get-cutomer-complaint', [ComplaintController::class, 'customer_wise_complaints']);
+Route::get('/get-customer-complaint', [ComplaintController::class, 'customer_wise_complaints']);
 
 Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
