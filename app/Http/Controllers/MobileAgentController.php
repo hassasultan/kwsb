@@ -86,7 +86,28 @@ class MobileAgentController extends Controller
     }
     public function update(Request $request,$id)
     {
-        $valid = $this->validator($request->all());
+        $data = $request->all();
+        $valid = Validator::make($data, [
+            'user_id' => ['required', 'numeric', 'exists:users,id'],
+            'town_id' => ['required', 'numeric', 'exists:towns,id'],
+            'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
+            'type_id' => [
+                'required',
+                'numeric',
+                'exists:complaint_types,id',
+                function ($attribute, $value, $fail) use ($data, $id) {
+                    $existingAgent = MobileAgent::where('town_id', $data['town_id'])
+                                          ->where('type_id', $value)
+                                          ->where('id', '!=', $id)
+                                          ->exists();
+    
+                    if ($existingAgent) {
+                        $fail('The selected type for this town is already assigned to another agent.');
+                    }
+                }
+            ],
+            'address' => ['required', 'string'],
+        ]);
         if($valid->valid())
         {
             $data = $request->except(['_method','_token']);
