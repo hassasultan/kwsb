@@ -5,6 +5,8 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SubTownController;
 use App\Http\Controllers\TownController;
+use App\Http\Controllers\ComplaintTypeController;
+use App\Http\Controllers\SubTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,8 @@ Route::post('/customer/register', [AuthController::class, 'customer_register']);
 Route::post('/customer/complaint/registration', [FrontendController::class, 'api_store']);
 Route::get('/get-subtown', [SubTownController::class, 'get_subtown']);
 Route::get('/get-town', [TownController::class, 'alltown']);
+Route::get('/get-types', [ComplaintTypeController::class, 'allTypes']);
+Route::get('/get-subtypes', [SubTypeController::class, 'get_subtype']);
 
 Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

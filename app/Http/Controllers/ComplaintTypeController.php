@@ -27,6 +27,12 @@ class ComplaintTypeController extends Controller
         return view('pages.complaintTypes.create');
 
     }
+    public function allTypes()
+    {
+        $type = ComplaintType::all();
+        return $type;
+
+    }
     public function store(Request $request)
     {
         ComplaintType::create($request->all());
