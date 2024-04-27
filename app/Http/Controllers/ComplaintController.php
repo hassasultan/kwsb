@@ -127,15 +127,17 @@ class ComplaintController extends Controller
     public function agent_wise_complaints()
     {
         $town_id = auth('api')->user()->agent->town_id;
-        $complaint = Complaints::with('town','customer','type','subtype','prio')->where('town_id', $town_id)->get();
+        $type_id = auth('api')->user()->agent->type_id;
+        $complaint = Complaints::with('town','customer','type','subtype','prio')->where('town_id', $town_id)->where('type_id', $type_id)->get();
         return $complaint;
     }
     public function type_wise_complaints()
     {
+        $type_id = auth('api')->user()->agent->type_id;
         $town_id = auth('api')->user()->agent->town_id;
         $typesWithComplaintsCount = ComplaintType::withCount([
-            'complaints' => function (Builder $query) use ($town_id) {
-                $query->where('town_id', $town_id);
+            'complaints' => function (Builder $query) use ($town_id,$type_id) {
+                $query->where('town_id', $town_id)->where('type_id', $type_id);
             }
         ])
         ->get(['id', 'title']);
@@ -144,9 +146,10 @@ class ComplaintController extends Controller
     public function subtype_wise_complaints()
     {
         $town_id = auth('api')->user()->agent->town_id;
+        $type_id = auth('api')->user()->agent->type_id;
         $subtypesWithComplaintsCount = SubType::withCount([
-            'complaints' => function (Builder $query) use ($town_id) {
-                $query->where('town_id', $town_id);
+            'complaints' => function (Builder $query) use ($town_id,$type_id) {
+                $query->where('town_id', $town_id)->where('type_id', $type_id);
             }
         ])
         ->get(['id', 'title']);
@@ -156,12 +159,14 @@ class ComplaintController extends Controller
     {
         $typeCount = array();
         $town_id = auth('api')->user()->agent->town_id;
+        $type_id = auth('api')->user()->agent->type_id;
+
         $data['agent'] = MobileAgent::with('assignedComplaints','assignedComplaints.complaints','assignedComplaints.complaints.town')->find(auth('api')->user()->agent->id);
-        $data['total_complaint'] = Complaints::with('town','customer','type','prio')->where('town_id', $town_id)->count();
-        $data['total_complaint_pending'] = Complaints::where('status',0)->where('town_id', $town_id)->count();
-        $data['total_complaint_complete'] = Complaints::where('status',1)->where('town_id', $town_id)->count();
-        $type = ComplaintType::with('complaints')->whereHas('complaints',function($query)use($town_id){
-            $query->where('town_id', $town_id);
+        $data['total_complaint'] = Complaints::with('town','customer','type','prio')->where('town_id', $town_id)->where('type_id', $type_id)->count();
+        $data['total_complaint_pending'] = Complaints::where('status',0)->where('town_id', $town_id)->where('type_id', $type_id)->count();
+        $data['total_complaint_complete'] = Complaints::where('status',1)->where('town_id', $town_id)->where('type_id', $type_id)->count();
+        $type = ComplaintType::with('complaints')->whereHas('complaints',function($query)use($town_id, $type_id){
+            $query->where('town_id', $town_id)->where('type_id', $type_id);
         })->get();
         foreach($type as $key => $row)
         {

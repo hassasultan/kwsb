@@ -24,6 +24,7 @@
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Agent</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Town</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
                   {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                   <th class="text-secondary opacity-7">Action</th>
@@ -42,6 +43,9 @@
                             <td class="align-middle text-center text-sm">
                                 <p class="text-xs text-secondary mb-0">{{ $row->town->town }}</p>
                                 <p class="text-xs text-secondary mb-0">{{ $row->town->subtown }}</p>
+                            </td>
+                            <td class="align-middle text-center text-sm">
+                                <p class="text-xs text-secondary mb-0">{{ $row->complaint_type->title ?? 'Type is not defined...' }}</p>
                             </td>
                             <td>
                                 <p class="text-xs text-center font-weight-bold mb-0"> {{ $row->address }} </p>

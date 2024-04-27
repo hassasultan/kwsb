@@ -12,6 +12,7 @@ class MobileAgent extends Model
     protected $fillable = [
         "user_id",
         "town_id",
+        "type_id",
         "avatar",
         "description",
         "address",
@@ -24,6 +25,10 @@ class MobileAgent extends Model
     public function town()
     {
         return $this->belongsTo(Town::class,'town_id','id');
+    }
+    public function complaint_type()
+    {
+        return $this->belongsTo(ComplaintType::class,'type_id','id');
     }
     public function assignedComplaints()
     {
