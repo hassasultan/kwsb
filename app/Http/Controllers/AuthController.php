@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -19,11 +20,11 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string'],
-            'town' => ['required', 'string'],
-            'sub_town' => ['required', 'string'],
+            'town_id' => ['required', 'numeric', 'exists:towns,id'],
+            'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
             'address' => ['required', 'string'],
-            'customer_number' => ['required', 'string', 'customer_id', 'max:255', 'unique:customers'],
-            'role' => ['required', 'numeric', 'In:4'],
+            'customer_number' => ['required', 'string', 'max:255', 'unique:customers,customer_id,' . $data['customer_number'] . ',id'],
+            // 'role' => ['required', 'numeric', 'In:4'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -74,29 +75,38 @@ class AuthController extends Controller
     }
     public function customer_register(Request $request)
     {
-        $valid = $this->validator($request->all());
-        if($valid->validate())
+        try
         {
-            $user = User::create(['name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),]);
-            $user->role = $request->role;
-            $user->save();
-            $customer = new Customer();
-            $customer->customer_id = $request->customer_number;
-            $customer->user_id = $user->id;
-            $customer->customer_name = $request->name; 
-            $customer->phone = $request->phone;
-            $customer->town = $request->town;
-            $customer->sub_town = $request->sub_town;
-            $customer->address = $request->address;
-            $customer->save();
-            return response()->jsone(['success'=> 'Record created successfully.']);
+
+            $valid = $this->validator($request->all());
+            if($valid->validate())
+            {
+                $user = User::create(['name' => $request->name,
+                'email' => $request->email,
+                'role' => 5,
+                'password' => Hash::make($request->password),]);
+                $user->role = 5;
+                $user->save();
+                $customer = new Customer();
+                $customer->customer_id = $request->customer_number;
+                $customer->user_id = $user->id;
+                $customer->customer_name = $request->name; 
+                $customer->phone = $request->phone;
+                $customer->town_id = $request->town_id;
+                $customer->sub_town_id = $request->sub_town_id;
+                $customer->address = $request->address;
+                $customer->save();
+                return response()->json(['success'=> 'Record created successfully.']);
+            }
+            else
+            {
+                return response()->json(['error'=> $valid->errors()]);
+            }
         }
-        else
+        catch(Exception $exception)
         {
-            return response()->jsone(['error'=> $valid->errors()]);
+            return response()->json(['error'=> $exception->getMessage()]);
+
         }
     }
 }

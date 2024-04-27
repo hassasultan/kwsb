@@ -16,7 +16,7 @@ use App\Traits\SaveImage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use DB;
 use Illuminate\Support\Facades\Validator;
-
+use Exception;
 
 
 class FrontendController extends Controller
@@ -43,16 +43,14 @@ class FrontendController extends Controller
         $subtown = SubTown::all();
         $source = Source::all();
         $customer = NULL;
-        if($request->has('search'))
-        {
-            $customer = Customer::where('customer_id',$request->search)->first();
-            if($customer == null)
-            {
+        if ($request->has('search')) {
+            $customer = Customer::where('customer_id', $request->search)->first();
+            if ($customer == null) {
                 return redirect()->back()->with('error', "Customer Not Found...");
             }
         }
 
-        return view('welcome',compact('customer','town','type','prio','subtown','subtype','source'));
+        return view('welcome', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
 
     }
     public function store(Request $request)
@@ -62,23 +60,59 @@ class FrontendController extends Controller
             // dd($valid->errors());
             return redirect()->back()->with('errors', $valid->errors());
         }
-        if($valid->valid())
-        {
+        if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
-            $CompNum = IdGenerator::generate(['table' => 'complaint','field' => 'comp_num', 'length' => 14, 'prefix' =>$prefix]);
+            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 14, 'prefix' => $prefix]);
             $data['comp_num'] = $CompNum;
-            if($request->has('image') && $request->image != NULL)
-            {
+            if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
             $complaint = Complaints::create($data);
             return redirect()->back()->with('success', $complaint->comp_num);
 
-        }
-        else
-        {
+        } else {
             return back()->with('error', $valid->errors());
         }
     }
+    public function api_store(Request $request)
+    {
+        try {
+            $user = auth('api')->user();
+
+            if (!$user || $user->role != 5) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+
+            $data = $request->validate([
+                'town_id' => ['required', 'numeric', 'exists:towns,id'],
+                'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
+                'type_id' => ['required', 'numeric', 'exists:complaint_types,id'],
+                'subtype_id' => ['required', 'numeric', 'exists:sub_types,id'],
+                'title' => ['required', 'string'],
+                'description' => ['required', 'string'],
+            ]);
+
+            $prefix = "COMPLAINT-";
+            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 14, 'prefix' => $prefix]);
+            $data['comp_num'] = $CompNum;
+            $data['source'] = 'Mobile App';
+
+            if ($request->has('image') && $request->image != NULL) {
+                $data['image'] = $this->complaintImage($request->image);
+            }
+
+            $data['customer_id'] = $user->customer->id;
+            $complaint = Complaints::create($data);
+
+            return response()->json(['success' => $complaint->comp_num], 201);
+
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

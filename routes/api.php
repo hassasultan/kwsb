@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\SubTownController;
+use App\Http\Controllers\TownController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/customer/register', [AuthController::class, 'customer_register']);
+Route::post('/customer/complaint/registration', [FrontendController::class, 'api_store']);
+Route::get('/get-subtown', [SubTownController::class, 'get_subtown']);
+Route::get('/get-town', [TownController::class, 'alltown']);
+
 Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);

@@ -31,6 +31,11 @@ class TownController extends Controller
         }
         return view('pages.town.index',compact('town'));
     }
+    public function alltown()
+    {
+        $town = Town::all();
+        return $town;
+    }
     public function create()
     {
         return view('pages.town.create');
