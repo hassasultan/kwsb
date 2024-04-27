@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ComplaintType;
 use App\Models\MobileAgent;
 use App\Models\SubTown;
 use App\Models\Town;
@@ -22,6 +23,20 @@ class MobileAgentController extends Controller
             'user_id' => ['required', 'numeric', 'exists:users,id'],
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
             'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
+            'type_id' => [
+                'required',
+                'numeric',
+                'exists:complaint_types,id',
+                function ($attribute, $value, $fail) use ($data) {
+                    $existingAgent = MobileAgent::where('town_id', $data['town_id'])
+                                          ->where('type_id', $value)
+                                          ->exists();
+    
+                    if ($existingAgent) {
+                        $fail('The selected type for this town is already assigned to an agent.');
+                    }
+                }
+            ],
             'address' => ['required', 'string'],
         ]);
     }
@@ -36,7 +51,8 @@ class MobileAgentController extends Controller
         $user = User::where('role', 3)->get();
         $town = Town::all();
         $subtown = SubTown::all();
-        return view('pages.agent.create',compact('user','town','subtown'));
+        $type = ComplaintType::all();
+        return view('pages.agent.create',compact('user','town','subtown','type'));
 
     }
     public function store(Request $request)
