@@ -41,7 +41,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body class="vertical" style="background-color:#fff !important ">
+<body class="vertical" style="background-color:#fff !important; background-image:url('{{ asset('assets/images/cmp-bg.jpg') }}') !important;">
     <style>
         .item-required {
             color: red;
@@ -208,8 +208,8 @@
                 {{-- </div> --}}
             </div>
         </div>
-        <div class="container-fluid p-4 bg-white  text-left " id="getPrint">
-            <div class="bg-white m-auto">
+        <div class="container-fluid p-4  text-left " id="getPrint">
+            <div class=" m-auto">
                 <div class="row">
                     <div class="col-2 text-right">
 
@@ -235,7 +235,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body px-4 pb-2">
+                            <div class="card-body px-4 pb-2" style="">
                                 {{-- {{ dd($errors) }} --}}
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
