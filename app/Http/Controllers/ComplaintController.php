@@ -87,7 +87,7 @@ class ComplaintController extends Controller
             }
             else
             {
-                $phone = $cmp->customer->phone;
+                $phone = $cmp->phone;
             }
             $curl = curl_init();
 

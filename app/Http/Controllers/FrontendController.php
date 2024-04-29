@@ -75,7 +75,7 @@ class FrontendController extends Controller
             }
             else
             {
-                $phone = $complaint->customer->phone;
+                $phone = $complaint->phone;
             }
             $curl = curl_init();
 
@@ -145,7 +145,7 @@ class FrontendController extends Controller
             }
             else
             {
-                $phone = $complaint->customer->phone;
+                $phone = $complaint->phone;
             }
             $curl = curl_init();
 
