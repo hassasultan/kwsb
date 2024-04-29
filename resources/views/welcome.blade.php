@@ -424,7 +424,7 @@
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <button type="submit"
-                                                    class="btn btn-lg btn-primary btn-lg mt-4 mb-0">Create</button>
+                                                    class="btn btn-lg btn-primary btn-lg mt-4 mb-0">Submit</button>
                                             </div>
                                         </div>
                                     </div>
