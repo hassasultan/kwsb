@@ -344,10 +344,10 @@
                                                 @endif
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Select SubTown<span class="item-required">*</span></label>
+                                                <label>Select UC / Mohalla<span class="item-required">*</span></label>
                                                 <select name="sub_town_id" id="sub_town_id"
                                                     class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select SubTown --</option>
+                                                    <option selected disabled>-- Select UC / Mohalla --</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
