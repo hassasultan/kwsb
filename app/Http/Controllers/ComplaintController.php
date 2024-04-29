@@ -80,7 +80,43 @@ class ComplaintController extends Controller
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
-            Complaints::create($data);
+            $cmp = Complaints::create($data);
+            if($cmp->customer_id != 0)
+            {
+                $phone = $cmp->customer->phone;
+            }
+            else
+            {
+                $phone = $cmp->customer->phone;
+            }
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_POSTFIELDS => '{
+                    "MobileNumber":"'.$phone.'",
+                    "Type":"ComplaintLaunch",
+                    "ComplaintNumber":"'.$cmp->comp_num.'"
+
+                }
+                ',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            )
+            );
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
             return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
 
         } else {
