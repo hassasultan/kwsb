@@ -100,12 +100,12 @@ class AuthController extends Controller
             }
             else
             {
-                return response()->json(['error'=> $valid->errors()]);
+                return response()->json(['error'=> $valid->errors()],422);
             }
         }
         catch(Exception $exception)
         {
-            return response()->json(['error'=> $exception->getMessage()]);
+            return response()->json(['error'=> $exception->getMessage()],500);
 
         }
     }
