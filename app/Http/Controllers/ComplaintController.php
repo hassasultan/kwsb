@@ -116,7 +116,7 @@ class ComplaintController extends Controller
             $response = curl_exec($curl);
 
             curl_close($curl);
-
+            // dd($response);
             return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
 
         } else {
