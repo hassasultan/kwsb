@@ -26,6 +26,8 @@ class Complaints extends Model
         "address",
         "landmark",
         "image",
+        "lat",
+        "lng",
         "source",
         "status",
         "before_image",
