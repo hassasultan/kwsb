@@ -283,8 +283,8 @@
                     html += '</td>';
                     html += '<td class="align-middle text-center text-sm">';
                     if (row.image != null) {
-                        html += '<img src="{{ asset("' + row.image +
-                            '") }}/" class="img-fluid" style="width: 70px; height: 70px;" onerror="handleImageError()"/>';
+                        html += '<img src="' + currentUrl + '/public/storage/' + row.image +
+                            '" class="img-fluid" style="width: 70px; height: 70px;" />';
                     } else {
                         html += 'Not Available';
                     }
@@ -318,10 +318,7 @@
 
                 $('#user-table-body').html(html);
             }
-            function handleImageError() {
-    var imageElement = document.getElementById('image');
-    imageElement.src = ''; // Set src to null or an empty string to display nothing
-}
+
             // Function to generate pagination
             pre = 0;
             nxt = 0;
