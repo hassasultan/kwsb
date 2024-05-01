@@ -135,6 +135,12 @@ class FrontendController extends Controller
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
+            if ($request->has('image_two') && $request->image_two != NULL) {
+                $data['image_two'] = $this->complaintImage($request->image_two);
+            }
+            if ($request->has('image_three') && $request->image_three != NULL) {
+                $data['image_three'] = $this->complaintImage($request->image_three);
+            }
 
             $data['customer_id'] = $user->customer->id;
             $complaint = Complaints::create($data);
