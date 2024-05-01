@@ -174,7 +174,7 @@ class FrontendController extends Controller
 
             curl_close($curl);
 
-            return response()->json(['success' => $complaint->comp_num], 201);
+            return response()->json(['success' => $complaint->comp_num], 200);
 
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
