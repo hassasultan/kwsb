@@ -123,7 +123,7 @@ class FrontendController extends Controller
                 'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
                 'type_id' => ['required', 'numeric', 'exists:complaint_types,id'],
                 'subtype_id' => ['required', 'numeric', 'exists:sub_types,id'],
-                'title' => ['required', 'string'],
+                // 'title' => ['required', 'string'],
                 'description' => ['required', 'string'],
             ]);
 
