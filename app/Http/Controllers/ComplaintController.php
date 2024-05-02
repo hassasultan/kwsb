@@ -144,7 +144,7 @@ class ComplaintController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             Complaints::where('id', $id)->update($data);
-            return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
+            return redirect()->route('compaints-management.index')->with('success', 'Record Updated successfully.');
 
         } else {
             return back()->with('error', $valid->errors());
