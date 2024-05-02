@@ -127,8 +127,12 @@ class ComplaintController extends Controller
         $complaint = Complaints::find($id);
         $town = Town::all();
         $type = ComplaintType::all();
+        $subtype = SubType::all();
         $subtown = SubTown::all();
-        return view('pages.complaints.edit', compact('complaint', 'town', 'type', 'subtown'));
+        $prio = Priorities::all();
+        $source = Source::all();
+
+        return view('pages.complaints.edit', compact('complaint','prio','source','town', 'type', 'subtype','subtown'));
 
     }
     public function update(Request $request, $id)

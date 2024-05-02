@@ -312,6 +312,7 @@
                     html += row.assigned_complaints == null ? '<a href="' + "{{ route('compaints-management.details', '') }}/" +row.id+ '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
                         '<a href="{{ route("agent-management.details","") }}/' + row.assigned_complaints.id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
+                    html += '<a href="'+currentUrl+'/'+row.id +'/edit" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Edit</a>';
                     html += '</td>';
                     html += '</tr>';
                 });
