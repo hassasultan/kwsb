@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/customer/register', [AuthController::class, 'customer_register']);
+Route::get('/customer/profile', [AuthController::class, 'customer_profile']);
 Route::post('/customer/complaint/registration', [FrontendController::class, 'api_store']);
 Route::get('/get-subtown', [SubTownController::class, 'get_subtown']);
 Route::get('/get-town', [TownController::class, 'alltown']);
