@@ -75,8 +75,8 @@
                                 <h5>
                                     Comlaints List
                                 </h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
+                                {{-- <p class="card-text">With supporting text below as a natural lead-in to additional
+                                    content.</p> --}}
                             </div>
                             <div class="toolbar">
                                 <form class="form">
