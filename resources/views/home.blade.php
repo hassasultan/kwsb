@@ -126,7 +126,7 @@
                                     <span class="small text-muted">+100%</span>
                                     <span class="fe fe-arrow-up text-success fe-12"></span>
                                     <p class="text-muted mt-2">
-                                        Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui
+                                        Key Functions of Karachi Water & Sewerage Corporation.
                                     </p>
                                 </div>
                                 <div class="col-6 col-lg-2 text-center py-4">
@@ -136,15 +136,21 @@
                                     <span class="fe fe-arrow-up text-success fe-12"></span>
 
                                 </div>
-                                <div class="col-6 col-lg-2 text-center py-4">
+                                {{-- <div class="col-6 col-lg-2 text-center py-4">
                                     <p class="mb-1 small text-muted">Total Agents</p>
                                     <span class="h3">{{ $totalAgents }}</span><br />
                                     <span class="small text-muted">+20%</span>
                                     <span class="fe fe-arrow-up text-success fe-12"></span>
+                                </div> --}}
+                                <div class="col-6 col-lg-2 text-center py-4">
+                                    <p class="mb-1 small text-muted">Pending Complaints</p>
+                                    <span class="h3">{{ $complaintsPending }}</span><br />
+                                    <span class="small text-muted">+20%</span>
+                                    <span class="fe fe-arrow-up text-success fe-12"></span>
                                 </div>
                                 <div class="col-6 col-lg-2 text-center py-4">
-                                    <p class="mb-1 small text-muted">Total Customers</p>
-                                    <span class="h3">{{ $total_customer }}</span><br />
+                                    <p class="mb-1 small text-muted">Solved Complaints</p>
+                                    <span class="h3">{{ $complaintsComplete }}</span><br />
                                     <span class="small text-muted">+20%</span>
                                     <span class="fe fe-arrow-up text-success fe-12"></span>
                                 </div>

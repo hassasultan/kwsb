@@ -134,6 +134,6 @@ class HomeController extends Controller
         // }
         // dd($typeComp);
 
-        return view('home',compact('totalComplaints','totalAgents','allTown','typeComp_town','typeComp','total_customer'));
+        return view('home',compact('complaintsComplete','totalComplaints','totalAgents','allTown','typeComp_town','typeComp','total_customer','complaintsPending'));
     }
 }
