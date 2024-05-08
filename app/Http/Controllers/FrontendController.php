@@ -144,7 +144,7 @@ class FrontendController extends Controller
             }
 
             $data['customer_id'] = $user->customer->id;
-            dd($data);
+            // dd($data);
             $complaint = Complaints::create($data);
             if($complaint->phone != NULL)
             {
