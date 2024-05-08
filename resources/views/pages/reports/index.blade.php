@@ -13,7 +13,9 @@
                             <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
                                 enctype="multipart/form-data">
                                 <div class="row">
-        
+                                    <div class="form-group col-12">
+                                    <h6>Overall Reports</h6>
+                                    </div>
                                     <div class="form-group col-12">
                                         <label>From Date</label>
                                         <input type="date" class="form-control border-bottom"
@@ -41,7 +43,9 @@
                             <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
                                 enctype="multipart/form-data">
                                 <div class="row">
-        
+                                    <div class="form-group col-12">
+                                        <h6>Town Wise Reports</h6>
+                                    </div>
                                     <div class="form-group col-12">
                                         <label>From Date</label>
                                         <input type="date" class="form-control border-bottom"
@@ -79,7 +83,9 @@
                             <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
                                 enctype="multipart/form-data">
                                 <div class="row">
-        
+                                    <div class="form-group col-12">
+                                        <h6>Type Wise Reports</h6>
+                                    </div>
                                     <div class="form-group col-12">
                                         <label>From Date</label>
                                         <input type="date" class="form-control border-bottom"
@@ -117,7 +123,9 @@
                             <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
                                 enctype="multipart/form-data">
                                 <div class="row">
-        
+                                    <div class="form-group col-12">
+                                        <h6>Priority Wise Reports</h6>
+                                    </div>
                                     <div class="form-group col-12">
                                         <label>From Date</label>
                                         <input type="date" class="form-control border-bottom"
@@ -156,7 +164,9 @@
                             <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
                                 enctype="multipart/form-data">
                                 <div class="row">
-        
+                                    <div class="form-group col-12">
+                                        <h6>Source Wise Reports</h6>
+                                    </div>
                                     <div class="form-group col-12">
                                         <label>From Date</label>
                                         <input type="date" class="form-control border-bottom"
@@ -195,7 +205,9 @@
                             <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
                                 enctype="multipart/form-data">
                                 <div class="row">
-        
+                                    <div class="form-group col-12">
+                                        <h6>Customer Wise Reports</h6>
+                                    </div>
                                     <div class="form-group col-12">
                                         <label>From Date</label>
                                         <input type="date" class="form-control border-bottom"
