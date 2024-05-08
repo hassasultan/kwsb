@@ -118,8 +118,8 @@ class FrontendController extends Controller
             if (!$user || $user->role != 5) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
-
-            $data = $request->validate([
+            $data = $request->all();
+            $request->validate([
                 'town_id' => ['required', 'numeric', 'exists:towns,id'],
                 'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
                 'type_id' => ['required', 'numeric', 'exists:complaint_types,id'],
