@@ -145,13 +145,14 @@ class FrontendController extends Controller
 
             $data['customer_id'] = $user->customer->id;
             $complaint = Complaints::create($data);
-            if($complaint->customer_id != 0)
+            if($complaint->phone != NULL)
             {
-                $phone = $complaint->customer->phone;
+                $phone = $complaint->phone;
             }
             else
             {
-                $phone = $complaint->phone;
+                $phone = $complaint->customer->phone;
+
             }
             $curl = curl_init();
 
