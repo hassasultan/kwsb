@@ -81,36 +81,35 @@ class ComplaintController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             $cmp = Complaints::create($data);
-            if($cmp->customer_id != 0)
-            {
+            if ($cmp->customer_id != 0) {
                 $phone = $cmp->customer->phone;
-            }
-            else
-            {
+            } else {
                 $phone = $cmp->phone;
             }
             $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_POSTFIELDS => '{
-                    "MobileNumber":"'.$phone.'",
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_POSTFIELDS => '{
+                    "MobileNumber":"' . $phone . '",
                     "Type":"ComplaintLaunch",
-                    "ComplaintNumber":"'.$cmp->comp_num.'"
+                    "ComplaintNumber":"' . $cmp->comp_num . '"
 
                 }
                 ',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            )
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                )
             );
 
             $response = curl_exec($curl);
@@ -132,7 +131,7 @@ class ComplaintController extends Controller
         $prio = Priorities::all();
         $source = Source::all();
 
-        return view('pages.complaints.edit', compact('complaint','prio','source','town', 'type', 'subtype','subtown'));
+        return view('pages.complaints.edit', compact('complaint', 'prio', 'source', 'town', 'type', 'subtype', 'subtown'));
 
     }
     public function update(Request $request, $id)
@@ -231,6 +230,41 @@ class ComplaintController extends Controller
             $complaint->agent_description = $request->agent_description;
         }
         $complaint->save();
+        if ($complaint->phone != NULL) {
+            $phone = $complaint->phone;
+        } else {
+            $phone = $complaint->customer->phone;
+
+        }
+        $curl = curl_init();
+
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_POSTFIELDS => '{
+                    "MobileNumber":"' . $phone . '",
+                    "Type":"ComplaintSolve",
+                    "ComplaintNumber":"' . $complaint->comp_num . '"
+
+                }
+                ',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            )
+        );
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
         return response()->json(["message" => "Your Given Information Addedd Successfully..."]);
     }
     public function detail($id)
