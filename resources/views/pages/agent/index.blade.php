@@ -37,7 +37,7 @@
                             <td>
                                 <p class="text-xs font-weight-bold mb-0">{{ $row->user->name }}</p>
                                 @if ($row->avatar != NULL)
-                                    <img src="{{ asset('public/storage/'.$row->avatar) }}" class="img-fluid" style="width: 70px; height: 70px;"/>
+                                    <img src="{{ asset('storage/'.$row->avatar) }}" class="img-fluid" style="width: 70px; height: 70px;"/>
                                 @endif
                             </td>
                             <td class="align-middle text-center text-sm">
