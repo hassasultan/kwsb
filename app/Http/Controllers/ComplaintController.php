@@ -154,10 +154,10 @@ class ComplaintController extends Controller
     {
         $town_id = auth('api')->user()->agent->town_id;
         $type_id = auth('api')->user()->agent->type_id;
-        dd(auth()->user()->id);
+        // dd(auth()->user()->id);
         $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio','assignedComplaints')->whereHas('assignedComplaints',function($query)
         {
-            $query->where('agent_id',auth()->user()->agent->id);
+            $query->where('agent_id',auth('api')->user()->agent->id);
         })->where('town_id', $town_id)->where('type_id', $type_id)->get();
         return $complaint;
     }
