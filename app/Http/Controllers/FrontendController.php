@@ -104,10 +104,10 @@ class FrontendController extends Controller
             $response = curl_exec($curl);
             curl_close($curl);
 
-            $curl = curl_init();
+            $curl1 = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=2222891&lang=English&mobilenum=923012691232&password=Smskwsc@2024',
+            curl_setopt_array($curl1, array(
+                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=test&shortcode=KWSC&lang=English&mobilenum=923012691232&password=Smskwsc@2024',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -115,16 +115,15 @@ class FrontendController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
-                    'Cookie: cookiesession1=678B2883B54C73325A432BC21DAB6377'
-                ),
             )
             );
 
-            $response = curl_exec($curl);
+            $response1 = curl_exec($curl1);
 
-            dd($response);
-            curl_close($curl);
+            curl_close($curl1);
+
+            dd($response1);
+            curl_close($curl1);
             return redirect()->back()->with('success', $complaint->comp_num);
 
         } else {
