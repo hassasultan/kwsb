@@ -107,7 +107,7 @@ class FrontendController extends Controller
             $curl1 = curl_init();
 
             curl_setopt_array($curl1, array(
-                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=test&shortcode=KWSC&lang=English&mobilenum=923012691232&password=Smskwsc@2024',
+                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=check phone number&shortcode=KWSC&lang=English&mobilenum='.$phone.'&password=Smskwsc@2024',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
