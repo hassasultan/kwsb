@@ -122,7 +122,7 @@ class FrontendController extends Controller
 
             curl_close($curl1);
 
-            dd($response1);
+            // dd($response1);
             curl_close($curl1);
             return redirect()->back()->with('success', $complaint->comp_num);
 
