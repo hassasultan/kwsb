@@ -155,9 +155,8 @@ class ComplaintController extends Controller
         $town_id = auth('api')->user()->agent->town_id;
         $type_id = auth('api')->user()->agent->type_id;
         // dd(auth()->user()->id);
-        $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio','assignedComplaints')->whereHas('assignedComplaints',function($query)
-        {
-            $query->where('agent_id',auth('api')->user()->agent->id);
+        $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio', 'assignedComplaints')->whereHas('assignedComplaints', function ($query) {
+            $query->where('agent_id', auth('api')->user()->agent->id);
         })->where('town_id', $town_id)->where('type_id', $type_id)->get();
         return $complaint;
     }
@@ -269,6 +268,29 @@ class ComplaintController extends Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                    'Cookie: cookiesession1=678B2883C43F88D5E4F3BA5C946B0899'
+                ),
+        )
+        );
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
         return response()->json(["message" => "Your Given Information Addedd Successfully..."]);
     }
     public function detail($id)

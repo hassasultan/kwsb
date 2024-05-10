@@ -70,39 +70,60 @@ class FrontendController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             $complaint = Complaints::create($data);
-            if($complaint->customer_id != 0)
-            {
+            if ($complaint->customer_id != 0) {
                 $phone = $complaint->customer->phone;
-            }
-            else
-            {
+            } else {
                 $phone = $complaint->phone;
             }
             $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_POSTFIELDS => '{
-                    "MobileNumber":"'.$phone.'",
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_POSTFIELDS => '{
+                    "MobileNumber":"' . $phone . '",
                     "Type":"ComplaintLaunch",
-                    "ComplaintNumber":"'.$complaint->comp_num.'"
+                    "ComplaintNumber":"' . $complaint->comp_num . '"
 
                 }
                 ',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            )
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                )
             );
 
             $response = curl_exec($curl);
+            curl_close($curl);
+            $curl = curl_init();
+
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_HTTPHEADER => array(
+                        'Cookie: cookiesession1=678B2883C43F88D5E4F3BA5C946B0899'
+                    ),
+                )
+            );
+
+            $response = curl_exec($curl);
+
             curl_close($curl);
             return redirect()->back()->with('success', $complaint->comp_num);
 
@@ -146,37 +167,58 @@ class FrontendController extends Controller
             $data['customer_id'] = $user->customer->id;
             // dd($data);
             $complaint = Complaints::create($data);
-            if($complaint->phone != NULL)
-            {
+            if ($complaint->phone != NULL) {
                 $phone = $complaint->phone;
-            }
-            else
-            {
+            } else {
                 $phone = $complaint->customer->phone;
 
             }
             $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_POSTFIELDS => '{
-                    "MobileNumber":"'.$phone.'",
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_POSTFIELDS => '{
+                    "MobileNumber":"' . $phone . '",
                     "Type":"ComplaintLaunch",
-                    "ComplaintNumber":"'.$complaint->comp_num.'"
+                    "ComplaintNumber":"' . $complaint->comp_num . '"
 
                 }
                 ',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            )
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                )
+            );
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $curl = curl_init();
+
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_HTTPHEADER => array(
+                        'Cookie: cookiesession1=678B2883C43F88D5E4F3BA5C946B0899'
+                    ),
+                )
             );
 
             $response = curl_exec($curl);
