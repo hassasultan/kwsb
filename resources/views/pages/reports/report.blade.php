@@ -55,6 +55,9 @@
                             @if ($town != null)
                                 <b>Town : {{ $town->town }}</b>
                             @endif
+                            @if ($subtown != null)
+                                <b>UC : {{ $subtown->title }}</b>
+                            @endif
                             @if ($type != null)
                                 <b>Complaint Type : {{ $type->title }}</b>
                             @endif

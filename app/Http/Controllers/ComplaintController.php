@@ -315,10 +315,11 @@ class ComplaintController extends Controller
     public function report()
     {
         $town = Town::all();
+        $subtown = SubTown::all();
         $type = ComplaintType::get();
         $prio = Priorities::get();
         $source = Complaints::get()->groupBy('source');
-        return view('pages.reports.index', compact('town', 'type', 'prio', 'source'));
+        return view('pages.reports.index', compact('town','subtown', 'type', 'prio', 'source'));
 
     }
     public function generate_report(Request $request)
@@ -326,6 +327,7 @@ class ComplaintController extends Controller
         $dateS = $request->from_date;
         $dateE = $request->to_date;
         $town = null;
+        $subtown = null;
         $type = null;
         $prio = null;
         $source = null;
@@ -346,6 +348,11 @@ class ComplaintController extends Controller
         if ($request->has('town_id')) {
             $complaints = $complaints->where('town_id', $request->town_id);
             $town = Town::find($request->town_id);
+            // dd($town->toArray());
+        }
+        if ($request->has('sub_town_id')) {
+            $complaints = $complaints->where('sub_town_id', $request->sub_town_id);
+            $subtown = SubTown::find($request->sub_town_id);
             // dd($town->toArray());
         }
         if ($request->has('type_id')) {
@@ -384,6 +391,6 @@ class ComplaintController extends Controller
 
         // dd($comp);
         // dd($complaints->toArray());
-        return view('pages.reports.report', compact('complaints', 'type', 'dateS', 'dateE', 'town', 'consumer', 'source', 'prio'));
+        return view('pages.reports.report', compact('complaints','subtown', 'type', 'dateS', 'dateE', 'town', 'consumer', 'source', 'prio'));
     }
 }
