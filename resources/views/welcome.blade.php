@@ -225,7 +225,7 @@
                             <div class="card-header bg-grey">
                                 <div class="row">
                                     <div class="col-9">
-                                        <h5>Give Complaint Informarion...</h5>
+                                        <h5>Give Complaint Information...</h5>
                                     </div>
                                     <div class="col-3">
 
