@@ -210,11 +210,19 @@
         // Function to generate table rows
         function generateTableRows(users) {
             var html = '';
+            const currentUrl = window.location.href;
             $.each(users, function(index, user) {
                 html += '<tr>';
                 html += '<td>' + user.name + '</td>';
                 html += '<td>' + user.email + '</td>';
                 html += '<td>' + (user.role == 2 ? 'System User' : (user.role == 3 ? 'Mobile Agent' : 'Customer')) + '</td>';
+                html += '<td>'; 
+                html += '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                html += '<span class="text-muted sr-only">Action</span>';
+                html += '</button>';
+                html += '<div class="dropdown-menu dropdown-menu-right shadow">';
+                html += '<a class="dropdown-item" href="'+currentUrl+'/'+user.id+'/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
+                html += '</div></td>';
                 html += '</tr>';
             });
             $('#user-table-body').html(html);
