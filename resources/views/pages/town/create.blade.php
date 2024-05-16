@@ -20,6 +20,15 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-12 p-3">
+                                <label>Select District*</label>
+                                <select name="district_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                    @foreach ($district as $row)
+                                        <option value="{{ $row->id }}">{{ $row->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-12 p-3">
                                 <label>Town*</label>
                                 <input type="text" class="form-control border-bottom border-1 border-dark"
                                 placeholder="Enter Town Here..." name="town" required  value="{{ old('town') }}"/>

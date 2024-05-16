@@ -52,6 +52,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Town</th>
+                                                    <th>District</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -60,40 +61,50 @@
                                               <tr class="skeleton-row">
                                                 <td>Loading...</td>
                                                 <td>Loading...</td>
-                                            </tr>
-                                            <tr class="skeleton-row">
-                                                <td>Loading...</td>
                                                 <td>Loading...</td>
                                             </tr>
                                             <tr class="skeleton-row">
                                                 <td>Loading...</td>
-                                                <td>Loading...</td>
-                                            </tr>
-                                            <tr class="skeleton-row">
                                                 <td>Loading...</td>
                                                 <td>Loading...</td>
                                             </tr>
                                             <tr class="skeleton-row">
                                                 <td>Loading...</td>
                                                 <td>Loading...</td>
-                                            </tr>
-                                            <tr class="skeleton-row">
-                                                <td>Loading...</td>
                                                 <td>Loading...</td>
                                             </tr>
                                             <tr class="skeleton-row">
                                                 <td>Loading...</td>
-                                                <td>Loading...</td>
-                                            </tr>
-                                            <tr class="skeleton-row">
                                                 <td>Loading...</td>
                                                 <td>Loading...</td>
                                             </tr>
                                             <tr class="skeleton-row">
                                                 <td>Loading...</td>
                                                 <td>Loading...</td>
+                                                <td>Loading...</td>
                                             </tr>
                                             <tr class="skeleton-row">
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                            </tr>
+                                            <tr class="skeleton-row">
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                            </tr>
+                                            <tr class="skeleton-row">
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                            </tr>
+                                            <tr class="skeleton-row">
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                                <td>Loading...</td>
+                                            </tr>
+                                            <tr class="skeleton-row">
+                                                <td>Loading...</td>
                                                 <td>Loading...</td>
                                                 <td>Loading...</td>
                                             </tr>
@@ -197,6 +208,7 @@
             $.each(users, function(index, user) {
                 html += '<tr>';
                 html += '<td>' + user.town + '</td>';
+                html += '<td>' + user.district.title + '</td>';
                 html += '<td>'; 
                 html += '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                 html += '<span class="text-muted sr-only">Action</span>';

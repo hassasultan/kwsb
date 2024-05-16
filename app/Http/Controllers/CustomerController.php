@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $customer = Customer::all();
+        $customer = new Customer();
+        if($request->has('search') && $request->search != null && $request->search != '')
+        {
+            $customer = $customer->where('customer_id','LIKE','%'.$request->search.'%')->orwhere('customer_name','LIKE','%'.$request->search.'%')->orWhere('phone','LIKE','%'.$request->search.'%');
+        }
+        $customer = $customer->paginate(10);
+        if($request->has('type'))
+        {
+            return $customer;
+        }
         return view('pages.customer.index',compact('customer'));
     }
     public function create()

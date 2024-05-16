@@ -14,11 +14,21 @@ class Customer extends Model
         "phone",
         "town",
         "sub_town",
+        "town_id",
+        "sub_town_id",
         "address",
         "status",
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function town()
+    {
+        return $this->belongsTo(Town::class);
+    }
+    public function subtown()
+    {
+        return $this->belongsTo(SubTown::class);
     }
 }

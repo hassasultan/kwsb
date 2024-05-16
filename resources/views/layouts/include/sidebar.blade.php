@@ -65,6 +65,10 @@
                         <a class="nav-link" href="{{ url('admin/town-management') }}"><span class="ml-1 item-text">Town Management</span>
                         </a>
                     </li>
+                    <li class="nav-item @if (Route::is('districts.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/districts') }}"><span class="ml-1 item-text">District Management</span>
+                        </a>
+                    </li>
                     <li class="nav-item @if (Route::is('subtown-management.index')) active @endif">
                         <a class="nav-link" href="{{ url('admin/subtown-management') }}"><span class="ml-1 item-text">SubTown Management</span>
                         </a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Town;
+use App\Models\District;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class TownController extends Controller
     }
     public function index(Request $request)
     {
-        $town = new Town();
+        $town = Town::with('district');
         if($request->has('search') && $request->search != null && $request->search != '')
         {
             $town = $town->where('town','LIKE','%'.$request->search.'%');
@@ -38,7 +39,8 @@ class TownController extends Controller
     }
     public function create()
     {
-        return view('pages.town.create');
+        $district = District::all();
+        return view('pages.town.create',compact('district'));
 
     }
     public function store(Request $request)
@@ -57,8 +59,9 @@ class TownController extends Controller
     }
     public function edit($id)
     {
+        $district = District::all();
         $town = Town::find($id);
-        return view('pages.town.edit',compact('town'));
+        return view('pages.town.edit',compact('town','district'));
 
     }
     public function update(Request $request,$id)

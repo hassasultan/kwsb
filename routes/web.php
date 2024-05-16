@@ -12,6 +12,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SubTownController;
 use App\Http\Controllers\SubTypeController;
+use App\Http\Controllers\DistrictController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,7 @@ Route::prefix('/admin')->group(function (){
 
         Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
         Route::get('/reports',[ComplaintController::class,'report'])->name('admin.reports');
+        Route::resource('districts', DistrictController::class);
 
 
     });
