@@ -75,52 +75,52 @@ class FrontendController extends Controller
             } else {
                 $phone = $complaint->phone;
             }
-            // $curl = curl_init();
+            $curl = curl_init();
 
-            // curl_setopt_array(
-            //     $curl,
-            //     array(
-            //         CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
-            //         CURLOPT_RETURNTRANSFER => true,
-            //         CURLOPT_ENCODING => '',
-            //         CURLOPT_MAXREDIRS => 10,
-            //         CURLOPT_TIMEOUT => 0,
-            //         CURLOPT_FOLLOWLOCATION => true,
-            //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            //         CURLOPT_CUSTOMREQUEST => 'GET',
-            //         CURLOPT_POSTFIELDS => '{
-            //         "MobileNumber":"' . $phone . '",
-            //         "Type":"ComplaintLaunch",
-            //         "ComplaintNumber":"' . $complaint->comp_num . '"
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_POSTFIELDS => '{
+                    "MobileNumber":"' . $phone . '",
+                    "Type":"ComplaintLaunch",
+                    "ComplaintNumber":"' . $complaint->comp_num . '"
 
-            //     }
-            //     ',
-            //         CURLOPT_HTTPHEADER => array(
-            //             'Content-Type: application/json'
-            //         ),
-            //     )
-            // );
+                }
+                ',
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                )
+            );
 
-            // $response = curl_exec($curl);
-            // curl_close($curl);
+            $response = curl_exec($curl);
+            curl_close($curl);
 
-            // $curl1 = curl_init();
+            $curl1 = curl_init();
 
-            // curl_setopt_array($curl1, array(
-            //     CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=check phone number&shortcode=KWSC&lang=English&mobilenum='.$phone.'&password=Smskwsc@2024',
-            //     CURLOPT_RETURNTRANSFER => true,
-            //     CURLOPT_ENCODING => '',
-            //     CURLOPT_MAXREDIRS => 10,
-            //     CURLOPT_TIMEOUT => 0,
-            //     CURLOPT_FOLLOWLOCATION => true,
-            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            //     CURLOPT_CUSTOMREQUEST => 'GET',
-            // )
-            // );
+            curl_setopt_array($curl1, array(
+                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=check phone number&shortcode=KWSC&lang=English&mobilenum='.$phone.'&password=Smskwsc@2024',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            )
+            );
 
-            // $response1 = curl_exec($curl1);
+            $response1 = curl_exec($curl1);
 
-            // curl_close($curl1);
+            curl_close($curl1);
 
             return redirect()->back()->with('success', $complaint->comp_num);
 
