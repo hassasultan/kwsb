@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\CustomerFeedbackController;
 use App\Http\Controllers\SubTownController;
 use App\Http\Controllers\TownController;
 use App\Http\Controllers\ComplaintTypeController;
@@ -27,7 +28,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/customer/register', [AuthController::class, 'customer_register']);
 Route::get('/customer/profile', [AuthController::class, 'customer_profile']);
+Route::get('/customer/feedback/list', [CustomerFeedbackController::class, 'api_index']);
 Route::post('/customer/complaint/registration', [FrontendController::class, 'api_store']);
+Route::post('/customer/feedback/store', [CustomerFeedbackController::class, 'store']);
 Route::get('/get-subtown', [SubTownController::class, 'get_subtown']);
 Route::get('/get-town', [TownController::class, 'alltown']);
 Route::get('/get-types', [ComplaintTypeController::class, 'allTypes']);
