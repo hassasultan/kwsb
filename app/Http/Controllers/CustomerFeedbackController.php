@@ -10,7 +10,7 @@ class CustomerFeedbackController extends Controller
     //
     public function index()
     {
-        $data = CustomerFeedback::orderBy('DESC','id')->get();
+        $data = CustomerFeedback::orderBy('id','DESC')->get();
         return view('pages.feedback.index', compact('data'));
     }
     public function store(Request $request)
@@ -40,7 +40,7 @@ class CustomerFeedbackController extends Controller
         if (!$user || $user->role != 5) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        $data = CustomerFeedback::where('user_id',$user->id)->orderBy('DESC','id')->get();
+        $data = CustomerFeedback::where('user_id',$user->id)->orderBy('id','DESC')->get();
         return response()->json(['data'=>$data],200);
     }
 }
