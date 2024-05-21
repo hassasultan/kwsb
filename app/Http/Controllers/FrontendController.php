@@ -29,6 +29,7 @@ class FrontendController extends Controller
         return Validator::make($data, [
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
             'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
+            'g-recaptcha-response' => ['required','captcha'],
             // 'title' => ['required', 'string'],
             // 'source' => ['required', 'string'],
             'description' => ['required', 'string'],

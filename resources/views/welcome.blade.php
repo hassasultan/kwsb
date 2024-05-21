@@ -41,7 +41,8 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body class="vertical" style="background-color:#fff !important; background-image:url('{{ asset('assets/images/cmp-bg.jpg') }}') !important;">
+<body class="vertical"
+    style="background-color:#fff !important; background-image:url('{{ asset('assets/images/cmp-bg.jpg') }}') !important;">
     <style>
         .item-required {
             color: red;
@@ -121,39 +122,39 @@
             height: 80px;
             margin-top: 32px !important;
         }
-        .mobile-header
-        {
+
+        .mobile-header {
             display: none;
         }
+
         @media only screen and (max-width: 767px) {
 
-            .desktop-header
-            {
+            .desktop-header {
                 display: none;
             }
-            .mobile-header
-            {
+
+            .mobile-header {
                 display: block;
             }
-            .make-header
-            {
+
+            .make-header {
                 height: 120px !important;
             }
         }
-        .mobile-heading
-        {
+
+        .mobile-heading {
             font-size: 0.9rem;
         }
-        .mobile-row
-        {
+
+        .mobile-row {
             display: flex;
         }
-        .w-20
-        {
+
+        .w-20 {
             max-width: 20%;
         }
-        .w-80
-        {
+
+        .w-80 {
             max-width: 80%;
         }
     </style>
@@ -161,50 +162,50 @@
         <div class="container-fluid">
             <div class="bg-dark col-12 mt-3 make-header desktop-header">
                 {{-- <div class="container"> --}}
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
-                                style="width: 130px; margin-top:-30px;">
-                        </div>
-                        <div class="col-md-6 pt-3">
-                            <h5 class="fs-1 text-white">COMPLAINT REDRESSAL MECHANISM
-                                <br />
-                                <span style="font-size: 0.8rem">KW&SC  |  
-                                    {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
-                            </h5>
-                        </div>
-                        <div class="col-md-3 pt-3">
-                            <div id="google_translate_element"></div>
-                            <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                                href="./#googtrans(en|en)">English</a>
-                            <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                                href="./#googtrans(en|ur)">Urdu</a>
-                        </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                            style="width: 130px; margin-top:-30px;">
                     </div>
-                {{-- </div> --}}
-            </div>
-            <div class="bg-dark col-12 mt-3 make-header mobile-header">
-                {{-- <div class="container-fluid"> --}}
-                    <div class="mobile-row">
-                        <div class="w-20">
-                            <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
-                                style="width: 180px;">
-                        </div>
-                        <div class="w-80 pt-3 pl-2">
-                            <h5 class="mobile-heading text-white">COMPLAINT REDRESSAL MECHANISM
-                                <br />
-                                <span style="font-size: 0.6rem">KW&SC  |  
-                                    {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
-                            </h5>
-                        </div>
+                    <div class="col-md-6 pt-3">
+                        <h5 class="fs-1 text-white">COMPLAINT REDRESSAL MECHANISM
+                            <br />
+                            <span style="font-size: 0.8rem">KW&SC |
+                                {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                        </h5>
                     </div>
-                    <div class="w-100 text-right">
+                    <div class="col-md-3 pt-3">
                         <div id="google_translate_element"></div>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
                             href="./#googtrans(en|en)">English</a>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
                             href="./#googtrans(en|ur)">Urdu</a>
                     </div>
+                </div>
+                {{-- </div> --}}
+            </div>
+            <div class="bg-dark col-12 mt-3 make-header mobile-header">
+                {{-- <div class="container-fluid"> --}}
+                <div class="mobile-row">
+                    <div class="w-20">
+                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                            style="width: 180px;">
+                    </div>
+                    <div class="w-80 pt-3 pl-2">
+                        <h5 class="mobile-heading text-white">COMPLAINT REDRESSAL MECHANISM
+                            <br />
+                            <span style="font-size: 0.6rem">KW&SC |
+                                {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="w-100 text-right">
+                    <div id="google_translate_element"></div>
+                    <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                        href="./#googtrans(en|en)">English</a>
+                    <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                        href="./#googtrans(en|ur)">Urdu</a>
+                </div>
                 {{-- </div> --}}
             </div>
         </div>
@@ -264,6 +265,7 @@
                                 <form role="form" method="POST" action="{{ route('front.compalaint.store') }}"
                                     enctype="multipart/form-data" id="complaint-form">
                                     @csrf
+
                                     {{-- <div class="col-6 card-body px-4 pb-2 ">
                                             <div class="row border border-2 border-dark p-2">
                                                 <h5>Consumer Informarion...</h5>
@@ -367,7 +369,8 @@
                                             </div>
 
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Select Complaint Type<span class="item-required">*</span></label>
+                                                <label>Select Complaint Type<span
+                                                        class="item-required">*</span></label>
                                                 <select name="type_id" id="type_id"
                                                     class="form-control select2 border-dark" required>
                                                     <option selected disabled>-- Select Complaint Type --</option>
@@ -423,6 +426,8 @@
                                                     name="image" value="{{ old('image') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
+                                                {!! NoCaptcha::renderJs() !!}
+                                                {!! NoCaptcha::display() !!}
                                                 <button type="submit"
                                                     class="btn btn-lg btn-primary btn-lg mt-4 mb-0">Submit</button>
                                             </div>
