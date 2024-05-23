@@ -12,6 +12,7 @@ class CustomerFeedback extends Model
     protected $fillable =
     [
         'user_id',
+        'rating',
         'message',
     ];
     public function user()

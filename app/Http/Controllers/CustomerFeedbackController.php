@@ -18,6 +18,7 @@ class CustomerFeedbackController extends Controller
         try
         {
             $request->validate([
+                'rating' => ['required', 'numeric','in:0,1,2,3,4,5'],
                 'message' => ['required', 'string'],
             ]);
             $user = auth('api')->user();
