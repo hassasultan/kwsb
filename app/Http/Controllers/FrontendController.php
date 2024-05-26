@@ -232,5 +232,24 @@ class FrontendController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function track_complaint(Request $request)
+    {
+        $comp = Complaints::where('comp_num',$request->comp_num);
+        $auth = $comp->where('phone',$request->phone)->first();
+        // dd($auth->toArray());
+        if($auth == null)
+        {
+            $auth = $comp->with('customer')->whereHas('customer',function($q) use ($request){
+                $q->where('phone',$request->phone);
+            })->first();
+        }
+        if($auth == null)
+        {
+            return redirect()->back()->with('error', 'Sorry You are not Authenticate to view this Complaint...');
+        }
+        $comp = $comp->first();
+        // dd($comp->toArray());
+        return view('complaint-detail',compact('comp'));
+    }
 
 }
