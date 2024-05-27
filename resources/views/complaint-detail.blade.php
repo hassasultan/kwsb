@@ -98,16 +98,16 @@
                             </div>
                             <div class="col-md-6">
                                 @if ($comp->image != null)
-                                    <img src="{{ asset($comp->image) }}" style="width:250px;"/>
+                                    <img src="{{ asset('public/storage/'.$comp->image) }}" style="width:250px;"/>
                                     <br/>
                                 @endif
                                 @if ($comp->before_image != null)
-                                    <img src="{{ asset($comp->before_image) }}" style="width:250px;"/>
+                                    <img src="{{ asset('public/storage/'.$comp->before_image) }}" style="width:250px;"/>
                                     <br/>
 
                                 @endif
                                 @if ($comp->after_image != null)
-                                    <img src="{{ asset($comp->after_image) }}" style="width:250px;"/>
+                                    <img src="{{ asset('public/storage/'.$comp->after_image) }}" style="width:250px;"/>
                                     <br/>
 
                                 @endif
