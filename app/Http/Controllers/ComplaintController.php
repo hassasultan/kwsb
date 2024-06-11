@@ -91,7 +91,7 @@ class ComplaintController extends Controller
             curl_setopt_array(
                 $curl,
                 array(
-                    CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                    CURLOPT_URL => 'http://uti.bizintel.co:8003/ComplaintAPI.php',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -244,7 +244,7 @@ class ComplaintController extends Controller
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => 'http://115.167.50.221:8003/ComplaintAPI.php',
+                CURLOPT_URL => 'http://uti.bizintel.co:8003/ComplaintAPI.php',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
