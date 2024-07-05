@@ -74,18 +74,17 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
+                {{-- <div class="col-lg-4 col-md-6 mb-4">
                     <a href="{{ route('front.home.connection') }}" class="card-link">
                         <div class="card text-center p-4">
                             <div class="card-body">
                                 <i class="fas fa-tint icon"></i>
                                 <i class="fas fa-plus icon"></i>
-                                {{-- <i class="fas fa-plus-circle icon"></i> --}}
                                 <p class="card-text mt-3">Add New Connection</p>
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> --}}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <a href="javascript:void(0);" class="card-link" data-toggle="modal"
                         data-target="#trackComplaintModal">
