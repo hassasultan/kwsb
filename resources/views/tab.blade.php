@@ -75,7 +75,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{{ route('front.home') }}" class="card-link">
+                    <a href="{{ route('front.home.connection') }}" class="card-link">
                         <div class="card text-center p-4">
                             <div class="card-body">
                                 <i class="fas fa-tint icon"></i>
