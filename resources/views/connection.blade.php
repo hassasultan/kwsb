@@ -914,6 +914,7 @@
                             "</option>"
                     });
                     $("#sub_town_id").append(your_html); //// For Append
+                    $("#type_id").trigger('change');
                 },
                 error: function() {
                     console.log(data);
