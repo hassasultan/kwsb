@@ -684,12 +684,16 @@
                     .each(function() {
                         var value = $(this).val();
                         if (!value || value.trim() === '') {
-                            if ($(this).attr('name') != 'customer_num') {
+                            if ($(this).attr('name') == 'customer_num' || $(this).attr('name') == 'shops_count' || $(this).attr('name') == 'residential_type' || $(this).attr('name') == 'business_nature') {
+                            }
+                            else
+                            {
                                 $(this).addClass('is-invalid');
                                 isEmpty = true;
                                 var fieldName = $(this).attr('name');
                                 // console.log('check');
                                 toastr.error('Please fill in ' + fieldName + ' field.');
+
                             }
                         } else {
                             $(this).removeClass('is-invalid');
