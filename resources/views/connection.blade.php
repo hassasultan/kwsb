@@ -300,22 +300,42 @@
                                     <div class="col-12 card-body " style="background-color: #f8f8f8;">
                                         {{-- <h5>Complaint Informarion...</h5> --}}
                                         <div class="row">
-                                            <div class="form-group col-md-3 p-3">
+                                            {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Consumer # on BILL </label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Consumer Number Here..." name="customer_num"
                                                     value="{{ old('customer_num') }}" />
+                                            </div> --}}
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Select Connection Type<span
+                                                        class="item-required">*</span></label>
+                                                <select name="type_id" id="type_id"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select Complaint Type --</option>
+
+                                                    @foreach ($type as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Applicant Name<span class="item-required">*</span></label>
+                                                <label>Select Grivence<span class="item-required">*</span></label>
+                                                <select name="subtype_id" id="subtype_id"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select Grivence --</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Owner Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Person  Name Here..." name="customer_name"
                                                     value="{{ old('customer_name') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Applicant Phone Number<span
+                                                <label>Owner Phone Number<span
                                                         class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
@@ -323,11 +343,26 @@
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Applicant Email</label>
+                                                <label>Owner CNIC<span
+                                                        class="item-required">*</span></label>
+                                                <input type="tel"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter CNIC Here..." name="customer_cnic"
+                                                    value="{{ old('customer_cnic') }}" required />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Owner Email</label>
                                                 <input type="email"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Email Here..." name="email"
                                                     value="{{ old('email') }}" />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3 d-none" id="business-nature">
+                                                <label>Owner's Nature of Business</label>
+                                                <input type="text"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter Nature of Business Here..." name="business_nature"
+                                                    value="{{ old('business_nature') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Select Town<span class="item-required">*</span></label>
@@ -353,7 +388,23 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Applicant Person Address</label>
+                                                <label>Residential Type<span class="item-required">*</span></label>
+                                                <select name="residential_type" id="residential_type"
+                                                    class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Residential Type --</option>
+                                                    <option value="plot">Plot</option>
+                                                    <option value="flat">Flat</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>No. of Stories/Shops</label>
+                                                <input type="text"
+                                                    class="form-control border-bottom border-1 border-dark"
+                                                    placeholder="Enter No. of Stories/Shops Here..." name="shops_count"
+                                                    value="{{ old('shops_count') }}" />
+                                            </div>
+                                            <div class="form-group col-md-3 p-3">
+                                                <label>Owner Full Address</label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Address Here..." name="address"
@@ -368,26 +419,8 @@
                                                     value="{{ old('landmark') }}" required />
                                             </div>
 
-                                            <div class="form-group col-md-3 p-3">
-                                                <label>Select Complaint Type<span
-                                                        class="item-required">*</span></label>
-                                                <select name="type_id" id="type_id"
-                                                    class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Complaint Type --</option>
-
-                                                    @foreach ($type as $row)
-                                                        <option value="{{ $row->id }}">{{ $row->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-3 p-3">
-                                                <label>Select Grivence<span class="item-required">*</span></label>
-                                                <select name="subtype_id" id="subtype_id"
-                                                    class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Grivence --</option>
-                                                </select>
-                                            </div>
+                                            
+                                            
                                             {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Select Priority<span class="item-required">*</span></label>
                                                 <select name="prio_id" class="form-control select2 border-dark"
@@ -415,7 +448,7 @@
                                                         value="{{ old('title') }}" />
                                                 </div> --}}
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Description<span class="item-required">*</span></label>
+                                                <label>Comments<span class="item-required">*</span></label>
                                                 <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
                                                     name="description" required>{{ old('description') }}</textarea>
                                             </div>
@@ -425,7 +458,7 @@
                                                     class="form-control border-bottom border-1 border-dark"
                                                     name="image" value="{{ old('image') }}" />
                                             </div>
-                                            <div class="form-group col-md-3 p-3">
+                                            <div class="form-group col-md-12 p-3">
                                                 {!! NoCaptcha::renderJs() !!}
                                                 {!! NoCaptcha::display() !!}
                                                 <button type="submit"
@@ -907,6 +940,17 @@
                     console.log(data);
                 }
             });
+        });
+        $("#subtype_id").on("change", function() {
+            var subtype_val = $(this).val();
+            if(subtype_val == '59' || subtype_val == '60')
+            {
+                $('#business-nature').removeClass('d-none');
+            }
+            else
+            {
+                $('#business-nature').addClass('d-none');
+            }
         });
     </script>
     <!-- Github buttons -->
