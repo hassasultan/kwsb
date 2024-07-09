@@ -315,8 +315,10 @@
                                                     <option selected disabled>-- Select Complaint Type --</option>
 
                                                     @foreach ($type as $row)
-                                                        <option value="{{ $row->id }}">{{ $row->title }}
-                                                        </option>
+                                                        @if ($row->id == 14 || $row->id == 15)
+                                                            <option value="{{ $row->id }}">{{ $row->title }}
+                                                            </option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -946,11 +948,27 @@
             if(subtype_val == '59' || subtype_val == '60' || subtype_val == '63' || subtype_val == '64')
             {
                 $('#business-nature').removeClass('d-none');
-                $('#shops-counts').removeClass('d-none');
+                if(subtype_val != '60' || subtype_val != '64')
+                {
+                    $('#shops-counts').removeClass('d-none');
+                }
+                else
+                {
+                    $('#shops-counts').addClass('d-none');
+                }
             }
             else
             {
                 $('#business-nature').addClass('d-none');
+                $('#shops-counts').addClass('d-none');
+            }
+            if(subtype_val == '58' || subtype_val == '62')
+            {
+                $('#shops-counts label').html("No. of Stories");
+                $('#shops-counts').removeClass('d-none');
+            }
+            else
+            {
                 $('#shops-counts').addClass('d-none');
             }
         });
