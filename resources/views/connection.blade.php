@@ -389,10 +389,10 @@
                                                     <option selected disabled>-- Select UC / Mohalla --</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3 p-3">
-                                                <label>Residential Type<span class="item-required">*</span></label>
+                                            <div class="form-group col-md-3 p-3" id="_resType">
+                                                <label>Residential Type<span class="item-required"></span></label>
                                                 <select name="residential_type" id="residential_type"
-                                                    class="form-control select2 border-dark" required>
+                                                    class="form-control select2 border-dark" >
                                                     <option selected disabled>-- Residential Type --</option>
                                                     <option value="plot">Plot</option>
                                                     <option value="flat">Flat</option>
@@ -454,12 +454,12 @@
                                                 <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
                                                     name="description" required>{{ old('description') }}</textarea>
                                             </div>
-                                            <div class="form-group col-md-3 p-3">
+                                            {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Picture</label>
                                                 <input type="file"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     name="image" value="{{ old('image') }}" />
-                                            </div>
+                                            </div> --}}
                                             <div class="form-group col-md-12 p-3">
                                                 {!! NoCaptcha::renderJs() !!}
                                                 {!! NoCaptcha::display() !!}
@@ -980,6 +980,15 @@
             else
             {
                 $('#shops-counts').addClass('d-none');
+            }
+            if(subtype_val == '60' || subtype_val == '61' || subtype_val == '64' || subtype_val == '65')
+            {
+                $('#_resType').addClass('d-none');
+            }
+            else
+            {
+                $('#_resType').removeClass('d-none');
+
             }
         });
     </script>
