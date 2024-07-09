@@ -73,6 +73,25 @@ class FrontendController extends Controller
         return view('connection', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
 
     }
+    public function update_connection_request(Request $request)
+    {
+        $town = Town::all();
+        $type = ComplaintType::all();
+        $subtype = SubType::all();
+        $prio = Priorities::all();
+        $subtown = SubTown::all();
+        $source = Source::all();
+        $customer = NULL;
+        if ($request->has('search')) {
+            $customer = Customer::where('customer_id', $request->search)->first();
+            if ($customer == null) {
+                return redirect()->back()->with('error', "Customer Not Found...");
+            }
+        }
+
+        return view('consumer-data', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
+
+    }
     public function store(Request $request)
     {
         $valid = $this->validator($request->all());
