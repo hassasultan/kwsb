@@ -978,7 +978,7 @@
             }
             else
             {
-                $('#business-nature').addClass('d-none');
+                $('#shops-counts').addClass('d-none');
             }
         });
     </script>
