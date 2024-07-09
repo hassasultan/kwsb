@@ -950,11 +950,11 @@
                 $('#business-nature').removeClass('d-none');
                 if(subtype_val != '60' || subtype_val != '64')
                 {
-                    $('#shops-counts').addClass('d-none');
+                    $('#shops-counts').removeClass('d-none');
                 }
                 else
                 {
-                    $('#shops-counts').removeClass('d-none');
+                    $('#shops-counts').addClass('d-none');
                 }
             }
             else
@@ -965,11 +965,11 @@
             if(subtype_val == '58' || subtype_val == '62')
             {
                 $('#shops-counts label').html("No. of Stories");
-                $('#shops-counts').addClass('d-none');
+                $('#shops-counts').removeClass('d-none');
             }
             else
             {
-                $('#shops-counts').removeClass('d-none');
+                $('#shops-counts').addClass('d-none');
             }
         });
     </script>
