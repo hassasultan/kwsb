@@ -396,7 +396,7 @@
                                                     <option value="flat">Flat</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3 p-3">
+                                            <div class="form-group col-md-3 p-3 d-none" id="shops-counts">
                                                 <label>No. of Stories/Shops</label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
@@ -946,10 +946,12 @@
             if(subtype_val == '59' || subtype_val == '60')
             {
                 $('#business-nature').removeClass('d-none');
+                $('#shops-counts').removeClass('d-none');
             }
             else
             {
                 $('#business-nature').addClass('d-none');
+                $('#shops-counts').addClass('d-none');
             }
         });
     </script>
