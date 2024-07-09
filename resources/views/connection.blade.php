@@ -943,7 +943,7 @@
         });
         $("#subtype_id").on("change", function() {
             var subtype_val = $(this).val();
-            if(subtype_val == '59' || subtype_val == '60')
+            if(subtype_val == '59' || subtype_val == '60' || subtype_val == '63' || subtype_val == '64')
             {
                 $('#business-nature').removeClass('d-none');
                 $('#shops-counts').removeClass('d-none');
