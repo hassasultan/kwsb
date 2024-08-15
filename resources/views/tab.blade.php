@@ -57,6 +57,11 @@
     .icon {
         font-size: 3rem;
     }
+    .card-extra-css {
+        border: 2px solid;
+        box-shadow: 0px 7px 6px 0px;
+        border-radius: 1.2rem;
+    }
 </style>
 
 <body class="vertical"
@@ -66,20 +71,19 @@
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <a href="{{ route('front.home') }}" class="card-link">
-                        <div class="card text-center p-4">
+                        <div class="card text-center p-4 card-extra-css">
                             <div class="card-body">
-                                <i class="fas fa-plus-circle icon"></i>
-                                <p class="card-text mt-3">Add New Complaint</p>
+                                <img src="{{ asset('assets/images/add-file-color.png') }}" style="width: 80px;"/>
+                                <p class="card-text mt-3">Add Complaint</p>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <a href="{{ route('front.home.connection') }}" class="card-link">
-                        <div class="card text-center p-4">
+                        <div class="card text-center p-4 card-extra-css">
                             <div class="card-body">
-                                <i class="fas fa-tint icon"></i>
-                                <i class="fas fa-plus icon"></i>
+                                <img src="{{ asset('assets/images/water-tap.png') }}" style="width: 80px;"/>
                                 <p class="card-text mt-3">Add New Connection</p>
                             </div>
                         </div>
@@ -88,9 +92,9 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <a href="javascript:void(0);" class="card-link" data-toggle="modal"
                         data-target="#trackComplaintModal">
-                        <div class="card text-center p-4">
+                        <div class="card text-center p-4 card-extra-css">
                             <div class="card-body">
-                                <i class="fas fa-search icon"></i>
+                                <img src="{{ asset('assets/images/search.png') }}" style="width: 80px;"/>
                                 <p class="card-text mt-3">Track Your Complaint</p>
                             </div>
                         </div>
