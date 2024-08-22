@@ -171,7 +171,7 @@ class ComplaintController extends Controller
             $customer_id = auth('api')->user()->customer->id;
             if(auth('api')->user()->status == 0)
             {
-                return response()->json(['success' => 'No Record Found...']);
+                return response()->json(['success' => 'No Record Found...'],500);
             }
             // $type_id = auth('api')->user()->agent->type_id;
             $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->get();
