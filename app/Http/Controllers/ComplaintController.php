@@ -169,6 +169,10 @@ class ComplaintController extends Controller
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
             $customer_id = auth('api')->user()->customer->id;
+            if(auth('api')->user()->status == 0)
+            {
+                return response()->json(['success' => 'No Record Found...']);
+            }
             // $type_id = auth('api')->user()->agent->type_id;
             $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->get();
             return $complaint;

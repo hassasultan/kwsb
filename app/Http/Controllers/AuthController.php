@@ -34,6 +34,11 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
+        $exist_user = User::where('email',$request->email)->where('status',0)->where('delete_status',1)->first();
+        if($exist_user != null)
+        {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        } 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
@@ -81,9 +86,24 @@ class AuthController extends Controller
     public function customer_register(Request $request)
     {
         try {
-
+            $exist_user = User::where('email',$request->email)->where('status',0)->where('delete_status',1)->first();
+            if($exist_user != null)
+            {
+                $exist_user->delete_status = 0;
+                $exist_user->save();
+                $customer = Customer::where('user_id',$exist_user->id)->first();
+                $customer->customer_id = $request->customer_number;
+                $customer->customer_name = $request->name;
+                $customer->phone = $request->phone;
+                $customer->town_id = $request->town_id;
+                $customer->sub_town_id = $request->sub_town_id;
+                $customer->address = $request->address;
+                $customer->save();
+                return response()->json(['success' => 'Record created successfully.']);
+            } 
             $valid = $this->validator($request->all());
-            if ($valid->validate()) {
+            if ($valid->validate()) 
+            {
                 $user = User::create([
                     'name' => $request->name,
                     'email' => $request->email,
@@ -124,6 +144,23 @@ class AuthController extends Controller
             }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function delete_user()
+    {
+        if(auth('api')->user())
+        {
+            $id = auth('api')->user()->id;
+            $user = User::find($id);
+            $user->status = 0;
+            $user->delete_status = 1;
+            $user->save();
+            $this->logout();
+            return response()->json(['message' => 'User successfully deleted...']);
+        }
+        else
+        {
+            return response()->json(['error' => 'user should be logged in to delete user...'], 500);
         }
     }
 }
