@@ -243,12 +243,44 @@ class ComplaintController extends Controller
             $phone = $complaint->customer->phone;
 
         }
-        $curl = curl_init();
+        if($request->status == "1")
+        {
 
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => 'http://uti.bizintel.co:8003/ComplaintAPI.php',
+            $curl = curl_init();
+    
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'http://uti.bizintel.co:8003/ComplaintAPI.php',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_POSTFIELDS => '{
+                        "MobileNumber":"' . $phone . '",
+                        "Type":"ComplaintSolve",
+                        "ComplaintNumber":"' . $complaint->comp_num . '"
+    
+                    }
+                    ',
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                )
+            );
+    
+            $response = curl_exec($curl);
+    
+            curl_close($curl);
+    
+    
+            $curl = curl_init();
+    
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -256,44 +288,16 @@ class ComplaintController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_POSTFIELDS => '{
-                    "MobileNumber":"' . $phone . '",
-                    "Type":"ComplaintSolve",
-                    "ComplaintNumber":"' . $complaint->comp_num . '"
-
-                }
-                ',
                 CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
+                        'Cookie: cookiesession1=678B2883C43F88D5E4F3BA5C946B0899'
+                    ),
             )
-        );
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                    'Cookie: cookiesession1=678B2883C43F88D5E4F3BA5C946B0899'
-                ),
-        )
-        );
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
+            );
+    
+            $response = curl_exec($curl);
+    
+            curl_close($curl);
+        }
 
         return response()->json(["message" => "Your Given Information Addedd Successfully..."]);
     }
