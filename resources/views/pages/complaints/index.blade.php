@@ -298,15 +298,15 @@
                         html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.updated_at).format(
                             'DD/MM/YYYY hh:mm:ss') + '</p>';
                     } else {
-                        html += '<span class="bg-danger">Yet Not Resolve</span>';
+                        html += '<span class="bg-danger text-white">Yet Not Resolve</span>';
                     }
                     html += '</td>';
                     html += '<td class="text-center">';
                     html += '<p class="text-xs font-weight-bold mb-0">' + row.source + '</p>';
                     html += '</td>';
                     html += '<td class="text-center">';
-                    html += row.status == 1 ? '<span class="badge bg-success">Completed</span>' :
-                        '<span class="badge bg-danger">Pending</span>';
+                    html += row.status == 1 ? '<span class="badge bg-success text-white">Completed</span>' :
+                        '<span class="badge bg-danger text-white">Pending</span>';
                     html += '</td>';
                     html += '<td class="align-middle">';
                     html += row.assigned_complaints == null ? '<a href="' + "{{ route('compaints-management.details', '') }}/" +row.id+ '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
