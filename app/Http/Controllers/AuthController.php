@@ -92,6 +92,10 @@ class AuthController extends Controller
                 $exist_user->delete_status = 0;
                 $exist_user->save();
                 $customer = Customer::where('user_id',$exist_user->id)->first();
+                if($customer == null)
+                {
+                    $customer = new Customer();
+                }
                 $customer->customer_id = $request->customer_number;
                 $customer->customer_name = $request->name;
                 $customer->phone = $request->phone;

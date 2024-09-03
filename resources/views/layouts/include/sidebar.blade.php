@@ -53,6 +53,10 @@
                     <span class="ml-3 item-text">Activities</span>
                 </a>
                 <ul class="collapse list-unstyled w-100 show" id="ui-elements">
+                    <li class="nav-item @if (Route::is('announcements.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/announcements') }}"><span class="ml-1 item-text">Announcement</span>
+                        </a>
+                    </li>
                     <li class="nav-item @if (Route::is('user-management.index')) active @endif">
                         <a class="nav-link" href="{{ url('admin/user-management') }}"><span class="ml-1 item-text">User Management</span>
                         </a>

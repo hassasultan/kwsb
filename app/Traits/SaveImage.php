@@ -12,6 +12,18 @@ trait SaveImage
      * @param string $value
      * @return void
      */
+    public function announcementImage($image)
+    {
+        // $this->attributes['slug'] = Str::slug($image, config('roles.separator'));
+        $img = $image;
+        $number = rand(1,999);
+        $numb = $number / 7 ;
+        $extension      = $img->extension();
+        $filenamenew    = date('Y-m-d')."_.".$numb."_.".$extension;
+        $filenamepath   = 'announcement/image'.'/'.'img/'.$filenamenew;
+        $filename       = $img->move(public_path('storage/announcement/image'.'/'.'img'),$filenamenew);
+        return $filenamepath;
+    }
     public function complaintImage($image)
     {
         // $this->attributes['slug'] = Str::slug($image, config('roles.separator'));

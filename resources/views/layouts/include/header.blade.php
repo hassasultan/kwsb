@@ -9,12 +9,12 @@
           placeholder="Type something..." aria-label="Search">
   </form> --}}
   <ul class="nav">
-      {{-- <li class="nav-item">
+      <li class="nav-item">
           <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="">
               <i class="fe fe-sun fe-16"></i>
           </a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
           <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-shortcut">
               <span class="fe fe-grid fe-16"></span>
           </a>
