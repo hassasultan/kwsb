@@ -10,7 +10,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Perfect Scrollbar CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/simplebar.css') }}">
     <!-- Fonts CSS -->
     <link
@@ -35,10 +34,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.timepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/quill.snow.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 <style>
     .card-link {
@@ -57,6 +52,7 @@
     .icon {
         font-size: 3rem;
     }
+
     .card-extra-css {
         border: 2px solid;
         box-shadow: 0px 7px 6px 0px;
@@ -66,39 +62,205 @@
 
 <body class="vertical"
     style="background-color:#fff !important; background-image:url('{{ asset('assets/images/cmp-bg.jpg') }}') !important;">
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{{ route('front.home') }}" class="card-link">
-                        <div class="card text-center p-4 card-extra-css">
-                            <div class="card-body">
-                                <img src="{{ asset('assets/images/add-file-color.png') }}" style="width: 80px;"/>
-                                <p class="card-text mt-3">Add Complaint</p>
-                            </div>
-                        </div>
-                    </a>
+    <style>
+        .item-required {
+            color: red;
+        }
+
+        .my-element {
+            display: grid;
+            align-items: center;
+        }
+
+        .skiptranslate {
+            display: none !important;
+        }
+
+        .goog-te-combo {
+            width: 170px;
+            background: black;
+            color: white;
+            border-radius: 5px;
+            padding: 3px;
+            font-family: NexaBook;
+            font-style: normal;
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+
+        #goog-gt-tt {
+            display: none !important;
+            top: 0px !important;
+        }
+
+        .goog-tooltip skiptranslate {
+            display: none !important;
+            top: 0px !important;
+        }
+
+        .activity-root {
+            display: hide !important;
+        }
+
+        .status-message {
+            display: hide !important;
+        }
+
+        .started-activity-container {
+            display: hide !important;
+        }
+
+        .goog-text-highlight {
+            background: none !important;
+            box-shadow: none !important;
+        }
+
+        #google_element {
+            display: block;
+        }
+
+        .make-header {
+            height: 80px;
+            margin-top: 32px !important;
+        }
+
+        .mobile-header {
+            display: none;
+        }
+
+        @media only screen and (max-width: 767px) {
+
+            .desktop-header {
+                display: none;
+            }
+
+            .mobile-header {
+                display: block;
+            }
+
+            .make-header {
+                height: 120px !important;
+            }
+        }
+
+        .mobile-heading {
+            font-size: 0.9rem;
+        }
+
+        .mobile-row {
+            display: flex;
+        }
+
+        .w-20 {
+            max-width: 20%;
+        }
+
+        .w-80 {
+            max-width: 80%;
+        }
+    </style>
+    <div id="app" class="wrapper">
+        <div class="container-fluid">
+            <div class="bg-dark col-12 mt-3 make-header desktop-header">
+                {{-- <div class="container"> --}}
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                            style="width: 130px; margin-top:-30px;">
+                    </div>
+                    <div class="col-md-9 pt-3">
+                        <h5 class="text-white" style="font-size: 1.8rem; margin-bottom:0% !important;">COMPLAINT REDRESSAL MECHANISM
+                        </h5>
+                        <span class="text-white" style="font-size: 0.8rem">KW&SC |
+                            {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                    </div>
+                    {{-- <div class="col-md-3 pt-3">
+                        <div id="google_translate_element"></div>
+                        <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                            href="./#googtrans(en|en)">English</a>
+                        <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                            href="./#googtrans(en|ur)">Urdu</a>
+                    </div> --}}
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{{ route('front.home.connection') }}" class="card-link">
-                        <div class="card text-center p-4 card-extra-css">
-                            <div class="card-body">
-                                <img src="{{ asset('assets/images/water-tap.png') }}" style="width: 80px;"/>
-                                <p class="card-text mt-3">Add New Connection</p>
-                            </div>
-                        </div>
-                    </a>
+                {{-- </div> --}}
+            </div>
+            <div class="bg-dark col-12 mt-3 make-header mobile-header">
+                {{-- <div class="container-fluid"> --}}
+                <div class="mobile-row">
+                    <div class="w-20">
+                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                            style="width: 180px;">
+                    </div>
+                    <div class="w-80 pt-3 pl-2">
+                        <h5 class="mobile-heading text-white">COMPLAINT REDRESSAL MECHANISM
+                            <br />
+                            <span style="font-size: 0.6rem">KW&SC |
+                                {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                        </h5>
+                    </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="javascript:void(0);" class="card-link" data-toggle="modal"
-                        data-target="#trackComplaintModal">
-                        <div class="card text-center p-4 card-extra-css">
-                            <div class="card-body">
-                                <img src="{{ asset('assets/images/search.png') }}" style="width: 80px;"/>
-                                <p class="card-text mt-3">Track Your Complaint</p>
+                {{-- <div class="w-100 text-right">
+                    <div id="google_translate_element"></div>
+                    <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                        href="./#googtrans(en|en)">English</a>
+                    <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                        href="./#googtrans(en|ur)">Urdu</a>
+                </div> --}}
+                {{-- </div> --}}
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <a href="{{ route('front.home') }}" class="card-link">
+                            <div class="card text-center p-4 card-extra-css">
+                                <div class="card-body">
+                                    <img src="{{ asset('assets/images/add-file-color.png') }}" style="width: 80px;" />
+                                    <p class="card-text mt-3">Add Complaint</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <a href="{{ route('front.home.connection') }}" class="card-link">
+                            <div class="card text-center p-4 card-extra-css">
+                                <div class="card-body">
+                                    <img src="{{ asset('assets/images/water-tap.png') }}" style="width: 80px;" />
+                                    <p class="card-text mt-3">Add New Connection</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <a href="javascript:void(0);" class="card-link" data-toggle="modal"
+                            data-target="#trackComplaintModal">
+                            <div class="card text-center p-4 card-extra-css">
+                                <div class="card-body">
+                                    <img src="{{ asset('assets/images/search.png') }}" style="width: 80px;" />
+                                    <p class="card-text mt-3">Track Your Complaint</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
