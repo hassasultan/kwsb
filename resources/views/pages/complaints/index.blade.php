@@ -316,8 +316,17 @@
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
                         '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints.agent_id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
-                    html += '<a href="' + currentUrl + '/' + row.id +
-                        '/edit" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Edit</a>';
+                    html += '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                    html += '<span class="text-muted sr-only">Action</span>';
+                    html += '</button>';
+                    html += '<div class="dropdown-menu dropdown-menu-right shadow">';
+                    html += '<a class="dropdown-item" href="' + currentUrl + '/' + row.id +
+                        '/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
+                    // html += '<a class="dropdown-item" href="#"><i class="fe fe-trash fe-12 mr-3 text-muted"></i>Remove</a>';
+                    html += '<a class="dropdown-item" href="' +
+                        "{{ route('compaints-management.details', '') }}/" + row.id +
+                        '"><i class="fe fe-flag fe-12 mr-3 text-muted"></i>Assign</a>';
+                    html += '</div>';
                     html += '</td>';
                     html += '</tr>';
                 });
