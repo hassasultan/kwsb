@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
       <div class="col-12">
-        <h2 class="page-title">Complaint Management</h2>
+        <h2 class="page-title">Agent Management</h2>
         {{-- <p> Tables with built-in bootstrap styles </p> --}}
         {{-- <div class="col-12 text-right">
         <a class="btn btn-primary" href="{{ route('compaints-management.create') }}">add</i>&nbsp;&nbsp;<i
