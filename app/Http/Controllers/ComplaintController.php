@@ -311,6 +311,11 @@ class ComplaintController extends Controller
     {
         $check = ComplaintAssignAgent::where('complaint_id', $complaintId)->where('agent_id', $agentId)->first();
         if ($check == null) {
+            $alreadyAssign = ComplaintAssignAgent::where('complaint_id', $complaintId)->first();
+            if($alreadyAssign != null)
+            {
+                $alreadyAssign->delete();
+            }
             $check = ComplaintAssignAgent::create([
                 'complaint_id' => $complaintId,
                 'agent_id' => $agentId,
