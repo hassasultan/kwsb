@@ -71,116 +71,118 @@
                 <div class="row">
                     <div class="col-md-12 my-4">
                         <div class="card shadow">
-                            <div class="card-title">
-                                <h5>
-                                    Comlaints List
-                                </h5>
-                                {{-- <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p> --}}
-                            </div>
-                            <div class="toolbar">
-                                <form class="form">
-                                    <div class="form-row">
-                                        <div class="form-group col-auto mr-auto">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h5>
+                                        Comlaints List
+                                    </h5>
+                                    {{-- <p class="card-text">With supporting text below as a natural lead-in to additional
+                                        content.</p> --}}
+                                </div>
+                                <div class="toolbar">
+                                    <form class="form">
+                                        <div class="form-row">
+                                            <div class="form-group col-auto mr-auto">
+                                            </div>
+                                            <div class="form-group col-auto">
+                                                <label for="search" class="sr-only">Search</label>
+                                                <input type="text" class="form-control" id="search1" value=""
+                                                    placeholder="Search">
+                                            </div>
                                         </div>
-                                        <div class="form-group col-auto">
-                                            <label for="search" class="sr-only">Search</label>
-                                            <input type="text" class="form-control" id="search1" value=""
-                                                placeholder="Search">
-                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 skeleton-container">
+                                        <table class="skeleton-table table table-borderless table-hover table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Compaint ID</th>
+                                                    <th>
+                                                        Consumer Number</th>
+                                                    <th>
+                                                        Consumer Name</th>
+                                                    <th>
+                                                        Town</th>
+                                                    <th>
+                                                        Complaint Type / Priority</th>
+                                                    <th>
+                                                        Title Description</th>
+                                                    <th>
+                                                        Picture</th>
+                                                    <th>
+                                                        Created At</th>
+                                                    <th>
+                                                        Resolve Date</th>
+                                                    <th>
+                                                        Source</th>
+                                                    <th>
+                                                        Status</th>
+                                                    {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
+                                                    <th class="text-secondary opacity-7">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="user-table-body">
+                                                {{-- @if (count($user) > 0) --}}
+                                                @foreach ($complaint as $key => $row)
+                                                    @for ($i = 1; $i <= 10; $i++)
+                                                        <tr>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endfor
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <nav aria-label="Table Paging" class="mb-0 text-muted">
+                                            <ul class="pagination justify-content-center mb-0" id="user-pagination">
+                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                            </ul>
+                                        </nav>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 skeleton-container">
-                                    <table class="skeleton-table table table-borderless table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Compaint ID</th>
-                                                <th>
-                                                    Consumer Number</th>
-                                                <th>
-                                                    Consumer Name</th>
-                                                <th>
-                                                    Town</th>
-                                                <th>
-                                                    Complaint Type / Priority</th>
-                                                <th>
-                                                    Title Description</th>
-                                                <th>
-                                                    Picture</th>
-                                                <th>
-                                                    Created At</th>
-                                                <th>
-                                                    Resolve Date</th>
-                                                <th>
-                                                    Source</th>
-                                                <th>
-                                                    Status</th>
-                                                {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
-                                                <th class="text-secondary opacity-7">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="user-table-body">
-                                            {{-- @if (count($user) > 0) --}}
-                                            @foreach ($complaint as $key => $row)
-                                                @for ($i = 1; $i <= 10; $i++)
-                                                    <tr>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="skeleton-item">
-                                                            <div class="skeleton-content">
-                                                                <div class="skeleton-line" style="width: 100%;"></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endfor
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <nav aria-label="Table Paging" class="mb-0 text-muted">
-                                        <ul class="pagination justify-content-center mb-0" id="user-pagination">
-                                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                        </ul>
-                                    </nav>
                                 </div>
                             </div>
                         </div>
