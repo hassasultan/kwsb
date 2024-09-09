@@ -83,6 +83,7 @@ Route::prefix('/system')->group(function (){
 
         Route::resource('/customer-management', CustomerController::class);
         Route::resource('/priorities-management', PrioritiesController::class);
+        Route::resource('districts', DistrictController::class);
 
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
     });
