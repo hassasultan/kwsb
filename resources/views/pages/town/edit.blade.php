@@ -27,7 +27,7 @@
                     </div>
                     <select name="district_id" class="select2-multiple form-control fs-14  h-50px" required>
                         @foreach ($district as $row)
-                            <option value="{{ $row->id }}" @if($row->district_id == $town->district_id) selected @endif>{{ $row->title }}
+                            <option value="{{ $row->id }}" @if($row->id == $town->district_id) selected @endif>{{ $row->title }}
                             </option>
                         @endforeach
                     </select>
