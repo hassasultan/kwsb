@@ -323,10 +323,10 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Select Grivence<span class="item-required">*</span></label>
+                                                <label>Select Grievance<span class="item-required">*</span></label>
                                                 <select name="subtype_id" id="subtype_id"
                                                     class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Grivence --</option>
+                                                    <option selected disabled>-- Select Grievance --</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">

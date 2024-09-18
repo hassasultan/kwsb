@@ -15,8 +15,63 @@
                         <div class="card shadow">
                             <div class="card-body">
                                 <div class="card-title">
+                                    <h3 class="card-title text-center">Complaint Details</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <p><strong>Complaint Number:</strong> <span id="comp_num">{{ $complaint->comp_num }}</span>
+                                            </p>
+                                            <p><strong>Title:</strong> <span id="title">{{ $complaint->type->title }}</span></p>
+                                            <p><strong>Description:</strong> <span id="description">{{ $complaint->description }}</span></p>
+                                            <p><strong>Customer Name:</strong> <span id="customer_name">{{ $complaint->customer_name }}</span></p>
+                                            <p><strong>Phone:</strong> <span id="phone">{{ $complaint->phone }}</span></p>
+                                            <p><strong>Email:</strong> <span id="email">{{ $complaint->email }}</span>
+                                            </p>
+                                            <p><strong>Address:</strong> <span id="address">{{ $complaint->address }}</span></p>
+                                            <p><strong>Landmark:</strong> <span id="landmark">{{ $complaint->landmark }}</span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @if ($complaint->image != null)
+                                                <img src="{{ asset('public/storage/'.$complaint->image) }}" style="width:250px;"/>
+                                                <br/>
+                                            @endif
+                                            @if ($complaint->before_image != null)
+                                                <img src="{{ asset('public/storage/'.$complaint->before_image) }}" style="width:250px;"/>
+                                                <br/>
+            
+                                            @endif
+                                            @if ($complaint->after_image != null)
+                                                <img src="{{ asset('public/storage/'.$complaint->after_image) }}" style="width:250px;"/>
+                                                <br/>
+            
+                                            @endif
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h3 class="text-center status" id="status">
+                                                @if ($complaint->status == 1)
+                                                    COMPLETED
+                                                @elseif($complaint->status == 0)
+                                                    PENDING
+                                                @else
+                                                    IN PROCESS
+                                                @endif
+                                            </h3>
+                                            <div class="text-center status">
+                                                @if ($complaint->status == 0)
+                                                    <img src="{{ asset('assets/images/pending.jpg') }}" style="width: 200px;" />
+                                                @endif
+                                                @if ($complaint->status == 2)
+                                                    <img src="{{ asset('assets/images/progress.jpeg') }}" style="width: 200px;" />
+                                                @endif
+                                                @if ($complaint->status == 1)
+                                                    <img src="{{ asset('assets/images/completed.png') }}" style="width: 200px;" />
+                                                @endif
+                                            </div>
+            
+                                        </div>
+                                    </div>
                                     <h5>
-                                        {{ $complaint->title }}'s Agent List
+                                        {{ $complaint->comp_num }}'s Agent List
                                     </h5>
                                     {{-- <p class="card-text">With supporting text below as a natural lead-in to additional
                                     content.</p> --}}
@@ -100,5 +155,4 @@
             </div>
         </div>
     </div>
-
 @endsection
