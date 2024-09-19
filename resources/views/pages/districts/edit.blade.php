@@ -31,10 +31,9 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="text-right">
+                                        <div class="form-group col-12 p-3 text-right">
                                             <button type="submit" class="btn btn-primary">Update</button>
                                             <a href="{{ route('districts.index') }}" class="btn btn-secondary">Cancel</a>
-
                                         </div>
                                     </div>
                                 </form>

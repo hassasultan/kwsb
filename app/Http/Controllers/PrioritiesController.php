@@ -26,7 +26,7 @@ class PrioritiesController extends Controller
     public function edit($id)
     {
         $prio = Priorities::find($id);
-        return view('pages.priorities.edit',compact('type'));
+        return view('pages.priorities.edit',compact('prio'));
     }
     public function update(Request $request,$id)
     {

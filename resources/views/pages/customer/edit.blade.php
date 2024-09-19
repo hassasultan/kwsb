@@ -6,6 +6,7 @@
         <div class="card my-4">
             <div class="card-body px-4 pb-2">
                 <h5>Edit Customer Information</h5>
+                <hr/>
                 <form role="form" method="POST" action="{{ route('customer-management.update', $customer->id) }}">
                     @csrf
                     @method('PUT') <!-- Use method spoofing for PUT request -->
@@ -39,10 +40,15 @@
                                 placeholder="Enter Address Here..." name="address" required
                                 value="{{ $customer->address }}">
                         </div>
-                        <div class="form-group col-12 p-3">
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary btn-lg w-20 mt-4 mb-0">Update</button>
-                            </div>
+                        <div class="form-group col-12 p-3 text-right">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            @if (auth()->user()->role == 1)
+                                <a href="{{ url('/admin/customer-management') }}"
+                                    class="btn btn-secondary">Cancel</a>
+                            @else
+                                <a href="{{ url('/system/customer-management') }}"
+                                    class="btn btn-secondary">Cancel</a>
+                            @endif
                         </div>
                     </div>
                 </form>

@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="form-group col-12 p-3">
-                                <label>Confiremed Password</label>
+                                <label>Confirmed Password</label>
                                 <input type="password" class="form-control border-bottom border-1 border-dark"
                                     placeholder="Enter Password Confirmation..." name="password_confirmation" 
                                     autocomplete="new-password" value="{{ old('password_confirmation') }}" />
@@ -53,8 +53,12 @@
 
                             <div class="form-group col-12 p-3">
 
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary btn-lg w-20 mt-4 mb-0">Update</button>
+                                <div class="form-group col-12 p-3 text-right">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    @if (auth()->user()->role == 1)
+                                        <a href="{{ url('/admin/user-management') }}"
+                                            class="btn btn-secondary">Cancel</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

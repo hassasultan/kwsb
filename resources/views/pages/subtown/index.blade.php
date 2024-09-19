@@ -179,21 +179,65 @@
         pre = 0;
         nxt = 0;
         function generatePagination(response) {
-            var html = '';
-            if (response.prev_page_url) {
-                pre = response.current_page-1;
-                html += '<li class="page-item"><a onclick="fetchDataOnClick(\'' + pre + '\')" href="javascript:void(0);" class="page-link" >Previous</a></li>';
+                var html = '';
+                var totalPages = response.last_page;
+                var currentPage = response.current_page;
+
+                // Determine how many pages to show at the start and end
+                var startPages = 2;
+                var endPages = 2;
+                var middlePages = 2;
+                var range = middlePages * 2 + 1;
+
+                if (response.prev_page_url) {
+                    pre = currentPage - 1;
+                    html += '<li class="page-item"><a onclick="fetchDataOnClick(\'' + pre +
+                        '\')" href="javascript:void(0);" class="page-link">Previous</a></li>';
+                }
+
+                // Show first few pages
+                for (var i = 1; i <= startPages && i <= totalPages; i++) {
+                    html += '<li class="page-item ' + (i == currentPage ? 'active' : '') +
+                        '"><a class="page-link pg-btn" onclick="fetchDataOnClick(\'' + i + '\')" data-attr="page=' + i +
+                        '" href="javascript:void(0);">' + i + '</a></li>';
+                }
+
+                // Show "..." if there are hidden pages before the current page
+                if (currentPage > startPages + middlePages + 1) {
+                    html += '<li class="page-item disabled"><a class="page-link">...</a></li>';
+                }
+
+                // Show pages around the current page
+                var start = Math.max(startPages + 1, currentPage - middlePages);
+                var end = Math.min(totalPages - endPages, currentPage + middlePages);
+
+                for (var i = start; i <= end; i++) {
+                    html += '<li class="page-item ' + (i == currentPage ? 'active' : '') +
+                        '"><a class="page-link pg-btn" onclick="fetchDataOnClick(\'' + i + '\')" data-attr="page=' + i +
+                        '" href="javascript:void(0);">' + i + '</a></li>';
+                }
+
+                // Show "..." if there are hidden pages after the current page
+                if (currentPage < totalPages - endPages - middlePages) {
+                    html += '<li class="page-item disabled"><a class="page-link">...</a></li>';
+                }
+
+                // Show last few pages
+                for (var i = totalPages - endPages + 1; i <= totalPages; i++) {
+                    if (i > startPages) {
+                        html += '<li class="page-item ' + (i == currentPage ? 'active' : '') +
+                            '"><a class="page-link pg-btn" onclick="fetchDataOnClick(\'' + i + '\')" data-attr="page=' + i +
+                            '" href="javascript:void(0);">' + i + '</a></li>';
+                    }
+                }
+
+                if (response.next_page_url) {
+                    nxt = currentPage + 1;
+                    html += '<li class="page-item"><a class="page-link" onclick="fetchDataOnClick(\'' + nxt +
+                        '\')" href="javascript:void(0);">Next</a></li>';
+                }
+
+                $('#user-pagination').html(html);
             }
-            for (var i = 1; i <= response.last_page; i++) {
-                html += '<li class="page-item ' + (i == response.current_page ? 'active' : '') +
-                    '"><a class="page-link pg-btn" onclick="fetchDataOnClick(\'' + i + '\')" data-attr="page=' + i +
-                    '" href="javascript:void(0);">' + i + '</a></li>';
-            }
-            if (response.next_page_url) {
-              nxt = response.current_page+1;
-              html += '<li class="page-item"><a class="page-link" onclick="fetchDataOnClick(\'' + nxt + '\')" href="javascript:void(0);">Next</a></li>';
-            }
-            $('#user-pagination').html(html);
-        }
     </script>
 @endsection
