@@ -32,16 +32,16 @@
                                         </div>
                                         <div class="col-md-6">
                                             @if ($complaint->image != null)
-                                                <img src="{{ asset('public/storage/'.$complaint->image) }}" style="width:250px;"/>
+                                                <img src="{{ asset('storage/'.$complaint->image) }}" style="width:250px;"/>
                                                 <br/>
                                             @endif
                                             @if ($complaint->before_image != null)
-                                                <img src="{{ asset('public/storage/'.$complaint->before_image) }}" style="width:250px;"/>
+                                                <img src="{{ asset('storage/'.$complaint->before_image) }}" style="width:250px;"/>
                                                 <br/>
             
                                             @endif
                                             @if ($complaint->after_image != null)
-                                                <img src="{{ asset('public/storage/'.$complaint->after_image) }}" style="width:250px;"/>
+                                                <img src="{{ asset('storage/'.$complaint->after_image) }}" style="width:250px;"/>
                                                 <br/>
             
                                             @endif
