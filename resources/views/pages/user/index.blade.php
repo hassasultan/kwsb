@@ -171,6 +171,7 @@
                 url: "{{ route('user-management.index') }}",
                 type: "GET",
                 data:{
+                    search: search,
                     type:'ajax',
                     page:page
                 },

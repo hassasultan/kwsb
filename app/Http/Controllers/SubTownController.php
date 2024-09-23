@@ -20,6 +20,7 @@ class SubTownController extends Controller
     }
     public function index(Request $request)
     {
+        // dd($request->all());
         $subtown = SubTown::with('town');
         if($request->has('search') && $request->search != null && $request->search != '')
         {
@@ -30,6 +31,7 @@ class SubTownController extends Controller
         $subtown = $subtown->paginate(10);
         if($request->has('type'))
         {
+            // dd($request->search);
             return $subtown;
         }
         return view('pages.subtown.index',compact('subtown'));

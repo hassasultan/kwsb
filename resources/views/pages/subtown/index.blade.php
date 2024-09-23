@@ -59,18 +59,18 @@
                                       @foreach ($subtown as $key => $row)
                                           <tr>
                                               <td>
-                                                  <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }}
-                                                  </p>
+                                                  {{-- <p class="text-xs font-weight-bold mb-0">{{ $row->town->town }}
+                                                  </p> --}}
                                               </td>
                                               <td>
-                                                  <p class="text-xs font-weight-bold mb-0">{{ $row->title }}</p>
+                                                  {{-- <p class="text-xs font-weight-bold mb-0">{{ $row->title }}</p> --}}
                                               </td>
                                               <td class="align-middle">
-                                                  <a href="{{ route('subtown-management.edit', $row->id) }}"
+                                                  {{-- <a href="{{ route('subtown-management.edit', $row->id) }}"
                                                       class="text-secondary font-weight-bold text-xs"
                                                       data-toggle="tooltip" data-original-title="Edit user">
                                                       Edit
-                                                  </a>
+                                                  </a> --}}
                                               </td>
                                           </tr>
                                       @endforeach
@@ -115,6 +115,7 @@
                 url: "{{ route('subtown-management.index') }}",
                 type: "GET",
                 data: {
+                    search: search,
                     type: 'ajax',
                     page: page
                 },
