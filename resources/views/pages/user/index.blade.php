@@ -34,7 +34,7 @@
                                         content.</p>
                                 </div>
                                 <div class="toolbar">
-                                    <form class="form">
+                                    {{-- <form class="form"> --}}
                                         <div class="form-row">
                                         <div class="form-group col-auto mr-auto">
                                         </div>
@@ -43,7 +43,7 @@
                                             <input type="text" class="form-control" id="search1" value="" placeholder="Search">
                                         </div>
                                         </div>
-                                    </form>
+                                    {{-- </form> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">

@@ -23,7 +23,7 @@
                                         content.</p>
                                 </div>
                                 <div class="toolbar pr-3">
-                                    <form class="form">
+                                    {{-- <form class="form"> --}}
                                         <div class="form-row">
                                             <div class="form-group col-auto mr-auto">
                                             </div>
@@ -33,7 +33,7 @@
                                                     placeholder="Search">
                                             </div>
                                         </div>
-                                    </form>
+                                    {{-- </form> --}}
                                 </div>
                                 <div class="p-0">
                                     <table class="table table-borderless table-hover">
