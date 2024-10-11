@@ -31,7 +31,7 @@ class MobileAgentController extends Controller
                     $existingAgent = MobileAgent::where('town_id', $data['town_id'])
                                           ->where('type_id', $value)
                                           ->exists();
-    
+
                     if ($existingAgent) {
                         $fail('The selected type for this town is already assigned to an agent.');
                     }
@@ -80,8 +80,9 @@ class MobileAgentController extends Controller
         $user = User::where('role', 3)->get();
         $town = Town::all();
         $subtown = SubTown::all();
+        $type = ComplaintType::all();
 
-        return view('pages.agent.edit',compact('user','agent','town','subtown'));
+        return view('pages.agent.edit',compact('user','agent','town','subtown','type'));
 
     }
     public function update(Request $request,$id)
@@ -100,7 +101,7 @@ class MobileAgentController extends Controller
                                           ->where('type_id', $value)
                                           ->where('id', '!=', $id)
                                           ->exists();
-    
+
                     if ($existingAgent) {
                         $fail('The selected type for this town is already assigned to another agent.');
                     }

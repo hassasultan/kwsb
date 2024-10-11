@@ -46,6 +46,14 @@
                         </select>
                     </div>
                     <div class="form-group col-12 p-3">
+                        <label>Select Type*</label>
+                        <select name="type_id" class="select2-multiple form-control fs-14  h-50px" required>
+                            @foreach ($type as $row)
+                                <option value="{{ $row->id }}" @if($row->id == $agent->type_id) selected @endif >({{ $row->title }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-12 p-3">
                         <label>Agent Profile</label>
                         <input type="file" class="form-control border-bottom border-1 border-dark"
                              name="avatar" value="{{ old('avatar') }}" />
