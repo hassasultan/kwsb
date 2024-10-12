@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-
+use Spatie\Permission\Models\Role;
 
 
 class UserController extends Controller
@@ -84,5 +84,20 @@ class UserController extends Controller
         }
         $user->save();
         return redirect()->route('user-management.index')->with('success', 'Record updated successfully.');
+    }
+    public function get_role_assign($id)
+    {
+        $role = Role::where('id', $id)->first();
+        $user = User::whereDoesntHave('roles')->where('role',1)->get();
+        return view('pages.roles.assignRole', compact('role', 'user'));
+    }
+    public function role_assign(Request $request, $id)
+    {
+        $role = Role::where('id', $id)->first();
+        foreach ($request->user_id as $row) {
+            $user = User::where('id', $row)->first();
+            $user->assignRole([$role->id]);
+        }
+        return redirect()->back()->with('success', 'Assigned Role successfully...');
     }
 }

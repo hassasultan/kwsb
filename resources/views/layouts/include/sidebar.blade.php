@@ -61,6 +61,14 @@
                         <a class="nav-link" href="{{ url('admin/user-management') }}"><span class="ml-1 item-text">User Management</span>
                         </a>
                     </li>
+                    <li class="nav-item @if (Route::is('roles.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/roles') }}"><span class="ml-1 item-text">Role Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (Route::is('permissions.index')) active @endif">
+                        <a class="nav-link" href="{{ url('admin/permissions') }}"><span class="ml-1 item-text">Permissions Management</span>
+                        </a>
+                    </li>
                     <li class="nav-item @if (Route::is('source-management.index')) active @endif">
                         <a class="nav-link" href="{{ url('admin/source-management') }}"><span class="ml-1 item-text">Source Management</span>
                         </a>

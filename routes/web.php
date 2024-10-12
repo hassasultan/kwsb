@@ -15,6 +15,8 @@ use App\Http\Controllers\SubTypeController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PermissionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,7 @@ Auth::routes();
 
 //users
 Route::prefix('/admin')->group(function (){
-    Route::middleware(['IsAdmin'])->group(function () {
+    Route::middleware(['IsAdmin','auth', 'permission'])->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::resource('/user-management', UserController::class);
         Route::resource('/agent-management', MobileAgentController::class);
@@ -64,7 +66,10 @@ Route::prefix('/admin')->group(function (){
         Route::resource('districts', DistrictController::class);
         
         Route::resource('announcements', AnnouncementController::class)->except(['destroy']);
-
+        Route::resource('roles', RolesController::class);
+        Route::resource('permissions', PermissionsController::class);
+        Route::get('get/role/to/assign/{id}', [App\Http\Controllers\UserController::class, 'get_role_assign'])->name('get.assign.role.users');
+        Route::post('assign/role/{id}', [App\Http\Controllers\UserController::class, 'role_assign'])->name('assign.role.users');
     });
 });
 
