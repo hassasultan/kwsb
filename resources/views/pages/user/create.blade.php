@@ -42,6 +42,7 @@
                             <div class="form-group col-12 p-3">
                                 <label>User Type</label>
                                 <select name="role" class="select2-multiple form-control fs-14  h-50px" required>
+                                    <option value="1">Admin</option>
                                     <option value="2">System User</option>
                                     <option value="3">Mobile Agent</option>
                                 </select>

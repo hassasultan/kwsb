@@ -33,6 +33,14 @@
                                     required />
                             </div>
                             <div class="form-group col-12 p-3">
+                                <label>User Type</label>
+                                <select name="role" class="select2-multiple form-control fs-14  h-50px" required>
+                                    <option value="1" @if($user->role == 1) selected @endif>Admin</option>
+                                    <option value="2" @if($user->role == 2) selected @endif>System User</option>
+                                    <option value="3" @if($user->role == 3) selected @endif>Mobile Agent</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 p-3">
                                 <label>Password</label>
                                 <input type="password" class="form-control border-bottom border-1 border-dark"
                                     placeholder="Enter Password..." name="password" value="{{ old('password') }}"
@@ -47,7 +55,7 @@
                             <div class="form-group col-12 p-3">
                                 <label>Confirmed Password</label>
                                 <input type="password" class="form-control border-bottom border-1 border-dark"
-                                    placeholder="Enter Password Confirmation..." name="password_confirmation" 
+                                    placeholder="Enter Password Confirmation..." name="password_confirmation"
                                     autocomplete="new-password" value="{{ old('password_confirmation') }}" />
                             </div>
 
