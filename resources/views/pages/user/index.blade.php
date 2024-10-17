@@ -160,7 +160,7 @@
             fetchDataOnReady();
         });
         $(document).ready(function() {
-    
+
             // Call the function on document ready
             fetchDataOnReady();
 
@@ -207,7 +207,7 @@
                 }
             });
         }
-        
+
         // Function to generate table rows
         function generateTableRows(users) {
             var html = '';
@@ -216,8 +216,8 @@
                 html += '<tr>';
                 html += '<td>' + user.name + '</td>';
                 html += '<td>' + user.email + '</td>';
-                html += '<td>' + (user.role == 2 ? 'System User' : (user.role == 3 ? 'Mobile Agent' : 'Customer')) + '</td>';
-                html += '<td>'; 
+                html += '<td>' + (user.role == 2 ? 'System User' : (user.role == 3 ? 'Mobile Agent' : (user.role == 1 ? 'Admin' : 'Customer'))) + '</td>';
+                html += '<td>';
                 html += '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                 html += '<span class="text-muted sr-only">Action</span>';
                 html += '</button>';
@@ -293,5 +293,5 @@
                 $('#user-pagination').html(html);
             }
     </script>
-    
+
 @endsection

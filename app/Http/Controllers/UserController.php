@@ -78,7 +78,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        // $user->role = $request->input('role');
+        $user->role = $request->input('role');
         if (!empty($request->input('password'))) {
             $user->password = Hash::make($request->input('password'));
         }
