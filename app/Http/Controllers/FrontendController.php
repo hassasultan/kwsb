@@ -76,7 +76,7 @@ class FrontendController extends Controller
     public function update_connection_request(Request $request)
     {
         $town = Town::all();
-        $type = ComplaintType::all();
+        $type = ComplaintType::whereIn('id',[16,17])->get();
         $subtype = SubType::all();
         $prio = Priorities::all();
         $subtown = SubTown::all();

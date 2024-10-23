@@ -250,7 +250,7 @@
                                 {{-- <form role="form" method="get" action="{{ route('front.home') }}"
                                     enctype="multipart/form-data">
                                     <div class="row">
-            
+
                                         <div class="form-group col-md-3 p-3">
                                             <label>Customer Number</label>
                                             <input type="text" class="form-control border-bottom border-1 border-dark"
@@ -301,11 +301,12 @@
                                         {{-- <h5>Complaint Informarion...</h5> --}}
                                         <div class="row">
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Consumer # on BILL </label>
+                                                <label>Consumer # on BILL <span
+                                                    class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Consumer Number Here..." name="customer_num"
-                                                    value="{{ old('customer_num') }}" />
+                                                    value="{{ old('customer_num') }}" required/>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Applicant Name<span class="item-required">*</span></label>
