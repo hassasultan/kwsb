@@ -16,6 +16,7 @@ use App\Traits\SaveImage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use Exception;
 
 
@@ -91,6 +92,24 @@ class FrontendController extends Controller
 
         return view('consumer-data', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
 
+    }
+    public function generate_bill(Request $request)
+    {
+        $consumer_no = $request->consumer_no;
+        $username = 'websiteapikw@sc';
+        $password = 'kW@$c!%23$%26';
+        $response = Http::get('https://kwsconline.com:5000/api/BankCollection/GetConsumerBillDetails', [
+            'consumer_no' => $consumer_no,
+            'username' => $username,
+            'password' => $password
+        ]);
+
+        if ($response->successful()) {
+            // return $response->json();
+            $record = $response->json();
+            return view('bill',compact('record'));
+        }
+        return response()->json(['error' => 'Unable to fetch data'], $response->status());
     }
     public function store(Request $request)
     {
