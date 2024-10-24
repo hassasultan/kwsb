@@ -230,7 +230,7 @@
         <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-lg-3 col-md-6 mb-4">
                         <a href="{{ route('front.home') }}" class="card-link">
                             <div class="card text-center p-4 card-extra-css">
                                 <div class="card-body">
@@ -240,7 +240,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-lg-3 col-md-6 mb-4">
                         <a href="{{ route('front.home.connection') }}" class="card-link">
                             <div class="card text-center p-4 card-extra-css">
                                 <div class="card-body">
@@ -250,13 +250,24 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-lg-3 col-md-6 mb-4">
                         <a href="javascript:void(0);" class="card-link" data-toggle="modal"
                             data-target="#trackComplaintModal">
                             <div class="card text-center p-4 card-extra-css">
                                 <div class="card-body">
                                     <img src="{{ asset('assets/images/search.png') }}" style="width: 80px;" />
                                     <p class="card-text mt-3">Track Your Complaint</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <a href="javascript:void(0);" class="card-link" data-toggle="modal"
+                            data-target="#generateBillModal">
+                            <div class="card text-center p-4 card-extra-css">
+                                <div class="card-body">
+                                    <img src="{{ asset('assets/images/bill.png') }}" style="width: 80px;" />
+                                    <p class="card-text mt-3">Generate Bill</p>
                                 </div>
                             </div>
                         </a>
