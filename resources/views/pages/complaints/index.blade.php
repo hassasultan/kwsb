@@ -241,6 +241,9 @@
                     type: "GET",
                     data: {
                         type: 'ajax',
+                        search: search,
+                        town: town,
+                        type_id: type
                         page: page
                     },
                     success: function(response) {

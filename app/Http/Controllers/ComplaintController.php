@@ -66,7 +66,11 @@ class ComplaintController extends Controller
         {
             $complaint = $complaint->where('type_id',$request->type_id);
         }
-        $complaint = $complaint->paginate(10);
+        $complaint = $complaint->paginate(10)->appends([
+            'type_id' => request()->get('type_id'),
+            'town' => request()->get('town'),
+            'search' => request()->get('search'),
+        ]);
         // dd($complaint->toArray());
         if ($request->has('type')) {
             return $complaint;
