@@ -42,9 +42,9 @@ class ComplaintController extends Controller
         $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
             $complaint = $complaint->where('title', 'LIKE', '%' . $request->search . '%')
-            ->orWhere('comp_num', $request->search)
-            ->orWhere('customer_num', $request->search)
-            ->orWhere('customer_name', $request->search);
+            ->orWhere('comp_num', 'LIKE', '%' .$request->search. '%')
+            ->orWhere('customer_num','LIKE', '%' . $request->search. '%')
+            ->orWhere('customer_name','LIKE', '%' . $request->search. '%');
             if(count($complaint->get()) < 1)
             {
                 $customer = Customer::where('customer_id',$request->search)
