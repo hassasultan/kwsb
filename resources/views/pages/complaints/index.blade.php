@@ -125,8 +125,8 @@
                                                         Town</th>
                                                     <th>
                                                         Complaint Type / Priority</th>
-                                                    <th>
-                                                        Title Description</th>
+                                                    {{-- <th>
+                                                        Title Description</th> --}}
                                                     <th>
                                                         Picture</th>
                                                     <th>
@@ -311,9 +311,9 @@
                     html += '<p class="text-xs font-weight-bold mb-0">' + (row.type ? row.type.title : '') + '</p>';
                     html += '<p class="text-xs font-weight-bold mb-0">' + (row.prio ? row.prio.title : '') + '</p>';
                     html += '</td>';
-                    html += '<td class="align-middle text-center text-sm">';
-                    html += '<p class="text-xs text-secondary mb-0">' + row.title + '</p>';
-                    html += '</td>';
+                    // html += '<td class="align-middle text-center text-sm">';
+                    // html += '<p class="text-xs text-secondary mb-0">' + row.title + '</p>';
+                    // html += '</td>';
                     html += '<td class="align-middle text-center text-sm">';
                     if (row.image != null) {
                         html += '<img src="{{ asset('storage/') }}/' + row.image +
