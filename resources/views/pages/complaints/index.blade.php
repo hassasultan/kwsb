@@ -81,15 +81,33 @@
                                 </div>
                                 <div class="toolbar">
                                     {{-- <form class="form"> --}}
-                                        <div class="form-row">
-                                            <div class="form-group col-auto mr-auto">
-                                            </div>
-                                            <div class="form-group col-auto">
-                                                <label for="search" class="sr-only">Search</label>
-                                                <input type="text" class="form-control" id="search1" value=""
-                                                    placeholder="Search">
-                                            </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-auto mr-auto">
                                         </div>
+                                        <div class="form-group col-auto">
+                                            <label for="search" class="sr-only">Town</label>
+                                            <select class="form-control select2" id="town-id">
+                                                <option disabled selected> -- Select Town --</option>
+                                                @foreach ($town as $row)
+                                                    <option value="{{ $row->id }}"> {{ $row->town }} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <label for="search" class="sr-only">Complaint Type</label>
+                                            <select class="form-control select2" id="type-id">
+                                                <option disabled selected> -- Select Complaint Type --</option>
+                                                @foreach ($comptype as $row)
+                                                    <option value="{{ $row->id }}"> {{ $row->title }} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <label for="search" class="sr-only">Search</label>
+                                            <input type="text" class="form-control" id="search1" value=""
+                                                placeholder="Search">
+                                        </div>
+                                    </div>
                                     {{-- </form> --}}
                                 </div>
                                 <div class="row">
@@ -194,11 +212,22 @@
 
         <script>
             var search = null;
-            $("input").keyup(function() {
-                search = $(this).val();
-                fetchDataOnReady();
-            });
+            var town = null;
+            var type = null;
+
             $(document).ready(function() {
+                $("input").keyup(function() {
+                    search = $(this).val();
+                    fetchDataOnReady();
+                });
+                $("#town-id").change(function() {
+                    town = $(this).val();
+                    fetchDataOnReady();
+                });
+                $("#type-id").change(function() {
+                    type = $(this).val();
+                    fetchDataOnReady();
+                });
 
                 // Call the function on document ready
                 fetchDataOnReady();
@@ -233,7 +262,9 @@
                     type: "GET",
                     data: {
                         type: 'ajax',
-                        search: search
+                        search: search,
+                        town: town,
+                        type_id: type
                     },
                     success: function(response) {
                         console.log("Data fetched successfully on document ready:", response);
@@ -316,16 +347,16 @@
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
                         '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints.agent_id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
-                    
-                    html += '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+
+                    html +=
+                        '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                     html += '<span class="text-muted sr-only">Action</span>';
                     html += '</button>';
                     html += '<div class="dropdown-menu dropdown-menu-right shadow">';
                     html += '<a class="dropdown-item" href="' + currentUrl + '/' + row.id +
                         '/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
                     // html += '<a class="dropdown-item" href="#"><i class="fe fe-trash fe-12 mr-3 text-muted"></i>Remove</a>';
-                    if(row.status != 1)
-                    {
+                    if (row.status != 1) {
                         html += '<a class="dropdown-item" href="' +
                             "{{ route('compaints-management.details', '') }}/" + row.id +
                             '"><i class="fe fe-flag fe-12 mr-3 text-muted"></i>Detail</a>';

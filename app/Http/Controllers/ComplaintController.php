@@ -38,17 +38,43 @@ class ComplaintController extends Controller
     }
     public function index(Request $request)
     {
+        // dd($request->all());
         $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
-            $complaint = $complaint->where('title', 'LIKE', '%' . $request->search . '%')->orWhere('comp_num', $request->search);
+            $complaint = $complaint->where('title', 'LIKE', '%' . $request->search . '%')
+            ->orWhere('comp_num', $request->search)
+            ->orWhere('customer_num', $request->search)
+            ->orWhere('customer_name', $request->search);
+            if(count($complaint->get()) < 1)
+            {
+                $customer = Customer::where('customer_id',$request->search)
+                ->orwhere('customer_name',$request->search)->first();
+                if($customer != null)
+                {
+                    $complaint = $complaint->where('customer_id',$customer->id);
+                }
+            }
+            // ->orWhereHas('customer',function($query) use($request){
+            //     $query->where('customer_id',$request->search);
+            // });
+        }
+        if($request->has('town') && $request->town != null && $request->town != '' )
+        {
+            $complaint = $complaint->where('town_id',$request->town);
+        }
+        if($request->has('type_id') && $request->type_id != null && $request->type_id != '')
+        {
+            $complaint = $complaint->where('type_id',$request->type_id);
         }
         $complaint = $complaint->paginate(10);
         // dd($complaint->toArray());
         if ($request->has('type')) {
             return $complaint;
         }
+        $town = Town::all();
+        $comptype = ComplaintType::all();
         // dd($complaint->toArray());
-        return view('pages.complaints.index', compact('complaint'));
+        return view('pages.complaints.index', compact('complaint','town','comptype'));
     }
     public function create(Request $request)
     {
@@ -247,7 +273,7 @@ class ComplaintController extends Controller
         {
 
             $curl = curl_init();
-    
+
             curl_setopt_array(
                 $curl,
                 array(
@@ -263,7 +289,7 @@ class ComplaintController extends Controller
                         "MobileNumber":"' . $phone . '",
                         "Type":"ComplaintSolve",
                         "ComplaintNumber":"' . $complaint->comp_num . '"
-    
+
                     }
                     ',
                     CURLOPT_HTTPHEADER => array(
@@ -271,14 +297,14 @@ class ComplaintController extends Controller
                     ),
                 )
             );
-    
+
             $response = curl_exec($curl);
-    
+
             curl_close($curl);
-    
-    
+
+
             $curl = curl_init();
-    
+
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
                 CURLOPT_RETURNTRANSFER => true,
@@ -293,9 +319,9 @@ class ComplaintController extends Controller
                     ),
             )
             );
-    
+
             $response = curl_exec($curl);
-    
+
             curl_close($curl);
         }
 
