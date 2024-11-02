@@ -71,6 +71,7 @@ Route::prefix('/admin')->group(function (){
         Route::resource('permissions', PermissionsController::class);
         Route::get('get/role/to/assign/{id}', [App\Http\Controllers\UserController::class, 'get_role_assign'])->name('get.assign.role.users');
         Route::post('assign/role/{id}', [App\Http\Controllers\UserController::class, 'role_assign'])->name('assign.role.users');
+        Route::post('complaints/update-status', [App\Http\Controllers\ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
     });
 });
 

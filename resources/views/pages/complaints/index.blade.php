@@ -216,6 +216,35 @@
             var type = null;
 
             $(document).ready(function() {
+
+                $('#change-status').on('change', function() {
+                    const status = $(this).val();
+                    if (status == 0) {
+                        const complaintId = $(this).data('complaint-id');
+
+                        // AJAX request
+                        $.ajax({
+                            url: '/admin/complaints/update-status', // Laravel route URL
+                            method: 'POST',
+                            data: {
+                                complaint_id: complaintId,
+                                status: status,
+                                _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    alert('Complaint status updated successfully!');
+                                } else {
+                                    alert('Failed to update complaint status.');
+                                }
+                            },
+                            error: function() {
+                                alert('An error occurred while updating the status.');
+                            }
+                        });
+                    }
+                });
+
                 $("input").keyup(function() {
                     search = $(this).val();
                     fetchDataOnReady();
@@ -341,7 +370,9 @@
                     html += '<p class="text-xs font-weight-bold mb-0">' + row.source + '</p>';
                     html += '</td>';
                     html += '<td class="text-center">';
-                    html += row.status == 1 ? '<span class="badge bg-success text-white">Completed</span>' :
+                    html += row.status == 1 ?
+                        '<select class="form-control select2" complaint-id="'+ row.id +'" id="change-status"><option selected disabled>Completed</option><option value="0">Pending</option></select>' :
+
                         '<span class="badge bg-danger text-white">Pending</span>';
                     html += '</td>';
                     html += '<td class="align-middle">';

@@ -80,6 +80,20 @@ class ComplaintController extends Controller
         // dd($complaint->toArray());
         return view('pages.complaints.index', compact('complaint','town','comptype'));
     }
+
+    public function updateStatus(Request $request)
+    {
+        $complaint = Complaints::find($request->complaint_id);
+
+    if ($complaint) {
+        $complaint->status = $request->status;
+        $complaint->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false]);
+    }
     public function create(Request $request)
     {
         $town = Town::all();
