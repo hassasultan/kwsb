@@ -214,6 +214,7 @@
             var search = null;
             var town = null;
             var type = null;
+            fetchDataOnReady();
 
             $(document).ready(function() {
 
@@ -259,7 +260,6 @@
                 });
 
                 // Call the function on document ready
-                fetchDataOnReady();
 
             });
 
