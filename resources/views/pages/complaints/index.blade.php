@@ -272,7 +272,7 @@
                         type: 'ajax',
                         search: search,
                         town: town,
-                        type_id: type
+                        type_id: type,
                         page: page
                     },
                     success: function(response) {
