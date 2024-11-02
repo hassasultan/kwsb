@@ -216,10 +216,9 @@
             var type = null;
             fetchDataOnReady();
 
-            $('#change-status').on('change', function() {
-                const status = $(this).val();
+            function updateStatus(id, status) {
                 if (status == 0) {
-                    const complaintId = $(this).data('complaint-id');
+                    const complaintId = id;
 
                     // AJAX request
                     $.ajax({
@@ -242,7 +241,8 @@
                         }
                     });
                 }
-            });
+
+            }
             $(document).ready(function() {
 
 
@@ -371,7 +371,8 @@
                     html += '</td>';
                     html += '<td class="text-center">';
                     html += row.status == 1 ?
-                        '<select class="form-control select2" complaint-id="'+ row.id +'" id="change-status"><option selected disabled>Completed</option><option value="0">Pending</option></select>' :
+                        '<select class="form-control select2" complaint-id="' + row.id +
+                        '" id="change-status" onchange="updateStatus(' + row.id + ',0)"><option selected disabled>Completed</option><option value="0">Pending</option></select>' :
 
                         '<span class="badge bg-danger text-white">Pending</span>';
                     html += '</td>';
