@@ -216,35 +216,35 @@
             var type = null;
             fetchDataOnReady();
 
+            $('#change-status').on('change', function() {
+                const status = $(this).val();
+                if (status == 0) {
+                    const complaintId = $(this).data('complaint-id');
+
+                    // AJAX request
+                    $.ajax({
+                        url: '/admin/complaints/update-status', // Laravel route URL
+                        method: 'POST',
+                        data: {
+                            complaint_id: complaintId,
+                            status: status,
+                            _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                alert('Complaint status updated successfully!');
+                            } else {
+                                alert('Failed to update complaint status.');
+                            }
+                        },
+                        error: function() {
+                            alert('An error occurred while updating the status.');
+                        }
+                    });
+                }
+            });
             $(document).ready(function() {
 
-                $('#change-status').on('change', function() {
-                    const status = $(this).val();
-                    if (status == 0) {
-                        const complaintId = $(this).data('complaint-id');
-
-                        // AJAX request
-                        $.ajax({
-                            url: '/admin/complaints/update-status', // Laravel route URL
-                            method: 'POST',
-                            data: {
-                                complaint_id: complaintId,
-                                status: status,
-                                _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
-                            },
-                            success: function(response) {
-                                if (response.success) {
-                                    alert('Complaint status updated successfully!');
-                                } else {
-                                    alert('Failed to update complaint status.');
-                                }
-                            },
-                            error: function() {
-                                alert('An error occurred while updating the status.');
-                            }
-                        });
-                    }
-                });
 
                 $("input").keyup(function() {
                     search = $(this).val();
