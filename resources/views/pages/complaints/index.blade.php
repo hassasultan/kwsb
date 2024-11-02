@@ -216,8 +216,6 @@
             var type = null;
 
             $(document).ready(function() {
-                fetchDataOnReady();
-
                 $("input").keyup(function() {
                     search = $(this).val();
                     fetchDataOnReady();
@@ -232,6 +230,7 @@
                 });
 
                 // Call the function on document ready
+                fetchDataOnReady();
 
             });
 
