@@ -25,7 +25,7 @@
                             <div class="col-md-6">
                                 <p><strong>Town :</strong> <span id="comp_num">{{ $agent->town->town }}</span>
                                 </p>
-                                <p><strong>Department :</strong> <span id="landmark">{{ $agent->complaint_type->title }}</span></p>
+                                <p><strong>Department :</strong> <span id="landmark">{{ $agent->complaint_type?->title }}</span></p>
                                 <p><strong>Description :</strong> <span id="description">{{ $agent->description }}</span></p>
                                 <p><strong>Address :</strong> <span id="customer_name">{{ $agent->address }}</span></p>
                                 <p><strong>Phone :</strong> <span id="phone">{{ $agent->user->phone }}</span></p>
