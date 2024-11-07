@@ -112,6 +112,7 @@ class UserController extends Controller
     }
     public function reset_password(Request $request)
     {
+        dd($request->all());
         $data = $request->all();
         $id = auth()->user()->id;
         if ($request->has('change_password' && $request->change_password == '1')) {
