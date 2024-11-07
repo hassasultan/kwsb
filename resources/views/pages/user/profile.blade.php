@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="form-row">
                                     <form role="form" method="POST"
-                                        action="{{ route('user-management.update.password') }}">
+                                        action="{{ route('user.update.password') }}">
                                         @method('PUT')
                                         @csrf
                                         <input type="hidden" name="change_password" value="1" />
