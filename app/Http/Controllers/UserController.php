@@ -100,6 +100,10 @@ class UserController extends Controller
         }
         return redirect()->back()->with('success', 'Assigned Role successfully...');
     }
+    public function show()
+    {
+
+    }
     public function profile()
     {
         $user = auth()->user();
