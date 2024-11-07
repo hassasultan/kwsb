@@ -74,7 +74,7 @@
                             <div class="card-body">
                                 <div class="card-title">
                                     <h5>
-                                        Comlaints List
+                                        Complaints List
                                     </h5>
                                     {{-- <p class="card-text">With supporting text below as a natural lead-in to additional
                                         content.</p> --}}
