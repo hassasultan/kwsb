@@ -112,10 +112,9 @@ class UserController extends Controller
     }
     public function reset_password(Request $request)
     {
-        dd($request->all());
         $data = $request->all();
         $id = auth()->user()->id;
-        if ($request->has('change_password' && $request->change_password == '1')) {
+        if ($request->has('change_password') && $request->change_password == "1") {
             $valid = Validator::make($data, [
                 'old_password' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -125,7 +124,7 @@ class UserController extends Controller
                 if (Hash::check($request->old_password, $user->password)) {
                     $user->password = Hash::make($request->password);
                     $user->save();
-                    return redirect()->back()->with('success', 'Record created successfully.');
+                    return redirect()->back()->with('success', 'Password Updated successfully.');
                 }
             } else {
                 return redirect()->back()->with('error', $valid->errors());
