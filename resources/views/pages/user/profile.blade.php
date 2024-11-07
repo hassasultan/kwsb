@@ -41,6 +41,16 @@
                                                     placeholder="Enter Old Password Here..." name="password_confirmation"
                                                     required value="{{ old('password_confirmation') }}" />
                                             </div>
+                                            <div class="form-group col-12 p-3">
+
+                                                <div class="form-group col-12 p-3 text-right">
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    @if (auth()->user()->role == 1)
+                                                        <a href="{{ url('/admin/user-management') }}"
+                                                            class="btn btn-secondary">Cancel</a>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
