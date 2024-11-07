@@ -102,7 +102,8 @@ class UserController extends Controller
     }
     public function show()
     {
-
+        $user = auth()->user();
+        return view('pages.user.profile',compact('user'));
     }
     public function profile()
     {
