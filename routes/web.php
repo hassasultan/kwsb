@@ -50,7 +50,7 @@ Route::prefix('/admin')->group(function (){
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::resource('/user-management', UserController::class);
         Route::put('/user/update-password', [UserController::class,'reset_password'])->name('user.update.password');
-        Route::get('/user-management/reset-password',[UserController::class,'profile'])->name('user-management.profile');
+        Route::get('/user/reset-password',[UserController::class,'profile'])->name('user.profile');
         Route::resource('/agent-management', MobileAgentController::class);
         Route::get('/agent-management/details/{id}',[MobileAgentController::class,'detail'])->name('agent-management.details');
         Route::get('/assign-complaints/{agentId}/{complaintId}',[ComplaintController::class,'assign_complaint'])->name('complaints.assign');
