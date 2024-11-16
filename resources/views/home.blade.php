@@ -161,6 +161,7 @@
                                 </div>
                             </div>
                             <div class="row mt-1 align-items-center">
+                                <span class="h3">TAT Summary For Complete</span>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -172,7 +173,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($tat_summary as $row)
+                                        @foreach ($tat_summarypending as $row)
+                                            <tr>
+                                                <td>{{ $row->MonthName }}</td>
+                                                <td>{{ $row->TotalResolvedComplaints }}</td>
+                                                <td>{{ $row->AverageResolutionTime }}</td>
+                                                <td>{{ $row->MaxResolutionTimeInHours }}</td>
+                                                <td>{{ $row->MinResolutionTimeInHours }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row mt-1 align-items-center">
+                                <span class="h3">TAT Summary For Pending</span>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Month Name</th>
+                                            <th>Total Resolved Complaints</th>
+                                            <th>Average Resolution Time</th>
+                                            <th>Max Resolution Time (Hours)</th>
+                                            <th>Min Resolution Time (Hours)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($tat_summary_pending as $row)
                                             <tr>
                                                 <td>{{ $row->MonthName }}</td>
                                                 <td>{{ $row->TotalResolvedComplaints }}</td>

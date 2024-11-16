@@ -148,7 +148,7 @@ class HomeController extends Controller
         // ->first();
         $month = 10;
         $year = 2024;
-        $tat_summary = DB::select("
+        $tat_summary_complete = DB::select("
         SELECT
             MONTHNAME(c.created_at) AS MonthName,
             COUNT(c.id) AS TotalResolvedComplaints,
@@ -171,8 +171,31 @@ class HomeController extends Controller
         GROUP BY
             MonthName
     ", ['month' => $month, 'year' => $year]);
+        $tat_summary_pending = DB::select("
+        SELECT
+            MONTHNAME(c.created_at) AS MonthName,
+            COUNT(c.id) AS TotalResolvedComplaints,
+            CONCAT(
+                FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
+                MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
+            ) AS AverageResolutionTime,
+            MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
+            MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
+        FROM
+            complaint c
+        LEFT JOIN
+            priorities p ON c.prio_id = p.id
+        WHERE
+            c.updated_at IS NOT NULL
+            AND c.status = 0
+            AND c.created_at != c.updated_at
+            AND MONTH(c.created_at) = :month
+            AND YEAR(c.created_at) = :year
+        GROUP BY
+            MonthName
+    ", ['month' => $month, 'year' => $year]);
     // dd($tat_summary);
 
-        return view('home', compact('complaintsComplete', 'tat_summary', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
+        return view('home', compact('complaintsComplete','tat_summary_pending', 'tat_summary_complete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
 }
