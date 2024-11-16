@@ -146,8 +146,8 @@ class HomeController extends Controller
         // ->whereMonth('c.created_at', '=', 10) // Change month if needed
         // ->whereYear('c.created_at', '=', 2024) // Change year if needed
         // ->first();
-        $month = 10;
-        $year = 2024;
+        $month = date('m'); // Current month as a numeric value (e.g., "10" for October)
+        $year = date('Y');
         $tat_summary_complete = DB::select("
         SELECT
             MONTHNAME(c.created_at) AS MonthName,
