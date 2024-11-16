@@ -8,7 +8,7 @@ use App\Models\ComplaintType;
 use App\Models\MobileAgent;
 use App\Models\Town;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -128,27 +128,30 @@ class HomeController extends Controller
         //     $typeComp[$key]['data'] = [(int)count($row->complaints)];
         // }
         // dd($typeComp);
-        $tat_summary = DB::select(DB::raw("
-    SELECT
-        DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
-        COUNT(c.id) AS TotalResolvedComplaints,
-        CONCAT(
-            FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
-            MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
-        ) AS AverageResolutionTime,
-        MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
-        MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
-    FROM
-        complaint c
-    LEFT JOIN
-        priorities p ON c.prio_id = p.id
-    WHERE
-        c.updated_at IS NOT NULL
-        AND c.status = 1
-        AND c.created_at != c.updated_at
-        AND MONTH(c.created_at) = 10
-        AND YEAR(c.created_at) = 2024
-"));
+        $month = 10; // Default to October
+        $year =  2024; // Default to 2024
+
+        $tat_summary = DB::select("
+            SELECT
+                DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
+                COUNT(c.id) AS TotalResolvedComplaints,
+                CONCAT(
+                    FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
+                    MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
+                ) AS AverageResolutionTime,
+                MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
+                MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
+            FROM
+                complaint c
+            LEFT JOIN
+                priorities p ON c.prio_id = p.id
+            WHERE
+                c.updated_at IS NOT NULL
+                AND c.status = 1
+                AND c.created_at != c.updated_at
+                AND MONTH(c.created_at) = :month
+                AND YEAR(c.created_at) = :year
+        ", ['month' => $month, 'year' => $year]);
         dd($tat_summary);
         return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
