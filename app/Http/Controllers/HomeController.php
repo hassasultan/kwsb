@@ -139,7 +139,7 @@ class HomeController extends Controller
                 MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
                 MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
             FROM
-                complaints c
+                complaint c
             LEFT JOIN
                 priorities p ON c.prio_id = p.id
             WHERE
