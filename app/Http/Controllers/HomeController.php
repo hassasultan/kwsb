@@ -148,7 +148,7 @@ class HomeController extends Controller
         // ->first();
         $month = 10;
         $year = 2024;
-        $tat_summary =  DB::select("
+        $tat_summary = DB::select("
         SELECT
             DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
             COUNT(c.id) AS TotalResolvedComplaints,
@@ -169,7 +169,7 @@ class HomeController extends Controller
             AND MONTH(c.created_at) = :month
             AND YEAR(c.created_at) = :year
         GROUP BY
-            MONTH(c.created_at)
+            MONTH(c.created_at), YEAR(c.created_at)
     ", ['month' => $month, 'year' => $year]);
         foreach ($tat_summary as $row)
         {
