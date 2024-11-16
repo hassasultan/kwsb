@@ -150,7 +150,7 @@ class HomeController extends Controller
         $year = 2024;
         $tat_summary = DB::select("
         SELECT
-            DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
+            MONTHNAME(c.created_at) AS MonthName,,
             COUNT(c.id) AS TotalResolvedComplaints,
             CONCAT(
                 FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
