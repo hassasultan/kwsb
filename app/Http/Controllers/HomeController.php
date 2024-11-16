@@ -8,6 +8,8 @@ use App\Models\ComplaintType;
 use App\Models\MobileAgent;
 use App\Models\Town;
 use Illuminate\Http\Request;
+use DB;
+
 class HomeController extends Controller
 {
     /**
@@ -30,27 +32,24 @@ class HomeController extends Controller
         $allTown = array();
         $totalComplaints = Complaints::count();
         $totalAgents = MobileAgent::count();
-        $complaintsPending = Complaints::where('status',0)->count();
-        $complaintsComplete = Complaints::where('status',1)->count();
+        $complaintsPending = Complaints::where('status', 0)->count();
+        $complaintsComplete = Complaints::where('status', 1)->count();
         $total_customer = Customer::count();
-        $result[0] = ['Clicks','Viewers'];
-        $result[1] = ['Pending',$complaintsPending];
-        $result[2] = ['Complete',$complaintsComplete];
-        $type = ComplaintType::with('town','town.complaints','complaints')->get();
-        $new_town = Town::with('comp_type','comp_type.complaints','complaints')->get();
-        $resultNew[0] = ['Clicks','Viewers'];
+        $result[0] = ['Clicks', 'Viewers'];
+        $result[1] = ['Pending', $complaintsPending];
+        $result[2] = ['Complete', $complaintsComplete];
+        $type = ComplaintType::with('town', 'town.complaints', 'complaints')->get();
+        $new_town = Town::with('comp_type', 'comp_type.complaints', 'complaints')->get();
+        $resultNew[0] = ['Clicks', 'Viewers'];
         $town = Town::get('town');
-        foreach($town as $row)
-        {
-            array_push($allTown,$row->town);
+        foreach ($town as $row) {
+            array_push($allTown, $row->town);
         }
         // dd($allTown);
-        foreach($type as $key => $row)
-        {
+        foreach ($type as $key => $row) {
             $resultNew[++$key] = [$row->title, (int)count($row->complaints)];
         }
-        if($request->has('status') && $request->status == "api")
-        {
+        if ($request->has('status') && $request->status == "api") {
             $data['type_count'] = $resultNew;
             $data['result'] = $result;
             return $data;
@@ -58,25 +57,22 @@ class HomeController extends Controller
         $typeComp = null;
         $typeComp_town = array();;
         $total_comp = array();
-        $new_complaints = Complaints::get()->groupBy(['town_id','type_id']);
+        $new_complaints = Complaints::get()->groupBy(['town_id', 'type_id']);
 
         $all_types = ComplaintType::where('status', 1)->get();
 
         $new_key = 0;
-        foreach($new_complaints as $key => $row)
-        {
+        foreach ($new_complaints as $key => $row) {
             $total_num = array();
             $feed_town = Town::find($key);
-                // print_r($row->toArray());
+            // print_r($row->toArray());
 
-            foreach($all_types as $index => $item)
-            {
+            foreach ($all_types as $index => $item) {
                 // $feed_type = ComplaintType::find($index);
                 // array_push($total_comp,$feed_type->title);
-                $c_comp = Complaints::where('type_id',$item->id)->where('town_id',$key)->count();
-                array_push($total_num,$c_comp);
+                $c_comp = Complaints::where('type_id', $item->id)->where('town_id', $key)->count();
+                array_push($total_num, $c_comp);
                 $typeComp[$index]['name'] = $item->title;
-
             }
             $typeComp[$new_key]['data'] = $total_num;
             $new_key++;
@@ -91,8 +87,7 @@ class HomeController extends Controller
             //     $query->where('id',$comId);
             // })->get();
             // dd($newTown->toArray());
-            array_push($typeComp_town,$feed_town->town);
-
+            array_push($typeComp_town, $feed_town->town);
         }
         // dd($typeComp[$index]['data']);
         // $allTown = array();
@@ -133,7 +128,30 @@ class HomeController extends Controller
         //     $typeComp[$key]['data'] = [(int)count($row->complaints)];
         // }
         // dd($typeComp);
-
-        return view('home',compact('complaintsComplete','totalComplaints','totalAgents','allTown','typeComp_town','typeComp','total_customer','complaintsPending'));
+        $tat_summary = DB::select(DB::raw("
+            SELECT
+                DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
+                COUNT(c.id) AS TotalResolvedComplaints,
+                CONCAT(
+                    FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
+                    MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
+                ) AS AverageResolutionTime,
+                MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
+                MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
+            FROM
+                complaints c
+            LEFT JOIN
+                priorities p ON c.prio_id = p.id
+            WHERE
+                c.updated_at IS NOT NULL
+                AND c.status = 1
+                AND c.created_at != c.updated_at
+                AND MONTH(c.created_at) = 10
+                AND YEAR(c.created_at) = 2024
+            GROUP BY
+                MONTH(c.created_at)
+        "));
+        dd($tat_summary);
+        return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
 }
