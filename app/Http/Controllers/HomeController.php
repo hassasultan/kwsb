@@ -169,11 +169,11 @@ class HomeController extends Controller
             AND MONTH(c.created_at) = :month
             AND YEAR(c.created_at) = :year
         GROUP BY
-            MONTH(c.created_at), YEAR(c.created_at)
+            MonthName
     ", ['month' => $month, 'year' => $year]);
         foreach ($tat_summary as $row)
         {
-            dd($$row->MonthName);
+            dd($row->MonthName);
         }
         return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
