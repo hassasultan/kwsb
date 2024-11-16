@@ -128,25 +128,51 @@ class HomeController extends Controller
         //     $typeComp[$key]['data'] = [(int)count($row->complaints)];
         // }
         // dd($typeComp);
-        $tat_summary = DB::table('complaint as c')
-        ->leftJoin('priorities as p', 'c.prio_id', '=', 'p.id')
-        ->selectRaw("
+        // $tat_summary = DB::table('complaint as c')
+        // ->leftJoin('priorities as p', 'c.prio_id', '=', 'p.id')
+        // ->selectRaw("
+        //     COUNT(c.id) AS TotalResolvedComplaints,
+        //     CONCAT(
+        //         FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
+        //         MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
+        //     ) AS AverageResolutionTime,
+        //     MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
+        //     MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours,
+        //     DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName
+        // ")
+        // ->whereNotNull('c.updated_at')
+        // ->where('c.status', '=', 1)
+        // ->whereRaw('c.created_at != c.updated_at')
+        // ->whereMonth('c.created_at', '=', 10) // Change month if needed
+        // ->whereYear('c.created_at', '=', 2024) // Change year if needed
+        // ->first();
+        $month = 10;
+        $year = 2024;
+        $tat_summary = DB::select("
+        SELECT
+            DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
             COUNT(c.id) AS TotalResolvedComplaints,
             CONCAT(
                 FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
                 MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
             ) AS AverageResolutionTime,
             MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
-            MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours,
-            DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName
-        ")
-        ->whereNotNull('c.updated_at')
-        ->where('c.status', '=', 1)
-        ->whereRaw('c.created_at != c.updated_at')
-        ->whereMonth('c.created_at', '=', 10) // Change month if needed
-        ->whereYear('c.created_at', '=', 2024) // Change year if needed
-        ->first();
-        dd($tat_summary);
+            MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
+        FROM
+            complaint c
+        LEFT JOIN
+            priorities p ON c.prio_id = p.id
+        WHERE
+            c.updated_at IS NOT NULL
+            AND c.status = 1
+            AND c.created_at != c.updated_at
+            AND MONTH(c.created_at) = :month
+            AND YEAR(c.created_at) = :year
+    ", ['month' => $month, 'year' => $year]);
+        foreach ($tat_summary as $row)
+        {
+            dd($$row->MonthName);
+        }
         return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
 }
