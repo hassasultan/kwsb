@@ -160,6 +160,30 @@
                                         Add New Complaint</a>
                                 </div>
                             </div>
+                            <div class="row mt-1 align-items-center">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Month Name</th>
+                                            <th>Total Resolved Complaints</th>
+                                            <th>Average Resolution Time</th>
+                                            <th>Max Resolution Time (Hours)</th>
+                                            <th>Min Resolution Time (Hours)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($report as $row)
+                                            <tr>
+                                                <td>{{ $row->MonthName }}</td>
+                                                <td>{{ $row->TotalResolvedComplaints }}</td>
+                                                <td>{{ $row->AverageResolutionTime }}</td>
+                                                <td>{{ $row->MaxResolutionTimeInHours }}</td>
+                                                <td>{{ $row->MinResolutionTimeInHours }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="chartbox mr-4">
                                 <div id="container2"></div>
                             </div>
