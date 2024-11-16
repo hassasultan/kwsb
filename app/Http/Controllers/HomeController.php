@@ -171,7 +171,7 @@ class HomeController extends Controller
         GROUP BY
             MonthName
     ", ['month' => $month, 'year' => $year]);
-    dd($tat_summary);
+    // dd($tat_summary);
 
         return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
