@@ -129,28 +129,26 @@ class HomeController extends Controller
         // }
         // dd($typeComp);
         $tat_summary = DB::select(DB::raw("
-            SELECT
-                DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
-                COUNT(c.id) AS TotalResolvedComplaints,
-                CONCAT(
-                    FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
-                    MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
-                ) AS AverageResolutionTime,
-                MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
-                MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
-            FROM
-                complaint c
-            LEFT JOIN
-                priorities p ON c.prio_id = p.id
-            WHERE
-                c.updated_at IS NOT NULL
-                AND c.status = 1
-                AND c.created_at != c.updated_at
-                AND MONTH(c.created_at) = 10
-                AND YEAR(c.created_at) = 2024
-            GROUP BY
-                MONTH(c.created_at)
-        "));
+    SELECT
+        DATE_FORMAT(STR_TO_DATE(MONTH(c.created_at), '%m'), '%M') AS MonthName,
+        COUNT(c.id) AS TotalResolvedComplaints,
+        CONCAT(
+            FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
+            MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
+        ) AS AverageResolutionTime,
+        MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
+        MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
+    FROM
+        complaints c
+    LEFT JOIN
+        priorities p ON c.prio_id = p.id
+    WHERE
+        c.updated_at IS NOT NULL
+        AND c.status = 1
+        AND c.created_at != c.updated_at
+        AND MONTH(c.created_at) = 10
+        AND YEAR(c.created_at) = 2024
+"));
         dd($tat_summary);
         return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
