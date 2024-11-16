@@ -173,6 +173,6 @@ class HomeController extends Controller
     ", ['month' => $month, 'year' => $year]);
     // dd($tat_summary);
 
-        return view('home', compact('complaintsComplete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
+        return view('home', compact('complaintsComplete', 'tat_summary', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
 }

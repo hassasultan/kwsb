@@ -172,7 +172,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($report as $row)
+                                        @foreach ($tat_summary as $row)
                                             <tr>
                                                 <td>{{ $row->MonthName }}</td>
                                                 <td>{{ $row->TotalResolvedComplaints }}</td>
