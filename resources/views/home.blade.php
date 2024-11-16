@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="row mt-1 align-items-center">
-                                <span class="h3">TAT Summary For Complete</span>
+                                <span class="h3">TAT Summary For Pending</span>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -186,7 +186,7 @@
                                 </table>
                             </div>
                             <div class="row mt-1 align-items-center">
-                                <span class="h3">TAT Summary For Pending</span>
+                                <span class="h3">TAT Summary For Completed</span>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -198,7 +198,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($tat_summary_pending as $row)
+                                        @foreach ($tat_summary_complete as $row)
                                             <tr>
                                                 <td>{{ $row->MonthName }}</td>
                                                 <td>{{ $row->TotalResolvedComplaints }}</td>
