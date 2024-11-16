@@ -166,20 +166,20 @@
                                     <thead>
                                         <tr>
                                             <th>Month Name</th>
-                                            <th>Total Resolved Complaints</th>
-                                            <th>Average Resolution Time</th>
-                                            <th>Max Resolution Time (Hours)</th>
-                                            <th>Min Resolution Time (Hours)</th>
+                                            <th>Total Pending Complaints</th>
+                                            <th>Average Pending Time</th>
+                                            <th>Max Pending Time (Hours)</th>
+                                            <th>Min Pending Time (Hours)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($tat_summary_pending as $row)
                                             <tr>
                                                 <td>{{ $row->MonthName }}</td>
-                                                <td>{{ $row->TotalResolvedComplaints }}</td>
-                                                <td>{{ $row->AverageResolutionTime }}</td>
-                                                <td>{{ $row->MaxResolutionTimeInHours }}</td>
-                                                <td>{{ $row->MinResolutionTimeInHours }}</td>
+                                                <td>{{ $row->TotalPendingComplaints }}</td>
+                                                <td>{{ $row->AveragePendingTime }}</td>
+                                                <td>{{ $row->MaxPendingTimeInHours }}</td>
+                                                <td>{{ $row->MinPendingTimeInHours }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

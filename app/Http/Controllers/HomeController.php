@@ -174,13 +174,13 @@ class HomeController extends Controller
         $tat_summary_pending = DB::select("
         SELECT
             MONTHNAME(c.created_at) AS MonthName,
-            COUNT(c.id) AS TotalResolvedComplaints,
-            CONCAT(
-                FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
-                MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
-            ) AS AverageResolutionTime,
-            MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
-            MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
+            COUNT(c.id) AS TotalPendingComplaints,
+             CONCAT(
+                FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, NOW())) / 24), ' days and ',
+                MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, NOW())), 24), ' hours'
+            ) AS AveragePendingTime,
+            MAX(TIMESTAMPDIFF(HOUR, c.created_at, NOW())) AS MaxPendingTimeInHours,
+            MIN(TIMESTAMPDIFF(HOUR, c.created_at, NOW())) AS MinPendingTimeInHours
         FROM
             complaint c
         LEFT JOIN
@@ -188,14 +188,13 @@ class HomeController extends Controller
         WHERE
             c.updated_at IS NOT NULL
             AND c.status = 0
-            AND c.created_at != c.updated_at
             AND MONTH(c.created_at) = :month
             AND YEAR(c.created_at) = :year
         GROUP BY
             MonthName
     ", ['month' => $month, 'year' => $year]);
-    // dd($tat_summary);
+        // dd($tat_summary);
 
-        return view('home', compact('complaintsComplete','tat_summary_pending', 'tat_summary_complete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
+        return view('home', compact('complaintsComplete', 'tat_summary_pending', 'tat_summary_complete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
 }
