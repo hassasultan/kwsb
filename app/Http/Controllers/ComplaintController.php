@@ -448,8 +448,8 @@ class ComplaintController extends Controller
 
         $dateS = $request->from_date;
         $dateE = $request->to_date;
-        $town = $request->town;
-        $type = $request->type;
+        $town = $request->town_id;
+        $type = $request->type_id;
 
         // SQL query to fetch data with parameter binding
         $TATcompleteddetails = DB::select("

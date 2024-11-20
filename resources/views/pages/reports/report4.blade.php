@@ -83,8 +83,8 @@
                                                 <td>{{ $record->CreatedDate }}</td>
                                                 <td>{{ $record->ResolvedDate }}</td>
                                                 <td>{{ $record->PRIORITY }}</td>
-                                                <td>{{ $record->AgingTime }}</td>
-                                                <td>{{ $record->TimeInHours }}</td>
+                                                <td>{{ $record->AgingTime ?? '' }}</td>
+                                                <td>{{ $record->TimeInHours ?? '' }}</td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -103,7 +103,7 @@
 
 
 
-                
+
 
 
     <!--   Core JS Files   -->
