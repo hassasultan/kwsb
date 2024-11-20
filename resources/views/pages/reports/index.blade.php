@@ -239,6 +239,8 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-md-3">
                     <div class="card shadow mb-4">
                         <div class="card-body">
@@ -275,6 +277,177 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports2') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Turn Around Time Report</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg ">Create</button>
+                                    </div>
+                                </div>
+        
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports4') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Turn Around Time Report</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Town*</label>
+                                        <select name="town_id" id="town_id" class="select2 form-control fs-14  h-50px">
+                                            @foreach ($town as $row)
+                                                <option value="{{ $row->id }}">{{ $row->town }}
+        
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Complaint Type</label>
+                                        <select name="type_id" id="type_id" class="select2-multiple form-control fs-14  h-50px">
+                                            @foreach ($type as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}
+        
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg ">Create</button>
+                                    </div>
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports3') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Aging Report</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg ">Create</button>
+                                    </div>
+                                </div>
+        
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports5') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Aging Report</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date" value="{{ old('title') }}"
+                                            required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Town*</label>
+                                        <select name="town_id" id="town_id" class="select2 form-control fs-14  h-50px">
+                                            @foreach ($town as $row)
+                                                <option value="{{ $row->id }}">{{ $row->town }}
+        
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Complaint Type</label>
+                                        <select name="type_id" id="type_id" class="select2-multiple form-control fs-14  h-50px">
+                                            @foreach ($type as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}
+        
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg ">Create</button>
+                                    </div>
+                                </div>
+        
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div> <!-- /. card-body -->
     </div>

@@ -42,29 +42,25 @@ class ComplaintController extends Controller
         $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
             $complaint = $complaint->where('title', 'LIKE', '%' . $request->search . '%')
-            ->orWhere('comp_num', 'LIKE', '%' .$request->search. '%')
-            ->orWhere('customer_num','LIKE', '%' . $request->search. '%')
-            ->orWhere('customer_name','LIKE', '%' . $request->search. '%');
-            if(count($complaint->get()) < 1)
-            {
-                $customer = Customer::where('customer_id',$request->search)
-                ->orwhere('customer_name',$request->search)->first();
-                if($customer != null)
-                {
-                    $complaint = $complaint->where('customer_id',$customer->id);
+                ->orWhere('comp_num', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
+            if (count($complaint->get()) < 1) {
+                $customer = Customer::where('customer_id', $request->search)
+                    ->orwhere('customer_name', $request->search)->first();
+                if ($customer != null) {
+                    $complaint = $complaint->where('customer_id', $customer->id);
                 }
             }
             // ->orWhereHas('customer',function($query) use($request){
             //     $query->where('customer_id',$request->search);
             // });
         }
-        if($request->has('town') && $request->town != null && $request->town != '' )
-        {
-            $complaint = $complaint->where('town_id',$request->town);
+        if ($request->has('town') && $request->town != null && $request->town != '') {
+            $complaint = $complaint->where('town_id', $request->town);
         }
-        if($request->has('type_id') && $request->type_id != null && $request->type_id != '')
-        {
-            $complaint = $complaint->where('type_id',$request->type_id);
+        if ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
+            $complaint = $complaint->where('type_id', $request->type_id);
         }
         $complaint = $complaint->paginate(10)->appends([
             'type_id' => request()->get('type_id'),
@@ -78,21 +74,21 @@ class ComplaintController extends Controller
         $town = Town::all();
         $comptype = ComplaintType::all();
         // dd($complaint->toArray());
-        return view('pages.complaints.index', compact('complaint','town','comptype'));
+        return view('pages.complaints.index', compact('complaint', 'town', 'comptype'));
     }
 
     public function updateStatus(Request $request)
     {
         $complaint = Complaints::find($request->complaint_id);
 
-    if ($complaint) {
-        $complaint->status = $request->status;
-        $complaint->save();
+        if ($complaint) {
+            $complaint->status = $request->status;
+            $complaint->save();
 
-        return response()->json(['success' => true]);
-    }
+            return response()->json(['success' => true]);
+        }
 
-    return response()->json(['success' => false]);
+        return response()->json(['success' => false]);
     }
     public function create(Request $request)
     {
@@ -111,7 +107,6 @@ class ComplaintController extends Controller
         }
 
         return view('pages.complaints.create', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
-
     }
     public function store(Request $request)
     {
@@ -160,7 +155,6 @@ class ComplaintController extends Controller
 
             curl_close($curl);
             return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
-
         } else {
             return back()->with('error', $valid->errors());
         }
@@ -176,7 +170,6 @@ class ComplaintController extends Controller
         $source = Source::all();
 
         return view('pages.complaints.edit', compact('complaint', 'prio', 'source', 'town', 'type', 'subtype', 'subtown'));
-
     }
     public function update(Request $request, $id)
     {
@@ -188,11 +181,9 @@ class ComplaintController extends Controller
             }
             Complaints::where('id', $id)->update($data);
             return redirect()->route('compaints-management.index')->with('success', 'Record Updated successfully.');
-
         } else {
             return back()->with('error', $valid->errors());
         }
-
     }
     public function agent_wise_complaints()
     {
@@ -213,9 +204,8 @@ class ComplaintController extends Controller
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
             $customer_id = auth('api')->user()->customer->id;
-            if(auth('api')->user()->status == 0)
-            {
-                return response()->json(['success' => 'No Record Found...'],500);
+            if (auth('api')->user()->status == 0) {
+                return response()->json(['success' => 'No Record Found...'], 500);
             }
             // $type_id = auth('api')->user()->agent->type_id;
             $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->get();
@@ -285,10 +275,8 @@ class ComplaintController extends Controller
             $phone = $complaint->phone;
         } else {
             $phone = $complaint->customer->phone;
-
         }
-        if($request->status == "1")
-        {
+        if ($request->status == "1") {
 
             $curl = curl_init();
 
@@ -323,19 +311,21 @@ class ComplaintController extends Controller
 
             $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=le chal gay sms&shortcode=KWSC&lang=urdu&mobilenum=' . $phone . '&password=Smskwsc%402024',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_HTTPHEADER => array(
                         'Cookie: cookiesession1=678B2883C43F88D5E4F3BA5C946B0899'
                     ),
-            )
+                )
             );
 
             $response = curl_exec($curl);
@@ -349,17 +339,14 @@ class ComplaintController extends Controller
     {
         $complaint = Complaints::with('town', 'town.agents')->find($id);
         return view('pages.complaints.details', compact('complaint'));
-
     }
     public function assign_complaint($agentId, $complaintId)
     {
         $check = ComplaintAssignAgent::where('complaint_id', $complaintId)->where('agent_id', $agentId)->first();
         if ($check == null) {
             $alreadyAssign = ComplaintAssignAgent::where('complaint_id', $complaintId)->get();
-            if(count($alreadyAssign) > 0)
-            {
-                foreach($alreadyAssign as $row)
-                {
+            if (count($alreadyAssign) > 0) {
+                foreach ($alreadyAssign as $row) {
                     $row->delete();
                 }
             }
@@ -379,8 +366,7 @@ class ComplaintController extends Controller
         $type = ComplaintType::get();
         $prio = Priorities::get();
         $source = Complaints::get()->groupBy('source');
-        return view('pages.reports.index', compact('town','subtown', 'type', 'prio', 'source'));
-
+        return view('pages.reports.index', compact('town', 'subtown', 'type', 'prio', 'source'));
     }
     public function generate_report(Request $request)
     {
@@ -451,6 +437,212 @@ class ComplaintController extends Controller
 
         // dd($comp);
         // dd($complaints->toArray());
-        return view('pages.reports.report', compact('complaints','subtown', 'type', 'dateS', 'dateE', 'town', 'consumer', 'source', 'prio'));
+        return view('pages.reports.report', compact('complaints', 'subtown', 'type', 'dateS', 'dateE', 'town', 'consumer', 'source', 'prio'));
+    }
+    public function generate_report4(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town;
+        $type = $request->type;
+
+        // SQL query to fetch data with parameter binding
+        $TATcompleteddetails = DB::select("
+        SELECT
+            c.comp_num AS Complaint,
+            ct.title AS COMPLAIN_TYPE,
+            st.title AS GRIEVANCE_TYPE,
+            c.customer_name,
+            c.phone,
+            u.name AS Executive_Engineer,
+            c.created_at AS CreatedDate,
+            c.updated_at AS ResolvedDate,
+            p.title AS PRIORITY,
+            CONCAT(
+                FLOOR(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at) / 24), ' days and ',
+                MOD(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at), 24), ' hours'
+            ) AS TurnaroundTime,
+            TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at) AS TimeInHours
+        FROM
+            complaint c
+        LEFT JOIN
+            priorities p ON c.prio_id = p.id
+        JOIN complaint_types ct ON ct.id = c.type_id
+        JOIN sub_types st ON st.id = c.subtype_id
+        JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+        JOIN mobile_agent m ON ca.agent_id = m.id
+        JOIN users u ON m.user_id = u.id
+        WHERE
+            c.updated_at IS NOT NULL
+            AND c.status = 1
+            AND c.created_at != c.updated_at
+            AND c.town_id = :town
+            And c.type_id = :type
+            AND c.created_at BETWEEN :from_date AND :to_date
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'town' => $town,
+            'type' => $type,
+        ]);
+        // Return results to the view
+        return view('pages.reports.report4', compact('TATcompleteddetails', 'dateS', 'dateE', 'type', 'town'));
+    }
+
+    public function generate_report2(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+
+        // SQL query to fetch data with parameter binding
+        $TATcompleted = DB::select("
+        SELECT
+            c.comp_num AS Complaint,
+            ct.title AS COMPLAIN_TYPE,
+            st.title AS GRIEVANCE_TYPE,
+            c.customer_name,
+            c.phone,
+            u.name AS Executive_Engineer,
+            c.created_at AS CreatedDate,
+            c.updated_at AS ResolvedDate,
+            p.title AS PRIORITY,
+            CONCAT(
+                FLOOR(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at) / 24), ' days and ',
+                MOD(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at), 24), ' hours'
+            ) AS TurnaroundTime,
+            TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at) AS TimeInHours
+        FROM
+            complaint c
+        LEFT JOIN
+            priorities p ON c.prio_id = p.id
+        JOIN complaint_types ct ON ct.id = c.type_id
+        JOIN sub_types st ON st.id = c.subtype_id
+        JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+        JOIN mobile_agent m ON ca.agent_id = m.id
+        JOIN users u ON m.user_id = u.id
+        WHERE
+            c.updated_at IS NOT NULL
+            AND c.status = 1
+            AND c.created_at != c.updated_at
+            AND c.created_at BETWEEN :from_date AND :to_date
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+        ]);
+        // Return results to the view
+        return view('pages.reports.report2', compact('TATcompleted', 'dateS', 'dateE'));
+    }
+
+    public function generate_report3(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+
+
+        // SQL query to fetch data with parameter binding
+        $TATpending = DB::select("
+        SELECT
+            c.comp_num AS Complaint,
+            ct.title AS COMPLAIN_TYPE,
+            st.title AS GRIEVANCE_TYPE,
+            c.customer_name,
+            c.phone,
+            u.name AS Executive_Engineer,
+            c.created_at AS CreatedDate,
+            c.updated_at AS ResolvedDate,
+            p.title AS PRIORITY,
+            CONCAT(
+                FLOOR(TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) / 24), ' days and ',
+                MOD(TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP), 24), ' hours'
+            ) AS AgingTime,
+            TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) AS TimeInHours
+        FROM
+            complaint c
+        LEFT JOIN
+            priorities p ON c.prio_id = p.id
+        JOIN complaint_types ct ON ct.id = c.type_id
+        JOIN sub_types st ON st.id = c.subtype_id
+        JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+        JOIN mobile_agent m ON ca.agent_id = m.id
+        JOIN users u ON m.user_id = u.id
+        WHERE
+            c.updated_at IS NOT NULL
+            AND c.status = 0
+            AND c.created_at BETWEEN :from_date AND :to_date
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+        ]);
+        // Return results to the view
+        return view('pages.reports.report3', compact('TATpending', 'dateS', 'dateE',));
+    }
+
+    public function generate_report5(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town;
+        $type = $request->type;
+
+        // SQL query to fetch data with parameter binding
+        $TATpendingdetail = DB::select("
+        SELECT
+            c.comp_num AS Complaint,
+            ct.title AS COMPLAIN_TYPE,
+            st.title AS GRIEVANCE_TYPE,
+            c.customer_name,
+            c.phone,
+            u.name AS Executive_Engineer,
+            c.created_at AS CreatedDate,
+            c.updated_at AS ResolvedDate,
+            p.title AS PRIORITY,
+            CONCAT(
+                FLOOR(TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) / 24), ' days and ',
+                MOD(TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP), 24), ' hours'
+            ) AS AgingTime,
+            TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) AS TimeInHours
+        FROM
+            complaint c
+        LEFT JOIN
+            priorities p ON c.prio_id = p.id
+        JOIN complaint_types ct ON ct.id = c.type_id
+        JOIN sub_types st ON st.id = c.subtype_id
+        JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+        JOIN mobile_agent m ON ca.agent_id = m.id
+        JOIN users u ON m.user_id = u.id
+        WHERE
+            c.updated_at IS NOT NULL
+            AND c.status = 0
+            AND c.town_id = :town
+            And c.type_id = :type
+            AND c.created_at BETWEEN :from_date AND :to_date
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'town' => $town,
+            'type' => $type,
+        ]);
+        // Return results to the view
+        return view('pages.reports.report5', compact('TATpendingdetail', 'dateS', 'dateE', 'type', 'town'));
     }
 }

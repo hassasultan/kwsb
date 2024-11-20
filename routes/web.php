@@ -65,6 +65,10 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/customer-management', CustomerController::class);
 
         Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
+        Route::get('/compaints-reports/reports2',[ComplaintController::class,'generate_report2'])->name('compaints-reports.reports2');
+        Route::get('/compaints-reports/reports3',[ComplaintController::class,'generate_report3'])->name('compaints-reports.reports3');
+        Route::get('/compaints-reports/reports4',[ComplaintController::class,'generate_report4'])->name('compaints-reports.reports4');
+        Route::get('/compaints-reports/reports5',[ComplaintController::class,'generate_report5'])->name('compaints-reports.reports5');
         Route::get('/reports',[ComplaintController::class,'report'])->name('admin.reports');
         Route::resource('districts', DistrictController::class);
 
