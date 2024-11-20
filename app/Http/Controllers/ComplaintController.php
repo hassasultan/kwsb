@@ -484,7 +484,7 @@ class ComplaintController extends Controller
             AND c.town_id = :town
             And c.type_id = :type
             AND c.created_at BETWEEN :from_date AND :to_date
-    ", [
+        ", [
             'from_date' => $dateS,
             'to_date' => $dateE,
             'town' => $town,
@@ -601,8 +601,8 @@ class ComplaintController extends Controller
 
         $dateS = $request->from_date;
         $dateE = $request->to_date;
-        $town = $request->town;
-        $type = $request->type;
+        $town = $request->town_id;
+        $type = $request->type_id;
 
         // SQL query to fetch data with parameter binding
         $TATpendingdetail = DB::select("
