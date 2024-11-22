@@ -150,51 +150,165 @@ class HomeController extends Controller
         $year = date('Y');
         $tat_summary_complete = DB::select("
         SELECT
-            MONTHNAME(c.created_at) AS MonthName,
-            COUNT(c.id) AS TotalResolvedComplaints,
+            ResolutionDetails,
+            TotalComplaints,
             CONCAT(
-                FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) / 24), ' days and ',
-                MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)), 24), ' hours'
-            ) AS AverageResolutionTime,
-            MAX(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MaxResolutionTimeInHours,
-            MIN(TIMESTAMPDIFF(HOUR, c.created_at, c.updated_at)) AS MinResolutionTimeInHours
-        FROM
-            complaint c
-        LEFT JOIN
-            priorities p ON c.prio_id = p.id
-        WHERE
-            c.updated_at IS NOT NULL
-            AND c.status = 1
-            AND c.created_at != c.updated_at
-            AND MONTH(c.created_at) = :month
-            AND YEAR(c.created_at) = :year
-        GROUP BY
-            MonthName
-    ", ['month' => $month, 'year' => $year]);
+                ROUND(
+                    (TotalComplaints * 100 /
+                    (SELECT COUNT(*)
+                    FROM complaint c
+                    WHERE c.status = 1
+                    AND c.updated_at IS NOT NULL
+                    AND c.created_at != c.updated_at
+                    )), 2), '%'
+            ) AS Percentage
+        FROM (
+            SELECT
+                CASE
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 0 THEN 'Complaints solved within TAT (Immediate)'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 15 THEN 'Complaint Solved within TAT (15 days)'
+                    ELSE 'Complaint Solved out of TAT (after 15 days)'
+                END AS ResolutionDetails,
+                COUNT(*) AS TotalComplaints
+            FROM
+                complaint c
+            WHERE
+                c.status = 1
+                AND c.updated_at IS NOT NULL
+                AND c.created_at != c.updated_at
+            GROUP BY
+                ResolutionDetails
+            WITH ROLLUP
+            ) AS subquery
+    ");
         $tat_summary_pending = DB::select("
         SELECT
-            MONTHNAME(c.created_at) AS MonthName,
-            COUNT(c.id) AS TotalPendingComplaints,
-             CONCAT(
-                FLOOR(AVG(TIMESTAMPDIFF(HOUR, c.created_at, NOW())) / 24), ' days and ',
-                MOD(AVG(TIMESTAMPDIFF(HOUR, c.created_at, NOW())), 24), ' hours'
-            ) AS AveragePendingTime,
-            MAX(TIMESTAMPDIFF(HOUR, c.created_at, NOW())) AS MaxPendingTimeInHours,
-            MIN(TIMESTAMPDIFF(HOUR, c.created_at, NOW())) AS MinPendingTimeInHours
+            CASE
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+            END AS Pendingdays,
+            COUNT(*) AS TotalPendingComplaints,
+            CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
         FROM
             complaint c
-        LEFT JOIN
-            priorities p ON c.prio_id = p.id
         WHERE
-            c.updated_at IS NOT NULL
-            AND c.status = 0
-            AND MONTH(c.created_at) = :month
-            AND YEAR(c.created_at) = :year
+            c.status = 0
         GROUP BY
-            MonthName
-    ", ['month' => $month, 'year' => $year]);
+            Pendingdays
+        WITH ROLLUP
+    ");
+        $top3water =  DB::select("
+        SELECT
+            u.name AS Executive_Engineer,
+            t.town AS Town,
+            st.title AS Department,
+            COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+            COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+            COUNT(c.id) AS Total_Complaints,
+            ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+        FROM complaint c
+        JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+        JOIN mobile_agent m ON ca.agent_id = m.id
+        JOIN users u ON m.user_id = u.id
+        JOIN towns t ON c.town_id = t.id
+        JOIN complaint_types st ON c.type_id = st.id
+        WHERE c.type_id = 2 AND u.name NOT LIKE 'north agent'
+            AND u.name NOT LIKE 'north nazimabad agent'
+            AND u.name NOT LIKE 'south water'
+            AND u.name NOT LIKE 'Mobile Agent'
+            AND u.name NOT LIKE 'raghib'
+        GROUP BY
+            u.name, t.town, st.title
+        ORDER BY
+            Solved DESC
+        LIMIT 3
+        ");
+        $top3sewe = DB::select("
+        SELECT
+                u.name AS Executive_Engineer,
+                t.town AS Town,
+                st.title AS Department,
+                COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+                COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+                COUNT(c.id) AS Total_Complaints,
+                ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+            FROM complaint c
+            JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+            JOIN mobile_agent m ON ca.agent_id = m.id
+            JOIN users u ON m.user_id = u.id
+            JOIN towns t ON c.town_id = t.id
+            JOIN complaint_types st ON c.type_id = st.id
+            WHERE c.type_id = 1 AND u.name NOT LIKE 'north agent'
+                AND u.name NOT LIKE 'north nazimabad agent'
+                AND u.name NOT LIKE 'south water'
+                AND u.name NOT LIKE 'Mobile Agent'
+                AND u.name NOT LIKE 'raghib'
+            GROUP BY
+                u.name, t.town, st.title
+            ORDER BY
+                Solved DESC
+            LIMIT 3
+        ");
+
+        $wor3water = DB::select("
+            SELECT
+                u.name AS Executive_Engineer,
+                t.town AS Town,
+                st.title AS Department,
+                COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+                COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+                COUNT(c.id) AS Total_Complaints,
+                ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+            FROM complaint c
+            JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+            JOIN mobile_agent m ON ca.agent_id = m.id
+            JOIN users u ON m.user_id = u.id
+            JOIN towns t ON c.town_id = t.id
+            JOIN complaint_types st ON c.type_id = st.id
+            WHERE c.type_id = 2 AND u.name NOT LIKE 'north agent'
+                AND u.name NOT LIKE 'north nazimabad agent'
+                AND u.name NOT LIKE 'south water'
+                AND u.name NOT LIKE 'Mobile Agent'
+                AND u.name NOT LIKE 'raghib'
+            GROUP BY
+                u.name, t.town, st.title
+            ORDER BY
+                Pending DESC
+            LIMIT 3
+            ");
+
+    $wor3sewe = DB::select("
+    SELECT
+        u.name AS Executive_Engineer,
+        t.town AS Town,
+        st.title AS Department,
+        COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+        COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+        COUNT(c.id) AS Total_Complaints,
+        ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+    FROM complaint c
+    JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+    JOIN mobile_agent m ON ca.agent_id = m.id
+    JOIN users u ON m.user_id = u.id
+    JOIN towns t ON c.town_id = t.id
+    JOIN complaint_types st ON c.type_id = st.id
+    WHERE c.type_id = 1 AND u.name NOT LIKE 'north agent'
+        AND u.name NOT LIKE 'north nazimabad agent'
+        AND u.name NOT LIKE 'south water'
+        AND u.name NOT LIKE 'Mobile Agent'
+        AND u.name NOT LIKE 'raghib'
+    GROUP BY
+        u.name, t.town, st.title
+    ORDER BY
+        Pending DESC
+    LIMIT 3
+    ");
         // dd($tat_summary);
 
-        return view('home', compact('complaintsComplete', 'tat_summary_pending', 'tat_summary_complete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
+        return view('home', compact('complaintsComplete', 'top3water', 'top3sewe', 'wor3water', 'wor3sewe', 'tat_summary_pending', 'tat_summary_complete', 'totalComplaints', 'totalAgents', 'allTown', 'typeComp_town', 'typeComp', 'total_customer', 'complaintsPending'));
     }
 }

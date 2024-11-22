@@ -121,38 +121,27 @@
                         <div class="card-body">
                             <div class="row mt-1 align-items-center">
                                 <div class="col-12 col-lg-4 text-left pl-4">
-                                    <p class="mb-1 small text-muted">New</p>
                                     <span class="h3">KWSC</span>
-                                    <span class="small text-muted">+100%</span>
-                                    <span class="fe fe-arrow-up text-success fe-12"></span>
                                     <p class="text-muted mt-2">
-                                        Key Functions of Karachi Water & Sewerage Corporation.
+                                        Karachi Water & Sewerage Corporation.
                                     </p>
                                 </div>
                                 <div class="col-6 col-lg-2 text-center py-4">
                                     <p class="mb-1 small text-muted">Total Complaints</p>
                                     <span class="h3">{{ $totalComplaints }}</span><br />
-                                    <span class="small text-muted">+20%</span>
-                                    <span class="fe fe-arrow-up text-success fe-12"></span>
 
                                 </div>
                                 {{-- <div class="col-6 col-lg-2 text-center py-4">
                                     <p class="mb-1 small text-muted">Total Agents</p>
                                     <span class="h3">{{ $totalAgents }}</span><br />
-                                    <span class="small text-muted">+20%</span>
-                                    <span class="fe fe-arrow-up text-success fe-12"></span>
                                 </div> --}}
                                 <div class="col-6 col-lg-2 text-center py-4">
                                     <p class="mb-1 small text-muted">Pending Complaints</p>
                                     <span class="h3">{{ $complaintsPending }}</span><br />
-                                    <span class="small text-muted">+20%</span>
-                                    <span class="fe fe-arrow-up text-success fe-12"></span>
                                 </div>
                                 <div class="col-6 col-lg-2 text-center py-4">
                                     <p class="mb-1 small text-muted">Solved Complaints</p>
                                     <span class="h3">{{ $complaintsComplete }}</span><br />
-                                    <span class="small text-muted">+20%</span>
-                                    <span class="fe fe-arrow-up text-success fe-12"></span>
                                 </div>
                                 <div class="col-xl-12 col-sm-14  text-right">
                                     <a class="btn btn-primary mb-0" href="{{ route('compaints-management.create') }}"
@@ -160,56 +149,67 @@
                                         Add New Complaint</a>
                                 </div>
                             </div>
-                            <div class="row mt-1 align-items-center">
-                                <span class="h3">TAT Summary For Pending</span>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Month Name</th>
-                                            <th>Total Pending Complaints</th>
-                                            <th>Average Pending Time</th>
-                                            <th>Max Pending Time (Hours)</th>
-                                            <th>Min Pending Time (Hours)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($tat_summary_pending as $row)
-                                            <tr>
-                                                <td>{{ $row->MonthName }}</td>
-                                                <td>{{ $row->TotalPendingComplaints }}</td>
-                                                <td>{{ $row->AveragePendingTime }}</td>
-                                                <td>{{ $row->MaxPendingTimeInHours }}</td>
-                                                <td>{{ $row->MinPendingTimeInHours }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                            <div>
+                                ..
                             </div>
-                            <div class="row mt-1 align-items-center">
-                                <span class="h3">TAT Summary For Completed</span>
+
+                            <div class="row align-items-baseline">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card shadow eq-card mb-4">
+                                <div class="card-body mb-n3">
+                                <div class="row mt-1 align-items-center">
+                                <span class="h3">Turn Around Time Summary</span>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Month Name</th>
-                                            <th>Total Resolved Complaints</th>
-                                            <th>Average Resolution Time</th>
-                                            <th>Max Resolution Time (Hours)</th>
-                                            <th>Min Resolution Time (Hours)</th>
+                                            <th class="text-dark fw-bold">Complaints Resulotion Detail</th>
+                                            <th class="text-dark fw-bold">Total Complaints</th>
+                                            <th class="text-dark fw-bold">Percentage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($tat_summary_complete as $row)
                                             <tr>
-                                                <td>{{ $row->MonthName }}</td>
-                                                <td>{{ $row->TotalResolvedComplaints }}</td>
-                                                <td>{{ $row->AverageResolutionTime }}</td>
-                                                <td>{{ $row->MaxResolutionTimeInHours }}</td>
-                                                <td>{{ $row->MinResolutionTimeInHours }}</td>
+                                                <td class="text-dark fw-bold">{{ $row->ResolutionDetails }}</td>
+                                                <td class="text-dark fw-bold">{{ $row->TotalComplaints }}</td>
+                                                <td class="text-dark fw-bold">{{ $row->Percentage }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card -->
+                        </div> <!-- .col -->
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card shadow eq-card mb-4">
+                                <div class="card-body mb-n3">
+                                <div class="row mt-1 align-items-center">
+                                <span class="h3">Aging Summary</span>
+                                <table class="table">
+                                <thead>
+                                        <tr>
+                                            <th class="text-dark fw-bold">Pending Complaints Detail</th>
+                                            <th class="text-dark fw-bold">Total Pending Complaints</th>
+                                            <th class="text-dark fw-bold">Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($tat_summary_pending as $row)
+                                            <tr>
+                                                <td class="text-dark fw-bold">{{ $row->Pendingdays }}</td>
+                                                <td class="text-dark fw-bold">{{ $row->TotalPendingComplaints }}</td>
+                                                <td class="text-dark fw-bold">{{ $row->Percentage }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card -->
+                        </div> <!-- .col -->
+                    </div> <!-- .row -->
+                    <hr />
                             <div class="chartbox mr-4">
                                 <div id="container2"></div>
                             </div>
@@ -242,6 +242,121 @@
                     </div> <!-- .col -->
                 </div> <!-- .row -->
                 <hr />
+                <div class="row align-items-baseline">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card shadow eq-card mb-4">
+                                <div class="card-body mb-n3">
+                                    <div class="row mt-1 align-items-center">
+                                        <span class="h3">TOP 3 WATER</span>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-dark fw-bold">Executive Engineer</th>
+                                                    <th class="text-dark fw-bold">Town</th>
+                                                    <th class="text-dark fw-bold">Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($top3water as $row)
+                                                    <tr>
+                                                        <td class="text-dark fw-bold">{{ $row->Executive_Engineer }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Town }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Percentage_Solved }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card -->
+                        </div> <!-- .col -->
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card shadow eq-card mb-4">
+                                <div class="card-body mb-n3">
+                                    <div class="row mt-1 align-items-center">
+                                        <span class="h3">TOP 3 SEWERAGE</span>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-dark fw-bold">Executive Engineer</th>
+                                                    <th class="text-dark fw-bold">Town</th>
+                                                    <th class="text-dark fw-bold">Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($top3sewe as $row)
+                                                    <tr>
+                                                        <td class="text-dark fw-bold">{{ $row->Executive_Engineer }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Town }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Percentage_Solved }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card -->
+                        </div> <!-- .col -->
+                    </div> <!-- .row -->
+                    <hr />
+                    <div class="row align-items-baseline">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card shadow eq-card mb-4">
+                                <div class="card-body mb-n3">
+                                    <div class="row mt-1 align-items-center">
+                                        <span class="h3">WORST 3 WATER</span>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-dark fw-bold">Executive Engineer</th>
+                                                    <th class="text-dark fw-bold">Town</th>
+                                                    <th class="text-dark fw-bold">Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($wor3water as $row)
+                                                    <tr>
+                                                        <td class="text-dark fw-bold">{{ $row->Executive_Engineer }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Town }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Percentage_Solved }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card -->
+                        </div> <!-- .col -->
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card shadow eq-card mb-4">
+                                <div class="card-body mb-n3">
+                                    <div class="row mt-1 align-items-center">
+                                        <span class="h3">WORST 3 SEWERAGE</span>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-dark fw-bold">Executive Engineer</th>
+                                                    <th class="text-dark fw-bold">Town</th>
+                                                    <th class="text-dark fw-bold">Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($wor3sewe as $row)
+                                                    <tr>
+                                                        <td class="text-dark fw-bold">{{ $row->Executive_Engineer }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Town }}</td>
+                                                        <td class="text-dark fw-bold">{{ $row->Percentage_Solved }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card -->
+                        </div> <!-- .col -->
+                    </div> <!-- .row -->
+                    <hr />
+
 
             </div>
         </div>
@@ -253,6 +368,8 @@
             var cat = @json($allTown);
             var type = @json($typeComp);
             // console.log(type);
+            type = type.slice(0, 4);
+
             var seriesData = [];
 
             // Perform a loop to generate the series data dynamically
@@ -303,7 +420,7 @@
                     allowDecimals: false,
                     min: 0,
                     title: {
-                        text: 'Count medals'
+                        text: 'Complaints'
                     }
                 },
 
