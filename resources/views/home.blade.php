@@ -244,8 +244,8 @@
                 <hr />
                 <div class="row align-items-baseline">
                         <div class="col-md-12 col-lg-6">
-                            <div class="card shadow eq-card mb-4">
-                                <div class="card-body mb-n3 p-3">
+                            <div class="card shadow eq-card p-3 mb-4">
+                                <div class="card-body mb-n3 ">
                                     <div class="row mt-1 align-items-center">
                                         <span class="h3">TOP 3 WATER</span>
                                         <table class="table">
@@ -271,8 +271,8 @@
                             </div> <!-- .card -->
                         </div> <!-- .col -->
                         <div class="col-md-12 col-lg-6">
-                            <div class="card shadow eq-card mb-4">
-                                <div class="card-body mb-n3 p-3">
+                            <div class="card shadow eq-card p-3 mb-4">
+                                <div class="card-body mb-n3 ">
                                     <div class="row mt-1 align-items-center">
                                         <span class="h3">TOP 3 SEWERAGE</span>
                                         <table class="table">
@@ -301,8 +301,8 @@
                     <hr />
                     <div class="row align-items-baseline">
                         <div class="col-md-12 col-lg-6">
-                            <div class="card shadow eq-card mb-4">
-                                <div class="card-body mb-n3 p-3">
+                            <div class="card shadow eq-card p-3 mb-4">
+                                <div class="card-body mb-n3 ">
                                     <div class="row mt-1 align-items-center">
                                         <span class="h3">WORST 3 WATER</span>
                                         <table class="table">
@@ -328,8 +328,8 @@
                             </div> <!-- .card -->
                         </div> <!-- .col -->
                         <div class="col-md-12 col-lg-6">
-                            <div class="card shadow eq-card mb-4">
-                                <div class="card-body mb-n3 p-3">
+                            <div class="card shadow eq-card p-3 mb-4">
+                                <div class="card-body mb-n3 ">
                                     <div class="row mt-1 align-items-center">
                                         <span class="h3">WORST 3 SEWERAGE</span>
                                         <table class="table">
