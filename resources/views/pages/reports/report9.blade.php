@@ -43,9 +43,9 @@
                             </div>
                             <div class="col-7 text-end" style="padding-top:2.4rem;">
                             <h5 class=" fs-1">KW&SC-CMP</h5>
-                            <h2 class="mb-4">Turn Around Time Report</h2>
+                                <h2 class="mb-4">Complaints Aging Summary</h2>
                                 <p style="font-size: 1.2rem">
-                                    <span class="bg-dark text-white">TAT Filter Report</span>
+                                    <span class="bg-dark text-white">Aging Filter Summary</span>
                                 </p>
                                 <p>
                                     <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}
@@ -58,33 +58,17 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th><b>Complaint</b></th>
-                                            <th><b>Complain Type</b></th>
-                                            <th><b>Grievance Type</b></th>
-                                            <th><b>Customer Name</b></th>
-                                            <th><b>Phone</b></th>
-                                            <th><b>Executive Engineer</b></th>
-                                            <th><b>Created Date</b></th>
-                                            <th><b>Resolved Date</b></th>
-                                            <th><b>Priority</b></th>
-                                            <th><b>Turnaround Time<b></th>
-                                            <th><b>Time in Hours</b></th>
+                                            <th><b>Complaints Resulotion Detail</b></th>
+                                            <th><b>Total Complaints</b></th>
+                                            <th><b>Percentage</b></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($TATcompleteddetails as $record)
+                                        @forelse($tat_pending_filter as $record)
                                             <tr>
-                                                <td>{{ $record->Complaint }}</td>
-                                                <td>{{ $record->COMPLAIN_TYPE }}</td>
-                                                <td>{{ $record->GRIEVANCE_TYPE }}</td>
-                                                <td>{{ $record->customer_name }}</td>
-                                                <td>{{ $record->phone }}</td>
-                                                <td>{{ $record->Executive_Engineer }}</td>
-                                                <td>{{ $record->CreatedDate }}</td>
-                                                <td>{{ $record->ResolvedDate }}</td>
-                                                <td>{{ $record->PRIORITY }}</td>
-                                                <td>{{ $record->AgingTime ?? '' }}</td>
-                                                <td>{{ $record->TimeInHours ?? '' }}</td>
+                                                <td>{{ $record->Pendingdays }}</td>
+                                                <td>{{ $record->TotalPendingComplaints }}</td>
+                                                <td>{{ $record->Percentage }}</td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -100,11 +84,6 @@
             </div>
 
     {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
-
-
-
-
-
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>

@@ -42,10 +42,10 @@
                                     style="width: 200px;">
                             </div>
                             <div class="col-7 text-end" style="padding-top:2.4rem;">
-                                <h5 class="fs-1">KW&SB-CMP</h5>
+                            <h5 class=" fs-1">KW&SC-CMP</h5>
                                 <h2 class="mb-4">Complaints Aging Report</h2>
                                 <p style="font-size: 1.2rem">
-                                    <span class="bg-dark text-white">Aging Report</span>
+                                    <span class="bg-dark text-white">Aging Overall Report</span>
                                 </p>
                                 <p>
                                     <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}

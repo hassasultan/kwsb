@@ -42,10 +42,10 @@
                                     style="width: 200px;">
                             </div>
                             <div class="col-7 text-end" style="padding-top:2.4rem;">
-                                <h5 class="fs-1">KW&SB-CMP</h5>
+                            <h5 class=" fs-1">KW&SC-CMP</h5>
                                 <h2 class="mb-4">Turn Around Time Report</h2>
                                 <p style="font-size: 1.2rem">
-                                    <span class="bg-dark text-white">TAT Report</span>
+                                    <span class="bg-dark text-white">TAT Overall Report</span>
                                 </p>
                                 <p>
                                     <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}
@@ -58,17 +58,17 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Complaint</th>
-                                            <th>Complain Type</th>
-                                            <th>Grievance Type</th>
-                                            <th>Customer Name</th>
-                                            <th>Phone</th>
-                                            <th>Executive Engineer</th>
-                                            <th>Created Date</th>
-                                            <th>Resolved Date</th>
-                                            <th>Priority</th>
-                                            <th>Turnaround Time</th>
-                                            <th>Time in Hours</th>
+                                        <th><b>Complaint</b></th>
+                                            <th><b>Complain Type</b></th>
+                                            <th><b>Grievance Type</b></th>
+                                            <th><b>Customer Name</b></th>
+                                            <th><b>Phone</b></th>
+                                            <th><b>Executive Engineer</b></th>
+                                            <th><b>Created Date</b></th>
+                                            <th><b>Resolved Date</b></th>
+                                            <th><b>Priority</b></th>
+                                            <th><b>Turnaround Time<b></th>
+                                            <th><b>Time in Hours</b></th>
                                         </tr>
                                     </thead>
                                     <tbody>

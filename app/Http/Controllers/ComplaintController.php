@@ -645,4 +645,306 @@ class ComplaintController extends Controller
         // Return results to the view
         return view('pages.reports.report5', compact('TATpendingdetail', 'dateS', 'dateE', 'type', 'town'));
     }
+    public function generate_report6(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $tat_summary_complete = DB::select("
+        SELECT
+            ResolutionDetails,
+            TotalComplaints,
+            CONCAT(
+                ROUND(
+                    (TotalComplaints * 100 /
+                    (SELECT COUNT(*)
+                    FROM complaint c
+                    WHERE c.status = 1
+                    AND c.updated_at IS NOT NULL
+                    AND c.created_at != c.updated_at
+                    )), 2), '%'
+            ) AS Percentage
+        FROM (
+            SELECT
+                CASE
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 0 THEN 'Complaints solved within TAT (Immediate)'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 15 THEN 'Complaint Solved within TAT (15 days)'
+                    ELSE 'Complaint Solved out of TAT (after 15 days)'
+                END AS ResolutionDetails,
+                COUNT(*) AS TotalComplaints
+            FROM
+                complaint c
+            WHERE
+                c.status = 1
+                AND c.updated_at IS NOT NULL
+                AND c.created_at != c.updated_at
+                AND c.created_at BETWEEN :from_date AND :to_date
+            GROUP BY
+                ResolutionDetails
+            WITH ROLLUP
+            ) AS subquery
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE
+        ]);
+        return view('pages.reports.report6', compact('tat_summary_complete', 'dateE', 'dateS'));
+    }
+    public function generate_report7(Request $request)
+    {
+
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $tat_summary_pending = DB::select("
+    SELECT
+        CASE
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+        END AS Pendingdays,
+        COUNT(*) AS TotalPendingComplaints,
+        CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
+    FROM  complaint c
+    WHERE c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date
+    GROUP BY
+        Pendingdays
+    WITH ROLLUP
+", [
+            'from_date' => $dateS,
+            'to_date' => $dateE
+        ]);
+        return view('pages.reports.report7', compact('tat_summary_pending', 'dateE', 'dateS'));
+    }
+    public function generate_report8(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town_id;
+        $type = $request->type_id;
+        $tat_complete_filter = DB::select("
+    SELECT
+        ResolutionDetails,
+        TotalComplaints,
+        CONCAT(
+            ROUND(
+                (TotalComplaints * 100 /
+                (SELECT COUNT(*)
+                FROM complaint c
+                WHERE c.status = 1
+                AND c.updated_at IS NOT NULL
+                AND c.created_at != c.updated_at
+                )), 2), '%'
+        ) AS Percentage
+    FROM (
+        SELECT
+            CASE
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 0 THEN 'Complaints solved within TAT (Immediate)'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 15 THEN 'Complaint Solved within TAT (15 days)'
+                ELSE 'Complaint Solved out of TAT (after 15 days)'
+            END AS ResolutionDetails,
+            COUNT(*) AS TotalComplaints
+        FROM
+            complaint c
+        WHERE
+            c.status = 1
+            AND c.updated_at IS NOT NULL
+            AND c.created_at != c.updated_at
+            AND c.created_at BETWEEN :from_date AND :to_date
+            AND c.town_id = :town AND c.type_id = :type
+        GROUP BY
+            ResolutionDetails
+        WITH ROLLUP
+        ) AS subquery
+", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'town' => $town,
+            'type' => $type,
+        ]);
+        return view('pages.reports.report8', compact('tat_complete_filter', 'dateE', 'dateS', 'town', 'type'));
+    }
+    public function generate_report9(Request $request)
+    {
+
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town_id;
+        $type = $request->type_id;
+        $tat_pending_filter = DB::select("
+    SELECT
+        CASE
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+        END AS Pendingdays,
+        COUNT(*) AS TotalPendingComplaints,
+        CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
+    FROM  complaint c
+    WHERE c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date AND c.town_id = :town AND c.type_id = :type
+    GROUP BY
+        Pendingdays
+    WITH ROLLUP
+", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'town' => $town,
+            'type' => $type,
+        ]);
+        return view('pages.reports.report9', compact('tat_pending_filter', 'dateE', 'dateS', 'town', 'type'));
+    }
+
+    public function generate_report10(Request $request)
+    {
+
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+
+        $exen_complete = DB::select("
+                SELECT
+                u.name AS Executive_Engineer,
+                t.town AS Town,
+                st.title AS Department,
+                COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+                COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+                COUNT(c.id) AS Total_Complaints,
+                ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+            FROM complaint c
+            JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+            JOIN mobile_agent m ON ca.agent_id = m.id
+            JOIN users u ON m.user_id = u.id
+            JOIN towns t ON c.town_id = t.id
+            JOIN complaint_types st ON c.type_id = st.id
+            where (u.name NOT LIKE 'north agent'
+                AND u.name NOT LIKE 'north nazimabad agent'
+                AND u.name NOT LIKE 'south water'
+                AND u.name NOT LIKE 'Mobile Agent'
+                AND u.name NOT LIKE 'raghib')
+                AND c.created_at BETWEEN :from_date AND :to_date
+            GROUP BY
+                u.name, t.town, st.title
+            ORDER BY
+                Percentage_Solved DESC;
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+        ]);
+        return view('pages.reports.report10', compact('exen_complete', 'dateE', 'dateS'));
+    }
+    public function generate_report11(Request $request)
+    {
+
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town_id;
+        $type = $request->type_id;
+        $exen_complete_filter = DB::select("
+    SELECT
+    u.name AS Executive_Engineer,
+    t.town AS Town,
+    st.title AS Department,
+    COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+    COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+    COUNT(c.id) AS Total_Complaints,
+    ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+FROM complaint c
+JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+JOIN mobile_agent m ON ca.agent_id = m.id
+JOIN users u ON m.user_id = u.id
+JOIN towns t ON c.town_id = t.id
+JOIN complaint_types st ON c.type_id = st.id
+where (u.name NOT LIKE 'north agent'
+    AND u.name NOT LIKE 'north nazimabad agent'
+    AND u.name NOT LIKE 'south water'
+    AND u.name NOT LIKE 'Mobile Agent'
+    AND u.name NOT LIKE 'raghib')
+    AND c.created_at BETWEEN :from_date AND :to_date
+    AND c.type_id = :type
+GROUP BY
+    u.name, t.town, st.title
+ORDER BY
+    Percentage_Solved DESC;
+", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'type' => $type,
+        ]);
+        return view('pages.reports.report11', compact('exen_complete_filter', 'dateE', 'dateS', 'type'));
+    }
+
+    public function generate_report12(Request $request)
+    {
+
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town_id;
+        $exen_complete_filter2 = DB::select("
+    SELECT
+    u.name AS Executive_Engineer,
+    t.town AS Town,
+    st.title AS Department,
+    COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+    COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+    COUNT(c.id) AS Total_Complaints,
+    ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+FROM complaint c
+JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+JOIN mobile_agent m ON ca.agent_id = m.id
+JOIN users u ON m.user_id = u.id
+JOIN towns t ON c.town_id = t.id
+JOIN complaint_types st ON c.type_id = st.id
+where (u.name NOT LIKE 'north agent'
+    AND u.name NOT LIKE 'north nazimabad agent'
+    AND u.name NOT LIKE 'south water'
+    AND u.name NOT LIKE 'Mobile Agent'
+    AND u.name NOT LIKE 'raghib')
+    AND c.created_at BETWEEN :from_date AND :to_date
+    AND c.town_id = :town
+GROUP BY
+    u.name, t.town, st.title
+ORDER BY
+    Percentage_Solved DESC;
+", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'town' => $town,
+        ]);
+        return view('pages.reports.report12', compact('exen_complete_filter2', 'dateE', 'dateS', 'town'));
+    }
 }

@@ -69,6 +69,13 @@ Route::prefix('/admin')->group(function (){
         Route::get('/compaints-reports/reports3',[ComplaintController::class,'generate_report3'])->name('compaints-reports.reports3');
         Route::get('/compaints-reports/reports4',[ComplaintController::class,'generate_report4'])->name('compaints-reports.reports4');
         Route::get('/compaints-reports/reports5',[ComplaintController::class,'generate_report5'])->name('compaints-reports.reports5');
+        Route::get('/compaints-reports/reports6',[ComplaintController::class,'generate_report6'])->name('compaints-reports.reports6');
+        Route::get('/compaints-reports/reports7',[ComplaintController::class,'generate_report7'])->name('compaints-reports.reports7');
+        Route::get('/compaints-reports/reports8',[ComplaintController::class,'generate_report8'])->name('compaints-reports.reports8');
+        Route::get('/compaints-reports/reports9',[ComplaintController::class,'generate_report9'])->name('compaints-reports.reports9');
+        Route::get('/compaints-reports/reports10',[ComplaintController::class,'generate_report10'])->name('compaints-reports.reports10');
+        Route::get('/compaints-reports/reports11',[ComplaintController::class,'generate_report11'])->name('compaints-reports.reports11');
+        Route::get('/compaints-reports/reports12',[ComplaintController::class,'generate_report12'])->name('compaints-reports.reports12');
         Route::get('/reports',[ComplaintController::class,'report'])->name('admin.reports');
         Route::resource('districts', DistrictController::class);
 
