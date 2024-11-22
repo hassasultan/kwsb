@@ -182,25 +182,26 @@ class HomeController extends Controller
             ) AS subquery
     ");
         $tat_summary_pending = DB::select("
-        SELECT
-            CASE
-                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
-                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
-                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
-                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
-                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
-                WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
-            END AS Pendingdays,
-            COUNT(*) AS TotalPendingComplaints,
-            CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
-        FROM
-            complaint c
-        WHERE
-            c.status = 0
-        GROUP BY
-            Pendingdays
-        WITH ROLLUP
-    ");
+            SELECT
+                CASE
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+                END AS Pendingdays,
+                COUNT(*) AS TotalPendingComplaints,
+                CONCAT(ROUND(COUNT(*) * 100.0 /
+                    (SELECT COUNT(*) FROM complaint WHERE status = 0), 2), '%') AS Percentage
+            FROM
+                complaint c
+            WHERE
+                c.status = 0
+            GROUP BY
+                Pendingdays WITH ROLLUP
+        ");
+
         $top3water =  DB::select("
         SELECT
             u.name AS Executive_Engineer,
@@ -281,7 +282,7 @@ class HomeController extends Controller
             LIMIT 3
             ");
 
-    $wor3sewe = DB::select("
+        $wor3sewe = DB::select("
     SELECT
         u.name AS Executive_Engineer,
         t.town AS Town,
