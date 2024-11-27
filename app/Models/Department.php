@@ -9,5 +9,5 @@ class Department extends Model
 {
     use HasFactory;
     protected $table = "department";
-    protected $fillable = ['name', 'description', 'status'];
+    protected $fillable = ['comp_type_id', 'name', 'description', 'status'];
 }

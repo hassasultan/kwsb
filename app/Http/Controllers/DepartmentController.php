@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\ComplaintType;
 
 class DepartmentController extends Controller
 {
@@ -26,7 +27,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('pages.departments.create');
+        $ct = ComplaintType::all();
+        return view('pages.departments.create', compact('ct'));
     }
 
     /**
@@ -39,6 +41,7 @@ class DepartmentController extends Controller
     {
         //
         $request->validate([
+            'comp_type_id' => 'required|integer|exists:complaint_types,id',
             'name' => 'required|max:255',
             'description' => 'nullable',
             'status' => 'required|boolean',
@@ -82,6 +85,7 @@ class DepartmentController extends Controller
     {
         //
         $request->validate([
+            'comp_type_id' => 'required|integer|exists:complaint_types,id',
             'name' => 'required|max:255',
             'description' => 'nullable',
             'status' => 'required|boolean',
