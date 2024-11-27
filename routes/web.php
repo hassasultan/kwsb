@@ -17,6 +17,7 @@ use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,7 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::get('/compaints-management/details/{id}',[ComplaintController::class,'detail'])->name('compaints-management.details');
         Route::resource('/customer-management', CustomerController::class);
-
+        Route::resource('departments', DepartmentController::class);
         Route::get('/compaints-reports/reports',[ComplaintController::class,'generate_report'])->name('compaints-reports.reports');
         Route::get('/compaints-reports/reports2',[ComplaintController::class,'generate_report2'])->name('compaints-reports.reports2');
         Route::get('/compaints-reports/reports3',[ComplaintController::class,'generate_report3'])->name('compaints-reports.reports3');

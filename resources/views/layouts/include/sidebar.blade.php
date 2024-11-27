@@ -73,6 +73,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('departments.index')
+                        <li class="nav-item @if (Route::is('departments.index')) active @endif">
+                            <a class="nav-link" href="{{ url('admin/departments') }}"><span class="ml-1 item-text">Department
+                                    Management</span>
+                            </a>
+                        </li>
+                    @endcan
                     @can('roles.index')
                         <li class="nav-item @if (Route::is('roles.index')) active @endif">
                             <a class="nav-link" href="{{ url('admin/roles') }}"><span class="ml-1 item-text">Role

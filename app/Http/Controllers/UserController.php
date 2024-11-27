@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -40,12 +41,15 @@ class UserController extends Controller
     }
     public function create()
     {
-        return view('pages.user.create');
+        $department = Department::all();
+        return view('pages.user.create', compact('department'));
     }
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('pages.user.edit',compact('user'));
+        $department = Department::all();
+
+        return view('pages.user.edit', compact('user','department'));
     }
     public function store(Request $request)
     {
@@ -58,6 +62,9 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             $user->role = $request->role;
+            if ($request->has('department_id') && $request->department_id != null && $request->department_id != '') {
+                $user->department_id = $request->department_id;
+            }
             $user->save();
             return redirect()->route('user-management.index')->with('success', 'Record created successfully.');
         } else {
@@ -82,13 +89,16 @@ class UserController extends Controller
         if (!empty($request->input('password'))) {
             $user->password = Hash::make($request->input('password'));
         }
+        if ($request->has('department_id') && $request->department_id != null && $request->department_id != '') {
+            $user->department_id = $request->department_id;
+        }
         $user->save();
         return redirect()->route('user-management.index')->with('success', 'Record updated successfully.');
     }
     public function get_role_assign($id)
     {
         $role = Role::where('id', $id)->first();
-        $user = User::whereDoesntHave('roles')->where('role',1)->get();
+        $user = User::whereDoesntHave('roles')->where('role', 1)->get();
         return view('pages.roles.assignRole', compact('role', 'user'));
     }
     public function role_assign(Request $request, $id)
@@ -103,12 +113,12 @@ class UserController extends Controller
     public function show()
     {
         $user = auth()->user();
-        return view('pages.user.profile',compact('user'));
+        return view('pages.user.profile', compact('user'));
     }
     public function profile()
     {
         $user = auth()->user();
-        return view('pages.user.profile',compact('user'));
+        return view('pages.user.profile', compact('user'));
     }
     public function reset_password(Request $request)
     {

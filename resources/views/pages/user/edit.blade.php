@@ -34,10 +34,20 @@
                             </div>
                             <div class="form-group col-12 p-3">
                                 <label>User Type</label>
-                                <select name="role" class="select2-multiple form-control fs-14  h-50px" required>
+                                <select name="role" id="role-id" class="select2-multiple form-control fs-14  h-50px" required>
                                     <option value="1" @if($user->role == 1) selected @endif>Admin</option>
                                     <option value="2" @if($user->role == 2) selected @endif>System User</option>
                                     <option value="3" @if($user->role == 3) selected @endif>Mobile Agent</option>
+                                    <option value="4" @if($user->role == 4) selected @endif>Department</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 p-3 @if($user->department_id == 0) d-none @endif" id="department-div">
+                                <label>Department</label>
+                                <select name="department_id" id="department-id"
+                                    class="select2-multiple form-control fs-14  h-50px">
+                                    @foreach ($department as $row)
+                                        <option value="{{ $row->id }}" @if($user->department_id == $row->id) selected @endif>{{ $row->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-12 p-3">
@@ -76,4 +86,21 @@
             </div>
         </div>
     </div>
+@endsection
+@section('bottom_script')
+    <script>
+        $(document).ready(function() {
+            $("#role-id").on("change", function() {
+                const selectedRole = $(this).val();
+                if (selectedRole === '4') {
+                    $("#department-div").removeClass("d-none");
+                    $("#department-id").attr('required','required');
+                } else {
+                    $("#department-div").addClass("d-none");
+                    $("#department-id").attr('required',false);
+
+                }
+            });
+        });
+    </script>
 @endsection
