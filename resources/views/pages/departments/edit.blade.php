@@ -11,9 +11,9 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label for="search">Complaint Type</label>
+                                <label for="search">Type</label>
                                 <select class="form-control select2" name="comp_type_id" required>
-                                    <option disabled selected> -- Select Complaint Type --</option>
+                                    <option disabled selected> -- Select Type --</option>
                                     @foreach ($ct as $row)
                                         <option value="{{ $row->id }}" @if($row->id == $department->comp_type_id) selected @endif> {{ $row->title }} </option>
                                     @endforeach
