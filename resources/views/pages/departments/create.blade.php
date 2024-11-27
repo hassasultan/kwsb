@@ -9,8 +9,8 @@
                         <h1>Add Department</h1>
                         <form action="{{ route('departments.store') }}" method="POST">
                             @csrf
-                            <div class="form-group col-auto">
-                                <label for="search" class="sr-only">Complaint Type</label>
+                            <div class="form-group">
+                                <label for="search" >Complaint Type</label>
                                 <select class="form-control select2" name="comp_type_id" required>
                                     <option disabled selected> -- Select Complaint Type --</option>
                                     @foreach ($ct as $row)
