@@ -13,6 +13,7 @@ use App\Models\Source;
 use App\Models\Customer;
 use App\Models\Priorities;
 use App\Models\SubTown;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
@@ -338,7 +339,15 @@ class ComplaintController extends Controller
     public function detail($id)
     {
         $complaint = Complaints::with('town', 'town.agents')->find($id);
-        return view('pages.complaints.details', compact('complaint'));
+        $comp_type = $complaint->type_id;
+        $department_user = User::with('department')
+        ->where('department_id','!=',0)
+        ->whereHas('department',function($query) use($comp_type){
+            $query->where('comp_type_id',$comp_type);
+        })
+        ->get();
+        // dd($department_user->toArray());
+        return view('pages.complaints.details', compact('complaint','department_user'));
     }
     public function assign_complaint($agentId, $complaintId)
     {
