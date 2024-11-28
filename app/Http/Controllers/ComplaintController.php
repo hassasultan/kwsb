@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ComplaintAssignAgent;
+use App\Models\ComplaintAssignDepartment;
 use App\Models\MobileAgent;
 use App\Models\Town;
 use App\Models\ComplaintType;
@@ -367,6 +368,26 @@ class ComplaintController extends Controller
             return redirect()->back()->with('error', "Already Assigned this Complaint...!");
         }
         return redirect()->route('agent-management.details', $agentId);
+    }
+    public function assign_complaint_department($userId, $complaintId)
+    {
+        $check = ComplaintAssignDepartment::where('complaint_id', $complaintId)->where('user_id', $userId)->first();
+        if ($check == null) {
+            $alreadyAssign = ComplaintAssignDepartment::where('complaint_id', $complaintId)->get();
+            if (count($alreadyAssign) > 0) {
+                foreach ($alreadyAssign as $row) {
+                    $row->delete();
+                }
+            }
+            $check = ComplaintAssignDepartment::create([
+                'complaint_id' => $complaintId,
+                'user_id' => $userId,
+            ]);
+        } else {
+            return redirect()->back()->with('error', "Already Assigned this Complaint...!");
+        }
+        // return redirect()->route('agent-management.details', $userId);
+        return redirect()->back()->with('success', 'Complaint has been assigned to the department.');
     }
     public function report()
     {

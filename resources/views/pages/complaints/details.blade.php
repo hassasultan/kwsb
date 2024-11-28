@@ -180,7 +180,7 @@
                                                     <th scope="row">{{ ++$key }}</th>
                                                     <td>{{ $row->name }}</td>
                                                     <td>{{ $row->department->name }}</td>
-                                                    <td><a href="{{ route('complaints.assign', [$row->id, $complaint->id]) }}"
+                                                    <td><a href="{{ route('complaints.assign.department', [$row->id, $complaint->id]) }}"
                                                         class="text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
                                                         Assign Complaint

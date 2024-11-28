@@ -55,6 +55,7 @@ Route::prefix('/admin')->group(function (){
         Route::resource('/agent-management', MobileAgentController::class);
         Route::get('/agent-management/details/{id}',[MobileAgentController::class,'detail'])->name('agent-management.details');
         Route::get('/assign-complaints/{agentId}/{complaintId}',[ComplaintController::class,'assign_complaint'])->name('complaints.assign');
+        Route::get('/assign-complaint-department/{userId}/{complaintId}',[ComplaintController::class,'assign_complaint_department'])->name('complaints.assign.department');
         Route::resource('/town-management', TownController::class);
         Route::resource('/subtown-management', SubTownController::class);
         Route::resource('/compaints-management', ComplaintController::class);
