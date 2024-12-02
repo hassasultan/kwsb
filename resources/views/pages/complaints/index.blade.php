@@ -377,10 +377,13 @@
                         '<span class="badge bg-danger text-white">Pending</span>';
                     html += '</td>';
                     html += '<td class="align-middle">';
-                    html += row.assigned_complaints == null ? '<a href="' +
+                    html += row.assigned_complaints == null && row.assigned_complaints_department ==  null ? '<a href="' +
                         "{{ route('compaints-management.details', '') }}/" + row.id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
+                        row.assigned_complaints != null ?
                         '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints.agent_id +
+                        '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>':
+                        '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints_department.user_id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
 
                     html +=

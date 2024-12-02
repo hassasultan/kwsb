@@ -27,6 +27,21 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function redirect_page()
+    {
+        if(auth()->user()->role == 1)
+        {
+            return redirect('/admin/home');
+        }
+        if(auth()->user()->role == 2)
+        {
+            return redirect('/system/home');
+        }
+        if(auth()->user()->role == 4)
+        {
+            return redirect('/department/home');
+        }
+    }
     public function index(Request $request)
     {
         $allTown = array();

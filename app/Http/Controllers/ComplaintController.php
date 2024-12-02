@@ -41,7 +41,7 @@ class ComplaintController extends Controller
     public function index(Request $request)
     {
         // dd($request->all());
-        $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints')->OrderBy('id', 'DESC');
+        $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints','assignedComplaintsDepartment')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
             $complaint = $complaint->where('title', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('comp_num', 'LIKE', '%' . $request->search . '%')
@@ -341,6 +341,7 @@ class ComplaintController extends Controller
     {
         $complaint = Complaints::with('town', 'town.agents')->find($id);
         $comp_type = $complaint->type_id;
+        // dd($comp_type);
         $department_user = User::with('department')
         ->where('department_id','!=',0)
         ->whereHas('department',function($query) use($comp_type){

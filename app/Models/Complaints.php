@@ -68,4 +68,8 @@ class Complaints extends Model
     {
        return $this->belongsTo(ComplaintAssignAgent::class,'id','complaint_id');
     }
+    public function assignedComplaintsDepartment()
+    {
+       return $this->belongsTo(ComplaintAssignDepartment::class,'id','complaint_id');
+    }
 }
