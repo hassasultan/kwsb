@@ -65,6 +65,10 @@ class UserController extends Controller
             if ($request->has('department_id') && $request->department_id != null && $request->department_id != '') {
                 $user->department_id = $request->department_id;
             }
+            else
+            {
+                $user->department_id = 0;
+            }
             $user->save();
             return redirect()->route('user-management.index')->with('success', 'Record created successfully.');
         } else {
