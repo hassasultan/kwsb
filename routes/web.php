@@ -52,7 +52,10 @@ Auth::routes();
 Route::prefix('/department')->group(function () {
     Route::middleware(['IsDepartment'])->group(function () {
         //users
-        Route::get('/home', [App\Http\Controllers\DepartmentHomeController::class, 'home'])->name('department.home');
+        Route::get('/home', [DepartmentHomeController::class,'home'])->name('department.home');
+        Route::get('/compaints-management', [ComplaintController::class,'index'])->name('deparment.complaint.index');
+        Route::get('/compaints/details/{id}', [ComplaintController::class,'detail'])->name('deparment.complaint.detail');
+
     });
 });
 Route::prefix('/admin')->group(function () {

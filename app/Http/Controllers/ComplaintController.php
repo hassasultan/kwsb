@@ -64,6 +64,13 @@ class ComplaintController extends Controller
         if ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
             $complaint = $complaint->where('type_id', $request->type_id);
         }
+        if(auth()->user()->role == 4)
+        {
+            $complaint = $complaint->whereHas('assignedComplaintsDepartment',function($query){
+                $query->where('user_id',auth()->user()->id);
+            });
+            // return true;
+        }
         $complaint = $complaint->paginate(10)->appends([
             'type_id' => request()->get('type_id'),
             'town' => request()->get('town'),
@@ -76,6 +83,10 @@ class ComplaintController extends Controller
         $town = Town::all();
         $comptype = ComplaintType::all();
         // dd($complaint->toArray());
+        if(auth()->user()->role == 4)
+        {
+            return view('department.pages.complaints.index', compact('complaint', 'town', 'comptype'));
+        }
         return view('pages.complaints.index', compact('complaint', 'town', 'comptype'));
     }
 
@@ -349,6 +360,10 @@ class ComplaintController extends Controller
         })
         ->get();
         // dd($department_user->toArray());
+        if(auth()->user()->role == 4)
+        {
+            return view('department.pages.complaints.details', compact('complaint','department_user'));
+        }
         return view('pages.complaints.details', compact('complaint','department_user'));
     }
     public function assign_complaint($agentId, $complaintId)

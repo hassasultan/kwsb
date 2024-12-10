@@ -160,13 +160,13 @@
                     <span class="ml-3 item-text">Complaints Management</span>
                 </a>
                 <ul class="collapse list-unstyled w-100 show" id="tables">
-                    @can('compaints-management.index')
-                        <li class="nav-item @if (Route::is('compaints-management.index')) active @endif">
-                            <a class="nav-link" href="{{ url('admin/compaints-management') }}"><span
+                    {{-- @can('compaints-management.index') --}}
+                        <li class="nav-item @if (Route::is('deparment.complaint.index')) active @endif">
+                            <a class="nav-link" href="{{ route('deparment.complaint.index') }}"><span
                                     class="ml-1 item-text">Complaints</span>
                             </a>
                         </li>
-                    @endcan
+                    {{-- @endcan --}}
                     @can('compaints-type-management.index')
                         <li class="nav-item @if (Route::is('compaints-type-management.index')) active @endif">
                             <a class="nav-link" href="{{ url('admin/compaints-type-management') }}"><span
