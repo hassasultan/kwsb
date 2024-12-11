@@ -181,7 +181,7 @@
                                                     <td>{{ $row->name }}</td>
                                                     <td>{{ $row->department->name }}</td>
                                                     <td>
-                                                        @if ($row->check_assignment($row->id, $row->department_id) > 0)
+                                                        @if ($row->check_assignment($row->id, $complaint->id) > 0)
                                                             <a href="javascript:void(0)"
                                                                 class="text-secondary font-weight-bold text-xs"
                                                                 data-toggle="tooltip" data-original-title="Edit user">
