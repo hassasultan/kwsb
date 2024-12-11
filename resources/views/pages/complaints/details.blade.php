@@ -41,16 +41,19 @@
                                         </div>
                                         <div class="col-md-6">
                                             @if ($complaint->image != null)
+                                                <p><strong>Complaint Main Image</strong></p>
                                                 <img src="{{ asset('storage/' . $complaint->image) }}"
                                                     style="width:250px;" />
                                                 <br />
                                             @endif
                                             @if ($complaint->before_image != null)
+                                                <p><strong>Complaint Before Image</strong></p>
                                                 <img src="{{ asset('storage/' . $complaint->before_image) }}"
                                                     style="width:250px;" />
                                                 <br />
                                             @endif
                                             @if ($complaint->after_image != null)
+                                                <p><strong>Complaint Before Image</strong></p>
                                                 <img src="{{ asset('storage/' . $complaint->after_image) }}"
                                                     style="width:250px;" />
                                                 <br />
