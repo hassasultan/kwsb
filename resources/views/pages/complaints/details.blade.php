@@ -180,11 +180,21 @@
                                                     <th scope="row">{{ ++$key }}</th>
                                                     <td>{{ $row->name }}</td>
                                                     <td>{{ $row->department->name }}</td>
-                                                    <td><a href="{{ route('complaints.assign.department', [$row->id, $complaint->id]) }}"
-                                                        class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        Assign Complaint
-                                                    </a></td>
+                                                    <td>
+                                                        @if ($row->check_assignment($row->id, $row->department_id) > 0)
+                                                            <a href="javascript:void(0)"
+                                                                class="text-secondary font-weight-bold text-xs"
+                                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                                Already Assigned
+                                                            </a>
+                                                        @else
+                                                            <a href="{{ route('complaints.assign.department', [$row->id, $complaint->id]) }}"
+                                                                class="text-secondary font-weight-bold text-xs"
+                                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                                Assign Complaint
+                                                            </a>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

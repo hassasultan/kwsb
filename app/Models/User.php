@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\ComplaintAssignDepartment;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -70,5 +72,10 @@ class User extends Authenticatable implements JWTSubject
     public function department()
     {
         return $this->belongsTo(Department::class,'department_id','id');
+    }
+    public function check_assignment($user_id,$comp_id)
+    {
+        $check_assignment = ComplaintAssignDepartment::where('complaint_id',$comp_id)->where('user_id',$user_id)->count();
+        return $check_assignment;
     }
 }
