@@ -216,7 +216,7 @@
                 html += '<tr>';
                 html += '<td>' + user.name + '</td>';
                 html += '<td>' + user.email + '</td>';
-                html += '<td>' + (user.role == 2 ? 'System User' : (user.role == 3 ? 'Mobile Agent' : (user.role == 1 ? 'Admin' : (user.role == 4 ? 'Department' )))) : 'Customer' + '</td>';
+                html += '<td>' + (user.role == 2 ? 'System User' : (user.role == 3 ? 'Mobile Agent' : (user.role == 1 ? 'Admin' : (user.role == 4 ? 'Department' : 'Customer')))) + '</td>';
                 html += '<td>';
                 html += '  <button class="btn btn-sm rounded dropdown-toggle more-horizontal text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                 html += '<span class="text-muted sr-only">Action</span>';
