@@ -394,11 +394,11 @@
                     html += '<a class="dropdown-item" href="' + currentUrl + '/' + row.id +
                         '/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
                     // html += '<a class="dropdown-item" href="#"><i class="fe fe-trash fe-12 mr-3 text-muted"></i>Remove</a>';
-                    if (row.status != 1) {
+                    // if (row.status != 1) {
                         html += '<a class="dropdown-item" href="' +
                             "{{ route('compaints-management.details', '') }}/" + row.id +
                             '"><i class="fe fe-flag fe-12 mr-3 text-muted"></i>Detail</a>';
-                    }
+                    // }
                     html += '</div>';
                     html += '</td>';
                     html += '</tr>';
