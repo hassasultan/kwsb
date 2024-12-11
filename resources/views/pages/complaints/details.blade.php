@@ -26,6 +26,8 @@
                                                     id="title">{{ $complaint->type->title }}</span></p>
                                             <p><strong>Description:</strong> <span
                                                     id="description">{{ $complaint->description }}</span></p>
+                                            <p><strong>Agent Description:</strong> <span
+                                                    id="description">{{ $complaint->agent_description }}</span></p>
                                             <p><strong>Customer Name:</strong> <span
                                                     id="customer_name">{{ $complaint->customer_name }}</span></p>
                                             <p><strong>Phone:</strong> <span id="phone">{{ $complaint->phone }}</span>
