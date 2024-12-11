@@ -355,6 +355,7 @@ class ComplaintController extends Controller
         // dd($comp_type);
         $department_user = User::with('department')
         ->where('department_id','!=',0)
+        ->where('role',4)
         ->whereHas('department',function($query) use($comp_type){
             $query->where('comp_type_id',$comp_type);
         })
