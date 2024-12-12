@@ -750,26 +750,49 @@ class ComplaintController extends Controller
         $dateS = $request->from_date;
         $dateE = $request->to_date;
         $tat_summary_pending = DB::select("
-    SELECT
-        CASE
-            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
-            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
-            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
-            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
-            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
-            WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
-        END AS Pendingdays,
-        COUNT(*) AS TotalPendingComplaints,
-        CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
-    FROM  complaint c
-    WHERE c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date
-    GROUP BY
-        Pendingdays
-    WITH ROLLUP
-", [
+            SELECT
+                CASE
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+                    WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+                END AS Pendingdays,
+                COUNT(*) AS TotalPendingComplaints,
+                CONCAT(ROUND(COUNT(*) * 100.0 /
+                    (SELECT COUNT(*) FROM complaint WHERE status = 0), 2), '%') AS Percentage
+            FROM
+                complaint c
+            WHERE
+                c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date
+            GROUP BY
+                Pendingdays WITH ROLLUP
+        ",[
             'from_date' => $dateS,
             'to_date' => $dateE
         ]);
+//         $tat_summary_pending = DB::select("
+//     SELECT
+//         CASE
+//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+//         END AS Pendingdays,
+//         COUNT(*) AS TotalPendingComplaints,
+//         CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
+//     FROM  complaint c
+//     WHERE c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date
+//     GROUP BY
+//         Pendingdays
+//     WITH ROLLUP
+// ", [
+//             'from_date' => $dateS,
+//             'to_date' => $dateE
+//         ]);
         return view('pages.reports.report7', compact('tat_summary_pending', 'dateE', 'dateS'));
     }
     public function generate_report8(Request $request)
