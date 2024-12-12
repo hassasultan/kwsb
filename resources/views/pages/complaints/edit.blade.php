@@ -71,7 +71,7 @@
                                 <label>Select Source*</label>
                                 <select name="source" class="select2-multiple form-control fs-14  h-50px" required>
                                     @foreach ($source as $row)
-                                        <option value="{{ $row->title }}">{{ $row->title }}</option>
+                                        <option value="{{ $row->title }}" @if($row->title == $complaint->source) selected @endif>{{ $row->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
