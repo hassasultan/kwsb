@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 
 class MobileAgentController extends Controller
@@ -128,17 +129,154 @@ class MobileAgentController extends Controller
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
             $user = User::with('agent')->whereHas('agent', function ($query) use ($id) {
-                $query->where('id',$id);
+                $query->where('id', $id);
             })->first();
             if ($valid->valid()) {
                 if (Hash::check($request->old_password, $user->password)) {
                     $user->password = Hash::make($request->password);
                     $user->save();
-                    return response()->json(['success', 'Record created successfully.'],200);
+                    return response()->json(['success', 'Record created successfully.'], 200);
                 }
             } else {
-                return response()->json(['error', $valid->errors()],400);
+                return response()->json(['error', $valid->errors()], 400);
             }
         }
+    }
+    public function report(Request $request, $id)
+    {
+        $agent = MobileAgent::with('user', 'town', 'assignedComplaints.complaints')->findOrFail($id);
+
+        $useDateRange = $request->has('use_date_range');
+
+        if ($useDateRange) {
+            $request->validate([
+                'from_date' => 'required|date',
+                'to_date' => 'required|date|after_or_equal:from_date',
+            ]);
+
+            $dateS = $request->from_date;
+            $dateE = $request->to_date;
+        } else {
+            $dateS = null;
+            $dateE = null;
+        }
+
+        $complaintsQuery = $agent->assignedComplaints;
+
+        if ($useDateRange) {
+            $complaintsQuery = $complaintsQuery->filter(
+                fn($assignedComplaint) =>
+                $assignedComplaint->complaints->created_at >= $dateS &&
+                    $assignedComplaint->complaints->created_at <= $dateE
+            );
+        }
+
+        $complaintTypeTitle = $complaintsQuery
+            ->map(fn($assignedComplaint) => $assignedComplaint->complaints->type)
+            ->filter()
+            ->unique('id') // To avoid duplicates
+            ->pluck('title') // Extract titles
+            ->join(', '); // Combine titles into a single string if multiple
+
+        $totalComplaints = $complaintsQuery->count();
+
+        // Total resolved and pending complaints
+        $resolvedComplaints = $complaintsQuery
+            ->filter(fn($assignedComplaint) => $assignedComplaint->complaints->status == '1')
+            ->count();
+        $pendingComplaints = $complaintsQuery
+            ->filter(fn($assignedComplaint) => $assignedComplaint->complaints->status == '0')
+            ->count();
+
+        $subtypeCounts = $complaintsQuery
+            ->groupBy(fn($assignedComplaint) => $assignedComplaint->complaints->subtype->id)
+            ->map(fn($group) => [
+                'title' => $group->first()->complaints->subtype->title, // Subtype title
+                'count' => $group->count(), // Total complaints for this subtype
+                'resolved_count' => $group->filter(fn($assignedComplaint) => $assignedComplaint->complaints->status == '1')->count(), // Count of resolved complaints
+            ]);
+        // Complaints by subtypes
+        $subtypeCountsQuery = DB::table('mobile_agent as ma')
+            ->join('users as u', 'u.id', '=', 'ma.user_id')
+            ->join('complaint_assign_agent as caa', 'caa.agent_id', '=', 'ma.id')
+            ->join('complaint as c', 'c.id', '=', 'caa.complaint_id')
+            ->join('sub_types as st', 'st.id', '=', 'c.subtype_id')
+            ->selectRaw("
+            st.title AS subtype_name,
+            COUNT(c.id) AS total_complaints,
+            COUNT(CASE WHEN c.status = 1 THEN 1 ELSE NULL END) AS resolved_complaints
+        ")
+            ->where('ma.id', $agent->id); // Bind agent ID here
+
+        if ($useDateRange) {
+            $subtypeCountsQuery->whereBetween('c.created_at', [$dateS, $dateE]);
+        }
+
+        // Add grouping for the final query
+        $subtypeCounts1 = $subtypeCountsQuery
+            ->groupBy('st.title')
+            ->get();
+
+
+        // Complaints by subtown
+        $subtownCounts = $complaintsQuery
+            ->map(fn($assignedComplaint) => $assignedComplaint->complaints->subtown)
+            ->filter()
+            ->groupBy('id')
+            ->map(fn($group, $id) => [
+                'title' => $group->first()->title,
+                'count' => $group->count(),
+            ]);
+        // Turnaround time data
+        $turnaroundTimesQuery = DB::table('complaint as c')
+            ->join('complaint_assign_agent as caa', 'c.id', '=', 'caa.complaint_id')
+            ->join('mobile_agent as ma', 'ma.id', '=', 'caa.agent_id')
+            ->join('users as u', 'u.id', '=', 'ma.user_id')
+            ->selectRaw("
+            CASE
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 0 THEN 'Resolved Immediately'
+                WHEN TIMESTAMPDIFF(DAY, c.created_at, c.updated_at) <= 15 THEN 'Resolved within 15 days'
+                ELSE 'After 15 days'
+            END AS ResolutionDetails,
+            COUNT(*) AS TotalComplaints,
+            CONCAT(ROUND((COUNT(*) * 100 / (
+                SELECT COUNT(*)
+                FROM complaint c
+                JOIN complaint_assign_agent caa ON c.id = caa.complaint_id
+                JOIN mobile_agent ma ON ma.id = caa.agent_id
+                JOIN users u ON u.id = ma.user_id
+                WHERE
+                    c.status = 1
+                    AND c.updated_at IS NOT NULL
+                    AND c.created_at != c.updated_at
+                    AND ma.id = ?
+            )), 2), '%') AS Percentage
+        ", [$agent->id])
+            ->where('c.status', 1)
+            ->whereNotNull('c.updated_at')
+            ->whereColumn('c.created_at', '!=', 'c.updated_at')
+            ->where('ma.id', $agent->id);
+
+        if ($useDateRange) {
+            $turnaroundTimesQuery = $turnaroundTimesQuery
+                ->whereBetween('c.created_at', [$dateS, $dateE]);
+        }
+
+        $turnaroundTimes = $turnaroundTimesQuery->groupBy('ResolutionDetails')->get();
+        // Pass data to the view
+        return view('pages.agent.report', compact(
+            'agent',
+            'totalComplaints',
+            'resolvedComplaints',
+            'complaintTypeTitle',
+            'pendingComplaints',
+            'subtypeCounts',
+            'subtypeCounts1',
+            'subtownCounts',
+            'turnaroundTimes',
+            'useDateRange',
+            'dateS',
+            'dateE'
+        ));
     }
 }
