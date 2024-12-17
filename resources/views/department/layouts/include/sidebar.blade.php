@@ -38,12 +38,12 @@
                                     class="ml-1 item-text">Dashboard</span></a>
                         </li>
                     @endcan
-                    @can('admin.reports')
+                    {{-- @can('admin.reports')
                         <li class="nav-item @if (Route::is('admin.reports')) active @endif">
                             <a class="nav-link " href="{{ route('admin.reports') }}"><span
                                     class="ml-1 item-text">Reports</span></a>
                         </li>
-                    @endcan
+                    @endcan --}}
                 </ul>
             </li>
         </ul>
@@ -51,7 +51,7 @@
             <span>Components</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
                 <a href="#ui-elements" data-toggle="collapse" aria-expanded="tue" class="dropdown-toggle nav-link">
                     <i class="fe fe-box fe-16"></i>
                     <span class="ml-3 item-text">Activities</span>
@@ -121,12 +121,11 @@
                         </li>
                     @endcan
                 </ul>
-            </li>
-            <li class="nav-item dropdown">
+            </li> --}}
+            {{-- <li class="nav-item dropdown">
                 <a href="#forms" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
                     <i class="fe fe-layers fe-16"></i>
                     <span class="ml-3 item-text">Agents & Others</span>
-                    {{-- <span class="badge badge-pill badge-primary">New</span> --}}
                 </a>
 
                 <ul class="collapse list-unstyled w-100 show" id="forms">
@@ -153,7 +152,7 @@
                     @endcan
 
                 </ul>
-            </li>
+            </li> --}}
             <li class="nav-item dropdown">
                 <a href="#tables" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
                     <i class="fe fe-grid fe-16"></i>
@@ -167,7 +166,7 @@
                             </a>
                         </li>
                     {{-- @endcan --}}
-                    @can('compaints-type-management.index')
+                    {{-- @can('compaints-type-management.index')
                         <li class="nav-item @if (Route::is('compaints-type-management.index')) active @endif">
                             <a class="nav-link" href="{{ url('admin/compaints-type-management') }}"><span
                                     class="ml-1 item-text">CT Management</span>
@@ -180,7 +179,7 @@
                                     class="ml-1 item-text">SubType</span>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                 </ul>
             </li>
         </ul>
