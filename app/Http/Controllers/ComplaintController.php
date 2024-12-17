@@ -43,10 +43,25 @@ class ComplaintController extends Controller
         // dd($request->all());
         $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints','assignedComplaintsDepartment')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
-            $complaint = $complaint->where('title', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('comp_num', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
+            if(auth()->user()->role == 4)
+            {
+                $complaint = $complaint->whereHas('assignedComplaintsDepartment',function($query){
+                    $query->where('user_id',auth()->user()->id);
+                })->where(function ($query) use ($request) {
+                    $query->where('comp_num', 'LIKE', '%' . $request->search . '%')
+                          ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                          ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
+                });
+                // dd($complaint->get()->toArray());
+            }
+            else
+            {
+                $complaint = $complaint->where(function ($query) use ($request) {
+                    $query->where('comp_num', 'LIKE', '%' . $request->search . '%')
+                          ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                          ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
+                });
+            }
             if (count($complaint->get()) < 1) {
                 $customer = Customer::where('customer_id', $request->search)
                     ->orwhere('customer_name', $request->search)->first();

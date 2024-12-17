@@ -93,7 +93,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group col-auto">
+                                        {{-- <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Complaint Type</label>
                                             <select class="form-control select2" id="type-id">
                                                 <option disabled selected> -- Select Complaint Type --</option>
@@ -101,12 +101,12 @@
                                                     <option value="{{ $row->id }}"> {{ $row->title }} </option>
                                                 @endforeach
                                             </select>
-                                        </div>
-                                        {{-- <div class="form-group col-auto">
+                                        </div> --}}
+                                        <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Search</label>
                                             <input type="text" class="form-control" id="search1" value=""
                                                 placeholder="Search">
-                                        </div> --}}
+                                        </div>
                                     </div>
                                     {{-- </form> --}}
                                 </div>
@@ -373,8 +373,7 @@
                     html += '</td>';
                     html += '<td class="text-center">';
                     html += row.status == 1 ?
-                        '<select class="form-control select2" complaint-id="' + row.id +
-                        '" id="change-status" onchange="updateStatus(' + row.id + ',0)"><option selected disabled>Completed</option><option value="0">Pending</option></select>' :
+                        '<span class="badge bg-success text-white">Completed</span>' :
 
                         '<span class="badge bg-danger text-white">Pending</span>';
                     html += '</td>';
