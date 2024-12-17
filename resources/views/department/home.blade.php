@@ -120,7 +120,7 @@
                         <div class="card-body">
                             <div class="row mt-1 align-items-center">
                                 <div class="col-12 col-lg-4 text-left pl-4">
-                                    <span class="h3">KWSC - Department Portal</span>
+                                    <span class="h3">KWSC - {{ auth()->user()->name }}'s Portal</span>
                                     <p class="text-muted mt-2">
                                         Karachi Water & Sewerage Corporation.
                                     </p>
