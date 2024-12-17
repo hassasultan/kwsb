@@ -71,7 +71,8 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department = Department::findOrFail($id);
-        return view('pages.departments.edit', compact('department'));
+        $ct = ComplaintType::all();
+        return view('pages.departments.edit', compact('department','ct'));
     }
 
     /**
