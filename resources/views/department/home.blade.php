@@ -75,7 +75,7 @@
                 <script src="https://code.highcharts.com/modules/exporting.js"></script>
                 <script src="https://code.highcharts.com/modules/export-data.js"></script>
                 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-                {{-- <script type="text/javascript">
+                 {{-- <script type="text/javascript">
                     setInterval(function() {
 
                         $.ajax({
@@ -114,13 +114,13 @@
                             });
 
                     }, 3000);
-                </script>
+                </script> --}}
                 <div class="mb-2 align-items-center">
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="row mt-1 align-items-center">
                                 <div class="col-12 col-lg-4 text-left pl-4">
-                                    <span class="h3">KWSC</span>
+                                    <span class="h3">KWSC - Department Portal</span>
                                     <p class="text-muted mt-2">
                                         Karachi Water & Sewerage Corporation.
                                     </p>
@@ -139,17 +139,17 @@
                                     <p class="mb-1 small text-muted">Solved Complaints</p>
                                     <span class="h3">{{ $complaintsComplete }}</span><br />
                                 </div>
-                                <div class="col-xl-12 col-sm-14  text-right">
+                                {{-- <div class="col-xl-12 col-sm-14  text-right">
                                     <a class="btn btn-primary mb-0" href="{{ route('compaints-management.create') }}"
                                         target="_blank">+
                                         Add New Complaint</a>
-                                </div>
+                                </div> --}}
                             </div>
                             <div>
                                 ..
                             </div>
 
-                            <div class="row align-items-baseline">
+                            {{-- <div class="row align-items-baseline">
                                 <div class="col-md-12 col-lg-6">
                                     <div class="card shadow eq-card mb-4">
                                         <div class="card-body mb-n3">
@@ -211,11 +211,11 @@
                             <hr />
                             <div class="chartbox mr-4">
                                 <div id="container2"></div>
-                            </div>
+                            </div> --}}
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->
                 </div>
-                <div class="row items-align-baseline">
+                {{-- <div class="row items-align-baseline">
                     <div class="col-md-12 col-lg-6">
                         <div class="card shadow eq-card mb-4">
                             <div class="card-body mb-n3">

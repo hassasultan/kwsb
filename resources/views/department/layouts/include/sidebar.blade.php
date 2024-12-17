@@ -32,12 +32,12 @@
                     <span class="ml-3 item-text">D&R</span><span class="sr-only">(current)</span>
                 </a>
                 <ul class="collapse list-unstyled w-100 show" id="dashboard">
-                    @can('home')
-                        <li class="nav-item @if (Route::is('home')) active @endif">
-                            <a class="nav-link " href="{{ route('home') }}"><span
+                    {{-- @can('home') --}}
+                        <li class="nav-item @if (Route::is('department.home')) active @endif">
+                            <a class="nav-link " href="{{ route('department.home') }}"><span
                                     class="ml-1 item-text">Dashboard</span></a>
                         </li>
-                    @endcan
+                    {{-- @endcan --}}
                     {{-- @can('admin.reports')
                         <li class="nav-item @if (Route::is('admin.reports')) active @endif">
                             <a class="nav-link " href="{{ route('admin.reports') }}"><span
