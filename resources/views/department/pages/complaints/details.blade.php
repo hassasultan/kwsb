@@ -44,11 +44,13 @@
                                                 <br />
                                             @endif
                                             @if ($complaint->before_image != null)
+                                                <h4>Before Image</h4>
                                                 <img src="{{ asset('storage/' . $complaint->before_image) }}"
                                                     style="width:250px;" />
                                                 <br />
                                             @endif
                                             @if ($complaint->after_image != null)
+                                            <h4>After Image</h4>
                                                 <img src="{{ asset('storage/' . $complaint->after_image) }}"
                                                     style="width:250px;" />
                                                 <br />
@@ -93,6 +95,37 @@
                                             </div>
                                         </div>
                                     </div> --}}
+                                    @if ($complaint->status != 1)
+                                        <div class="col-12">
+                                            <h4>Complaint Solve </h4>
+                                            <form method="POST" action="{{ route('deparment.complaint.solved',$complaint->id) }}" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Before Image:</label>
+                                                            <input type="file" name="before_image" class="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>After Image:</label>
+                                                            <input type="file" name="after_image" class="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Department Comments:</label>
+                                                            <textarea name="agent_description" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 text-right">
+                                                        <button type="submit" class="btn btn-primary">Solved</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                                 {{-- <div class="agents" id="agents">
                                     <h5>

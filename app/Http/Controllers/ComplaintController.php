@@ -89,7 +89,21 @@ class ComplaintController extends Controller
         }
         return view('pages.complaints.index', compact('complaint', 'town', 'comptype'));
     }
+    public function solved_by_department(Request $request,$id)
+    {
+        $message = null;
+        $complaint = Complaints::find($id);
+        if ($complaint)
+        {
+            $request->merge(['id' => $id]);
+            $request->merge(['status' => 1]);
+            $response = $this->agent_complaints_update($request);
+            $message = json_decode($response->getContent());
+        }
+        // dd($message->message);
+        return redirect()->back()->with('success',$message->message);
 
+    }
     public function updateStatus(Request $request)
     {
         $complaint = Complaints::find($request->complaint_id);
