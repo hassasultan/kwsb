@@ -41,25 +41,22 @@ class ComplaintController extends Controller
     public function index(Request $request)
     {
         // dd($request->all());
-        $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints','assignedComplaintsDepartment')->OrderBy('id', 'DESC');
+        $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints', 'assignedComplaintsDepartment')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
-            if(auth()->user()->role == 4)
-            {
-                $complaint = $complaint->whereHas('assignedComplaintsDepartment',function($query){
-                    $query->where('user_id',auth()->user()->id);
+            if (auth()->user()->role == 4) {
+                $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
+                    $query->where('user_id', auth()->user()->id);
                 })->where(function ($query) use ($request) {
                     $query->where('comp_num', 'LIKE', '%' . $request->search . '%')
-                          ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
-                          ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
+                        ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
                 });
                 // dd($complaint->get()->toArray());
-            }
-            else
-            {
+            } else {
                 $complaint = $complaint->where(function ($query) use ($request) {
                     $query->where('comp_num', 'LIKE', '%' . $request->search . '%')
-                          ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
-                          ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
+                        ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
                 });
             }
             if (count($complaint->get()) < 1) {
@@ -79,10 +76,9 @@ class ComplaintController extends Controller
         if ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
             $complaint = $complaint->where('type_id', $request->type_id);
         }
-        if(auth()->user()->role == 4)
-        {
-            $complaint = $complaint->whereHas('assignedComplaintsDepartment',function($query){
-                $query->where('user_id',auth()->user()->id);
+        if (auth()->user()->role == 4) {
+            $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
+                $query->where('user_id', auth()->user()->id);
             });
             // return true;
         }
@@ -98,26 +94,23 @@ class ComplaintController extends Controller
         $town = Town::all();
         $comptype = ComplaintType::all();
         // dd($complaint->toArray());
-        if(auth()->user()->role == 4)
-        {
+        if (auth()->user()->role == 4) {
             return view('department.pages.complaints.index', compact('complaint', 'town', 'comptype'));
         }
         return view('pages.complaints.index', compact('complaint', 'town', 'comptype'));
     }
-    public function solved_by_department(Request $request,$id)
+    public function solved_by_department(Request $request, $id)
     {
         $message = null;
         $complaint = Complaints::find($id);
-        if ($complaint)
-        {
+        if ($complaint) {
             $request->merge(['id' => $id]);
             $request->merge(['status' => 1]);
             $response = $this->agent_complaints_update($request);
             $message = json_decode($response->getContent());
         }
         // dd($message->message);
-        return redirect()->back()->with('success',$message->message);
-
+        return redirect()->back()->with('success', $message->message);
     }
     public function updateStatus(Request $request)
     {
@@ -383,18 +376,17 @@ class ComplaintController extends Controller
         $comp_type = $complaint->type_id;
         // dd($comp_type);
         $department_user = User::with('department')
-        ->where('department_id','!=',0)
-        ->where('role',4)
-        ->whereHas('department',function($query) use($comp_type){
-            $query->where('comp_type_id',$comp_type);
-        })
-        ->get();
+            ->where('department_id', '!=', 0)
+            ->where('role', 4)
+            ->whereHas('department', function ($query) use ($comp_type) {
+                $query->where('comp_type_id', $comp_type);
+            })
+            ->get();
         // dd($department_user->toArray());
-        if(auth()->user()->role == 4)
-        {
-            return view('department.pages.complaints.details', compact('complaint','department_user'));
+        if (auth()->user()->role == 4) {
+            return view('department.pages.complaints.details', compact('complaint', 'department_user'));
         }
-        return view('pages.complaints.details', compact('complaint','department_user'));
+        return view('pages.complaints.details', compact('complaint', 'department_user'));
     }
     public function assign_complaint($agentId, $complaintId)
     {
@@ -797,7 +789,7 @@ class ComplaintController extends Controller
                 c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date
             GROUP BY
                 Pendingdays WITH ROLLUP
-        ",[
+        ", [
             'from_date' => $dateS,
             'to_date' => $dateE
         ]);
@@ -868,29 +860,29 @@ class ComplaintController extends Controller
         $dateE = $request->to_date;
         $town = $request->town_id;
         $type = $request->type_id;
-//         $tat_pending_filter = DB::select("
-//     SELECT
-//         CASE
-//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
-//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
-//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
-//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
-//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
-//             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
-//         END AS Pendingdays,
-//         COUNT(*) AS TotalPendingComplaints,
-//         CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
-//     FROM  complaint c
-//     WHERE c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date AND c.town_id = :town AND c.type_id = :type
-//     GROUP BY
-//         Pendingdays
-//     WITH ROLLUP
-// ", [
-//             'from_date' => $dateS,
-//             'to_date' => $dateE,
-//             'town' => $town,
-//             'type' => $type,
-//         ]);
+        //         $tat_pending_filter = DB::select("
+        //     SELECT
+        //         CASE
+        //             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 0 AND 15 THEN 'Pending since 1-15 days'
+        //             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 15 AND 30 THEN 'Pending since 15-30 days'
+        //             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 31 AND 60 THEN 'Pending since 31-60 days'
+        //             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 61 AND 90 THEN 'Pending since 61-90 days'
+        //             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) BETWEEN 91 AND 120 THEN 'Pending since 91-120 days'
+        //             WHEN TIMESTAMPDIFF(DAY, c.created_at, CURRENT_TIMESTAMP) > 120 THEN 'Pending more than 121 days'
+        //         END AS Pendingdays,
+        //         COUNT(*) AS TotalPendingComplaints,
+        //         CONCAT(ROUND(COUNT() * 100.0 / (SELECT COUNT() FROM complaint WHERE status = 0), 2), '%') AS Percentage
+        //     FROM  complaint c
+        //     WHERE c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date AND c.town_id = :town AND c.type_id = :type
+        //     GROUP BY
+        //         Pendingdays
+        //     WITH ROLLUP
+        // ", [
+        //             'from_date' => $dateS,
+        //             'to_date' => $dateE,
+        //             'town' => $town,
+        //             'type' => $type,
+        //         ]);
         $tat_pending_filter = DB::select("
             SELECT
                 CASE
@@ -910,7 +902,7 @@ class ComplaintController extends Controller
                 c.status = 0 AND c.created_at BETWEEN :from_date AND :to_date AND c.town_id = :town AND c.type_id = :type
             GROUP BY
                 Pendingdays WITH ROLLUP
-        ",[
+        ", [
             'from_date' => $dateS,
             'to_date' => $dateE,
             'town' => $town,
