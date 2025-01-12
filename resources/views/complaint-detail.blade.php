@@ -98,18 +98,19 @@
                             </div>
                             <div class="col-md-6">
                                 @if ($comp->image != null)
-                                    <img src="{{ asset('public/storage/'.$comp->image) }}" style="width:250px;"/>
-                                    <br/>
+                                    <p><strong>Complaint Main Image</strong></p>
+                                    <img src="{{ asset('storage/' . $comp->image) }}" style="width:250px;" />
+                                    <br />
                                 @endif
                                 @if ($comp->before_image != null)
-                                    <img src="{{ asset('public/storage/'.$comp->before_image) }}" style="width:250px;"/>
-                                    <br/>
-
+                                    <p><strong>Complaint Before Image</strong></p>
+                                    <img src="{{ asset('storage/' . $comp->before_image) }}" style="width:250px;" />
+                                    <br />
                                 @endif
                                 @if ($comp->after_image != null)
-                                    <img src="{{ asset('public/storage/'.$comp->after_image) }}" style="width:250px;"/>
-                                    <br/>
-
+                                    <p><strong>Complaint Before Image</strong></p>
+                                    <img src="{{ asset('storage/' . $comp->after_image) }}" style="width:250px;" />
+                                    <br />
                                 @endif
                             </div>
                             <div class="col-md-12">
