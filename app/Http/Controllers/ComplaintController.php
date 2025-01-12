@@ -200,7 +200,7 @@ class ComplaintController extends Controller
         $town = Town::all();
         $type = ComplaintType::all();
         $subtype = SubType::all();
-        $subtown = SubTown::all();
+        $subtown = SubTown::where('town_id',$complaint->town_id)->get();
         $prio = Priorities::all();
         $source = Source::all();
 
