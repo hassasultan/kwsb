@@ -96,7 +96,7 @@
                                 <p><strong>Address:</strong> <span id="address"></span></p>
                                 <p><strong>Landmark:</strong> <span id="landmark"></span></p>
                                 <p><strong>Created Date:</strong> <span id="created-date"></span></p>
-                                <p><strong>Solved:</strong> <span id="solved"></span></p>
+                                <p><strong>Resolved:</strong> <span id="solved"></span></p>
                             </div>
                             <div class="col-md-6">
                                 @if ($comp->image != null)
