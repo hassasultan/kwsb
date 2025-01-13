@@ -95,6 +95,8 @@
                                 <p><strong>Email:</strong> <span id="email"></span></p>
                                 <p><strong>Address:</strong> <span id="address"></span></p>
                                 <p><strong>Landmark:</strong> <span id="landmark"></span></p>
+                                <p><strong>Created Date:</strong> <span id="created-date"></span></p>
+                                <p><strong>Solved:</strong> <span id="solved"></span></p>
                             </div>
                             <div class="col-md-6">
                                 @if ($comp->image != null)
@@ -160,6 +162,8 @@
             email: "{{ $comp->email }}",
             address: "{{ $comp->address }}",
             landmark: "{{ $comp->landmark }}",
+            CDate: "{{ $comp->created_at }}",
+            solved: "{{ $comp->updated_at }}",
         };
 
         // Function to load complaint data
@@ -173,6 +177,8 @@
             document.getElementById('email').innerText = complaint.email;
             document.getElementById('address').innerText = complaint.address;
             document.getElementById('landmark').innerText = complaint.landmark;
+            document.getElementById('created-date').innerText = complaint.CDate;
+            document.getElementById('solved').innerText = complaint.solved;
 
         }
 
