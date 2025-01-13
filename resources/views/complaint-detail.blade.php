@@ -159,6 +159,7 @@
 
         // Function to load complaint data
         function loadComplaintData() {
+            console.log(complaint);
             document.getElementById('comp_num').innerText = complaint.comp_num;
             document.getElementById('title').innerText = complaint.title;
             document.getElementById('description').innerText = complaint.description;
