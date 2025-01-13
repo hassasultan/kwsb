@@ -142,14 +142,19 @@
             </div>
         </div>
     </div>
+    @php
+        $content = $comp->description;
 
+// Remove line breaks
+    $updatedContent = str_replace(["\r\n", "\n", "\r"], '', $content);
+    @endphp
     <script>
         // Mock complaint data
         const complaint = {
             comp_num: "{{ $comp->comp_num }}",
             customer_num: "CN123456",
             title: "{{ $comp->type->title }}",
-            description: "{{ $comp->description }}",
+            description: "{{ $updatedContent }}",
             customer_name: "{{ $comp->customer_name }}",
             phone: "{{ $comp->phone }}",
             email: "{{ $comp->email }}",
