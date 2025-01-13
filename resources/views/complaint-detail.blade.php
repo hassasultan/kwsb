@@ -108,7 +108,7 @@
                                     <br />
                                 @endif
                                 @if ($comp->after_image != null)
-                                    <p><strong>Complaint Before Image</strong></p>
+                                    <p><strong>Complaint After Image</strong></p>
                                     <img src="{{ asset('storage/' . $comp->after_image) }}" style="width:250px;" />
                                     <br />
                                 @endif
