@@ -76,6 +76,21 @@ class ComplaintController extends Controller
         if ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
             $complaint = $complaint->where('type_id', $request->type_id);
         }
+        if ($request->has('status') && $request->status != null && $request->status != '') {
+            if ($request->status == 1) {
+                // Fetch complaints that have at least one of the relationships
+                $complaint = $complaint->where(function ($query) {
+                    $query->whereHas('assignedComplaints')
+                          ->orWhereHas('assignedComplaintsDepartment');
+                });
+            } else {
+                // Fetch complaints that have none of the relationships
+                $complaint = $complaint->where(function ($query) {
+                    $query->whereDoesntHave('assignedComplaints')
+                          ->whereDoesntHave('assignedComplaintsDepartment');
+                });
+            }
+        }
         if (auth()->user()->role == 4) {
             $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
                 $query->where('user_id', auth()->user()->id);

@@ -103,6 +103,14 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-auto">
+                                            <label for="search" class="sr-only">Status</label>
+                                            <select class="form-control select2" id="status-id">
+                                                <option disabled selected> -- Select Status --</option>
+                                                <option value="1"> Assigned</option>
+                                                <option value="0">Not Assigned Yet</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Search</label>
                                             <input type="text" class="form-control" id="search1" value=""
                                                 placeholder="Search">
@@ -214,6 +222,7 @@
             var search = null;
             var town = null;
             var type = null;
+            var status = null;
             fetchDataOnReady();
 
             function updateStatus(id, status) {
@@ -258,6 +267,10 @@
                     type = $(this).val();
                     fetchDataOnReady();
                 });
+                $("#status-id").change(function() {
+                    status = $(this).val();
+                    fetchDataOnReady();
+                });
 
                 // Call the function on document ready
 
@@ -295,6 +308,7 @@
                     data: {
                         type: 'ajax',
                         search: search,
+                        status: status,
                         town: town,
                         type_id: type
                     },
