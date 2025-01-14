@@ -33,78 +33,98 @@
 </head>
 
 <body class="vertical dark">
-        <div id="app" class="wrapper">
-                <div class="container p-4 bg-white text-center" id="getPrint">
-                    <div class="bg-white m-auto">
-                        <div class="row">
-                            <div class="col-3">
-                                <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
-                                    style="width: 200px;">
-                            </div>
-                            <div class="col-6 text-end" style="padding-top:2.4rem;">
-                                <h2 class="mb-4">Complaint Management Center</h2>
-                                <p>Karachi Water & Sewerage Corporation
-                                </p>
+    <div id="app" class="wrapper">
+        <div class="container p-4 bg-white text-center" id="getPrint">
+            <div class="bg-white m-auto">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                            style="width: 200px;">
+                    </div>
+                    <div class="col-6 text-end" style="padding-top:2.4rem;">
+                        <h2 class="mb-4">Complaint Management Center</h2>
+                        <p>Karachi Water & Sewerage Corporation
+                        </p>
 
-                                <h5 style="font-size: 0.8rem">
-                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
-                                </h5>
-                            </div>
-                            <div class="col-9 text-left pl-4">
-                                <p>
-                                    Compalints Created : From {{ $dateS }} till {{ $dateE }} (11:59 pm)
-                                </p>
-                                <p>
-                                    <strong>Total Complaints</strong>
-                                </p>
-                                <p>
-                                    <strong>Pending</strong>
-                                </p>
-                                <p>
-                                    <strong>Resolve</strong>
-                                </p>
-                            </div>
-                            <div class="col-3 text-right pr-4">
-                                <h3>Report</h3>
-                                <p>Complaint Sub-Type</p>
+                        <h5 style="font-size: 0.8rem">
+                            ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                        </h5>
+                    </div>
+                    <div class="col-9 text-left pl-4">
+                        @php
+                            $total_pending = 0;
+                            $total_resolved = 0;
+                            $total_recieved = 0;
+                        @endphp
+                        @foreach ($exen_complete_filter2 as $record)
+                            @php
+                                $total_pending = $total_pending + $record->Pending;
+                                $total_resolved = $total_resolved + $record->Resolved;
+                                $total_recieved = $total_recieved + $record->Total_Complaints;
+                            @endphp
+                        @endforeach
+                        <p>
+                            Compalints Created : From {{ $dateS }} till {{ $dateE }} (11:59 pm)
+                        </p>
+                        <p>
+                            <strong>Total Complaints
 
-                            </div>
-                            <div class="table mt-4">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th><b>Executive Engineer</b></th>
-                                            <th><b>Town</b></th>
-                                            <th><b>Sub-Type </b></th>
-                                            <th><b>Total Recieved</b></th>
-                                            <th><b>Resolved </b></th>
-                                            <th><b>Pending</b></th>
-                                            <th><b>Resolved %</b></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($exen_complete_filter2 as $record)
-                                            <tr>
-                                                <td>{{ $record->Executive_Engineer }}</td>
-                                                <td>{{ $record->Town }}</td>
-                                                <td>{{ $record->Complaint }}</td>
-                                                <td>{{ $record->Total_Complaints }}</td>
-                                                <td>{{ $record->Resolved }}</td>
-                                                <td>{{ $record->Pending }}</td>
-                                                <td>{{ $record->Percentage_Resolved }}</td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="11" class="text-center">No records found for the selected dates.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                <span style="margin-left: 15px;">{{ $total_recieved }}</span>
+                            </strong>
+                        </p>
+                        <p>
+                            <strong>Pending
+                                <span style="margin-left: 15px;">{{ $total_pending }}</span>
+                            </strong>
+                        </p>
+                        <p>
+                            <strong>Resolve
+                                <span style="margin-left: 15px;">{{ $total_resolved }}</span>
+                            </strong>
+                        </p>
+                    </div>
+                    <div class="col-3 text-right pr-4">
+                        <h3>Report</h3>
+                        <p>Complaint Sub-Type</p>
+
+                    </div>
+                    <div class="table mt-4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><b>Executive Engineer</b></th>
+                                    <th><b>Town</b></th>
+                                    <th><b>Sub-Type </b></th>
+                                    <th><b>Total Recieved</b></th>
+                                    <th><b>Resolved </b></th>
+                                    <th><b>Pending</b></th>
+                                    <th><b>Resolved %</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($exen_complete_filter2 as $record)
+                                    <tr>
+                                        <td>{{ $record->Executive_Engineer }}</td>
+                                        <td>{{ $record->Town }}</td>
+                                        <td>{{ $record->Complaint }}</td>
+                                        <td>{{ $record->Total_Complaints }}</td>
+                                        <td>{{ $record->Resolved }}</td>
+                                        <td>{{ $record->Pending }}</td>
+                                        <td>{{ $record->Percentage_Resolved }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="11" class="text-center">No records found for the selected dates.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
     {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
 
@@ -151,7 +171,7 @@
             print_area.document.write('<html>');
             print_area.document.write(
                 '<link rel="dns-prefetch" href="//fonts.gstatic.com"><link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" /><link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" /><link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" /><link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"><link id="pagestyle" href="{{ asset('assets/css/material-dashboard.css?v=3.0.0') }}" rel="stylesheet" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="crossorigin="anonymous" referrerpolicy="no-referrer" /><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />'
-                );
+            );
             print_area.document.write('<body>');
             print_area.document.write(elem.innerHTML);
             print_area.document.write('</body></html>');
