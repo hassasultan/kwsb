@@ -732,7 +732,8 @@
                                     </div>
                                     <div class="form-group col-12">
                                         <label>Select Town*</label>
-                                        <select name="town_id" id="town_id" class="select2 form-control fs-14  h-50px">
+                                        <select name="town_id" id="town-id" class=" form-control fs-14  h-50px">
+                                            <option disabled selected> -- Select Town --</option>
                                             @foreach ($town as $row)
                                                 <option value="{{ $row->id }}">{{ $row->town }}</option>
                                             @endforeach
@@ -740,7 +741,8 @@
                                     </div>
                                     <div class="form-group col-12">
                                         <label>Select SubTown*</label>
-                                        <select name="sub_town_id" id="sub_town_id" class="select2 form-control fs-14  h-50px" required>
+                                        <select name="sub_town_id" id="sub_town_id" class="select2 form-control fs-14  h-50px" >
+                                            <option disabled selected> -- Select SubTown --</option>
                                             @foreach ($subtown as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                             @endforeach
@@ -748,7 +750,8 @@
                                     </div>
                                     <div class="form-group col-12">
                                         <label>Select Type*</label>
-                                        <select name="type_id" id="type_id" class="select2 form-control fs-14  h-50px" required>
+                                        <select name="type_id" id="type_id" class=" form-control fs-14  h-50px" >
+                                            <option disabled selected> -- Select Complaint Type --</option>
                                             @foreach ($type as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                             @endforeach
@@ -757,7 +760,8 @@
                                     <div class="form-group col-12">
                                         <label>Select Sub Type*</label>
                                         <select name="subtype_id" id="subtype_id"
-                                            class="select2 form-control fs-14  h-50px" required>
+                                            class="select2 form-control fs-14  h-50px" >
+                                            <option disabled selected> -- Select SubType --</option>
                                             @foreach ($subtype as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                             @endforeach
@@ -777,29 +781,30 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $("#town_id").on("change", function() {
+        $("#town-id").change( function() {
             var town_id = $(this).val();
-            console.log(town_id);
-            // $.ajax({
-            //     type: "get",
-            //     url: "{{ route('subtown.by.town') }}",
-            //     data: {
-            //         'town_id': town_id,
-            //     },
-            //     success: function(data) {
-            //         $("#sub_town_id").html("");
-            //         var your_html = "";
-            //         $.each(data, function(key, val) {
-            //             console.log(val);
-            //             your_html += "<option value=" + val['id'] + ">" + val['title'] +
-            //                 "</option>"
-            //         });
-            //         $("#sub_town_id").append(your_html); //// For Append
-            //     },
-            //     error: function() {
-            //         console.log(data);
-            //     }
-            // });
+            // console.log(town_id);
+            $.ajax({
+                type: "get",
+                url: "{{ route('subtown.by.town') }}",
+                data: {
+                    'town_id': town_id,
+                },
+                success: function(data) {
+                    $("#sub_town_id").html("");
+                    var your_html = "";
+                    your_html += "<option disabled selected> -- Select SubTown --</option>";
+                    $.each(data, function(key, val) {
+                        console.log(val);
+                        your_html += "<option value=" + val['id'] + ">" + val['title'] +
+                            "</option>"
+                    });
+                    $("#sub_town_id").append(your_html); //// For Append
+                },
+                error: function() {
+                    console.log(data);
+                }
+            });
         });
         $("#type_id").on("change", function() {
             var type_id = $(this).val();
@@ -812,6 +817,7 @@
                 success: function(data) {
                     $("#subtype_id").html("");
                     var your_html = "";
+                    your_html += "<option disabled selected> -- Select SubType --</option>";
                     $.each(data, function(key, val) {
                         console.log(val);
                         your_html += "<option value=" + val['id'] + ">" + val['title'] +

@@ -81,13 +81,13 @@ class ComplaintController extends Controller
                 // Fetch complaints that have at least one of the relationships
                 $complaint = $complaint->where(function ($query) {
                     $query->whereHas('assignedComplaints')
-                          ->orWhereHas('assignedComplaintsDepartment');
+                        ->orWhereHas('assignedComplaintsDepartment');
                 });
             } else {
                 // Fetch complaints that have none of the relationships
                 $complaint = $complaint->where(function ($query) {
                     $query->whereDoesntHave('assignedComplaints')
-                          ->whereDoesntHave('assignedComplaintsDepartment');
+                        ->whereDoesntHave('assignedComplaintsDepartment');
                 });
             }
         }
@@ -215,7 +215,7 @@ class ComplaintController extends Controller
         $town = Town::all();
         $type = ComplaintType::all();
         $subtype = SubType::all();
-        $subtown = SubTown::where('town_id',$complaint->town_id)->get();
+        $subtown = SubTown::where('town_id', $complaint->town_id)->get();
         $prio = Priorities::all();
         $source = Source::all();
 
@@ -450,7 +450,7 @@ class ComplaintController extends Controller
         $prio = Priorities::get();
         $source = Complaints::get()->groupBy('source');
         $subtype = SubType::all();
-        return view('pages.reports.index', compact('town','subtype', 'subtown', 'type', 'prio', 'source'));
+        return view('pages.reports.index', compact('town', 'subtype', 'subtown', 'type', 'prio', 'source'));
     }
     public function generate_report(Request $request)
     {
@@ -1067,40 +1067,78 @@ ORDER BY
             'to_date' => 'required|date',
         ]);
 
+        $town = $request->town_id ?? null;
+        $subtown = $request->sub_town_id ?? null;
+        $type = $request->type_id ?? null;
+        $subtype = $request->subtype_id ?? null;
+
         $dateS = $request->from_date;
         $dateE = $request->to_date;
-        $town = $request->town_id;
-        $exen_complete_filter2 = DB::select("
+
+        // Start building the query
+        $query = "
     SELECT
-    u.name AS Executive_Engineer,
-    t.town AS Town,
-    st.title AS Department,
-    COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
-    COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
-    COUNT(c.id) AS Total_Complaints,
-    ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
-FROM complaint c
-JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
-JOIN mobile_agent m ON ca.agent_id = m.id
-JOIN users u ON m.user_id = u.id
-JOIN towns t ON c.town_id = t.id
-JOIN complaint_types st ON c.type_id = st.id
-where (u.name NOT LIKE 'north agent'
-    AND u.name NOT LIKE 'north nazimabad agent'
-    AND u.name NOT LIKE 'south water'
-    AND u.name NOT LIKE 'Mobile Agent'
-    AND u.name NOT LIKE 'raghib')
-    AND c.created_at BETWEEN :from_date AND :to_date
-    AND c.town_id = :town
-GROUP BY
-    u.name, t.town, st.title
-ORDER BY
-    Percentage_Solved DESC;
-", [
-            'from_date' => $dateS,
-            'to_date' => $dateE,
-            'town' => $town,
-        ]);
-        return view('pages.reports.report12', compact('exen_complete_filter2', 'dateE', 'dateS', 'town'));
+        u.name AS Executive_Engineer,
+        t.town AS Town,
+        st.title AS Complaint,
+        COUNT(c.id) AS Total_Complaints,
+        COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Resolved,
+        COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+        ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Resolved
+    FROM complaint c
+    LEFT JOIN complaint_assign_agent ca ON ca.complaint_id = c.id
+    JOIN mobile_agent ma ON ma.id = ca.agent_id
+    LEFT JOIN users u ON u.id = ma.user_id
+    JOIN complaint_types ct ON c.type_id = ct.id
+    LEFT JOIN sub_types st ON st.id = c.subtype_id
+    JOIN towns t ON t.id = c.town_id
+    JOIN district d ON t.district_id = d.id
+    LEFT JOIN subtown s ON s.id = c.sub_town_id
+    LEFT JOIN customers c2 ON c2.id = c.customer_id
+    WHERE c.created_at BETWEEN :from_date AND :to_date
+";
+
+        if ($town) {
+            $query .= " AND c.town_id = :town";
+        }
+        if ($subtown) {
+            $query .= " AND c.sub_town_id = :subtown";
+        }
+        if ($type) {
+            $query .= " AND c.type_id = :type";
+        }
+        if ($subtype) {
+            $query .= " AND c.subtype_id = :subtype";
+        }
+
+        // Add the updated GROUP BY and ORDER BY clauses
+        $query .= "
+            GROUP BY u.name, t.town, st.title
+            ORDER BY u.name;
+        ";
+
+        // Prepare the query parameters
+        $params = [
+            'from_date' => $dateS . ' 00:00:00',
+            'to_date' => $dateE . ' 23:59:59',
+        ];
+
+        if ($town) {
+            $params['town'] = $town;
+        }
+        if ($subtown) {
+            $params['subtown'] = $subtown;
+        }
+        if ($type) {
+            $params['type'] = $type;
+        }
+        if ($subtype) {
+            $params['subtype'] = $subtype;
+        }
+
+        // Execute the query
+        $exen_complete_filter2 = DB::select($query, $params);
+        // dd($exen_complete_filter2);
+        return view('pages.reports.report13', compact('exen_complete_filter2', 'dateE', 'dateS', 'town'));
     }
 }
