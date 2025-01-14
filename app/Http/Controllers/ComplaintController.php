@@ -449,7 +449,8 @@ class ComplaintController extends Controller
         $type = ComplaintType::get();
         $prio = Priorities::get();
         $source = Complaints::get()->groupBy('source');
-        return view('pages.reports.index', compact('town', 'subtown', 'type', 'prio', 'source'));
+        $subtype = SubType::all();
+        return view('pages.reports.index', compact('town','subtype', 'subtown', 'type', 'prio', 'source'));
     }
     public function generate_report(Request $request)
     {
@@ -1015,6 +1016,50 @@ ORDER BY
     }
 
     public function generate_report12(Request $request)
+    {
+
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+        $town = $request->town_id;
+        $exen_complete_filter2 = DB::select("
+    SELECT
+    u.name AS Executive_Engineer,
+    t.town AS Town,
+    st.title AS Department,
+    COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Solved,
+    COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+    COUNT(c.id) AS Total_Complaints,
+    ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Solved
+FROM complaint c
+JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+JOIN mobile_agent m ON ca.agent_id = m.id
+JOIN users u ON m.user_id = u.id
+JOIN towns t ON c.town_id = t.id
+JOIN complaint_types st ON c.type_id = st.id
+where (u.name NOT LIKE 'north agent'
+    AND u.name NOT LIKE 'north nazimabad agent'
+    AND u.name NOT LIKE 'south water'
+    AND u.name NOT LIKE 'Mobile Agent'
+    AND u.name NOT LIKE 'raghib')
+    AND c.created_at BETWEEN :from_date AND :to_date
+    AND c.town_id = :town
+GROUP BY
+    u.name, t.town, st.title
+ORDER BY
+    Percentage_Solved DESC;
+", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+            'town' => $town,
+        ]);
+        return view('pages.reports.report12', compact('exen_complete_filter2', 'dateE', 'dateS', 'town'));
+    }
+    public function generate_report13(Request $request)
     {
 
         $request->validate([

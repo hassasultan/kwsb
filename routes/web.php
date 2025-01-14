@@ -91,6 +91,7 @@ Route::prefix('/admin')->group(function () {
         Route::get('/compaints-reports/reports10', [ComplaintController::class, 'generate_report10'])->name('compaints-reports.reports10');
         Route::get('/compaints-reports/reports11', [ComplaintController::class, 'generate_report11'])->name('compaints-reports.reports11');
         Route::get('/compaints-reports/reports12', [ComplaintController::class, 'generate_report12'])->name('compaints-reports.reports12');
+        Route::get('/compaints-reports/reports13', [ComplaintController::class, 'generate_report13'])->name('compaints-reports.reports13');
         Route::get('/reports', [ComplaintController::class, 'report'])->name('admin.reports');
         Route::resource('districts', DistrictController::class);
 

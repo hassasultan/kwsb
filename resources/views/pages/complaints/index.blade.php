@@ -222,7 +222,7 @@
             var search = null;
             var town = null;
             var type = null;
-            var status = null;
+            var change_status = null;
             fetchDataOnReady();
 
             function updateStatus(id, status) {
@@ -268,7 +268,7 @@
                     fetchDataOnReady();
                 });
                 $("#status-id").change(function() {
-                    status = $(this).val();
+                    change_status = $(this).val();
                     fetchDataOnReady();
                 });
 
@@ -308,7 +308,7 @@
                     data: {
                         type: 'ajax',
                         search: search,
-                        status: status,
+                        status: change_status,
                         town: town,
                         type_id: type
                     },
