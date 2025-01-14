@@ -1078,31 +1078,25 @@ ORDER BY
         // Start building the query
         $query = "
     SELECT
-    u.name AS Executive_Engineer,
-    t.town AS Town,
-    st.title AS Complaint,
-    aggregated.Total_Complaints,
-    aggregated.Resolved,
-    aggregated.Pending,
-    ROUND((aggregated.Resolved * 100.0 / aggregated.Total_Complaints), 2) AS Percentage_Resolved
-    FROM (
-        SELECT
-            c.assigned_engineer_id AS engineer_id,
-            c.town_id,
-            c.subtype_id,
-            COUNT(c.id) AS Total_Complaints,
-            COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Resolved,
-            COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending
-        FROM complaint c
-        WHERE c.created_at BETWEEN :from_date AND :to_date
-        AND c.type_id = :type
-        AND c.subtype_id = :subtype
-        GROUP BY c.assigned_engineer_id, c.town_id, c.subtype_id
-    ) AS aggregated
-    LEFT JOIN users u ON u.id = aggregated.engineer_id
-    LEFT JOIN towns t ON t.id = aggregated.town_id
-    LEFT JOIN sub_types st ON st.id = aggregated.subtype_id
-    ";
+        u.name AS Executive_Engineer,
+        t.town AS Town,
+        st.title AS Complaint,
+        COUNT(c.id) AS Total_Complaints,
+        COUNT(CASE WHEN c.status = 1 THEN 1 END) AS Resolved,
+        COUNT(CASE WHEN c.status = 0 THEN 1 END) AS Pending,
+        ROUND((COUNT(CASE WHEN c.status = 1 THEN 1 END) * 100.0 / COUNT(c.id)), 2) AS Percentage_Resolved
+    FROM complaint c
+    LEFT JOIN complaint_assign_agent ca ON ca.complaint_id = c.id
+    JOIN mobile_agent ma ON ma.id = ca.agent_id
+    LEFT JOIN users u ON u.id = ma.user_id
+    JOIN complaint_types ct ON c.type_id = ct.id
+    LEFT JOIN sub_types st ON st.id = c.subtype_id
+    JOIN towns t ON t.id = c.town_id
+    JOIN district d ON t.district_id = d.id
+    LEFT JOIN subtown s ON s.id = c.sub_town_id
+    LEFT JOIN customers c2 ON c2.id = c.customer_id
+    WHERE c.created_at BETWEEN :from_date AND :to_date
+";
 
         if ($town) {
             $query .= " AND c.town_id = :town";
@@ -1118,8 +1112,8 @@ ORDER BY
         }
 
         // Add the updated GROUP BY and ORDER BY clauses
-        // GROUP BY u.name, t.town, st.title
         $query .= "
+            GROUP BY u.name, t.town
             ORDER BY u.name;
         ";
 
