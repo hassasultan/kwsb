@@ -1113,7 +1113,7 @@ ORDER BY
 
         // Add the updated GROUP BY and ORDER BY clauses
         $query .= "
-            GROUP BY u.name, t.town
+            GROUP BY u.name, t.town, st.title
             ORDER BY u.name;
         ";
 
