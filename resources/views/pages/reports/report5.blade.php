@@ -64,8 +64,9 @@
                                             <th><b>Customer Name</b></th>
                                             <th><b>Phone</b></th>
                                             <th><b>Executive Engineer</b></th>
-                                            <th><b>Created Date</b></th>
-                                            <th><b>Resolved Date</b></th>
+                                            <th><b>Town</b></th>
+                                            <th><b>Registered Date</b></th>
+                                            <th><b>Status update Date</b></th>
                                             <th><b>Priority</b></th>
                                             <th><b>Aging Time</b></th>
                                             <th><b>Time in Hours</b></th>
@@ -78,10 +79,11 @@
                                                 <td>{{ $record->COMPLAIN_TYPE }}</td>
                                                 <td>{{ $record->GRIEVANCE_TYPE }}</td>
                                                 <td>{{ $record->customer_name }}</td>
-                                                <td>{{ $record->phone }}</td>
-                                                <td>{{ $record->Executive_Engineer }}</td>
-                                                <td>{{ $record->CreatedDate }}</td>
-                                                <td>{{ $record->ResolvedDate }}</td>
+                                                <td>{{ $record->Cust_number }}</td>
+                                                <td>{{ $record->Exec_Engineer }}</td>
+                                                <td>{{ $record->town }}</td>
+                                                <td>{{ $record->Registered_Date }}</td>
+                                                <td>{{ $record->Status_updated_date }}</td>
                                                 <td>{{ $record->PRIORITY }}</td>
                                                 <td>{{ $record->AgingTime }}</td>
                                                 <td>{{ $record->TimeInHours }}</td>
@@ -103,7 +105,7 @@
 
 
 
-                
+
 
 
     <!--   Core JS Files   -->

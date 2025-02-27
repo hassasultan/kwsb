@@ -695,10 +695,11 @@ class ComplaintController extends Controller
             ct.title AS COMPLAIN_TYPE,
             st.title AS GRIEVANCE_TYPE,
             c.customer_name,
-            c.phone,
-            u.name AS Executive_Engineer,
-            c.created_at AS CreatedDate,
-            c.updated_at AS ResolvedDate,
+            c.phone AS Cust_number,
+            u.name AS Exec_Engineer,
+            t.town ,
+            c.created_at AS Registered_Date,
+            case when c.created_at = c.updated_at then NULL else c.updated_at end as Status_updated_date,
             p.title AS PRIORITY,
             CONCAT(
                 FLOOR(TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) / 24), ' days and ',
@@ -707,8 +708,8 @@ class ComplaintController extends Controller
             TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) AS TimeInHours
         FROM
             complaint c
-        LEFT JOIN
-            priorities p ON c.prio_id = p.id
+        left join towns t on t.id = c.town_id 
+        LEFT JOIN priorities p ON c.prio_id = p.id
         JOIN complaint_types ct ON ct.id = c.type_id
         JOIN sub_types st ON st.id = c.subtype_id
         JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
@@ -720,6 +721,7 @@ class ComplaintController extends Controller
             AND c.town_id = :town
             And c.type_id = :type
             AND c.created_at BETWEEN :from_date AND :to_date
+            Order by t.town
     ", [
             'from_date' => $dateS,
             'to_date' => $dateE,
