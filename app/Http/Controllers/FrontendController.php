@@ -17,6 +17,7 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 use Exception;
 
 
@@ -121,8 +122,9 @@ class FrontendController extends Controller
         if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
-            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 14, 'prefix' => $prefix]);
-            $data['comp_num'] = $CompNum;
+            $now = Carbon::now();
+            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
+            $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
             $data['source'] = "webpage";
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
