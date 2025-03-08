@@ -167,8 +167,8 @@ class ComplaintController extends Controller
             $prefix = "COMPLAINT-";
             $now = Carbon::now();
             $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
-            $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
-            if ($request->has('image') && $request->image != NULL) {
+            $data['comp_num'] = $CompNum;
+            // $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
             $cmp = Complaints::create($data);
