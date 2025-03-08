@@ -21,6 +21,7 @@ use App\Traits\SaveImage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Exception;
 
 class ComplaintController extends Controller
@@ -164,8 +165,9 @@ class ComplaintController extends Controller
         if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
+            $now = Carbon::now();
             $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
-            $data['comp_num'] = $CompNum;
+            $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
