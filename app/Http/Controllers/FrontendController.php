@@ -31,7 +31,7 @@ class FrontendController extends Controller
         return Validator::make($data, [
             'town_id' => ['required', 'numeric', 'exists:towns,id'],
             'sub_town_id' => ['required', 'numeric', 'exists:subtown,id'],
-            'g-recaptcha-response' => ['required','captcha'],
+            'g-recaptcha-response' => ['required', 'captcha'],
             // 'title' => ['required', 'string'],
             // 'source' => ['required', 'string'],
             'description' => ['required', 'string'],
@@ -54,7 +54,6 @@ class FrontendController extends Controller
         }
 
         return view('welcome', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
-
     }
     public function create_connection_request(Request $request)
     {
@@ -73,12 +72,11 @@ class FrontendController extends Controller
         }
 
         return view('connection', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
-
     }
     public function update_connection_request(Request $request)
     {
         $town = Town::all();
-        $type = ComplaintType::whereIn('id',[16,17])->get();
+        $type = ComplaintType::whereIn('id', [16, 17])->get();
         $subtype = SubType::all();
         $prio = Priorities::all();
         $subtown = SubTown::all();
@@ -92,7 +90,6 @@ class FrontendController extends Controller
         }
 
         return view('consumer-data', compact('customer', 'town', 'type', 'prio', 'subtown', 'subtype', 'source'));
-
     }
     public function generate_bill(Request $request)
     {
@@ -108,7 +105,7 @@ class FrontendController extends Controller
         if ($response->successful()) {
             // return $response->json();
             $record = $response->json();
-            return view('bill',compact('record'));
+            return view('bill', compact('record'));
         }
         return response()->json(['error' => 'Unable to fetch data'], $response->status());
     }
@@ -122,9 +119,20 @@ class FrontendController extends Controller
         if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
-            $now = Carbon::now();
+            $lastComp = DB::table('complaint')->where('comp_num', 'like', 'COMPLAINT-%')->latest('comp_num')->first();
+
+            if ($lastComp) {
+                $lastNumber = (int) str_replace('COMPLAINT-', '', $lastComp->comp_num);
+                $newNumber = $lastNumber + 1;
+            } else {
+                $newNumber = 10000; // Start from this if no record exists
+            }
+
+            $CompNum = "COMPLAINT-" . $newNumber;
+            $data['comp_num'] = $CompNum;
+            // $now = Carbon::now();
             // $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
-            $data['comp_num'] = $prefix . $now->format("mdHis")  ;
+            // $data['comp_num'] = $prefix . $now->format("mdHis");
             // $data['comp_num'] = $CompNum;
             $data['source'] = "webpage";
             if ($request->has('image') && $request->image != NULL) {
@@ -167,16 +175,18 @@ class FrontendController extends Controller
 
             $curl1 = curl_init();
 
-            curl_setopt_array($curl1, array(
-                CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=check phone number&shortcode=KWSC&lang=English&mobilenum='.$phone.'&password=Smskwsc@2024',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-            )
+            curl_setopt_array(
+                $curl1,
+                array(
+                    CURLOPT_URL => 'https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03348970362&message=check phone number&shortcode=KWSC&lang=English&mobilenum=' . $phone . '&password=Smskwsc@2024',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                )
             );
 
             $response1 = curl_exec($curl1);
@@ -184,7 +194,6 @@ class FrontendController extends Controller
             curl_close($curl1);
 
             return redirect()->back()->with('success', $complaint->comp_num);
-
         } else {
             return back()->with('error', $valid->errors());
         }
@@ -208,10 +217,21 @@ class FrontendController extends Controller
             ]);
 
             $prefix = "COMPLAINT-";
-            $now = Carbon::now();
+            // $now = Carbon::now();
+            $lastComp = DB::table('complaint')->where('comp_num', 'like', 'COMPLAINT-%')->latest('comp_num')->first();
+
+            if ($lastComp) {
+                $lastNumber = (int) str_replace('COMPLAINT-', '', $lastComp->comp_num);
+                $newNumber = $lastNumber + 1;
+            } else {
+                $newNumber = 10000; // Start from this if no record exists
+            }
+
+            $CompNum = "COMPLAINT-" . $newNumber;
+            $data['comp_num'] = $CompNum;
             // $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
             // $data['comp_num'] = $CompNum;
-            $data['comp_num'] = $prefix . $now->format("mdHis")  ;
+            // $data['comp_num'] = $prefix . $now->format("mdHis")  ;
             // $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
             $data['source'] = 'Mobile App';
 
@@ -232,7 +252,6 @@ class FrontendController extends Controller
                 $phone = $complaint->phone;
             } else {
                 $phone = $complaint->customer->phone;
-
             }
             $curl = curl_init();
 
@@ -287,32 +306,27 @@ class FrontendController extends Controller
             curl_close($curl);
 
             return response()->json(['success' => $complaint->comp_num], 200);
-
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
-
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
     public function track_complaint(Request $request)
     {
-        $comp = Complaints::where('comp_num',$request->comp_num);
-        $auth = $comp->where('phone',$request->phone)->first();
+        $comp = Complaints::where('comp_num', $request->comp_num);
+        $auth = $comp->where('phone', $request->phone)->first();
         // dd($auth->toArray());
-        if($auth == null)
-        {
-            $auth = $comp->with('customer')->whereHas('customer',function($q) use ($request){
-                $q->where('phone',$request->phone);
+        if ($auth == null) {
+            $auth = $comp->with('customer')->whereHas('customer', function ($q) use ($request) {
+                $q->where('phone', $request->phone);
             })->first();
         }
-        if($auth == null)
-        {
+        if ($auth == null) {
             return redirect()->back()->with('error', 'Sorry You are not Authenticate to view this Complaint...');
         }
         $comp = $comp->first();
         // dd($comp->toArray());
-        return view('complaint-detail',compact('comp'));
+        return view('complaint-detail', compact('comp'));
     }
-
 }

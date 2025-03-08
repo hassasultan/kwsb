@@ -165,10 +165,21 @@ class ComplaintController extends Controller
         if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
-            $now = Carbon::now();
+            $lastComp = DB::table('complaint')->where('comp_num', 'like', 'COMPLAINT-%')->latest('comp_num')->first();
+
+            if ($lastComp) {
+                $lastNumber = (int) str_replace('COMPLAINT-', '', $lastComp->comp_num);
+                $newNumber = $lastNumber + 1;
+            } else {
+                $newNumber = 10000; // Start from this if no record exists
+            }
+
+            $CompNum = "COMPLAINT-" . $newNumber;
+            $data['comp_num'] = $CompNum;
+            // $now = Carbon::now();
             // $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
             // $data['comp_num'] = $CompNum;
-            $data['comp_num'] = $prefix . $now->format("mdHis")  ;
+            // $data['comp_num'] = $prefix . $now->format("mdHis")  ;
             // $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
