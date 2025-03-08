@@ -119,7 +119,7 @@ class FrontendController extends Controller
         if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
-            $lastComp = DB::table('complaint')->where('comp_num', 'like', 'COMPLAINT-%')->latest('comp_num')->first();
+            $lastComp = DB::table('complaint')->where('comp_num', 'like', 'COMPLAINT-%')->latest('id')->first();
             dd($lastComp);
             if ($lastComp) {
                 $lastNumber = (int) str_replace('COMPLAINT-', '', $lastComp->comp_num);
