@@ -123,9 +123,9 @@ class FrontendController extends Controller
             $data = $request->all();
             $prefix = "COMPLAINT-";
             $now = Carbon::now();
-            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
-            $data['comp_num'] = $CompNum;
-            // $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
+            // $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
+            $data['comp_num'] = $prefix . $now->format("YmdHis")  ;
+            // $data['comp_num'] = $CompNum;
             $data['source'] = "webpage";
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
