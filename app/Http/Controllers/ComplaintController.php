@@ -164,7 +164,7 @@ class ComplaintController extends Controller
         if ($valid->valid()) {
             $data = $request->all();
             $prefix = "COMPLAINT-";
-            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 14, 'prefix' => $prefix]);
+            $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
             $data['comp_num'] = $CompNum;
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
@@ -708,7 +708,7 @@ class ComplaintController extends Controller
             TIMESTAMPDIFF(HOUR, c.created_at, CURRENT_TIMESTAMP) AS TimeInHours
         FROM
             complaint c
-        left join towns t on t.id = c.town_id 
+        left join towns t on t.id = c.town_id
         LEFT JOIN priorities p ON c.prio_id = p.id
         JOIN complaint_types ct ON ct.id = c.type_id
         JOIN sub_types st ON st.id = c.subtype_id
