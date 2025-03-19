@@ -202,9 +202,9 @@
                 <div class="w-100 text-right">
                     <div id="google_translate_element"></div>
                     <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                        href="./#googtrans(en|en)">English</a>
+                        href="{{ route('front.home.connection') }}/#googtrans(en|en)">English</a>
                     <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                        href="./#googtrans(en|ur)">Urdu</a>
+                        href="{{ route('front.home.connection') }}/#googtrans(en|ur)">Urdu</a>
                 </div>
                 {{-- </div> --}}
             </div>
@@ -250,7 +250,7 @@
                                 {{-- <form role="form" method="get" action="{{ route('front.home') }}"
                                     enctype="multipart/form-data">
                                     <div class="row">
-            
+
                                         <div class="form-group col-md-3 p-3">
                                             <label>Customer Number</label>
                                             <input type="text" class="form-control border-bottom border-1 border-dark"
@@ -421,8 +421,8 @@
                                                     value="{{ old('landmark') }}" required />
                                             </div>
 
-                                            
-                                            
+
+
                                             {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Select Priority<span class="item-required">*</span></label>
                                                 <select name="prio_id" class="form-control select2 border-dark"
@@ -957,7 +957,7 @@
                 {
                     $('#shops-counts label').html("No. of Shops");
                 }
-                
+
 
                 // if(subtype_val != '60' || subtype_val != '64')
                 // {

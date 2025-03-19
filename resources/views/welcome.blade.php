@@ -177,9 +177,9 @@
                     <div class="col-md-3 pt-3">
                         <div id="google_translate_element"></div>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                            href="./#googtrans(en|en)">English</a>
+                            href="{{ route('front.home') }}/#googtrans(en|en)">English</a>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                            href="./#googtrans(en|ur)">Urdu</a>
+                            href="{{ route('front.home') }}/#googtrans(en|ur)">Urdu</a>
                     </div>
                 </div>
                 {{-- </div> --}}
@@ -250,7 +250,7 @@
                                 {{-- <form role="form" method="get" action="{{ route('front.home') }}"
                                     enctype="multipart/form-data">
                                     <div class="row">
-            
+
                                         <div class="form-group col-md-3 p-3">
                                             <label>Customer Number</label>
                                             <input type="text" class="form-control border-bottom border-1 border-dark"
