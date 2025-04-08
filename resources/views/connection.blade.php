@@ -179,7 +179,7 @@
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
                             href="{{ route('front.home.connection') }}/#googtrans(en|en)">English</a>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                            href="/#googtrans(en|ur)">Urdu</a>
+                            href="{{ route('front.home.connection') }}/#googtrans(en|ur)">Urdu</a>
                         {{-- <a target="_blank" class="btn btn-link text-white font-weight-bolder"
                             href="/#googtrans(en|en)">English</a>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
