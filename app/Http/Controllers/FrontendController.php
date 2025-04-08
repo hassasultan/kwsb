@@ -133,7 +133,7 @@ class FrontendController extends Controller
             // $CompNum = IdGenerator::generate(['table' => 'complaint', 'field' => 'comp_num', 'length' => 20, 'prefix' => $prefix]);
             // $data['comp_num'] = $prefix . $now->format("mdHis");
             // $data['comp_num'] = $CompNum;
-            $data['source'] = "webpage";
+            $data['source'] = "Web Page";
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
