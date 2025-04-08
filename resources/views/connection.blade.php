@@ -202,9 +202,9 @@
                 <div class="w-100 text-right">
                     <div id="google_translate_element"></div>
                     <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                        href="{{ route('front.home.connection') }}/#googtrans(en|en)">English</a>
+                        href="./#googtrans(en|en)">English</a>
                     <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                        href="{{ route('front.home.connection') }}/#googtrans(en|ur)">Urdu</a>
+                        href="./#googtrans(en|ur)">Urdu</a>
                 </div>
                 {{-- </div> --}}
             </div>
