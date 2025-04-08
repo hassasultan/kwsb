@@ -177,9 +177,13 @@
                     <div class="col-md-3 pt-3">
                         <div id="google_translate_element"></div>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
-                            href="/#googtrans(en|en)">English</a>
+                            href="{{ route('front.home.connection') }}">English</a>
                         <a target="_blank" class="btn btn-link text-white font-weight-bolder"
                             href="/#googtrans(en|ur)">Urdu</a>
+                        {{-- <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                            href="/#googtrans(en|en)">English</a>
+                        <a target="_blank" class="btn btn-link text-white font-weight-bolder"
+                            href="/#googtrans(en|ur)">Urdu</a> --}}
                     </div>
                 </div>
                 {{-- </div> --}}
