@@ -254,7 +254,7 @@ class ComplaintController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             Complaints::where('id', $id)->update($data);
-            LogService::create('Complaint', $id, auth()->user()->name.' a complaint record.');
+            LogService::create('Complaint', $id, auth()->user()->name.' has updated complaint record.');
             return redirect()->route('compaints-management.index')->with('success', 'Record Updated successfully.');
         } else {
             return back()->with('error', $valid->errors());
