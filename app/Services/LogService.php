@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Log;
+use App\Models\Logs;
 use Illuminate\Support\Facades\Auth;
 
 class LogService
@@ -13,11 +13,11 @@ class LogService
      * @param string $action
      * @param int $actionId
      * @param string|null $actionDetail
-     * @return Log
+     * @return Logs
      */
-    public static function create(string $action, int $actionId, ?string $actionDetail = null): Log
+    public static function create(string $action, int $actionId, ?string $actionDetail = null): Logs
     {
-        return Log::create([
+        return Logs::create([
             'user_id' => Auth::id() ?? 0,
             'action' => $action,
             'action_id' => $actionId,
