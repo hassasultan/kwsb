@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
-
+use App\Services\LogService;
 class ComplaintController extends Controller
 {
     //
@@ -131,11 +131,19 @@ class ComplaintController extends Controller
     public function updateStatus(Request $request)
     {
         $complaint = Complaints::find($request->complaint_id);
-
+        $status = '';
         if ($complaint) {
             $complaint->status = $request->status;
             $complaint->save();
-
+            if($request->status != 0)
+            {
+                $status = 'Completed';
+            }
+            else
+            {
+                $status = 'pending';
+            }
+            LogService::create('Complaint', $request->complaint_id, auth()->user()->name.' has updated the complaint status to '.$status);
             return response()->json(['success' => true]);
         }
 
@@ -185,6 +193,7 @@ class ComplaintController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             $cmp = Complaints::create($data);
+            LogService::create('Complaint', $cmp->id, auth()->user()->name.' has created a complaint record.');
             if ($cmp->customer_id != 0) {
                 $phone = $cmp->customer->phone;
             } else {
@@ -233,7 +242,7 @@ class ComplaintController extends Controller
         $subtown = SubTown::where('town_id', $complaint->town_id)->get();
         $prio = Priorities::all();
         $source = Source::all();
-
+        LogService::create('Complaint', $id, auth()->user()->name.' redirect to edit a complaint record.');
         return view('pages.complaints.edit', compact('complaint', 'prio', 'source', 'town', 'type', 'subtype', 'subtown'));
     }
     public function update(Request $request, $id)
@@ -245,6 +254,7 @@ class ComplaintController extends Controller
                 $data['image'] = $this->complaintImage($request->image);
             }
             Complaints::where('id', $id)->update($data);
+            LogService::create('Complaint', $id, auth()->user()->name.' a complaint record.');
             return redirect()->route('compaints-management.index')->with('success', 'Record Updated successfully.');
         } else {
             return back()->with('error', $valid->errors());
@@ -341,6 +351,7 @@ class ComplaintController extends Controller
         } else {
             $phone = $complaint->customer->phone;
         }
+        LogService::create('Complaint', $complaint->id, auth('api')->user()->name.' has updated the complaint status to Complated');
         if ($request->status == "1") {
 
             $curl = curl_init();
@@ -412,6 +423,7 @@ class ComplaintController extends Controller
                 $query->where('comp_type_id', $comp_type);
             })
             ->get();
+        LogService::create('Complaint', $complaint->id, auth()->user()->name.' has redrect to the complaint.');
         // dd($department_user->toArray());
         if (auth()->user()->role == 4) {
             return view('department.pages.complaints.details', compact('complaint', 'department_user'));
@@ -432,9 +444,14 @@ class ComplaintController extends Controller
                 'complaint_id' => $complaintId,
                 'agent_id' => $agentId,
             ]);
+            $agent = MobileAgent::with('user')->find($agentId);
+            LogService::create('Complaint', $complaintId, auth()->user()->name.' has assigned complaint to agent '.$agent->user->name. ' ('.$agent->user->email.')');
         } else {
+            $agent = MobileAgent::with('user')->find($agentId);
+            LogService::create('Complaint', $complaintId, auth()->user()->name.' try to assigned complaint to agent '.$agent->user->name. ' ('.$agent->user->email.') but this complaint is already assined to this agent.');
             return redirect()->back()->with('error', "Already Assigned this Complaint...!");
         }
+
         return redirect()->route('agent-management.details', $agentId);
     }
     public function assign_complaint_department($userId, $complaintId)
@@ -451,7 +468,11 @@ class ComplaintController extends Controller
                 'complaint_id' => $complaintId,
                 'user_id' => $userId,
             ]);
+            $departuser = User::find($userId);
+            LogService::create('Complaint', $complaintId, auth()->user()->name.' has assigned complaint to department '.$departuser->name. ' ('.$departuser->email.')');
         } else {
+            $departuser = User::find($userId);
+            LogService::create('Complaint', $complaintId, auth()->user()->name.' try to assigne complaint to department '.$departuser->name. ' ('.$departuser->email.') but this complaint has already assigned to this department.');
             return redirect()->back()->with('error', "Already Assigned this Complaint...!");
         }
         // return redirect()->route('agent-management.details', $userId);
