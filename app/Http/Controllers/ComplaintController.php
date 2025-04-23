@@ -351,7 +351,14 @@ class ComplaintController extends Controller
         } else {
             $phone = $complaint->customer->phone;
         }
-        LogService::create('Complaint', $complaint->id, auth('api')->user()->name.' has updated the complaint status to Complated');
+        if(auth('api')->user() != null)
+        {
+            LogService::create('Complaint', $complaint->id, auth('api')->user()->name.' has updated the complaint status to Complated');
+        }
+        else
+        {
+            LogService::create('Complaint', $complaint->id, auth()->user()->name.' has updated the complaint status to Complated');
+        }
         if ($request->status == "1") {
 
             $curl = curl_init();
