@@ -286,6 +286,7 @@
                         search: search,
                         town: town,
                         type_id: type,
+                        status: change_status,
                         page: page
                     },
                     success: function(response) {
