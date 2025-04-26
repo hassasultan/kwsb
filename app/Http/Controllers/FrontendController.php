@@ -134,9 +134,9 @@ class FrontendController extends Controller
             // $data['comp_num'] = $prefix . $now->format("mdHis");
             // $data['comp_num'] = $CompNum;
             $data['source'] = "Web Page";
-            if ($request->has('image') && $request->image != NULL) {
-                $data['image'] = $this->complaintImage($request->image);
-            }
+            // if ($request->has('image') && $request->image != NULL) {
+            //     $data['image'] = $this->complaintImage($request->image);
+            // }
             $complaint = Complaints::create($data);
             if ($complaint->customer_id != 0) {
                 $phone = $complaint->customer->phone;
