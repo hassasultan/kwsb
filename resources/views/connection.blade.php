@@ -338,19 +338,18 @@
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Person  Name Here..." name="customer_name"
-                                                    value="{{ old('customer_name') }}" required />
+                                                    value="{{ old('customer_name') }}" id="customer-number"
+                                                    oninput="validateInput(this)" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Owner Phone Number<span
-                                                        class="item-required">*</span></label>
+                                                <label>Owner Phone Number<span class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Phone Number Here..." name="phone"
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Owner CNIC<span
-                                                        class="item-required">*</span></label>
+                                                <label>Owner CNIC<span class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter CNIC Here..." name="customer_cnic"
@@ -367,8 +366,8 @@
                                                 <label>Owner's Nature of Business</label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Nature of Business Here..." name="business_nature"
-                                                    value="{{ old('business_nature') }}" />
+                                                    placeholder="Enter Nature of Business Here..."
+                                                    name="business_nature" value="{{ old('business_nature') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Select Town<span class="item-required">*</span></label>
@@ -396,7 +395,7 @@
                                             <div class="form-group col-md-3 p-3" id="_resType">
                                                 <label>Residential Type<span class="item-required"></span></label>
                                                 <select name="residential_type" id="residential_type"
-                                                    class="form-control select2 border-dark" >
+                                                    class="form-control select2 border-dark">
                                                     <option selected disabled>-- Residential Type --</option>
                                                     <option value="plot">Plot</option>
                                                     <option value="flat">Flat</option>
@@ -406,8 +405,8 @@
                                                 <label>No. of Stories/Shops</label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter No. of Stories/Shops Here..." name="shops_count"
-                                                    value="{{ old('shops_count') }}" />
+                                                    placeholder="Enter No. of Stories/Shops Here..."
+                                                    name="shops_count" value="{{ old('shops_count') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Owner Full Address</label>
@@ -456,7 +455,7 @@
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Comments<span class="item-required">*</span></label>
                                                 <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
-                                                    name="description" required>{{ old('description') }}</textarea>
+                                                    name="description" required oninput="validateInput(this)" id="description-box">{{ old('description') }}</textarea>
                                             </div>
                                             {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Picture</label>
@@ -636,7 +635,7 @@
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
-
+    @include('script')
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -688,10 +687,9 @@
                     .each(function() {
                         var value = $(this).val();
                         if (!value || value.trim() === '') {
-                            if ($(this).attr('name') == 'customer_num' || $(this).attr('name') == 'shops_count' || $(this).attr('name') == 'residential_type' || $(this).attr('name') == 'business_nature') {
-                            }
-                            else
-                            {
+                            if ($(this).attr('name') == 'customer_num' || $(this).attr('name') ==
+                                'shops_count' || $(this).attr('name') == 'residential_type' || $(this)
+                                .attr('name') == 'business_nature') {} else {
                                 $(this).addClass('is-invalid');
                                 isEmpty = true;
                                 var fieldName = $(this).attr('name');
@@ -954,11 +952,9 @@
         });
         $("#subtype_id").on("change", function() {
             var subtype_val = $(this).val();
-            if(subtype_val == '59' || subtype_val == '60' || subtype_val == '63' || subtype_val == '64')
-            {
+            if (subtype_val == '59' || subtype_val == '60' || subtype_val == '63' || subtype_val == '64') {
                 $('#business-nature').removeClass('d-none');
-                if(subtype_val == '59' || subtype_val == '63')
-                {
+                if (subtype_val == '59' || subtype_val == '63') {
                     $('#shops-counts label').html("No. of Shops");
                 }
 
@@ -970,31 +966,22 @@
                 // {
                 //     $('#shops-counts').addClass('d-none');
                 // }
-            }
-            else
-            {
+            } else {
                 $('#business-nature').addClass('d-none');
                 // $('#shops-counts').addClass('d-none');
             }
-            if(subtype_val == '58' || subtype_val == '62')
-            {
+            if (subtype_val == '58' || subtype_val == '62') {
                 $('#shops-counts label').html("No. of Stories");
 
             }
-            if(subtype_val == '58' || subtype_val == '62' || subtype_val == '59' || subtype_val == '63')
-            {
+            if (subtype_val == '58' || subtype_val == '62' || subtype_val == '59' || subtype_val == '63') {
                 $('#shops-counts').removeClass('d-none');
-            }
-            else
-            {
+            } else {
                 $('#shops-counts').addClass('d-none');
             }
-            if(subtype_val == '60' || subtype_val == '61' || subtype_val == '64' || subtype_val == '65')
-            {
+            if (subtype_val == '60' || subtype_val == '61' || subtype_val == '64' || subtype_val == '65') {
                 $('#_resType').addClass('d-none');
-            }
-            else
-            {
+            } else {
                 $('#_resType').removeClass('d-none');
 
             }

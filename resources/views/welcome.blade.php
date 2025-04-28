@@ -305,14 +305,14 @@
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Consumer Number Here..." name="customer_num"
-                                                    value="{{ old('customer_num') }}" />
+                                                    value="{{ old('customer_num') }}"   maxlength="25"/>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Applicant Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Person  Name Here..." name="customer_name"
-                                                    value="{{ old('customer_name') }}" required />
+                                                    value="{{ old('customer_name') }}" id="customer-number" oninput="validateInput(this)" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Applicant Phone Number<span
@@ -417,7 +417,7 @@
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Description<span class="item-required">*</span></label>
                                                 <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
-                                                    name="description" required>{{ old('description') }}</textarea>
+                                                    name="description" required maxlength="350" oninput="validateInput(this)" id="description-box">{{ old('description') }}</textarea>
                                             </div>
                                             {{-- <div class="form-group col-md-3 p-3">
                                                 <label>Picture</label>
@@ -597,7 +597,7 @@
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
-
+    @include('script')
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
