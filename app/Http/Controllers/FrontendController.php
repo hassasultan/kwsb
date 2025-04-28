@@ -130,7 +130,7 @@ class FrontendController extends Controller
 
             $CompNum = "COMPLAINT-" . $newNumber;
             $data['comp_num'] = $CompNum;
-            if($request->has('description') && $request->description != '') {
+            if($request->has('description') && $request->description != '' && $request->description != null)
             {
                 $data['description'] = preg_replace('/[^a-zA-Z0-9 ]/', '', $request->description);
             }
