@@ -4,9 +4,10 @@
 
         if (element.id === 'customer-name') {
             maxLength = 25;
-        }
-        if (element.id === 'description-box') {
+        } else if (element.id === 'description-box') {
             maxLength = 350;
+        } else {
+            return; // If not recognized, do nothing
         }
 
         // Allow only letters, numbers, and spaces
