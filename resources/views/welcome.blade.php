@@ -469,7 +469,7 @@
         </div>
     @endif
     {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
-
+    @include('script')
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
@@ -597,7 +597,7 @@
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
-    @include('script')
+
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
