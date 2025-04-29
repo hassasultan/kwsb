@@ -225,8 +225,9 @@
             var change_status = null;
             fetchDataOnReady();
 
-            function updateStatus(id, status) {
-                if (status == 0) {
+            function updateStatus(id, element) {
+                console.log($(element).val());
+                if ($(element).val() == 0 || $(element).val() == 2) {
                     const complaintId = id;
 
                     // AJAX request
@@ -235,7 +236,7 @@
                         method: 'POST',
                         data: {
                             complaint_id: complaintId,
-                            status: status,
+                            status: $(element).val(),
                             _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
                         },
                         success: function(response) {
@@ -385,11 +386,31 @@
                     html += '<p class="text-xs font-weight-bold mb-0">' + row.source + '</p>';
                     html += '</td>';
                     html += '<td class="text-center">';
-                    html += row.status == 1 ?
-                        '<select class="form-control select2" complaint-id="' + row.id +
-                        '" id="change-status" onchange="updateStatus(' + row.id + ',0)"><option selected disabled>Completed</option><option value="0">Pending</option></select>' :
+                    // html += row.status == 1 ?
+                    //     '<select class="form-control select2" complaint-id="' + row.id +
+                    //     '" id="change-status" onchange="updateStatus(' + row.id + ',0)"><option selected disabled>Completed</option><option value="2">Work In Progress</option><option value="0">Pending</option></select>'? :
 
-                        '<span class="badge bg-danger text-white">Pending</span>';
+                    //     '<span class="badge bg-danger text-white">Pending</span>';
+                    if (row.status == 1 || row.status == 2) {
+                        html += '<select class="form-control select2" complaint-id="' + row.id + '" onchange="updateStatus(' + row.id + ',this)">';
+
+                        if (row.status == 1) {
+                            html += '<option selected disabled>Completed</option>';
+                        } else {
+                            html += '<option value="1">Completed</option>';
+                        }
+
+                        if (row.status == 2) {
+                            html += '<option selected disabled>Work In Progress</option>';
+                        } else {
+                            html += '<option value="2">Work In Progress</option>';
+                        }
+
+                        html += '<option value="0">Pending</option>';
+                        html += '</select>';
+                    } else {
+                        html += '<span class="badge bg-danger text-white">Pending</span>';
+                    }
                     html += '</td>';
                     html += '<td class="align-middle">';
                     html += row.assigned_complaints == null && row.assigned_complaints_department ==  null ? '<a href="' +

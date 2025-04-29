@@ -78,7 +78,7 @@ class ComplaintController extends Controller
             $complaint = $complaint->where('type_id', $request->type_id);
         }
         if ($request->has('status') && $request->status != null && $request->status != '') {
-            if ($request->status == 1) {
+            if ($request->status == 1 || $request->status == 2) {
                 // Fetch complaints that have at least one of the relationships
                 $complaint = $complaint->where(function ($query) {
                     $query->whereHas('assignedComplaints')
@@ -135,13 +135,17 @@ class ComplaintController extends Controller
         if ($complaint) {
             $complaint->status = $request->status;
             $complaint->save();
-            if($request->status != 0)
+            if($request->status == 1)
             {
                 $status = 'Completed';
             }
+            elseif($request->status == 2)
+            {
+                $status = 'Work In Progress';
+            }
             else
             {
-                $status = 'pending';
+                $status = 'Pending';
             }
             LogService::create('Complaint', $request->complaint_id, auth()->user()->name.' has updated the complaint status to '.$status);
             return response()->json(['success' => true]);
