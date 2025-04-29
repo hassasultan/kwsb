@@ -31,6 +31,11 @@
                                         <td>
                                             <a href="{{ route('departments.edit', $department->id) }}"
                                                 class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="{{ route('departments.details', $department->id) }}"
+                                                class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip"
+                                                data-original-title="Show Complaints">
+                                                Assigned Complaints
+                                            </a>
                                             <form action="{{ route('departments.destroy', $department->id) }}"
                                                 method="POST" style="display:inline-block;">
                                                 @csrf

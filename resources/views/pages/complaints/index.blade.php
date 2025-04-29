@@ -398,7 +398,7 @@
                         row.assigned_complaints != null ?
                         '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints.agent_id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>':
-                        '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints_department.user_id +
+                        '<a href="{{ route('departments.details', '') }}/' + row.assigned_complaints_department.user_id +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Already Assigned</a>';
 
                     html +=

@@ -78,4 +78,8 @@ class User extends Authenticatable implements JWTSubject
         $check_assignment = ComplaintAssignDepartment::where('complaint_id',$comp_id)->where('user_id',$user_id)->count();
         return $check_assignment;
     }
+    public function assignedComplaints()
+    {
+        return $this->hasMany(ComplaintAssignDepartment::class,'user_id','id');
+    }
 }

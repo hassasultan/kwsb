@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\ComplaintType;
+use App\Models\Complaints;
+use App\Models\User;
 
 class DepartmentController extends Controller
 {
@@ -72,7 +74,7 @@ class DepartmentController extends Controller
     {
         $department = Department::findOrFail($id);
         $ct = ComplaintType::all();
-        return view('pages.departments.edit', compact('department','ct'));
+        return view('pages.departments.edit', compact('department', 'ct'));
     }
 
     /**
@@ -95,6 +97,18 @@ class DepartmentController extends Controller
         $department = Department::findOrFail($id);
         $department->update($request->all());
         return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
+    }
+    public function detail($id)
+    {
+        $depart = User::with('assignedComplaints')->find($id);
+
+        $complaints = Complaints::whereIn('id', function ($q) use ($depart) {
+            $q->select('complaint_id')
+                ->from('complaint_assign_department')
+                ->where('user_id', $depart->id);
+        })->paginate(20);
+        // dd($complaints->toArray());
+        return view('pages.departments.details', compact('depart','complaints'));
     }
 
     /**

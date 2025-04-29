@@ -79,6 +79,8 @@ Route::prefix('/admin')->group(function () {
         Route::get('/compaints-management/details/{id}', [ComplaintController::class, 'detail'])->name('compaints-management.details');
         Route::resource('/customer-management', CustomerController::class);
         Route::resource('departments', DepartmentController::class);
+        Route::get('/department/details/{id}', [DepartmentController::class, 'detail'])->name('departments.details');
+
         Route::get('/compaints-reports/reports', [ComplaintController::class, 'generate_report'])->name('compaints-reports.reports');
         Route::get('/compaints-reports/reports2', [ComplaintController::class, 'generate_report2'])->name('compaints-reports.reports2');
         Route::get('/compaints-reports/reports3', [ComplaintController::class, 'generate_report3'])->name('compaints-reports.reports3');
