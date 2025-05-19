@@ -4,7 +4,12 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2 class="page-title">Complaint Management</h2>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                    <h2 class="page-title mb-0">Complaint Management</h2>
+                </div>
                 {{-- <p> Tables with built-in bootstrap styles </p> --}}
                 {{-- <div class="col-12 text-right">
                 <a class="btn btn-primary" href="{{ route('compaints-management.create') }}">add</i>&nbsp;&nbsp;<i

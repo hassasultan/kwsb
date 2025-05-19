@@ -89,7 +89,7 @@
 <div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{{ route('agent-management.report', ':id') }}">
+            <form method="POST" action="{{ route('agent-management.report', ':id') }}" id="dateRangeForm">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
@@ -126,6 +126,7 @@
     const dateRangeFields = document.getElementById('date-range-fields');
     const useDateRangeCheckbox = document.getElementById('use_date_range');
     const modal = new bootstrap.Modal(document.getElementById('dateRangeModal'));
+    const dateRangeForm = document.getElementById('dateRangeForm');
 
     // Toggle date range fields
     useDateRangeCheckbox.addEventListener('change', () => {
@@ -134,8 +135,8 @@
 
     // Open the modal and update form action
     function openDateRangeModal(agentId) {
-        const form = document.querySelector('#dateRangeModal form');
-        form.action = form.action.replace(':id', agentId);
+        const baseUrl = "{{ route('agent-management.report', ':id') }}";
+        dateRangeForm.action = baseUrl.replace(':id', agentId);
         modal.show();
     }
 

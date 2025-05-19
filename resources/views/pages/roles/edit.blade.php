@@ -4,7 +4,12 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2 class="page-title">Edit Role</h2>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                    <h2 class="page-title mb-0">Edit Role</h2>
+                </div>
                 <div class="card shadow">
                     <div class="card-body">
                         <form action="{{ route('roles.update', $role->id) }}" method="POST">

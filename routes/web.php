@@ -54,6 +54,8 @@ Route::prefix('/department')->group(function () {
         //users
         Route::get('/home', [DepartmentHomeController::class,'home'])->name('department.home');
         Route::get('/compaints-management', [ComplaintController::class,'index'])->name('deparment.complaint.index');
+        Route::get('/compaints-management/{id}/edit', [ComplaintController::class,'edit'])->name('deparment.complaint.edit');
+        Route::put('/compaints-management/{id}/update', [ComplaintController::class,'update'])->name('deparment.complaint.update');
         Route::get('/compaints/details/{id}', [ComplaintController::class,'detail'])->name('deparment.complaint.detail');
         Route::post('/compaints/solved/{id}', [ComplaintController::class,'solved_by_department'])->name('deparment.complaint.solved');
 

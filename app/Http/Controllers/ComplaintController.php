@@ -92,6 +92,9 @@ class ComplaintController extends Controller
                 });
             }
         }
+        if ($request->has('comp_status') && $request->comp_status != null && $request->comp_status != '') {
+            $complaint = $complaint->where('status', $request->comp_status);
+        }
         if (auth()->user()->role == 4) {
             $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
                 $query->where('user_id', auth()->user()->id);
@@ -247,6 +250,9 @@ class ComplaintController extends Controller
         $prio = Priorities::all();
         $source = Source::all();
         LogService::create('Complaint', $id, auth()->user()->name.' redirect to edit a complaint record.');
+        if (auth()->user()->role == 4) {
+            return view('department.pages.complaints.edit', compact('complaint', 'prio', 'source', 'town', 'type', 'subtype', 'subtown'));
+        }
         return view('pages.complaints.edit', compact('complaint', 'prio', 'source', 'town', 'type', 'subtype', 'subtown'));
     }
     public function update(Request $request, $id)
@@ -259,6 +265,9 @@ class ComplaintController extends Controller
             }
             Complaints::where('id', $id)->update($data);
             LogService::create('Complaint', $id, auth()->user()->name.' has updated complaint record.');
+            if (auth()->user()->role == 4) {
+                return redirect()->route('deparment.complaint.index')->with('success', 'Record Updated successfully.');
+            }
             return redirect()->route('compaints-management.index')->with('success', 'Record Updated successfully.');
         } else {
             return back()->with('error', $valid->errors());

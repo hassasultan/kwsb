@@ -93,6 +93,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group col-auto">
+                                            <label for="search" class="sr-only">Status Pending/Solve</label>
+                                            <select class="form-control select2" id="comp-status-id">
+                                                <option disabled selected> -- Select Status --</option>
+                                                <option value="1"> Completed</option>
+                                                <option value="2"> Work In Progress</option>
+                                                <option value="0">Pending</option>
+                                            </select>
+                                        </div>
                                         {{-- <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Complaint Type</label>
                                             <select class="form-control select2" id="type-id">
@@ -214,6 +223,7 @@
             var search = null;
             var town = null;
             var type = null;
+            var comp_status = null;
             fetchDataOnReady();
 
             function updateStatus(id, status) {
@@ -258,6 +268,10 @@
                     type = $(this).val();
                     fetchDataOnReady();
                 });
+                $("#comp-status-id").change(function() {
+                    comp_status = $(this).val();
+                    fetchDataOnReady();
+                });
 
                 // Call the function on document ready
 
@@ -273,6 +287,7 @@
                         search: search,
                         town: town,
                         type_id: type,
+                        comp_status: comp_status,
                         page: page
                     },
                     success: function(response) {
@@ -298,7 +313,8 @@
                         type: 'ajax',
                         search: search,
                         town: town,
-                        type_id: type
+                        type_id: type,
+                        comp_status: comp_status
                     },
                     success: function(response) {
                         console.log("Data fetched successfully on document ready:", response);
@@ -392,14 +408,14 @@
                     html += '<span class="text-muted sr-only">Action</span>';
                     html += '</button>';
                     html += '<div class="dropdown-menu dropdown-menu-right shadow">';
-                    // html += '<a class="dropdown-item" href="' + currentUrl + '/' + row.id +
-                    //     '/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
+                    html += '<a class="dropdown-item" href="' + currentUrl + '/' + row.id +
+                        '/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
                     // html += '<a class="dropdown-item" href="#"><i class="fe fe-trash fe-12 mr-3 text-muted"></i>Remove</a>';
-                    if (row.status != 1) {
+                    // if (row.status != 1) {
                         html += '<a class="dropdown-item" href="' +
                             "{{ route('deparment.complaint.detail', '') }}/" + row.id +
                             '"><i class="fe fe-flag fe-12 mr-3 text-muted"></i>Detail</a>';
-                    }
+                    // }
                     html += '</div>';
                     html += '</td>';
                     html += '</tr>';

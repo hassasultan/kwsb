@@ -111,6 +111,15 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-auto">
+                                            <label for="search" class="sr-only">Status Pending/Solve</label>
+                                            <select class="form-control select2" id="comp-status-id">
+                                                <option disabled selected> -- Select Status --</option>
+                                                <option value="1"> Completed</option>
+                                                <option value="2"> Work In Progress</option>
+                                                <option value="0">Pending</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Search</label>
                                             <input type="text" class="form-control" id="search1" value=""
                                                 placeholder="Search">
@@ -223,6 +232,7 @@
             var town = null;
             var type = null;
             var change_status = null;
+            var comp_status = null;
             fetchDataOnReady();
 
             function updateStatus(id, element) {
@@ -272,7 +282,10 @@
                     change_status = $(this).val();
                     fetchDataOnReady();
                 });
-
+                $("#comp-status-id").change(function() {
+                    comp_status = $(this).val();
+                    fetchDataOnReady();
+                });
                 // Call the function on document ready
 
             });
@@ -288,6 +301,7 @@
                         town: town,
                         type_id: type,
                         status: change_status,
+                        comp_status: comp_status,
                         page: page
                     },
                     success: function(response) {
@@ -312,7 +326,8 @@
                         search: search,
                         status: change_status,
                         town: town,
-                        type_id: type
+                        type_id: type,
+                        comp_status: comp_status
                     },
                     success: function(response) {
                         console.log("Data fetched successfully on document ready:", response);
