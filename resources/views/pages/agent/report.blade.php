@@ -94,14 +94,14 @@
                 <section>
                     <h2>Grievance Details</h2>
                     <div class="row align-items-start">
-                        <div class="col-6">
+                        <div class="col-7">
                             <div class="card shadow eq-card mb-4">
                                 <div class="card-body">
                                     <canvas id="grievancePieChart" width="200" height="100"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="card shadow eq-card mb-4">
                                 <div class="card-body">
                                     <table class="table">
@@ -133,14 +133,14 @@
                     <h2>Complaint Resolve Time</h2>
                     <div class="row align-items-start">
                         @if ($turnaroundTimes->isNotEmpty())
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card shadow eq-card mb-4">
                                 <div class="card-body">
                                     <canvas id="resolveTimeChart" width="200" height="100"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card shadow eq-card mb-4">
                                 <div class="card-body">
                                     <table class="table">
