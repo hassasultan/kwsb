@@ -62,7 +62,7 @@
                 <section>
                     <h2>Total Complaints</h2>
                     <div class="row justify-content-center text-center">
-                        <div class="col-12 col-md-4">
+                        <div class="col-4">
                             <div class="card shadow eq-card mb-2">
                                 <div class="card-body">
                                     <p class="text-dark fw-bold">Total Complaints</p>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4">
+                        <div class="col-4">
                             <div class="card shadow eq-card mb-2">
                                 <div class="card-body">
                                     <p class="text-dark fw-bold">Resolved Complaints</p>
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4">
+                        <div class="col-4">
                             <div class="card shadow eq-card mb-2">
                                 <div class="card-body">
                                     <p class="text-dark fw-bold">Pending Complaints</p>
@@ -87,21 +87,21 @@
                             </div>
                         </div>
                     </div>
-                    <canvas id="totalComplaintsChart" width="200" height="100"></canvas>
+                    <canvas id="totalComplaintsChart" width="200" height="100" style="max-height: 500px;"></canvas>
                 </section>
 
                 <!-- Grievance Details Section -->
                 <section>
                     <h2>Grievance Details</h2>
                     <div class="row align-items-start">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card shadow eq-card mb-4">
                                 <div class="card-body">
                                     <canvas id="grievancePieChart" width="200" height="100"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card shadow eq-card mb-4">
                                 <div class="card-body">
                                     <table class="table">
