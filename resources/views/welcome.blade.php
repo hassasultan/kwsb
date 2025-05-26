@@ -429,7 +429,7 @@
                                                 {!! NoCaptcha::renderJs() !!}
                                                 {!! NoCaptcha::display() !!}
                                                 <button type="submit"
-                                                    class="btn btn-lg btn-primary btn-lg mt-4 mb-0">Submit</button>
+                                                    class="btn btn-lg btn-primary btn-lg mt-4 mb-0" id="submit-button">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -496,6 +496,13 @@
     <script src="{{ asset('assets/js/apexcharts.custom.js') }}"></script>
     <script src='{{ asset('assets/js/jquery.dataTables.min.js') }}'></script>
     <script src='{{ asset('assets/js/dataTables.bootstrap4.min.js') }}'></script>
+    <script>
+        $(document).ready(function() {
+            $('#submit-button').click(function() {
+                $('#submit-button').prop('disabled', true);
+            });
+        });
+    </script>
     <script>
         $('#dataTable-1').DataTable({
             autoWidth: true,
