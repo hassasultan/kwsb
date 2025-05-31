@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/test/img', [ComplaintController::class, 'testFileUpload']);
 Route::post('/customer/register', [AuthController::class, 'customer_register']);
 Route::get('/customer/profile', [AuthController::class, 'customer_profile']);
 Route::get('/customer/feedback/list', [CustomerFeedbackController::class, 'api_index']);

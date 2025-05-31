@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Exception;
 use App\Services\LogService;
+use App\Services\FileScan;
 class ComplaintController extends Controller
 {
     //
@@ -196,6 +197,8 @@ class ComplaintController extends Controller
             // $data['comp_num'] = $CompNum;
             // $data['comp_num'] = $prefix . $now->format("mdHis")  ;
             // $data['comp_num'] = $prefix . $now->format("YmdHis") . round($now->format("u") / 1000);
+            // FileScan::scanWithTrendMicro('Complaint', $cmp->id, auth()->user()->name.' has created a complaint record.');
+
             if ($request->has('image') && $request->image != NULL) {
                 $data['image'] = $this->complaintImage($request->image);
             }
@@ -238,6 +241,21 @@ class ComplaintController extends Controller
             return redirect()->route('compaints-management.index')->with('success', 'Record created successfully.');
         } else {
             return back()->with('error', $valid->errors());
+        }
+    }
+    public function testFileUpload(Request $request)
+    {
+        try
+        {
+            if ($request->has('image') && $request->image != NULL) {
+                $image = $this->complaintImage($request->image);
+                return $image;
+            }
+            return false;
+        }
+        catch(Exception $ex)
+        {
+            return $ex->getMessage();
         }
     }
     public function edit($id)
