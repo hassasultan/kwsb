@@ -498,9 +498,39 @@
     <script src='{{ asset('assets/js/dataTables.bootstrap4.min.js') }}'></script>
     <script>
         $(document).ready(function() {
-            $('#submit-button').click(function() {
+            $('#complaint-form').submit(function(e) {
+                console.log("check");
+                e.preventDefault();
+                var isEmpty = false;
                 $('#submit-button').prop('disabled', true);
+                $(this).find('input[type="text"], input[type="tel"], input[type="email"], textarea, select')
+                    .each(function() {
+                        var value = $(this).val();
+                        if (!value || value.trim() === '') {
+                            if ($(this).attr('name') != 'customer_num') {
+                                $(this).addClass('is-invalid');
+                                isEmpty = true;
+                                var fieldName = $(this).attr('name');
+                                // console.log('check');
+                                toastr.error('Please fill in ' + fieldName + ' field.');
+                            }
+                        } else {
+                            $(this).removeClass('is-invalid');
+                        }
+                    });
+
+                if (isEmpty) {
+                    return false;
+                }
+                this.submit();
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // $('#submit-button').click(function() {
+            //     $('#submit-button').prop('disabled', true);
+            // });
         });
     </script>
     <script>
@@ -587,7 +617,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         $(document).ready(function() {
-            console.log("check");
+            // console.log("check");
 
             @if (session('success'))
                 toastr.success('Your Compaint has been Registered Successfully...');
@@ -647,34 +677,7 @@
     </script>
 
     <script src='{{ asset('assets/js/quill.min.js') }}'></script>
-    <script>
-        $(document).ready(function() {
-            $('#complaint-form').submit(function(e) {
-                e.preventDefault();
-                var isEmpty = false;
-                $(this).find('input[type="text"], input[type="tel"], input[type="email"], textarea, select')
-                    .each(function() {
-                        var value = $(this).val();
-                        if (!value || value.trim() === '') {
-                            if ($(this).attr('name') != 'customer_num') {
-                                $(this).addClass('is-invalid');
-                                isEmpty = true;
-                                var fieldName = $(this).attr('name');
-                                // console.log('check');
-                                toastr.error('Please fill in ' + fieldName + ' field.');
-                            }
-                        } else {
-                            $(this).removeClass('is-invalid');
-                        }
-                    });
 
-                if (isEmpty) {
-                    return false;
-                }
-                this.submit();
-            });
-        });
-    </script>
 
     <!-- select2 -->
     <script>
