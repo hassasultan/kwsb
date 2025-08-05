@@ -528,6 +528,32 @@
         gtag('js', new Date());
         gtag('config', 'UA-56159088-1');
     </script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZtTVNWbZX8XNVXgxvhglYUozY5lODs40",
+            authDomain: "kwsc-a96c0.firebaseapp.com",
+            projectId: "kwsc-a96c0",
+            storageBucket: "kwsc-a96c0.firebasestorage.app",
+            messagingSenderId: "653256839310",
+            appId: "1:653256839310:web:5738f31a533e76c80c79df",
+            measurementId: "G-0FPCJCDP4H"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+        messaging.requestPermission()
+            .then(() => messaging.getToken({
+                vapidKey: 'BLPgmK6tE_hiczwq3tUgPiRzsEurmn9MYLRP5AAjUS330sjSZ0SU-VzTC915DAc0T1QAUP3359bWIYLoOwDkd8s'
+            }))
+            .then((token) => {
+                // Send this token to your Laravel backend via API
+            });
+        messaging.onMessage((payload) => {
+            // Show notification to user
+            alert(payload.notification.title + ': ' + payload.notification.body);
+        });
+    </script>
     @yield('bottom_script')
 </body>
 

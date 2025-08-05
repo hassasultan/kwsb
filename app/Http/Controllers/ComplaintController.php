@@ -25,10 +25,13 @@ use Carbon\Carbon;
 use Exception;
 use App\Services\LogService;
 use App\Services\FileScan;
+use App\Services\FirebaseNotificationService;
+use App\Traits\Loggable;
+
 class ComplaintController extends Controller
 {
     //
-    use SaveImage;
+    use SaveImage, Loggable;
     //
     protected function validator(array $data)
     {
@@ -204,6 +207,8 @@ class ComplaintController extends Controller
             }
             $cmp = Complaints::create($data);
             LogService::create('Complaint', $cmp->id, auth()->user()->name.' has created a complaint record.');
+            // Also log using our new Loggable trait
+            $this->logComplaintAction($cmp->id, 'created', auth()->user()->name.' has created a complaint record.');
             if ($cmp->customer_id != 0) {
                 $phone = $cmp->customer->phone;
             } else {
@@ -283,6 +288,8 @@ class ComplaintController extends Controller
             }
             Complaints::where('id', $id)->update($data);
             LogService::create('Complaint', $id, auth()->user()->name.' has updated complaint record.');
+            // Also log using our new Loggable trait
+            $this->logComplaintAction($id, 'updated', auth()->user()->name.' has updated complaint record.');
             if (auth()->user()->role == 4) {
                 return redirect()->route('deparment.complaint.index')->with('success', 'Record Updated successfully.');
             }
@@ -484,6 +491,17 @@ class ComplaintController extends Controller
             ]);
             $agent = MobileAgent::with('user')->find($agentId);
             LogService::create('Complaint', $complaintId, auth()->user()->name.' has assigned complaint to agent '.$agent->user->name. ' ('.$agent->user->email.')');
+
+            // Send push notification to agent (make sure 'device_token' exists on MobileAgent or User)
+            if (isset($agent->device_token)) {
+                $notificationService = new FirebaseNotificationService();
+                $notificationService->sendNotification(
+                    $agent->device_token,
+                    'New Complaint Assigned',
+                    'A new complaint has been assigned to you.',
+                    ['complaint_id' => $complaintId]
+                );
+            }
         } else {
             $agent = MobileAgent::with('user')->find($agentId);
             LogService::create('Complaint', $complaintId, auth()->user()->name.' try to assigned complaint to agent '.$agent->user->name. ' ('.$agent->user->email.') but this complaint is already assined to this agent.');
@@ -508,6 +526,17 @@ class ComplaintController extends Controller
             ]);
             $departuser = User::find($userId);
             LogService::create('Complaint', $complaintId, auth()->user()->name.' has assigned complaint to department '.$departuser->name. ' ('.$departuser->email.')');
+
+            // Send push notification to department user (make sure 'device_token' exists on User)
+            if (isset($departuser->device_token)) {
+                $notificationService = new FirebaseNotificationService();
+                $notificationService->sendNotification(
+                    $departuser->device_token,
+                    'New Complaint Assigned',
+                    'A new complaint has been assigned to your department.',
+                    ['complaint_id' => $complaintId]
+                );
+            }
         } else {
             $departuser = User::find($userId);
             LogService::create('Complaint', $complaintId, auth()->user()->name.' try to assigne complaint to department '.$departuser->name. ' ('.$departuser->email.') but this complaint has already assigned to this department.');

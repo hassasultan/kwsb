@@ -46,6 +46,12 @@
                                     class="ml-1 item-text">Reports</span></a>
                         </li>
                     @endcan
+                    @can('admin.logs.index')
+                        <li class="nav-item @if (Route::is('admin.logs.index')) active @endif">
+                            <a class="nav-link " href="{{ route('admin.logs.index') }}"><span
+                                    class="ml-1 item-text">Complaint Logs</span></a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         </ul>

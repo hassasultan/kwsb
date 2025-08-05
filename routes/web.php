@@ -19,6 +19,8 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentHomeController;
+use App\Http\Controllers\LogController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +108,10 @@ Route::prefix('/admin')->group(function () {
         Route::post('assign/role/{id}', [App\Http\Controllers\UserController::class, 'role_assign'])->name('assign.role.users');
         Route::post('complaints/update-status', [App\Http\Controllers\ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
         Route::post('/agent-management/report/{id}', [MobileAgentController::class, 'report'])->name('agent-management.report');
+
+        // Logs Management Routes
+        Route::get('/logs-management', [App\Http\Controllers\LogController::class, 'index'])->name('admin.logs.index');
+        Route::get('/logs-management/{id}/detail', [App\Http\Controllers\LogController::class, 'detail'])->name('admin.logs.detail');
     });
 });
 
@@ -127,5 +133,9 @@ Route::prefix('/system')->group(function () {
         Route::resource('districts', DistrictController::class);
 
         Route::get('/compaints-management/details/{id}', [ComplaintController::class, 'detail'])->name('compaints-management.details');
+
+        // Logs Management Routes for System Users
+        Route::get('/logs-management', [LogController::class, 'index'])->name('system.logs.index');
+        Route::get('/logs-management/{id}/detail', [LogController::class, 'detail'])->name('system.logs.detail');
     });
 });

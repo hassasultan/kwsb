@@ -38,7 +38,7 @@ class AuthController extends Controller
         if($exist_user != null)
         {
             return response()->json(['error' => 'Unauthorized'], 401);
-        } 
+        }
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
@@ -104,9 +104,9 @@ class AuthController extends Controller
                 $customer->address = $request->address;
                 $customer->save();
                 return response()->json(['success' => 'Record created successfully.']);
-            } 
+            }
             $valid = $this->validator($request->all());
-            if ($valid->validate()) 
+            if ($valid->validate())
             {
                 $user = User::create([
                     'name' => $request->name,
