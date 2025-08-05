@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Logs;
+use App\Models\logs;
 use App\Models\User;
 use App\Models\Complaints;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +30,7 @@ class LogController extends Controller
      */
     public function detail($id)
     {
-        $log = Logs::with(['user', 'complaint'])->findOrFail($id);
+        $log = logs::with(['user', 'complaint'])->findOrFail($id);
         return view('pages.logs.detail', compact('log'));
     }
 
@@ -39,7 +39,7 @@ class LogController extends Controller
      */
     private function getLogsData(Request $request)
     {
-        $query = Logs::with(['user', 'complaint']);
+        $query = logs::with(['user', 'complaint']);
 
         // Filter by user
         if ($request->filled('user_id')) {
