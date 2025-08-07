@@ -104,6 +104,7 @@
                                     <div class="form-group col-12 p-3">
                                         <label>Select Town*</label>
                                         <select name="town_id" id="town_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            <option disabled selected> -- Select Town Here -- </option>
                                             @foreach ($town as $row)
                                                 <option value="{{ $row->id }}">{{ $row->town }}
 
@@ -118,14 +119,16 @@
                                     <div class="form-group col-12 p-3">
                                         <label>Select SubTown*</label>
                                         <select name="sub_town_id" id="sub_town_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            @foreach ($subtown as $row)
+                                            <option disabled selected> -- Select Subtown Here -- </option>
+                                            {{-- @foreach ($subtown as $row)
                                                 <option value="{{ $row->id }}">({{ $row->town->town }})  {{ $row->title }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Select Type*</label>
                                         <select name="type_id" id="type_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            <option disabled selected> -- Select Type Here -- </option>
                                             @foreach ($type as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                             @endforeach
@@ -134,14 +137,16 @@
                                     <div class="form-group col-12 p-3">
                                         <label>Select Sub Type*</label>
                                         <select name="subtype_id" id="subtype_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            @foreach ($subtype as $row)
+                                            <option disabled selected> -- Select SubType Here -- </option>
+                                            {{-- @foreach ($subtype as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Select Priority*</label>
                                         <select name="prio_id" class="select2-multiple form-control fs-14  h-50px" required>
+                                            <option disabled selected> -- Select Priority Here -- </option>
                                             @foreach ($prio as $row)
                                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                             @endforeach
@@ -150,6 +155,7 @@
                                     <div class="form-group col-12 p-3">
                                         <label>Select Source*</label>
                                         <select name="source" class="select2-multiple form-control fs-14  h-50px" required>
+                                            <option disabled selected> -- Select Source Here -- </option>
                                             @foreach ($source as $row)
                                                 <option value="{{ $row->title }}">{{ $row->title }}</option>
                                             @endforeach
