@@ -196,7 +196,7 @@
                             style="width: 180px;">
                     </div>
                     <div class="w-80 pt-3 pl-2">
-                        <h5 class="mobile-heading text-white">COMPLAINT REDRESSAL MECHANISM
+                        <h5 class="mobile-heading text-white">REQUEST REDRESSAL MECHANISM
                             <br />
                             <span style="font-size: 0.6rem">KW&SC |
                                 {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
