@@ -527,6 +527,14 @@
         });
     </script>
     <script>
+        document.getElementById('complaint-form').addEventListener('submit', function () {
+            // console.log("check btn");
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            submitButton.innerText = 'Submitting...'; // Optional: visual feedback
+            // console.log("disabled");
+
+        });
         $(document).ready(function() {
             // $('#submit-button').click(function() {
             //     $('#submit-button').prop('disabled', true);

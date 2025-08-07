@@ -535,11 +535,19 @@
     <script src='{{ asset('assets/js/jquery.dataTables.min.js') }}'></script>
     <script src='{{ asset('assets/js/dataTables.bootstrap4.min.js') }}'></script>
     <script>
-        $(document).ready(function() {
-            $('#submit-button').click(function() {
-                $('#submit-button').prop('disabled', true);
-            });
+        document.getElementById('complaint-form').addEventListener('submit', function () {
+            // console.log("check btn");
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            submitButton.innerText = 'Submitting...'; // Optional: visual feedback
+            // console.log("disabled");
+
         });
+        // $(document).ready(function() {
+        //     $('#submit-button').click(function() {
+        //         $('#submit-button').prop('disabled', true);
+        //     });
+        // });
     </script>
     <script>
         $('#dataTable-1').DataTable({

@@ -318,7 +318,7 @@ class FrontendController extends Controller
     }
     public function track_complaint(Request $request)
     {
-        $comp = Complaints::where('comp_num', $request->comp_num);
+        $comp = Complaints::where('comp_num', 'COMPLAINT-'.$request->comp_num);
         $auth = $comp->where('phone', $request->phone)->first();
         // dd($auth->toArray());
         if ($auth == null) {

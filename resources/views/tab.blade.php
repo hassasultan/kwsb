@@ -290,9 +290,15 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="complaintNumber">Complaint Number</label>
-                            <input type="text" class="form-control" id="complaintNumber" name="comp_num"
-                                placeholder="Enter Complaint Number" required>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="complaintPrefix">COMPLAINT-</span>
+                                </div>
+                                <input type="text" class="form-control" id="complaintNumber" name="comp_num"
+                                       placeholder="Enter Number" required inputmode="numeric" pattern="[0-9]*">
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label for="mobileNumber">Mobile Number</label>
                             <input type="number" class="form-control" id="mobileNumber" name="phone"
@@ -338,6 +344,12 @@
             </div>
         </div>
     </div>
+    <script>
+        const input = document.getElementById('complaintNumber');
+        input.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, ''); // removes non-digits
+        });
+    </script>
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
