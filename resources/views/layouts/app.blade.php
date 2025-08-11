@@ -552,6 +552,32 @@
             }))
             .then((token) => {
                 // Send this token to your Laravel backend via API
+                if (token) {
+                    // Save device token to backend
+                    fetch('/api/device-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Authorization': 'Bearer ' + (localStorage.getItem('access_token') || ''),
+                        },
+                        body: JSON.stringify({
+                            device_token: token,
+                            platform: 'web'
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Device token saved successfully');
+                        } else {
+                            console.error('Failed to save device token:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error saving device token:', error);
+                    });
+                }
             });
         messaging.onMessage((payload) => {
             // Show notification to user

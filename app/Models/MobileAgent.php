@@ -17,6 +17,7 @@ class MobileAgent extends Model
         "description",
         "address",
         "status",
+        "device_token",
     ];
     public function user()
     {

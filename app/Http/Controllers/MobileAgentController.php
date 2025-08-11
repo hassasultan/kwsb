@@ -41,11 +41,40 @@ class MobileAgentController extends Controller
             'address' => ['required', 'string'],
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        // dd("check");
-        $agent = MobileAgent::all();
-        return view('pages.agent.index', compact('agent'));
+        if ($request->type === 'ajax') {
+            $query = MobileAgent::with(['user', 'town', 'complaint_type']);
+
+            // Search by agent name
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            }
+
+            // Filter by town
+            if ($request->filled('town')) {
+                $query->where('town_id', $request->town);
+            }
+
+            // Filter by complaint type
+            if ($request->filled('type_id')) {
+                $query->where('type_id', $request->type_id);
+            }
+
+            $agents = $query->paginate(10);
+
+            return response()->json($agents);
+        }
+
+        // For initial page load, get all data for filters
+        $agent = MobileAgent::with(['user', 'town', 'complaint_type'])->get();
+        $towns = Town::all();
+        $types = ComplaintType::all();
+
+        return view('pages.agent.index', compact('agent', 'towns', 'types'));
     }
     public function create()
     {

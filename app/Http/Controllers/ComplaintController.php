@@ -493,13 +493,17 @@ class ComplaintController extends Controller
             LogService::create('Complaint', $complaintId, auth()->user()->name.' has assigned complaint to agent '.$agent->user->name. ' ('.$agent->user->email.')');
 
             // Send push notification to agent (make sure 'device_token' exists on MobileAgent or User)
-            if (isset($agent->device_token)) {
+            if (isset($agent->user->device_token)) {
                 $notificationService = new FirebaseNotificationService();
                 $notificationService->sendNotification(
-                    $agent->device_token,
+                    $agent->user->device_token,
                     'New Complaint Assigned',
                     'A new complaint has been assigned to you.',
-                    ['complaint_id' => $complaintId]
+                    ['complaint_id' => $complaintId, 'type' => 'complaint_assigned'],
+                    'complaint_assigned',
+                    $agent->id,
+                    'agent',
+                    auth()->id()
                 );
             }
         } else {
@@ -534,7 +538,11 @@ class ComplaintController extends Controller
                     $departuser->device_token,
                     'New Complaint Assigned',
                     'A new complaint has been assigned to your department.',
-                    ['complaint_id' => $complaintId]
+                    ['complaint_id' => $complaintId, 'type' => 'complaint_assigned'],
+                    'complaint_assigned',
+                    $departuser->id,
+                    'department',
+                    auth()->id()
                 );
             }
         } else {

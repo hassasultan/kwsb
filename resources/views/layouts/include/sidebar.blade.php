@@ -52,6 +52,12 @@
                                     class="ml-1 item-text">Complaint Logs</span></a>
                         </li>
                     @endcan
+                    @can('notifications.index')
+                        <li class="nav-item @if (Route::is('admin.notification.*')) active @endif">
+                            <a class="nav-link " href="{{ route('admin.notification.index') }}"><span
+                                    class="ml-1 item-text">Notification Management</span></a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         </ul>

@@ -21,6 +21,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentHomeController;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,6 +109,19 @@ Route::prefix('/admin')->group(function () {
         Route::post('assign/role/{id}', [App\Http\Controllers\UserController::class, 'role_assign'])->name('assign.role.users');
         Route::post('complaints/update-status', [App\Http\Controllers\ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
         Route::post('/agent-management/report/{id}', [MobileAgentController::class, 'report'])->name('agent-management.report');
+
+        // Notification Management Routes
+        Route::resource('notification', NotificationController::class)->names([
+            'index' => 'admin.notification.index',
+            'create' => 'admin.notification.create',
+            'store' => 'admin.notification.store',
+            'show' => 'admin.notification.show',
+            'edit' => 'admin.notification.edit',
+            'update' => 'admin.notification.update',
+            'destroy' => 'admin.notification.destroy',
+        ]);
+        Route::post('notification/send-test', [NotificationController::class, 'sendTest'])->name('admin.notification.send-test');
+        Route::get('notification/statistics', [NotificationController::class, 'statistics'])->name('admin.notification.statistics');
 
         // Logs Management Routes
         Route::get('/logs-management', [App\Http\Controllers\LogController::class, 'index'])->name('admin.logs.index');
