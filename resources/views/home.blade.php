@@ -209,14 +209,14 @@
                             </div> <!-- .card -->
                         </div> <!-- .col -->
                     </div> <!-- .row -->
-                    <hr />
+                    {{-- <hr />
                             <div class="chartbox mr-4">
                                 <div id="container2"></div>
-                            </div>
+                            </div> --}}
                         </div> <!-- .card-body -->
                     </div> <!-- .card -->
                 </div>
-                <div class="row items-align-baseline">
+                {{-- <div class="row items-align-baseline">
                     <div class="col-md-12 col-lg-6">
                         <div class="card shadow eq-card mb-4">
                             <div class="card-body mb-n3">
@@ -240,7 +240,7 @@
                             </div> <!-- .card-body -->
                         </div> <!-- .card -->
                     </div> <!-- .col -->
-                </div> <!-- .row -->
+                </div> <!-- .row --> --}}
                 <hr />
                 <div class="row align-items-baseline">
                         <div class="col-md-12 col-lg-6">
