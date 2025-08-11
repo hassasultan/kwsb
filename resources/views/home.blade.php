@@ -141,7 +141,9 @@
                                 </div>
                                 <div class="col-6 col-lg-2 text-center py-4">
                                     <p class="mb-1 small text-muted">Solved Complaints</p>
-                                    <span class="h3">{{ $complaintsComplete }}</span><br />
+                                    {{-- <span class="h3">{{ $complaintsComplete }} $tat_summary_complete --}}
+                                    <span class="h3">{{ $complaintsComplete }} $tat_summary_complete
+                                        {{ $tat_summary_complete[0]->TotalComplaints }}</span><br />
                                 </div>
                                 <div class="col-xl-12 col-sm-14  text-right">
                                     <a class="btn btn-primary mb-0" href="{{ route('compaints-management.create') }}"
