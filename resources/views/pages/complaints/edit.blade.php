@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="form-group col-md-6 p-3">
                                     <label>Select Priority*</label>
-                                    <select name="prio_id" class="select2-multiple form-control fs-14 h-50px" required>
+                                    <select name="prio_id" class="select2-multiple form-control fs-14 h-50px">
                                         <option value="">-- Select Priority --</option>
                                         @foreach ($prio as $row)
                                             <option value="{{ $row->id }}" @if ($row->id == $complaint->prio_id) selected @endif>{{ $row->title }}</option>
