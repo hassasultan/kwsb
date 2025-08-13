@@ -37,9 +37,9 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        $agents = MobileAgent::with('user')->get();
-        $towns = Town::all();
-        $types = ComplaintType::all();
+        $agents = MobileAgent::with('user')->orderBy('id', 'asc')->get();
+        $towns = Town::orderBy('town', 'asc')->get();
+        $types = ComplaintType::orderBy('title', 'asc')->get();
 
         return view('pages.notifications.create', compact('agents', 'towns', 'types'));
     }

@@ -13,13 +13,13 @@ class RolesController extends Controller
     //
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::orderBy('name', 'asc')->get();
         return view('pages.roles.index', compact('roles'));
     }
 
     public function create()
     {
-        $permissions = Permission::get();
+        $permissions = Permission::orderBy('name', 'asc')->get();
 
         return view('pages.roles.create',compact('permissions'));
     }
@@ -40,7 +40,7 @@ class RolesController extends Controller
     {
         $role = Role::find($id);
         $rolePermissions = $role->permissions->pluck('name')->toArray();
-        $permissions = Permission::get();
+        $permissions = Permission::orderBy('name', 'asc')->get();
         return view('pages.roles.edit', compact('role','rolePermissions', 'permissions'));
     }
 

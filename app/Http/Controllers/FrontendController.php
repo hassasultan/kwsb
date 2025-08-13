@@ -40,12 +40,12 @@ class FrontendController extends Controller
     }
     public function create_compalint(Request $request)
     {
-        $town = Town::all();
-        $type = ComplaintType::all();
-        $subtype = SubType::all();
-        $prio = Priorities::all();
-        $subtown = SubTown::all();
-        $source = Source::all();
+        $town = Town::orderBy('town', 'asc')->get();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
+        $subtype = SubType::orderBy('title', 'asc')->get();
+        $prio = Priorities::orderBy('title', 'asc')->get();
+        $subtown = SubTown::orderBy('title', 'asc')->get();
+        $source = Source::orderBy('title', 'asc')->get();
         $customer = NULL;
         if ($request->has('search')) {
             $customer = Customer::where('customer_id', $request->search)->first();
@@ -58,12 +58,12 @@ class FrontendController extends Controller
     }
     public function create_connection_request(Request $request)
     {
-        $town = Town::all();
-        $type = ComplaintType::all();
-        $subtype = SubType::all();
-        $prio = Priorities::all();
-        $subtown = SubTown::all();
-        $source = Source::all();
+        $town = Town::orderBy('town', 'asc')->get();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
+        $subtype = SubType::orderBy('title', 'asc')->get();
+        $prio = Priorities::orderBy('title', 'asc')->get();
+        $subtown = SubTown::orderBy('title', 'asc')->get();
+        $source = Source::orderBy('title', 'asc')->get();
         $customer = NULL;
         if ($request->has('search')) {
             $customer = Customer::where('customer_id', $request->search)->first();
@@ -76,12 +76,12 @@ class FrontendController extends Controller
     }
     public function update_connection_request(Request $request)
     {
-        $town = Town::all();
-        $type = ComplaintType::whereIn('id', [16, 17])->get();
-        $subtype = SubType::all();
-        $prio = Priorities::all();
-        $subtown = SubTown::all();
-        $source = Source::all();
+        $town = Town::orderBy('town', 'asc')->get();
+        $type = ComplaintType::whereIn('id', [16, 17])->orderBy('title', 'asc')->get();
+        $subtype = SubType::orderBy('title', 'asc')->get();
+        $prio = Priorities::orderBy('title', 'asc')->get();
+        $subtown = SubTown::orderBy('title', 'asc')->get();
+        $source = Source::orderBy('title', 'asc')->get();
         $customer = NULL;
         if ($request->has('search')) {
             $customer = Customer::where('customer_id', $request->search)->first();

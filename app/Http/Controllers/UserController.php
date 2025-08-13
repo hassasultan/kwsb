@@ -41,13 +41,13 @@ class UserController extends Controller
     }
     public function create()
     {
-        $department = Department::all();
+        $department = Department::orderBy('name', 'asc')->get();
         return view('pages.user.create', compact('department'));
     }
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $department = Department::all();
+        $department = Department::orderBy('name', 'asc')->get();
 
         return view('pages.user.edit', compact('user','department'));
     }

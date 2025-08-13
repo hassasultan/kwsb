@@ -33,7 +33,7 @@ class SubTypeController extends Controller
     }
     public function create()
     {
-        $type = ComplaintType::all();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
         return view('pages.subtype.create',compact('type'));
 
     }
@@ -54,7 +54,7 @@ class SubTypeController extends Controller
     public function edit($id)
     {
         $subtype = SubType::with('type')->find($id);
-        $type = ComplaintType::all();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
         return view('pages.subtype.edit',compact('subtype','type'));
 
     }
@@ -76,7 +76,7 @@ class SubTypeController extends Controller
     }
     public function get_subtype(Request $request)
     {
-        $subtype = SubType::where('type_id',$request->type_id)->get();
+        $subtype = SubType::where('type_id',$request->type_id)->orderBy('title', 'asc')->get();
         return $subtype;
 
     }

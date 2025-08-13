@@ -34,12 +34,12 @@ class TownController extends Controller
     }
     public function alltown()
     {
-        $town = Town::all();
+        $town = Town::orderBy('town', 'asc')->get();
         return $town;
     }
     public function create()
     {
-        $district = District::all();
+        $district = District::orderBy('name', 'asc')->get();
         return view('pages.town.create',compact('district'));
 
     }
@@ -59,7 +59,7 @@ class TownController extends Controller
     }
     public function edit($id)
     {
-        $district = District::all();
+        $district = District::orderBy('name', 'asc')->get();
         $town = Town::find($id);
         return view('pages.town.edit',compact('town','district'));
 

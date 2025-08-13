@@ -38,7 +38,7 @@ class SubTownController extends Controller
     }
     public function create()
     {
-        $town = Town::all();
+        $town = Town::orderBy('town', 'asc')->get();
         return view('pages.subtown.create',compact('town'));
 
     }
@@ -59,7 +59,7 @@ class SubTownController extends Controller
     public function edit($id)
     {
         $subtown = SubTown::with('town')->find($id);
-        $town = Town::all();
+        $town = Town::orderBy('town', 'asc')->get();
         return view('pages.subtown.edit',compact('subtown','town'));
 
     }
@@ -81,7 +81,7 @@ class SubTownController extends Controller
     }
     public function get_subtown(Request $request)
     {
-        $subtown = SubTown::where('town_id',$request->town_id)->get();
+        $subtown = SubTown::where('town_id',$request->town_id)->orderBy('title', 'asc')->get();
         return $subtown;
 
     }

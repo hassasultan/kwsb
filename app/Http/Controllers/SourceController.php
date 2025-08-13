@@ -18,7 +18,7 @@ class SourceController extends Controller
     }
     public function index()
     {
-        $source = Source::all();
+        $source = Source::orderBy('title', 'asc')->get();
         return view('pages.source.index',compact('source'));
     }
     public function create()

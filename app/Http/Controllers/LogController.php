@@ -19,8 +19,8 @@ class LogController extends Controller
             return $this->getLogsData($request);
         }
 
-        $users = User::where('status', 1)->get();
-        $complaints = Complaints::select('id', 'comp_num')->get();
+        $users = User::where('status', 1)->orderBy('name', 'asc')->get();
+        $complaints = Complaints::select('id', 'comp_num')->orderBy('comp_num', 'asc')->get();
 
         return view('pages.logs.index', compact('users', 'complaints'));
     }

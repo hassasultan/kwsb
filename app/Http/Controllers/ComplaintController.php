@@ -114,8 +114,8 @@ class ComplaintController extends Controller
         if ($request->has('type')) {
             return $complaint;
         }
-        $town = Town::all();
-        $comptype = ComplaintType::all();
+        $town = Town::orderBy('town', 'asc')->get();
+        $comptype = ComplaintType::orderBy('title', 'asc')->get();
         // dd($complaint->toArray());
         if (auth()->user()->role == 4) {
             return view('department.pages.complaints.index', compact('complaint', 'town', 'comptype'));
@@ -162,12 +162,12 @@ class ComplaintController extends Controller
     }
     public function create(Request $request)
     {
-        $town = Town::all();
-        $type = ComplaintType::all();
-        $subtype = SubType::all();
-        $prio = Priorities::all();
-        $subtown = SubTown::all();
-        $source = Source::all();
+        $town = Town::orderBy('town', 'asc')->get();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
+        $subtype = SubType::orderBy('title', 'asc')->get();
+        $prio = Priorities::orderBy('title', 'asc')->get();
+        $subtown = SubTown::orderBy('title', 'asc')->get();
+        $source = Source::orderBy('title', 'asc')->get();
         $customer = NULL;
         if ($request->has('search')) {
             $customer = Customer::where('customer_id', $request->search)->first();
@@ -266,13 +266,13 @@ class ComplaintController extends Controller
     public function edit($id)
     {
         $complaint = Complaints::find($id);
-        $town = Town::all();
-        $type = ComplaintType::all();
+        $town = Town::orderBy('town', 'asc')->get();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
         // Load subtypes based on the current complaint's type_id
-        $subtype = SubType::where('type_id', $complaint->type_id)->get();
-        $subtown = SubTown::where('town_id', $complaint->town_id)->get();
-        $prio = Priorities::all();
-        $source = Source::all();
+        $subtype = SubType::where('type_id', $complaint->type_id)->orderBy('title', 'asc')->get();
+        $subtown = SubTown::where('town_id', $complaint->town_id)->orderBy('title', 'asc')->get();
+        $prio = Priorities::orderBy('title', 'asc')->get();
+        $source = Source::orderBy('title', 'asc')->get();
         LogService::create('Complaint', $id, auth()->user()->name.' redirect to edit a complaint record.');
         if (auth()->user()->role == 4) {
             return view('department.pages.complaints.edit', compact('complaint', 'prio', 'source', 'town', 'type', 'subtype', 'subtown'));

@@ -9,7 +9,7 @@ class PrioritiesController extends Controller
     //
     public function index()
     {
-        $prio = Priorities::all();
+        $prio = Priorities::orderBy('title', 'asc')->get();
         return view('pages.priorities.index',compact('prio'));
     }
     public function create()

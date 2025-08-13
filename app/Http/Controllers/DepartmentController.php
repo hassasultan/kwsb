@@ -29,7 +29,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        $ct = ComplaintType::all();
+        $ct = ComplaintType::orderBy('title', 'asc')->get();
         return view('pages.departments.create', compact('ct'));
     }
 
@@ -73,7 +73,7 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department = Department::findOrFail($id);
-        $ct = ComplaintType::all();
+        $ct = ComplaintType::orderBy('title', 'asc')->get();
         return view('pages.departments.edit', compact('department', 'ct'));
     }
 

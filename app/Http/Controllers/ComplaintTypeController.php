@@ -29,7 +29,7 @@ class ComplaintTypeController extends Controller
     }
     public function allTypes()
     {
-        $type = ComplaintType::all();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
         return $type;
 
     }

@@ -71,17 +71,17 @@ class MobileAgentController extends Controller
 
         // For initial page load, get all data for filters
         $agent = MobileAgent::with(['user', 'town', 'complaint_type'])->get();
-        $towns = Town::all();
-        $types = ComplaintType::all();
+        $towns = Town::orderBy('town', 'asc')->get();
+        $types = ComplaintType::orderBy('title', 'asc')->get();
 
         return view('pages.agent.index', compact('agent', 'towns', 'types'));
     }
     public function create()
     {
-        $user = User::where('role', 3)->get();
-        $town = Town::all();
-        $subtown = SubTown::all();
-        $type = ComplaintType::all();
+        $user = User::where('role', 3)->orderBy('name', 'asc')->get();
+        $town = Town::orderBy('town', 'asc')->get();
+        $subtown = SubTown::orderBy('title', 'asc')->get();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
         return view('pages.agent.create', compact('user', 'town', 'subtown', 'type'));
     }
     public function store(Request $request)
@@ -101,10 +101,10 @@ class MobileAgentController extends Controller
     public function edit($id)
     {
         $agent = MobileAgent::find($id);
-        $user = User::where('role', 3)->get();
-        $town = Town::all();
-        $subtown = SubTown::all();
-        $type = ComplaintType::all();
+        $user = User::where('role', 3)->orderBy('name', 'asc')->get();
+        $town = Town::orderBy('town', 'asc')->get();
+        $subtown = SubTown::orderBy('title', 'asc')->get();
+        $type = ComplaintType::orderBy('title', 'asc')->get();
 
         return view('pages.agent.edit', compact('user', 'agent', 'town', 'subtown', 'type'));
     }
