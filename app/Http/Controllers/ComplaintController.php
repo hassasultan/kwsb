@@ -268,7 +268,8 @@ class ComplaintController extends Controller
         $complaint = Complaints::find($id);
         $town = Town::all();
         $type = ComplaintType::all();
-        $subtype = SubType::all();
+        // Load subtypes based on the current complaint's type_id
+        $subtype = SubType::where('type_id', $complaint->type_id)->get();
         $subtown = SubTown::where('town_id', $complaint->town_id)->get();
         $prio = Priorities::all();
         $source = Source::all();
