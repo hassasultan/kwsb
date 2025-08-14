@@ -154,6 +154,8 @@
                                                         Source</th>
                                                     <th>
                                                         Status</th>
+                                                    <th>
+                                                        Bounce Back</th>
                                                     {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                                                     <th class="text-secondary opacity-7">Action</th>
                                                 </tr>
@@ -163,6 +165,11 @@
                                                 @foreach ($complaint as $key => $row)
                                                     @for ($i = 1; $i <= 10; $i++)
                                                         <tr>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
                                                             <td class="skeleton-item">
                                                                 <div class="skeleton-content">
                                                                     <div class="skeleton-line" style="width: 100%;"></div>
@@ -427,6 +434,13 @@
                         html += '<span class="badge bg-danger text-white">Pending</span>';
                     }
                     html += '</td>';
+                    html += '<td class="text-center">';
+                    if (row.bounce_back_complaints && row.bounce_back_complaints.length > 0) {
+                        html += '<a href="' + "{{ route('bounce-back.detail', '') }}/" + row.id + '" class="badge bg-warning text-dark">Bounced Back</a>';
+                    } else {
+                        html += '<span class="text-muted">No</span>';
+                    }
+                    html += '</td>';
                     html += '<td class="align-middle">';
                     html += row.assigned_complaints == null && row.assigned_complaints_department ==  null ? '<a href="' +
                         "{{ route('compaints-management.details', '') }}/" + row.id +
@@ -450,6 +464,9 @@
                             "{{ route('compaints-management.details', '') }}/" + row.id +
                             '"><i class="fe fe-flag fe-12 mr-3 text-muted"></i>Detail</a>';
                     // }
+                    html += '<a class="dropdown-item" href="' +
+                        "{{ route('compaints-management.logs', '') }}/" + row.id +
+                        '"><i class="fe fe-activity fe-12 mr-3 text-muted"></i>View Logs</a>';
                     html += '</div>';
                     html += '</td>';
                     html += '</tr>';

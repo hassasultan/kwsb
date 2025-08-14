@@ -195,6 +195,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('bounce-back.index')
+                    <li class="nav-item @if (Route::is('bounce-back.index')) active @endif">
+                        <a class="nav-link" href="{{ route('bounce-back.index') }}"><span
+                                class="ml-1 item-text">Bounce Back Complaints</span>
+                        </a>
+                    </li>
+                    @endcan
                 </ul>
             </li>
         </ul>

@@ -72,4 +72,14 @@ class Complaints extends Model
     {
        return $this->belongsTo(ComplaintAssignDepartment::class,'id','complaint_id');
     }
+
+    public function bounceBackComplaints()
+    {
+        return $this->hasMany(BounceBackComplaint::class, 'complaint_id', 'id');
+    }
+
+    public function hasBounceBack()
+    {
+        return $this->bounceBackComplaints()->where('status', 'active')->exists();
+    }
 }

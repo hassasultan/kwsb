@@ -15,6 +15,7 @@ use App\Models\Customer;
 use App\Models\Priorities;
 use App\Models\SubTown;
 use App\Models\Department;
+use App\Models\BounceBackComplaint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SaveImage;
@@ -27,6 +28,7 @@ use App\Services\LogService;
 use App\Services\FileScan;
 use App\Services\FirebaseNotificationService;
 use App\Traits\Loggable;
+use App\Models\logs;
 
 class ComplaintController extends Controller
 {
@@ -46,7 +48,7 @@ class ComplaintController extends Controller
     public function index(Request $request)
     {
         // dd($request->all());
-        $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints', 'assignedComplaintsDepartment')->OrderBy('id', 'DESC');
+        $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints', 'assignedComplaintsDepartment', 'bounceBackComplaints')->OrderBy('id', 'DESC');
         if ($request->has('search') && $request->search != null && $request->search != '') {
             if (auth()->user()->role == 4) {
                 $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
@@ -1254,5 +1256,160 @@ ORDER BY
         $exen_complete_filter2 = DB::select($query, $params);
         // dd($exen_complete_filter2);
         return view('pages.reports.report13', compact('exen_complete_filter2', 'dateE', 'dateS', 'town'));
+    }
+
+    public function bounceBackComplaint(Request $request)
+    {
+        try {
+            $request->validate([
+                'complaint_id' => 'required|exists:complaint,id',
+                'reason' => 'required|string|max:500',
+                'type' => 'required|in:department,agent'
+            ]);
+
+            $user = auth('api')->user();
+            $complaint = Complaints::findOrFail($request->complaint_id);
+
+            // Check if user is authorized to bounce back this complaint
+            if ($request->type === 'agent') {
+                $assignedComplaint = ComplaintAssignAgent::where('complaint_id', $request->complaint_id)
+                    ->where('agent_id', $user->agent->id)
+                    ->first();
+
+                if (!$assignedComplaint) {
+                    return response()->json(['error' => 'You are not authorized to bounce back this complaint'], 403);
+                }
+            } else {
+                $assignedComplaint = ComplaintAssignDepartment::where('complaint_id', $request->complaint_id)
+                    ->where('user_id', $user->id)
+                    ->first();
+
+                if (!$assignedComplaint) {
+                    return response()->json(['error' => 'You are not authorized to bounce back this complaint'], 403);
+                }
+            }
+
+            // Create bounce back record
+            $bounceBack = BounceBackComplaint::create([
+                'complaint_id' => $request->complaint_id,
+                'type' => $request->type,
+                'agent_id' => $request->type === 'agent' ? $user->agent->id : $user->id,
+                'status' => 'active',
+                'reason' => $request->reason,
+                'bounced_by' => $user->id,
+                'bounced_at' => now()
+            ]);
+
+            // Remove the assignment
+            if ($request->type === 'agent') {
+                ComplaintAssignAgent::where('complaint_id', $request->complaint_id)
+                    ->where('agent_id', $user->agent->id)
+                    ->delete();
+            } else {
+                ComplaintAssignDepartment::where('complaint_id', $request->complaint_id)
+                    ->where('user_id', $user->id)
+                    ->delete();
+            }
+
+            // Log the action
+            LogService::create('Complaint', $complaint->id,
+                $user->name . ' has bounced back the complaint. Reason: ' . $request->reason .
+                ' (Type: ' . ucfirst($request->type) . ')'
+            );
+
+            return response()->json([
+                'success' => 'Complaint bounced back successfully',
+                'data' => $bounceBack
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getBounceBackComplaints(Request $request)
+    {
+        try {
+            $user = auth('api')->user();
+            $type = $request->type ?? 'agent'; // 'agent' or 'department'
+
+            if ($type === 'agent') {
+                $bounceBacks = BounceBackComplaint::with(['complaint.town', 'complaint.customer', 'complaint.type', 'complaint.subtype', 'complaint.prio'])
+                    ->where('type', 'agent')
+                    ->where('agent_id', $user->agent->id)
+                    ->where('status', 'active')
+                    ->get();
+            } else {
+                $bounceBacks = BounceBackComplaint::with(['complaint.town', 'customer', 'complaint.type', 'complaint.subtype', 'complaint.prio'])
+                    ->where('type', 'department')
+                    ->where('agent_id', $user->id)
+                    ->where('status', 'active')
+                    ->get();
+            }
+
+            // Log the action
+            LogService::create('Complaint', 0,
+                $user->name . ' viewed bounce back complaints list (Type: ' . ucfirst($type) . ')'
+            );
+
+            return response()->json([
+                'success' => true,
+                'data' => $bounceBacks
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function logs($complaintId)
+    {
+        // try {
+            $complaint = Complaints::with([
+                'town',
+                'subtown',
+                'customer',
+                'type',
+                'subtype',
+                'prio',
+                'assignedComplaints.agents.user',
+                'assignedComplaintsDepartment.user'
+            ])->findOrFail($complaintId);
+
+            // Get all logs for this complaint
+            $logs = logs::where('action', 'Complaint')
+                ->where('action_id', $complaintId)
+                ->with('user')
+                ->orderBy('created_at', 'asc')
+                ->get();
+            // dd($logs->toArray());
+            // Get bounce back records for this complaint
+            $bounceBacks = BounceBackComplaint::with([
+                'mobileAgent.user',
+                'departmentUser',
+                'bouncedByUser'
+            ])->where('complaint_id', $complaintId)
+              ->orderBy('bounced_at', 'desc')
+              ->get();
+
+            // Add bounce back logs to the main logs array
+            foreach ($bounceBacks as $bounceBack) {
+                $logs->push((object) [
+                    'log_type' => 'BounceBack',
+                    'description' => "Complaint bounced back by " . ($bounceBack->bouncedByUser ? $bounceBack->bouncedByUser->name : 'Unknown User') .
+                                   ". Reason: " . $bounceBack->reason . " (Type: " . ucfirst($bounceBack->type) . ")",
+                    'created_at' => $bounceBack->bounced_at,
+                    'user' => $bounceBack->bouncedByUser
+                ]);
+            }
+
+            // Sort all logs by creation date
+            $logs = $logs->sortBy('created_at')->values();
+
+            return view('pages.complaints.logs', compact('complaint', 'logs', 'bounceBacks'));
+
+        // } catch (Exception $e) {
+        //     return redirect()->back()->with('error', 'Complaint not found or error occurred.');
+        // }
     }
 }

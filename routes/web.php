@@ -22,6 +22,7 @@ use App\Http\Controllers\DepartmentHomeController;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\BounceBackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,7 @@ Route::prefix('/admin')->group(function () {
         Route::resource('/source-management', SourceController::class);
         Route::resource('/compaints-type-management', ComplaintTypeController::class);
         Route::get('/compaints-management/details/{id}', [ComplaintController::class, 'detail'])->name('compaints-management.details');
+        Route::get('/compaints-management/logs/{id}', [ComplaintController::class, 'logs'])->name('compaints-management.logs');
         Route::resource('/customer-management', CustomerController::class);
         Route::resource('departments', DepartmentController::class);
         Route::get('/department/details/{id}', [DepartmentController::class, 'detail'])->name('departments.details');
@@ -98,6 +100,13 @@ Route::prefix('/admin')->group(function () {
         Route::get('/compaints-reports/reports10', [ComplaintController::class, 'generate_report10'])->name('compaints-reports.reports10');
         Route::get('/compaints-reports/reports11', [ComplaintController::class, 'generate_report11'])->name('compaints-reports.reports11');
         Route::get('/compaints-reports/reports12', [ComplaintController::class, 'generate_report12'])->name('compaints-reports.reports12');
+
+        // Bounce Back Routes
+        Route::get('/bounce-back', [BounceBackController::class, 'index'])->name('bounce-back.index');
+        Route::get('/bounce-back/detail/{id}', [BounceBackController::class, 'detail'])->name('bounce-back.detail');
+        Route::get('/bounce-back/get-agents', [BounceBackController::class, 'getAgents'])->name('bounce-back.get-agents');
+        Route::get('/bounce-back/get-departments', [BounceBackController::class, 'getDepartments'])->name('bounce-back.get-departments');
+        Route::post('/bounce-back/assign', [BounceBackController::class, 'assign'])->name('bounce-back.assign');
         Route::get('/compaints-reports/reports13', [ComplaintController::class, 'generate_report13'])->name('compaints-reports.reports13');
         Route::get('/reports', [ComplaintController::class, 'report'])->name('admin.reports');
         Route::resource('districts', DistrictController::class);

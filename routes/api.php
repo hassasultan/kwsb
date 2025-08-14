@@ -49,6 +49,10 @@ Route::middleware(['IsMobileAgent'])->group(function () {
     Route::get('/agent-complaints/counts/by/subtype', [ComplaintController::class, 'subtype_wise_complaints']);
     Route::post('/agent-complaints/update', [ComplaintController::class, 'agent_complaints_update']);
 
+    // Bounce Back Functionality
+    Route::post('/complaints/bounce-back', [ComplaintController::class, 'bounceBackComplaint']);
+    Route::get('/complaints/bounce-back', [ComplaintController::class, 'getBounceBackComplaints']);
+
     // Device Token Management
     Route::post('/device-token', [App\Http\Controllers\Api\DeviceTokenController::class, 'store']);
     Route::delete('/device-token', [App\Http\Controllers\Api\DeviceTokenController::class, 'destroy']);

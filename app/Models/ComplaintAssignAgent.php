@@ -16,7 +16,7 @@ class ComplaintAssignAgent extends Model
     ];
     public function agents()
     {
-        return $this->hasMany(MobileAgent::class,'agent_id','id');
+        return $this->hasMany(MobileAgent::class,'id','agent_id');
     }
     public function complaints()
     {

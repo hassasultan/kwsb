@@ -146,6 +146,8 @@
                                                         Source</th>
                                                     <th>
                                                         Status</th>
+                                                    <th>
+                                                        Bounce Back</th>
                                                     {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                                                     <th class="text-secondary opacity-7">Action</th>
                                                 </tr>
@@ -392,6 +394,13 @@
                         '<span class="badge bg-success text-white">Completed</span>' :
 
                         '<span class="badge bg-danger text-white">Pending</span>';
+                    html += '</td>';
+                    html += '<td class="text-center">';
+                    if (row.bounce_back_complaints && row.bounce_back_complaints.length > 0) {
+                        html += '<a href="' + "{{ route('bounce-back.detail', '') }}/" + row.id + '" class="badge bg-warning text-dark">Bounced Back</a>';
+                    } else {
+                        html += '<span class="text-muted">No</span>';
+                    }
                     html += '</td>';
                     html += '<td class="align-middle">';
                     // html += row.assigned_complaints == null && row.assigned_complaints_department ==  null ? '<a href="' +
