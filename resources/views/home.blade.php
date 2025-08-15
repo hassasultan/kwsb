@@ -156,7 +156,7 @@
                                 <div class="col-6 col-lg-2 text-center py-3">
                                     <div class="bg-light rounded-3 p-3 h-100">
                                         <p class="mb-1 small text-dark fw-bold">Total Complaints</p>
-                                        <span class="h2 fw-bold text-primary">{{ $totalComplaints }}</span>
+                                        <span class="h2 fw-bold text-primary">{{ $totalcount[0]->totalc }}</span>
                                     </div>
                                 </div>
                                 
