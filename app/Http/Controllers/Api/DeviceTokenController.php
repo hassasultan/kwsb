@@ -30,7 +30,7 @@ class DeviceTokenController extends Controller
         }
 
         try {
-            $user = Auth::user();
+            $user = auth('api')->user();
 
             if (!$user) {
                 return response()->json([
