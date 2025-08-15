@@ -116,12 +116,12 @@ class ComplaintController extends Controller
             });
         }
         
-        if ($request->has('bounce_back_status') && $request->bounce_back_status != null && $request->bounce_back_status != '') {
-            if ($request->bounce_back_status == 'yes') {
+        if ($request->has('bounce_back') && $request->bounce_back != null && $request->bounce_back != '') {
+            if ($request->bounce_back == '1') {
                 $complaint = $complaint->whereHas('bounceBackComplaints', function ($query) {
                     $query->where('status', 'active');
                 });
-            } elseif ($request->bounce_back_status == 'no') {
+            } elseif ($request->bounce_back == '0') {
                 $complaint = $complaint->whereDoesntHave('bounceBackComplaints', function ($query) {
                     $query->where('status', 'active');
                 });
@@ -142,13 +142,14 @@ class ComplaintController extends Controller
             });
             // return true;
         }
+        
         $complaint = $complaint->paginate(10)->appends([
             'type_id' => request()->get('type_id'),
             'town' => request()->get('town'),
             'search' => request()->get('search'),
             'source' => request()->get('source'),
             'consumer_number' => request()->get('consumer_number'),
-            'bounce_back_status' => request()->get('bounce_back_status'),
+            'bounce_back' => request()->get('bounce_back'),
             'from_date' => request()->get('from_date'),
             'to_date' => request()->get('to_date'),
         ]);
@@ -515,7 +516,7 @@ class ComplaintController extends Controller
         LogService::create('Complaint', $complaint->id, auth()->user()->name.' has redirect to the complaint.');
         // dd($department_user->toArray());
         if (auth()->user()->role == 4) {
-            return view('department.pages.complaints.details', compact('complaint', 'department_user'));
+            return view('department.pages.complaints.details', compact('complainft', 'department_user'));
         }
         return view('pages.complaints.details', compact('complaint', 'department_user'));
     }
@@ -616,7 +617,6 @@ class ComplaintController extends Controller
         $type = null;
         $prio = null;
         $source = null;
-        $consumer = null;
         // $comp = Complaints::with('type')->whereDate('created_at','>=',$dateS)->whereDate('created_at','<=',$dateE)->orderBy('created_at')
         // ->get()->groupBy('type_id');
         // $comp = Complaints::with('type')
