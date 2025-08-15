@@ -101,6 +101,41 @@ class ComplaintController extends Controller
         if ($request->has('comp_status') && $request->comp_status != null && $request->comp_status != '') {
             $complaint = $complaint->where('status', $request->comp_status);
         }
+        
+        // New filters
+        if ($request->has('source') && $request->source != null && $request->source != '') {
+            $complaint = $complaint->where('source', $request->source);
+        }
+        
+        if ($request->has('consumer_number') && $request->consumer_number != null && $request->consumer_number != '') {
+            $complaint = $complaint->where(function ($query) use ($request) {
+                $query->where('customer_num', 'LIKE', '%' . $request->consumer_number . '%')
+                    ->orWhereHas('customer', function ($q) use ($request) {
+                        $q->where('customer_id', 'LIKE', '%' . $request->consumer_number . '%');
+                    });
+            });
+        }
+        
+        if ($request->has('bounce_back_status') && $request->bounce_back_status != null && $request->bounce_back_status != '') {
+            if ($request->bounce_back_status == 'yes') {
+                $complaint = $complaint->whereHas('bounceBackComplaints', function ($query) {
+                    $query->where('status', 'active');
+                });
+            } elseif ($request->bounce_back_status == 'no') {
+                $complaint = $complaint->whereDoesntHave('bounceBackComplaints', function ($query) {
+                    $query->where('status', 'active');
+                });
+            }
+        }
+        
+        if ($request->has('from_date') && $request->from_date != null && $request->from_date != '') {
+            $complaint = $complaint->whereDate('created_at', '>=', $request->from_date);
+        }
+        
+        if ($request->has('to_date') && $request->to_date != null && $request->to_date != '') {
+            $complaint = $complaint->whereDate('created_at', '<=', $request->to_date);
+        }
+        
         if (auth()->user()->role == 4) {
             $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
                 $query->where('user_id', auth()->user()->id);
@@ -111,6 +146,11 @@ class ComplaintController extends Controller
             'type_id' => request()->get('type_id'),
             'town' => request()->get('town'),
             'search' => request()->get('search'),
+            'source' => request()->get('source'),
+            'consumer_number' => request()->get('consumer_number'),
+            'bounce_back_status' => request()->get('bounce_back_status'),
+            'from_date' => request()->get('from_date'),
+            'to_date' => request()->get('to_date'),
         ]);
         // dd($complaint->toArray());
         if ($request->has('type')) {
@@ -118,11 +158,12 @@ class ComplaintController extends Controller
         }
         $town = Town::orderBy('town', 'asc')->get();
         $comptype = ComplaintType::orderBy('title', 'asc')->get();
+        $sources = \App\Models\Source::orderBy('title', 'asc')->get();
         // dd($complaint->toArray());
         if (auth()->user()->role == 4) {
-            return view('department.pages.complaints.index', compact('complaint', 'town', 'comptype'));
+            return view('department.pages.complaints.index', compact('complaint', 'town', 'comptype', 'sources'));
         }
-        return view('pages.complaints.index', compact('complaint', 'town', 'comptype'));
+        return view('pages.complaints.index', compact('complaint', 'town', 'comptype', 'sources'));
     }
     public function solved_by_department(Request $request, $id)
     {
@@ -471,7 +512,7 @@ class ComplaintController extends Controller
                 $query->where('comp_type_id', $comp_type);
             })
             ->get();
-        LogService::create('Complaint', $complaint->id, auth()->user()->name.' has redrect to the complaint.');
+        LogService::create('Complaint', $complaint->id, auth()->user()->name.' has redirect to the complaint.');
         // dd($department_user->toArray());
         if (auth()->user()->role == 4) {
             return view('department.pages.complaints.details', compact('complaint', 'department_user'));

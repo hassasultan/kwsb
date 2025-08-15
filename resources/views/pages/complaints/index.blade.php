@@ -87,7 +87,7 @@
                                         <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Town</label>
                                             <select class="form-control select2" id="town-id">
-                                                <option disabled selected> -- Select Town --</option>
+                                                <option value=""> ALL TOWNS</option>
                                                 @foreach ($town as $row)
                                                     <option value="{{ $row->id }}"> {{ $row->town }} </option>
                                                 @endforeach
@@ -96,7 +96,7 @@
                                         <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Complaint Type</label>
                                             <select class="form-control select2" id="type-id">
-                                                <option disabled selected> -- Select Complaint Type --</option>
+                                            <option value="">Complaint Type</option>
                                                 @foreach ($comptype as $row)
                                                     <option value="{{ $row->id }}"> {{ $row->title }} </option>
                                                 @endforeach
@@ -105,7 +105,7 @@
                                         <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Status</label>
                                             <select class="form-control select2" id="status-id">
-                                                <option disabled selected> -- Select Status --</option>
+                                            <option value="">Assigned Status</option>   
                                                 <option value="1"> Assigned</option>
                                                 <option value="0">Not Assigned Yet</option>
                                             </select>
@@ -113,7 +113,7 @@
                                         <div class="form-group col-auto">
                                             <label for="search" class="sr-only">Status Pending/Solve</label>
                                             <select class="form-control select2" id="comp-status-id">
-                                                <option disabled selected> -- Select Status --</option>
+                                            <option value="">Complaint Status</option>
                                                 <option value="1"> Completed</option>
                                                 <option value="2"> Work In Progress</option>
                                                 <option value="0">Pending</option>
@@ -123,6 +123,50 @@
                                             <label for="search" class="sr-only">Search</label>
                                             <input type="text" class="form-control" id="search1" value=""
                                                 placeholder="Search">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- New Filters Row -->
+                                    <div class="form-row mt-3 justify-content-end">
+                                        <div class="form-group col-auto">
+                                            <label for="source" class="sr-only">Source</label>
+                                            <select class="form-control select2" id="source">
+                                                <option value="">All Sources</option>
+                                                @foreach ($sources as $row)
+                                                    <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <label for="consumer_number" class="sr-only">Consumer Number</label>
+                                            <input type="text" class="form-control" id="consumer_number" value=""
+                                                placeholder="Consumer Number">
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <label for="bounce_back" class="sr-only">Bounce Back Status</label>
+                                            <select class="form-control select2" id="bounce_back">
+                                                <option value="">Bounce Back</option>
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <label for="from_date" class="sr-only">From Date</label>
+                                            <input type="date" class="form-control" id="from_date">
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <label for="to_date" class="sr-only">To Date</label>
+                                            <input type="date" class="form-control" id="to_date">
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <button type="button" class="btn btn-primary" id="search-btn">
+                                                <i class="fa fa-search"></i> Search
+                                            </button>
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <button type="button" class="btn btn-secondary" id="reset-btn">
+                                                <i class="fa fa-refresh"></i> Reset
+                                            </button>
                                         </div>
                                     </div>
                                     {{-- </form> --}}
@@ -240,6 +284,11 @@
             var type = null;
             var change_status = null;
             var comp_status = null;
+            var source = null;
+            var consumer_number = null;
+            var bounce_back_status = null;
+            var from_date = null;
+            var to_date = null;
             fetchDataOnReady();
 
             function updateStatus(id, element) {
@@ -275,24 +324,76 @@
 
                 $("input").keyup(function() {
                     search = $(this).val();
-                    fetchDataOnReady();
                 });
                 $("#town-id").change(function() {
                     town = $(this).val();
-                    fetchDataOnReady();
                 });
                 $("#type-id").change(function() {
                     type = $(this).val();
-                    fetchDataOnReady();
                 });
                 $("#status-id").change(function() {
                     change_status = $(this).val();
-                    fetchDataOnReady();
                 });
                 $("#comp-status-id").change(function() {
                     comp_status = $(this).val();
+                });
+                
+                // New filter event handlers
+                $("#source").change(function() {
+                    source = $(this).val();
+                });
+                
+                $("#consumer_number").on('input', function() {
+                    consumer_number = $(this).val();
+                });
+                
+                $("#bounce_back").change(function() {
+                    bounce_back_status = $(this).val();
+                });
+                
+                $("#from_date").change(function() {
+                    from_date = $(this).val();
+                });
+                
+                $("#to_date").change(function() {
+                    to_date = $(this).val();
+                });
+                
+                // Search button click handler
+                $("#search-btn").click(function() {
                     fetchDataOnReady();
                 });
+                
+                // Reset button click handler
+                $("#reset-btn").click(function() {
+                    // Reset all filter values
+                    search = null;
+                    town = null;
+                    type = null;
+                    change_status = null;
+                    comp_status = null;
+                    source = null;
+                    consumer_number = null;
+                    bounce_back_status = null;
+                    from_date = null;
+                    to_date = null;
+                    
+                    // Reset form fields
+                    $("#search1").val('');
+                    $("#town-id").val('').trigger('change');
+                    $("#type-id").val('').trigger('change');
+                    $("#status-id").val('').trigger('change');
+                    $("#comp-status-id").val('').trigger('change');
+                    $("#source").val('').trigger('change');
+                    $("#consumer_number").val('');
+                    $("#bounce_back").val('').trigger('change');
+                    $("#from_date").val('');
+                    $("#to_date").val('');
+                    
+                    // Fetch data with reset filters
+                    fetchDataOnReady();
+                });
+                
                 // Call the function on document ready
 
             });
@@ -309,6 +410,11 @@
                         type_id: type,
                         status: change_status,
                         comp_status: comp_status,
+                        source: source,
+                        consumer_number: consumer_number,
+                        bounce_back: bounce_back_status,
+                        from_date: from_date,
+                        to_date: to_date,
                         page: page
                     },
                     success: function(response) {
@@ -334,7 +440,12 @@
                         status: change_status,
                         town: town,
                         type_id: type,
-                        comp_status: comp_status
+                        comp_status: comp_status,
+                        source: source,
+                        consumer_number: consumer_number,
+                        bounce_back: bounce_back_status,
+                        from_date: from_date,
+                        to_date: to_date
                     },
                     success: function(response) {
                         console.log("Data fetched successfully on document ready:", response);
@@ -394,12 +505,12 @@
                     html += '</td>';
                     html += '<td class="text-center">';
                     html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.created_at).format(
-                        'DD/MM/YYYY hh:mm:ss') + '</p>';
+                        'DD/MM/YYYY hh:mm A') + '</p>';
                     html += '</td>';
                     html += '<td class="text-center">';
                     if (row.status == 1) {
                         html += '<p class="text-xs font-weight-bold mb-0">' + moment(row.updated_at).format(
-                            'DD/MM/YYYY hh:mm:ss') + '</p>';
+                            'DD/MM/YYYY hh:mm A') + '</p>';
                     } else {
                         html += '<span class="bg-danger text-white">Yet Not Resolve</span>';
                     }
