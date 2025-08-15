@@ -12,114 +12,105 @@
             border: none;
         }
     </style>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <h2 class="page-title">Complaint Type Management</h2>
-                <p> Tables with built-in bootstrap styles </p>
-                <div class="col-12 text-right">
-                    <a class="btn btn-primary" href="{{ route('compaints-type-management.create') }}">add</i>&nbsp;&nbsp;<i
-                            class="fa fa-user"></i></a>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 my-4">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h5>
-                                        Complaint Type List
-                                    </h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                </div>
-                                <div class="toolbar">
-                                    {{-- <form class="form"> --}}
-                                        <div class="form-row">
-                                            <div class="form-group col-auto mr-auto">
-                                            </div>
-                                            <div class="form-group col-auto">
-                                                <label for="search" class="sr-only">Search</label>
-                                                <input type="text" class="form-control" id="search1" value=""
-                                                    placeholder="Search">
-                                            </div>
-                                        </div>
-                                    {{-- </form> --}}
-                                </div>
-                                <div class="p-4">
-                                    <h5>Generate Report</h5>
-                                    <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
-                                        enctype="multipart/form-data">
-                                        <div class="row">
-
-                                            <div class="form-group col-4">
-                                                <label>From Date</label>
-                                                <input type="date" class="form-control border-bottom"
-                                                    placeholder="Enter Customer Title..." name="from_date"
-                                                    value="{{ old('title') }}" required />
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <label>To Date</label>
-                                                <input type="date" class="form-control border-bottom"
-                                                    placeholder="Enter Customer Title..." name="to_date"
-                                                    value="{{ old('title') }}" required />
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <button type="submit"
-                                                    class="btn bg-primary btn-lg ">Create</button>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-borderless table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Title</th>
-                                                    <th>Action</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="user-table-body">
-                                                @if (count($type) > 0)
-                                                    @foreach ($type as $key => $row)
-                                                        <tr>
-                                                            <td>
-                                                                <div class="d-flex px-2 py-1">
-                                                                    <div class="d-flex flex-column justify-content-center">
-                                                                        <h6 class="mb-0 text-sm">{{ $row->title }}</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-                                                            <td class="align-middle">
-                                                                <a href="{{ route('compaints-type-management.edit', $row->id) }}"
-                                                                    class="text-secondary font-weight-bold text-xs"
-                                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                                    Edit
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    No Record Find...
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                        <nav aria-label="Table Paging" class="mb-0 text-muted">
-                                          <ul class="pagination justify-content-center mb-0" id="user-pagination">
-                                              {{-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
-                                          </ul>
-                                      </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 my-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h1>Complaint Type Management</h1>
+                            <a href="{{ route('compaints-type-management.create') }}" class="btn btn-primary">Add Complaint Type</a>
+                        </div>
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        
+                        <div class="toolbar mb-3">
+                            {{-- <form class="form"> --}}
+                                <div class="form-row">
+                                    <div class="form-group col-auto mr-auto">
+                                    </div>
+                                    <div class="form-group col-auto">
+                                        <label for="search" class="sr-only">Search</label>
+                                        <input type="text" class="form-control" id="search1" value=""
+                                            placeholder="Search complaint types...">
                                     </div>
                                 </div>
-                            </div>
+                            {{-- </form> --}}
                         </div>
+                        
+                        <div class="p-4">
+                            <h5>Generate Report</h5>
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+
+                                    <div class="form-group col-4">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date"
+                                            value="{{ old('title') }}" required />
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date"
+                                            value="{{ old('title') }}" required />
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <button type="submit"
+                                            class="btn bg-primary btn-lg ">Create</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body">
+                                @if (count($type) > 0)
+                                    @foreach ($type as $key => $row)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $row->title }}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('compaints-type-management.edit', $row->id) }}"
+                                                    class="btn btn-sm btn-warning"
+                                                    data-toggle="tooltip" data-original-title="Edit user">
+                                                    Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="2" class="text-center">No Record Find...</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                        
+                        <nav aria-label="Table Paging" class="mb-0 text-muted">
+                          <ul class="pagination justify-content-center mb-0" id="user-pagination">
+                              {{-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
+                          </ul>
+                      </nav>
                     </div>
                 </div>
             </div>

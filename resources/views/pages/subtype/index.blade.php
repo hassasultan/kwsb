@@ -59,111 +59,100 @@
             border-radius: 5px;
         }
     </style>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <h2 class="page-title">SubType Management</h2>
-                <p> Tables with built-in bootstrap styles </p>
-                <div class="col-12 text-right">
-                    <a class="btn btn-primary" href="{{ route('subtype-management.create') }}">add</i>&nbsp;&nbsp;<i
-                            class="fa fa-user"></i></a>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 my-4">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h5>
-                                        SubType List
-                                    </h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                </div>
-                                <div class="toolbar">
-                                    <form class="form">
-                                        <div class="form-row">
-                                            <div class="form-group col-auto mr-auto">
-                                            </div>
-                                            <div class="form-group col-auto">
-                                                <label for="search" class="sr-only">Search</label>
-                                                <input type="text" class="form-control" id="search1" value=""
-                                                    placeholder="Search">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 skeleton-container">
-                                        <table class="skeleton-table table table-borderless table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>SubType</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="user-table-body">
-                                                {{-- @if (count($user) > 0) --}}
-                                                @foreach ($subtype as $key => $row)
-                                                    @for ($i = 1; $i <= 10; $i++)
-                                                        <tr>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="skeleton-item">
-                                                                <div class="skeleton-content">
-                                                                    <div class="skeleton-line" style="width: 100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endfor
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <nav aria-label="Table Paging" class="mb-0 text-muted">
-                                          <ul class="pagination justify-content-center mb-0" id="user-pagination">
-                                              {{-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
-                                          </ul>
-                                      </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 my-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h1>SubType Management</h1>
+                            <a href="{{ route('subtype-management.create') }}" class="btn btn-primary">Add SubType</a>
+                        </div>
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        
+                        <div class="toolbar mb-3">
+                            <form class="form">
+                                <div class="form-row">
+                                    <div class="form-group col-auto mr-auto">
+                                    </div>
+                                    <div class="form-group col-auto">
+                                        <label for="search" class="sr-only">Search</label>
+                                        <input type="text" class="form-control" id="search1" value=""
+                                            placeholder="Search subtypes...">
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
+                        
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>SubType</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body">
+                                {{-- @if (count($user) > 0) --}}
+                                @foreach ($subtype as $key => $row)
+                                    @for ($i = 1; $i <= 10; $i++)
+                                        <tr>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                            <td class="skeleton-item">
+                                                <div class="skeleton-content">
+                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endfor
+                                @endforeach
+                            </tbody>
+                        </table>
+                        
+                        <nav aria-label="Table Paging" class="mb-0 text-muted">
+                          <ul class="pagination justify-content-center mb-0" id="user-pagination">
+                              {{-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
+                          </ul>
+                      </nav>
                     </div>
                 </div>
             </div>

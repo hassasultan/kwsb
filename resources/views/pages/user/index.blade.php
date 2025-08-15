@@ -12,140 +12,149 @@
     }
 </style>
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                {{-- @include('layouts.include.toolbar') --}}
-                <h2 class="page-title">User Management</h2>
-                <p> Tables with built-in bootstrap styles </p>
-                <div class="col-12 text-right">
-                    <a class="btn btn-primary" href="{{ route('user-management.create') }}">add</i>&nbsp;&nbsp;<i
-                            class="fa fa-user"></i></a>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 my-4">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h5>
-                                        User List
-                                    </h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                </div>
-                                <div class="toolbar">
-                                    {{-- <form class="form"> --}}
-                                        <div class="form-row">
-                                        <div class="form-group col-auto mr-auto">
-                                        </div>
-                                        <div class="form-group col-auto">
-                                            <label for="search" class="sr-only">Search</label>
-                                            <input type="text" class="form-control" id="search1" value="" placeholder="Search">
-                                        </div>
-                                        </div>
-                                    {{-- </form> --}}
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-borderless table-hover">
-                                            <thead>
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Name</th>
-                                                        <th>
-                                                            Email</th>
-                                                        <th>
-                                                            Role</th>
-                                                        {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
-                                                        {{-- <th class="text-secondary opacity-7">Action</th> --}}
-                                                    </tr>
-                                                </thead>
-                                            <tbody id="user-table-body">
-                                                {{-- @if (count($user) > 0) --}}
-                                                {{-- Skeleton loading rows will be dynamically generated here --}}
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                <tr class="skeleton-row">
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                    <td>Loading...</td>
-                                                </tr>
-                                                {{-- @foreach ($user as $key => $row)
-                                                    <tr>
-                                                        <td>
-                                                            {{ $row->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $row->email }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($row->role == 2)
-                                                                System User
-                                                            @else
-                                                                Mobile Agent
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach --}}
-                                            </tbody>
-                                        </table>
-                                        <nav aria-label="Table Paging" class="mb-0 text-muted">
-                                            <ul class="pagination justify-content-center mb-0" id="user-pagination">
-                                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                            </ul>
-                                          </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 my-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h1>User Management</h1>
+                            <a href="{{ route('user-management.create') }}" class="btn btn-primary">Add User</a>
+                        </div>
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        
+                        <div class="toolbar mb-3">
+                            {{-- <form class="form"> --}}
+                                <div class="form-row">
+                                    <div class="form-group col-auto mr-auto">
+                                    </div>
+                                    <div class="form-group col-auto">
+                                        <label for="role-filter" class="sr-only">Role Filter</label>
+                                        <select class="form-control" id="role-filter">
+                                            <option value="">All Roles</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">System User</option>
+                                            <option value="3">Mobile Agent</option>
+                                            <option value="4">Department</option>
+                                            <option value="5">Customer</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-auto">
+                                        <label for="search" class="sr-only">Search</label>
+                                        <input type="text" class="form-control" id="search1" value="" placeholder="Search users...">
+                                    </div>
+                                    <div class="form-group col-auto">
+                                        <button type="button" class="btn btn-secondary" id="reset-filters">
+                                            <i class="fa fa-refresh"></i> Reset
+                                        </button>
                                     </div>
                                 </div>
-                            </div>
+                            {{-- </form> --}}
                         </div>
+                        
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body">
+                                {{-- @if (count($user) > 0) --}}
+                                {{-- Skeleton loading rows will be dynamically generated here --}}
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="skeleton-row">
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td></td>
+                                </tr>
+                                {{-- @foreach ($user as $key => $row)
+                                    <tr>
+                                        <td>
+                                            {{ $row->name }}
+                                        </td>
+                                        <td>
+                                            {{ $row->email }}
+                                        </td>
+                                        <td>
+                                            @if ($row->role == 2)
+                                                System User
+                                            @else
+                                                Mobile Agent
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach --}}
+                            </tbody>
+                        </table>
+                        
+                        <nav aria-label="Table Paging" class="mb-0 text-muted">
+                            <ul class="pagination justify-content-center mb-0" id="user-pagination">
+                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                          </nav>
                     </div>
                 </div>
             </div>
@@ -155,10 +164,31 @@
 
     <script>
         var search = null;
+        var role = null;
+        
         $("input").keyup(function(){
             search = $(this).val();
             fetchDataOnReady();
         });
+        
+        $("#role-filter").change(function(){
+            role = $(this).val();
+            fetchDataOnReady();
+        });
+        
+        $("#reset-filters").click(function(){
+            // Reset all filter values
+            search = null;
+            role = null;
+            
+            // Reset form fields
+            $("#search1").val('');
+            $("#role-filter").val('').trigger('change');
+            
+            // Fetch data with reset filters
+            fetchDataOnReady();
+        });
+        
         $(document).ready(function() {
 
             // Call the function on document ready
@@ -172,6 +202,7 @@
                 type: "GET",
                 data:{
                     search: search,
+                    role: role,
                     type:'ajax',
                     page:page
                 },
@@ -193,7 +224,8 @@
                 type: "GET",
                 data:{
                     type:'ajax',
-                    search:search
+                    search:search,
+                    role:role
                 },
                 success: function(response) {
                     console.log("Data fetched successfully on document ready:", response);
