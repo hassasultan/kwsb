@@ -1453,4 +1453,57 @@ ORDER BY
         //     return redirect()->back()->with('error', 'Complaint not found or error occurred.');
         // }
     }
+    public function generate_report14(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+
+        // SQL query to fetch data with parameter binding
+        $Subtypesummary = DB::select("
+        select 
+                st.title AS Department ,
+                SUM(
+                    CASE 
+                        WHEN c.status = 1 
+                        AND c.updated_at IS NOT NULL 
+                        AND c.created_at != c.updated_at 
+                        THEN 1 ELSE 0 
+                    END
+                ) 
+                + 
+                SUM(
+                    CASE 
+                        WHEN c.status = 0 
+                        THEN 1 ELSE 0 
+                    END
+                ) AS Total_Complaints,
+                SUM(CASE 
+                    WHEN c.status = 1 
+                    AND c.updated_at IS NOT NULL 
+                    AND c.created_at != c.updated_at 
+                    THEN 1 ELSE 0 
+                END) AS Solved,
+                SUM(CASE 
+                    WHEN c.status = 0 
+                    THEN 1 ELSE 0 
+                END) AS Pending
+                from complaint c 
+                left JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+            left JOIN mobile_agent m ON ca.agent_id = m.id
+            left JOIN users u ON m.user_id = u.id
+            JOIN complaint_types st ON c.type_id = st.id
+            where  c.created_at BETWEEN :from_date AND :to_date
+            GROUP BY c.type_id,st.title;
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+        ]);
+        // Return results to the view
+        return view('pages.reports.report14', compact('Subtypesummary', 'dateS', 'dateE'));
+    }
 }

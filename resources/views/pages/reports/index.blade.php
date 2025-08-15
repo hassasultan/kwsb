@@ -776,6 +776,40 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports14') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Complaints Type Summary Report</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date"
+                                            value="{{ old('title') }}" required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date"
+                                            value="{{ old('title') }}" required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg ">Create</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div> <!-- /. card-body -->
     </div>
