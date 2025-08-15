@@ -241,6 +241,26 @@
                                                                     <div class="skeleton-line" style="width: 100%;"></div>
                                                                 </div>
                                                             </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="skeleton-item">
+                                                                <div class="skeleton-content">
+                                                                    <div class="skeleton-line" style="width: 100%;"></div>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                     @endfor
                                                 @endforeach
@@ -397,7 +417,7 @@
                 });
                 
                 $.ajax({
-                    url: "{{ route('compaints-management.index') }}",
+                    url: "{{ route('deparment.complaint.index') }}",
                     type: "GET",
                     data: {
                         type: 'ajax',
@@ -441,7 +461,7 @@
                 });
                 
                 $.ajax({
-                    url: "{{ route('compaints-management.index') }}",
+                    url: "{{ route('deparment.complaint.index') }}",
                     type: "GET",
                     data: {
                         type: 'ajax',
