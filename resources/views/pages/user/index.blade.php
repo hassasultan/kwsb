@@ -30,7 +30,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-auto mr-auto">
                                     </div>
-                                    <div class="form-group col-auto">
+                                    <!-- <div class="form-group col-auto">
                                         <label for="role-filter" class="sr-only">Role Filter</label>
                                         <select class="form-control" id="role-filter">
                                             <option value="">All Roles</option>
@@ -40,7 +40,7 @@
                                             <option value="4">Department</option>
                                             <option value="5">Customer</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group col-auto">
                                         <label for="search" class="sr-only">Search</label>
                                         <input type="text" class="form-control" id="search1" value="" placeholder="Search users...">
