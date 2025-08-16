@@ -91,11 +91,13 @@
                                                    class="btn btn-sm btn-outline-primary"
                                                    title="View Details">
                                                     <i class="fa fa-eye"></i>
+                                                    View Details
                                                 </a>
                                                 <a href="{{ route('admin.notification.edit', $notification->id) }}"
                                                    class="btn btn-sm btn-outline-secondary"
                                                    title="Edit">
                                                     <i class="fa fa-edit"></i>
+                                                    Edit
                                                 </a>
                                                 <form action="{{ route('admin.notification.destroy', $notification->id) }}"
                                                       method="POST"
@@ -107,6 +109,7 @@
                                                             class="btn btn-sm btn-outline-danger"
                                                             title="Delete">
                                                         <i class="fa fa-trash"></i>
+                                                        Delete
                                                     </button>
                                                 </form>
                                             </div>
