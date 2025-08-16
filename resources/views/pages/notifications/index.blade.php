@@ -46,7 +46,7 @@
                                     <th>Status</th>
                                     <th>Sent By</th>
                                     <th>Sent At</th>
-                                    <th>Actions</th>
+                                    {{-- <th>Actions</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,7 +85,7 @@
                                         <td>
                                             {{ $notification->created_at->format('M d, Y H:i') }}
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <div class="btn-group" role="group">
                                                 <a href="{{ route('admin.notification.show', $notification->id) }}"
                                                    class="btn btn-sm btn-outline-primary"
@@ -113,7 +113,7 @@
                                                     </button>
                                                 </form>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @empty
                                     <tr>
