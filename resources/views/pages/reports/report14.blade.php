@@ -30,6 +30,43 @@
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
+    <style>
+        /* Table responsive and overflow fixes */
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .table th, .table td {
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        
+        /* Export button styles */
+        .btn-export {
+            margin: 5px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .export-buttons {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        @media print {
+            .export-buttons {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="vertical dark">
@@ -51,34 +88,46 @@
                                     <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}
                                 </p>
                                 <h5 style="font-size: 0.8rem">
-                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}
                                 </h5>
                             </div>
-                            <div class="table mt-4">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th><b>Department</b></th>
-                                            <th><b>Total Complaint</b></th>
-                                            <th><b>Resolved</b></th>
-                                            <th><b>Pending</b></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($Subtypesummary as $record)
-                                            <tr>
-                                                <td>{{ $record->Department }}</td>
-                                                <td>{{ $record->Total_Complaints }}</td>
-                                                <td>{{ $record->Solved }}</td>
-                                                <td>{{ $record->Pending }}</td>
+                            
+                            <!-- Export Buttons -->
+                            <div class="col-12">
+                                <div class="export-buttons">
+                                    <button type="button" onclick="exportToExcel()" class="btn btn-success btn-export">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                                                <th><b>Department</b></th>
+                                                <th><b>Total Complaint</b></th>
+                                                <th><b>Resolved</b></th>
+                                                <th><b>Pending</b></th>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="11" class="text-center">No records found for the selected dates.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($Subtypesummary as $record)
+                                                <tr>
+                                                    <td>{{ $record->Department }}</td>
+                                                    <td>{{ $record->Total_Complaints }}</td>
+                                                    <td>{{ $record->Solved }}</td>
+                                                    <td>{{ $record->Pending }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="4" class="text-center">No records found for the selected dates.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -86,8 +135,6 @@
             </div>
 
     {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
-
-
 
 
 
@@ -143,6 +190,20 @@
             print_area.print();
             // print_area.close();
         }
+        
+        // Export to Excel function
+        function exportToExcel() {
+            let table = document.querySelector('.table');
+            let html = table.outerHTML;
+            let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+            let downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            downloadLink.href = url;
+            downloadLink.download = 'Complaint_Type_Summary_Report.xls';
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+        
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {

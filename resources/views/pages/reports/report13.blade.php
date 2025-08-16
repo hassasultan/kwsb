@@ -30,6 +30,43 @@
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
+    <style>
+        /* Table responsive and overflow fixes */
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .table th, .table td {
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        
+        /* Export button styles */
+        .btn-export {
+            margin: 5px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .export-buttons {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        @media print {
+            .export-buttons {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="vertical dark">
@@ -47,7 +84,7 @@
                         </p>
 
                         <h5 style="font-size: 0.8rem">
-                            ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                            ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}
                         </h5>
                     </div>
                     <div class="col-9 text-left pl-4">
@@ -88,38 +125,50 @@
                         <p>Complaint Sub-Type</p>
 
                     </div>
-                    <div class="table mt-4">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th><b>Executive Engineer</b></th>
-                                    <th><b>Town</b></th>
-                                    <th><b>Sub-Type </b></th>
-                                    <th><b>Total Recieved</b></th>
-                                    <th><b>Resolved </b></th>
-                                    <th><b>Pending</b></th>
-                                    <th><b>Resolved %</b></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($exen_complete_filter2 as $record)
-                                    <tr>
-                                        <td>{{ $record->Executive_Engineer }}</td>
-                                        <td>{{ $record->Town }}</td>
-                                        <td>{{ $record->Complaint }}</td>
-                                        <td>{{ $record->Total_Complaints }}</td>
-                                        <td>{{ $record->Resolved }}</td>
-                                        <td>{{ $record->Pending }}</td>
-                                        <td>{{ $record->Percentage_Resolved }}</td>
+                    
+                    <!-- Export Buttons -->
+                    <div class="col-12">
+                        <div class="export-buttons">
+                            <button type="button" onclick="exportToExcel()" class="btn btn-success btn-export">
+                                <i class="fas fa-file-excel"></i> Export to Excel
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                                        <th><b>Executive Engineer</b></th>
+                                        <th><b>Town</b></th>
+                                        <th><b>Sub-Type </b></th>
+                                        <th><b>Total Recieved</b></th>
+                                        <th><b>Resolved </b></th>
+                                        <th><b>Pending</b></th>
+                                        <th><b>Resolved %</b></th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="11" class="text-center">No records found for the selected dates.
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @forelse($exen_complete_filter2 as $record)
+                                        <tr>
+                                            <td>{{ $record->Executive_Engineer }}</td>
+                                            <td>{{ $record->Town }}</td>
+                                            <td>{{ $record->Complaint }}</td>
+                                            <td>{{ $record->Total_Complaints }}</td>
+                                            <td>{{ $record->Resolved }}</td>
+                                            <td>{{ $record->Pending }}</td>
+                                            <td>{{ $record->Percentage_Resolved }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">No records found for the selected dates.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,6 +228,20 @@
             print_area.print();
             // print_area.close();
         }
+        
+        // Export to Excel function
+        function exportToExcel() {
+            let table = document.querySelector('.table');
+            let html = table.outerHTML;
+            let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+            let downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            downloadLink.href = url;
+            downloadLink.download = 'Complaint_Sub_Type_Report.xls';
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+        
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {

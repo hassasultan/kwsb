@@ -23,6 +23,10 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" disabled>
     <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -30,6 +34,37 @@
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        .table th, .table td {
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        
+        .table th:first-child, .table td:first-child {
+            min-width: 100px;
+        }
+        
+        .btn-export {
+            margin: 10px;
+        }
+        
+        .export-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            .export-buttons {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="vertical dark">
@@ -45,22 +80,32 @@
                             <h5 class=" fs-1">KW&SC-CRM</h5>
                             <h2 class="mb-4">Turn Around Time Summary</h2>
                                 <p style="font-size: 1.2rem">
-                                    <span class="bg-dark text-white">TAT FIlter Summary</span>
+                                    <span class="bg-dark text-white">TAT Filter Summary</span>
                                 </p>
                                 <p>
                                     <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}
                                 </p>
                                 <h5 style="font-size: 0.8rem">
-                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}
                                 </h5>
                             </div>
-                            <div class="table mt-4">
-                                <table class="table table-striped">
+                            
+                            <!-- Export Buttons -->
+                            <div class="col-12">
+                                <div class="export-buttons">
+                                    <button type="button" onclick="exportToExcel()" class="btn btn-success btn-lg btn-export">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive mt-4">
+                                <table class="table table-striped table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th><b>Complaints Resulotion Detail</b></th>
-                                            <th><b>Total Complaints</b></th>
-                                            <th><b>Percentage</b></th>
+                                        <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                                            <th class="text-white"><b>Complaints Resolution Detail</b></th>
+                                            <th class="text-white"><b>Total Complaints</b></th>
+                                            <th class="text-white"><b>Percentage</b></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,7 +117,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="11" class="text-center">No records found for the selected dates.</td>
+                                                <td colspan="3" class="text-center">No records found for the selected dates.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -82,8 +127,6 @@
                     </div>
                 </div>
             </div>
-
-    {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -136,6 +179,28 @@
             print_area.print();
             // print_area.close();
         }
+
+        function exportToExcel() {
+            // Create a table element for export
+            var table = document.querySelector('table');
+            var html = table.outerHTML;
+            
+            // Create download link
+            var link = document.createElement('a');
+            link.download = 'tat_filter_summary_report.xls';
+            link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+            link.click();
+        }
+
+        // Auto-hide export buttons on print
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'none');
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'block');
+        });
+
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {
