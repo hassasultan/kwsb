@@ -25,7 +25,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::with(['sender', 'recipient'])
+        $notifications = Notification::with('sender', 'recipient')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
 
