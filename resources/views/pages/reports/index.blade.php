@@ -776,6 +776,133 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports14') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Complaints Type Summary Report</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="from_date"
+                                            value="{{ old('title') }}" required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter Customer Title..." name="to_date"
+                                            value="{{ old('title') }}" required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg ">Create</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports15') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Detailed Report with Advanced Filters</h6>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>From Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter From Date..." name="from_date"
+                                            value="{{ old('from_date') }}" required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>To Date</label>
+                                        <input type="date" class="form-control border-bottom"
+                                            placeholder="Enter To Date..." name="to_date"
+                                            value="{{ old('to_date') }}" required />
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Town</label>
+                                        <select name="town_id" id="town-id-15" class="form-control fs-14 h-50px">
+                                            <option value="">All Towns</option>
+                                            @foreach ($town as $row)
+                                                <option value="{{ $row->id }}">{{ $row->town }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select SubTown</label>
+                                        <select name="sub_town_id" id="sub_town_id_15" class="form-control fs-14 h-50px">
+                                            <option value="">All SubTowns</option>
+                                            @foreach ($subtown as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Complaint Type</label>
+                                        <select name="type_id" id="type_id_15" class="form-control fs-14 h-50px">
+                                            <option value="">All Types</option>
+                                            @foreach ($type as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Sub Type</label>
+                                        <select name="subtype_id" id="subtype_id_15" class="form-control fs-14 h-50px">
+                                            <option value="">All SubTypes</option>
+                                            @foreach ($subtype as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Source</label>
+                                        <select name="source" class="form-control fs-14 h-50px">
+                                            <option value="all">All Sources</option>
+                                            @foreach ($source as $key => $row)
+                                                <option value="{{ $key }}">{{ $key }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Executive Engineer</label>
+                                        <select name="executive_engineer" class="form-control fs-14 h-50px">
+                                            <option value="">All Engineers</option>
+                                            @foreach ($executive_engineers ?? [] as $row)
+                                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Select Department</label>
+                                        <select name="department" class="form-control fs-14 h-50px">
+                                            <option value="">All Departments</option>
+                                            @foreach ($departments ?? [] as $row)
+                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg">Generate Report</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div> <!-- /. card-body -->
     </div>
@@ -830,5 +957,50 @@
                 }
             });
         });
+        $("#town-id-15").change(function() {
+        var town_id = $(this).val();
+        $.ajax({
+            type: "get",
+            url: "{{ route('subtown.by.town') }}",
+            data: {
+                'town_id': town_id,
+            },
+            success: function(data) {
+                $("#sub_town_id_15").html("");
+                var your_html = "";
+                your_html += "<option value=''>All SubTowns</option>";
+                $.each(data, function(key, val) {
+                    your_html += "<option value=" + val['id'] + ">" + val['title'] + "</option>"
+                });
+                $("#sub_town_id_15").append(your_html);
+            },
+            error: function() {
+                console.log("Error fetching subtowns");
+            }
+        });
+    });
+
+    $("#type_id_15").on("change", function() {
+        var type_id = $(this).val();
+        $.ajax({
+            type: "get",
+            url: "{{ route('subtype.by.type') }}",
+            data: {
+                'type_id': type_id,
+            },
+            success: function(data) {
+                $("#subtype_id_15").html("");
+                var your_html = "";
+                your_html += "<option value=''>All SubTypes</option>";
+                $.each(data, function(key, val) {
+                    your_html += "<option value=" + val['id'] + ">" + val['title'] + "</option>"
+                });
+                $("#subtype_id_15").append(your_html);
+            },
+            error: function() {
+                console.log("Error fetching subtypes");
+            }
+        });
+    });
     </script>
 @endsection

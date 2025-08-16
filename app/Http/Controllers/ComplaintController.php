@@ -116,12 +116,12 @@ class ComplaintController extends Controller
             });
         }
         
-        if ($request->has('bounce_back_status') && $request->bounce_back_status != null && $request->bounce_back_status != '') {
-            if ($request->bounce_back_status == 'yes') {
+        if ($request->has('bounce_back') && $request->bounce_back != null && $request->bounce_back != '') {
+            if ($request->bounce_back == '1') {
                 $complaint = $complaint->whereHas('bounceBackComplaints', function ($query) {
                     $query->where('status', 'active');
                 });
-            } elseif ($request->bounce_back_status == 'no') {
+            } elseif ($request->bounce_back == '0') {
                 $complaint = $complaint->whereDoesntHave('bounceBackComplaints', function ($query) {
                     $query->where('status', 'active');
                 });
@@ -142,13 +142,14 @@ class ComplaintController extends Controller
             });
             // return true;
         }
+        
         $complaint = $complaint->paginate(10)->appends([
             'type_id' => request()->get('type_id'),
             'town' => request()->get('town'),
             'search' => request()->get('search'),
             'source' => request()->get('source'),
             'consumer_number' => request()->get('consumer_number'),
-            'bounce_back_status' => request()->get('bounce_back_status'),
+            'bounce_back' => request()->get('bounce_back'),
             'from_date' => request()->get('from_date'),
             'to_date' => request()->get('to_date'),
         ]);
@@ -515,7 +516,7 @@ class ComplaintController extends Controller
         LogService::create('Complaint', $complaint->id, auth()->user()->name.' has redirect to the complaint.');
         // dd($department_user->toArray());
         if (auth()->user()->role == 4) {
-            return view('department.pages.complaints.details', compact('complaint', 'department_user'));
+            return view('department.pages.complaints.details', compact('complainft', 'department_user'));
         }
         return view('pages.complaints.details', compact('complaint', 'department_user'));
     }
@@ -1453,4 +1454,196 @@ ORDER BY
         //     return redirect()->back()->with('error', 'Complaint not found or error occurred.');
         // }
     }
+    public function generate_report14(Request $request)
+    {
+        $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $dateS = $request->from_date;
+        $dateE = $request->to_date;
+
+        // SQL query to fetch data with parameter binding
+        $Subtypesummary = DB::select("
+        select 
+                st.title AS Department ,
+                SUM(
+                    CASE 
+                        WHEN c.status = 1 
+                        AND c.updated_at IS NOT NULL 
+                        AND c.created_at != c.updated_at 
+                        THEN 1 ELSE 0 
+                    END
+                ) 
+                + 
+                SUM(
+                    CASE 
+                        WHEN c.status = 0 
+                        THEN 1 ELSE 0 
+                    END
+                ) AS Total_Complaints,
+                SUM(CASE 
+                    WHEN c.status = 1 
+                    AND c.updated_at IS NOT NULL 
+                    AND c.created_at != c.updated_at 
+                    THEN 1 ELSE 0 
+                END) AS Solved,
+                SUM(CASE 
+                    WHEN c.status = 0 
+                    THEN 1 ELSE 0 
+                END) AS Pending
+                from complaint c 
+                left JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+            left JOIN mobile_agent m ON ca.agent_id = m.id
+            left JOIN users u ON m.user_id = u.id
+            JOIN complaint_types st ON c.type_id = st.id
+            where  c.created_at BETWEEN :from_date AND :to_date
+            GROUP BY c.type_id,st.title;
+    ", [
+            'from_date' => $dateS,
+            'to_date' => $dateE,
+        ]);
+        // Return results to the view
+        return view('pages.reports.report14', compact('Subtypesummary', 'dateS', 'dateE'));
+    }
+
+    public function generate_report15(Request $request)
+        {
+            $request->validate([
+                'from_date' => 'required|date',
+                'to_date' => 'required|date',
+            ]);
+
+            $town = $request->town_id ?? null;
+            $subtown = $request->sub_town_id ?? null;
+            $type = $request->type_id ?? null;
+            $subtype = $request->subtype_id ?? null;
+            $source = $request->source ?? null;
+            $executive_engineer = $request->executive_engineer ?? null;
+            $department = $request->department ?? null;
+
+            $dateS = $request->from_date;
+            $dateE = $request->to_date;
+
+            // Start building the query with correct column names
+            $query = "
+            SELECT 
+                c.comp_num,
+                ct.title as complain_type,
+                st.title as sub_type,
+                p.title as priority,
+                t.town,
+                st2.title as sub_town,
+                c.customer_num as consumer_number,
+                c.customer_cnic,
+                c.description as customer_desc,
+                c.customer_name,
+                c.phone,
+                c.email,
+                c.address,
+                c.source,
+                c.agent_description,
+                c.created_at,
+                c.updated_at,
+                CASE WHEN c.status = 1 THEN 'Solved' ELSE 'Pending' END AS status,
+                u.name as executive_engineer,
+                d.name as department_name
+            FROM complaint c 
+            LEFT JOIN complaint_types ct ON ct.id = c.type_id 
+            LEFT JOIN sub_types st ON st.id = c.subtype_id 
+            LEFT JOIN priorities p ON p.id = c.prio_id 
+            LEFT JOIN towns t ON t.id = c.town_id 
+            LEFT JOIN subtown st2 ON st2.id = c.sub_town_id 
+            LEFT JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
+            LEFT JOIN mobile_agent ma ON ma.id = ca.agent_id
+            LEFT JOIN users u ON u.id = ma.user_id
+            LEFT JOIN department d ON d.id = u.department_id
+            WHERE c.created_at BETWEEN :from_date AND :to_date
+            ";
+
+            if ($town) {
+                $query .= " AND c.town_id = :town";
+            }
+            if ($subtown) {
+                $query .= " AND c.sub_town_id = :subtown";
+            }
+            if ($type) {
+                $query .= " AND c.type_id = :type";
+            }
+            if ($subtype) {
+                $query .= " AND c.subtype_id = :subtype";
+            }
+            if ($source && $source !== 'all') {
+                $query .= " AND c.source = :source";
+            }
+            if ($executive_engineer) {
+                $query .= " AND u.id = :executive_engineer";
+            }
+            if ($department) {
+                $query .= " AND u.department_id = :department";
+            }
+
+            $query .= " ORDER BY c.created_at DESC";
+
+            // Prepare the query parameters
+            $params = [
+                'from_date' => $dateS . ' 00:00:00',
+                'to_date' => $dateE . ' 23:59:59',
+            ];
+
+            if ($town) {
+                $params['town'] = $town;
+            }
+            if ($subtown) {
+                $params['subtown'] = $subtown;
+            }
+            if ($type) {
+                $params['type'] = $type;
+            }
+            if ($subtype) {
+                $params['subtype'] = $subtype;
+            }
+            if ($source && $source !== 'all') {
+                $params['source'] = $source;
+            }
+            if ($executive_engineer) {
+                $params['executive_engineer'] = $executive_engineer;
+            }
+            if ($department) {
+                $params['department'] = $department;
+            }
+
+            // Execute the query
+            $detailed_report = DB::select($query, $params);
+
+            // Get filter data for the form
+            $towns = Town::orderBy('town', 'asc')->get();
+            $subtowns = SubTown::orderBy('title', 'asc')->get();
+            $types = ComplaintType::orderBy('title', 'asc')->get();
+            $subtypes = SubType::orderBy('title', 'asc')->get();
+            $sources = Source::orderBy('title', 'asc')->get();
+            $executive_engineers = User::where('role', 3)->orderBy('name', 'asc')->get();
+            $departments = Department::orderBy('name', 'asc')->get();
+
+            return view('pages.reports.report15', compact(
+                'detailed_report', 
+                'dateE', 
+                'dateS', 
+                'towns',
+                'subtowns', 
+                'types', 
+                'subtypes',
+                'sources',
+                'executive_engineers',
+                'departments',
+                'town',
+                'subtown',
+                'type',
+                'subtype',
+                'source',
+                'executive_engineer',
+                'department'
+            ));
+        }
 }

@@ -1,93 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                {{-- @include('layouts.include.toolbar') --}}
-                <h2 class="page-title">Customer Management</h2>
-                <p> All Customer are available here... </p>
-                <div class="col-12 text-right">
-                    <a class="btn btn-primary" href="{{ route('customer-management.create') }}">add</i>&nbsp;&nbsp;<i
-                            class="fa fa-user"></i></a>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card shadow">
-                            <div class="card-body px-0 pb-2">
-                                <div class="card-title p-3">
-                                    <h5>
-                                        Customer List
-                                    </h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                </div>
-                                <div class="toolbar pr-3">
-                                    {{-- <form class="form"> --}}
-                                        <div class="form-row">
-                                            <div class="form-group col-auto mr-auto">
-                                            </div>
-                                            <div class="form-group col-auto">
-                                                <label for="search" class="sr-only">Search</label>
-                                                <input type="text" class="form-control" id="search1" value=""
-                                                    placeholder="Search">
-                                            </div>
-                                        </div>
-                                    {{-- </form> --}}
-                                </div>
-                                <div class="p-0">
-                                    <table class="table table-borderless table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-uppercase  text-xxs font-weight-bolder opacity-7 ps-2">
-                                                    Customer#</th>
-                                                <th
-                                                    class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                                    Name / Phone</th>
-                                                <th
-                                                    class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                                    Town SubTown</th>
-                                                <th
-                                                    class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                                    Address</th>
-                                                {{-- <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
-                                                {{-- <th class=" opacity-7">Action</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody id="user-table-body">
-                                            {{-- @if (count($user) > 0) --}}
-                                            @foreach ($customer as $key => $row)
-                                                <tr>
-                                                    <td>
-                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->customer_id }}</p>
-                                                    </td>
-                                                    <td class="align-middle text-center text-sm">
-                                                        <p class="text-xs  mb-0">{{ $row->customer_name }}</p>
-                                                        <p class="text-xs  mb-0">{{ $row->phone }}</p>
-                                                    </td>
-                                                    <td class="align-middle text-center text-sm">
-                                                        <p class="text-xs  mb-0">{{ $row->town }} -
-                                                            {{ $row->sub_town }}</p>
-                                                    </td>
-                                                    <td class="align-middle text-center text-sm">
-                                                        <p class="text-xs  mb-0">{{ $row->address }}</p>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <nav aria-label="Table Paging" class="mb-0 text-muted">
-                                      <ul class="pagination justify-content-center mb-0" id="user-pagination">
-                                        {{-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
-                                      </ul>
-                                    </nav>
-                                </div>
-                            </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 my-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h1>Customer Management</h1>
+                            <a href="{{ route('customer-management.create') }}" class="btn btn-primary">Add Customer</a>
                         </div>
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        
+                        <div class="toolbar mb-3">
+                            {{-- <form class="form"> --}}
+                                <div class="form-row">
+                                    <div class="form-group col-auto mr-auto">
+                                    </div>
+                                    <!-- <div class="form-group col-auto">
+                                        <label for="town-filter" class="sr-only">Town Filter</label>
+                                        <select class="form-control" id="town-filter">
+                                            <option value="">All Towns</option>
+                                            <option value="1">Town 1</option>
+                                            <option value="2">Town 2</option>
+                                            <option value="3">Town 3</option>
+                                        </select>
+                                    </div> -->
+                                    <div class="form-group col-auto">
+                                        <label for="search" class="sr-only">Search</label>
+                                        <input type="text" class="form-control" id="search1" value=""
+                                            placeholder="Search customers...">
+                                    </div>
+                                    <div class="form-group col-auto">
+                                        <button type="button" class="btn btn-secondary" id="reset-filters">
+                                            <i class="fa fa-refresh"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                        
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Customer#</th>
+                                    <th>Name / Phone</th>
+                                    <th>Town SubTown</th>
+                                    <th>Address</th>
+                                    {{-- <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body">
+                                {{-- @if (count($user) > 0) --}}
+                                @foreach ($customer as $key => $row)
+                                    <tr>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $row->customer_id }}</p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <p class="text-xs  mb-0">{{ $row->customer_name }}</p>
+                                            <p class="text-xs  mb-0">{{ $row->phone }}</p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <p class="text-xs  mb-0">{{ $row->town }} -
+                                                {{ $row->sub_town }}</p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <p class="text-xs  mb-0">{{ $row->address }}</p>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('customer-management.edit', $row->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        
+                        <nav aria-label="Table Paging" class="mb-0 text-muted">
+                          <ul class="pagination justify-content-center mb-0" id="user-pagination">
+                            {{-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
+                          </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -97,10 +97,31 @@
 
     <script>
         var search = null;
+        var town = null;
+        
         $("input").keyup(function() {
             search = $(this).val();
             fetchDataOnReady();
         });
+        
+        $("#town-filter").change(function() {
+            town = $(this).val();
+            fetchDataOnReady();
+        });
+        
+        $("#reset-filters").click(function(){
+            // Reset all filter values
+            search = null;
+            town = null;
+            
+            // Reset form fields
+            $("#search1").val('');
+            $("#town-filter").val('').trigger('change');
+            
+            // Fetch data with reset filters
+            fetchDataOnReady();
+        });
+        
         $(document).ready(function() {
 
             // Call the function on document ready
@@ -114,6 +135,8 @@
                 url: "{{ route('customer-management.index') }}",
                 type: "GET",
                 data: {
+                    search: search,
+                    town: town,
                     type: 'ajax',
                     page: page
                 },
@@ -136,7 +159,8 @@
                 type: "GET",
                 data: {
                     type: 'ajax',
-                    search: search
+                    search: search,
+                    town: town
                 },
                 success: function(response) {
                     console.log("Data fetched successfully on document ready:", response);

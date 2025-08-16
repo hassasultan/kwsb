@@ -104,6 +104,26 @@ class HomeController extends Controller
             $typeComp_town[] = $town->town;
         }
 
+        $totalcount = DB::select("
+        SELECT 
+            SUM(
+                CASE 
+                    WHEN c.status = 1 
+                    AND c.updated_at IS NOT NULL 
+                    AND c.created_at != c.updated_at 
+                    THEN 1 ELSE 0 
+                END
+            ) 
+            + 
+            SUM(
+                CASE 
+                    WHEN c.status = 0 
+                    THEN 1 ELSE 0 
+                END
+            ) AS totalc
+        FROM complaint c
+        ");
+
         // Optimize TAT summary queries - use more efficient SQL
         $tat_summary_complete = DB::select("
             SELECT
@@ -247,6 +267,7 @@ class HomeController extends Controller
             'wor3water',
             'wor3sewe',
             'tat_summary_pending',
+            'totalcount',
             'tat_summary_complete',
             'totalComplaints',
             'totalAgents',

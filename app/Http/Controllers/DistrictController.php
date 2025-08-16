@@ -9,7 +9,7 @@ class DistrictController extends Controller
 {
     public function index()
     {
-        $districts = District::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('title', 'asc')->get();
         return view('pages.districts.index', compact('districts'));
     }
 

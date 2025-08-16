@@ -133,7 +133,7 @@
                                             <select class="form-control select2" id="source">
                                                 <option value="">All Sources</option>
                                                 @foreach ($sources as $row)
-                                                    <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                                    <option value="{{ $row->title }}">{{ $row->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -145,7 +145,7 @@
                                         <div class="form-group col-auto">
                                             <label for="bounce_back" class="sr-only">Bounce Back Status</label>
                                             <select class="form-control select2" id="bounce_back">
-                                                <option value="">Bounce Back</option>
+                                                <option value="">All</option>
                                                 <option value="1">Yes</option>
                                                 <option value="0">No</option>
                                             </select>
@@ -289,7 +289,6 @@
             var bounce_back_status = null;
             var from_date = null;
             var to_date = null;
-            fetchDataOnReady();
 
             function updateStatus(id, element) {
                 console.log($(element).val());
@@ -321,7 +320,6 @@
             }
             $(document).ready(function() {
 
-
                 $("input").keyup(function() {
                     search = $(this).val();
                 });
@@ -341,22 +339,27 @@
                 // New filter event handlers
                 $("#source").change(function() {
                     source = $(this).val();
+                    console.log("Source changed to:", source);
                 });
                 
                 $("#consumer_number").on('input', function() {
                     consumer_number = $(this).val();
+                    console.log("Consumer number changed to:", consumer_number);
                 });
                 
                 $("#bounce_back").change(function() {
                     bounce_back_status = $(this).val();
+                    console.log("Bounce back changed to:", bounce_back_status);
                 });
                 
                 $("#from_date").change(function() {
                     from_date = $(this).val();
+                    console.log("From date changed to:", from_date);
                 });
                 
                 $("#to_date").change(function() {
                     to_date = $(this).val();
+                    console.log("To date changed to:", to_date);
                 });
                 
                 // Search button click handler
@@ -394,12 +397,26 @@
                     fetchDataOnReady();
                 });
                 
-                // Call the function on document ready
+                // Call the function on document ready - moved here
+                fetchDataOnReady();
 
             });
 
             function fetchDataOnClick(page) {
-                console.log(page);
+                console.log("Fetching data on click with filters:", {
+                    search: search,
+                    town: town,
+                    type_id: type,
+                    status: change_status,
+                    comp_status: comp_status,
+                    source: source,
+                    consumer_number: consumer_number,
+                    bounce_back: bounce_back_status,
+                    from_date: from_date,
+                    to_date: to_date,
+                    page: page
+                });
+                
                 $.ajax({
                     url: "{{ route('compaints-management.index') }}",
                     type: "GET",
@@ -431,6 +448,19 @@
             }
             // Function to send AJAX request on document ready
             function fetchDataOnReady() {
+                console.log("Fetching data with filters:", {
+                    search: search,
+                    status: change_status,
+                    town: town,
+                    type_id: type,
+                    comp_status: comp_status,
+                    source: source,
+                    consumer_number: consumer_number,
+                    bounce_back: bounce_back_status,
+                    from_date: from_date,
+                    to_date: to_date
+                });
+                
                 $.ajax({
                     url: "{{ route('compaints-management.index') }}",
                     type: "GET",

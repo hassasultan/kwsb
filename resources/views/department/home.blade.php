@@ -21,6 +21,27 @@
                     #piechart_3d>div {
                         background-color: #202940 !important;
                     }
+                    
+                    /* Dark mode compatibility */
+                    [data-bs-theme="dark"] .text-dark {
+                        color: #fff !important;
+                    }
+                    
+                    [data-bs-theme="dark"] .table {
+                        color: #fff !important;
+                    }
+                    
+                    [data-bs-theme="dark"] .table tbody tr {
+                        color: #fff !important;
+                    }
+                    
+                    [data-bs-theme="dark"] .card-header {
+                        color: #fff !important;
+                    }
+                    
+                    [data-bs-theme="dark"] .fw-semibold {
+                        color: #fff !important;
+                    }
                 </style>
                 <style>
                     #container2 {
@@ -115,105 +136,51 @@
 
                     }, 3000);
                 </script> --}}
-                <div class="mb-2 align-items-center">
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="row mt-1 align-items-center">
-                                <div class="col-12 col-lg-4 text-left pl-4">
-                                    <span class="h3">KWSC - {{ auth()->user()->name }}'s Portal</span>
-                                    <p class="text-muted mt-2">
-                                        Karachi Water & Sewerage Corporation.
-                                    </p>
+                <div class="mb-4">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-12 col-lg-4">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h3 class="mb-1 fw-bold text-dark">KWSC - {{ auth()->user()->name }}'s Portal</h3>
+                                            <p class="text-muted mb-0">
+                                                <i class="fas fa-building me-1"></i>
+                                                Karachi Water & Sewerage Corporation
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-6 col-lg-2 text-center py-4">
-                                    <p class="mb-1 small text-muted">Total Complaints</p>
-                                    <span class="h3">{{ $totalComplaints }}</span><br />
+                                
+                                <div class="col-6 col-lg-2 text-center py-3">
+                                    <div class="bg-light rounded-3 p-3 h-100">
+                                        <p class="mb-1 small text-muted fw-semibold">Total Complaints</p>
+                                        <span class="h2 fw-bold text-primary">{{ $totalComplaints }}</span>
+                                    </div>
+                                </div>
 
+                                <div class="col-6 col-lg-2 text-center py-3">
+                                    <div class="bg-light rounded-3 p-3 h-100">
+                                        <p class="mb-1 small text-muted fw-semibold">Pending Complaints</p>
+                                        <span class="h2 fw-bold text-warning">{{ $complaintsPending }}</span>
+                                    </div>
                                 </div>
-
-                                <div class="col-6 col-lg-2 text-center py-4">
-                                    <p class="mb-1 small text-muted">Pending Complaints</p>
-                                    <span class="h3">{{ $complaintsPending }}</span><br />
+                                
+                                <div class="col-6 col-lg-2 text-center py-3">
+                                    <div class="bg-light rounded-3 p-3 h-100">
+                                        <p class="mb-1 small text-muted fw-semibold">Resolved Complaints</p>
+                                        <span class="h2 fw-bold text-success">{{ $complaintsComplete }}</span>
+                                    </div>
                                 </div>
-                                <div class="col-6 col-lg-2 text-center py-4">
-                                    <p class="mb-1 small text-muted">Solved Complaints</p>
-                                    <span class="h3">{{ $complaintsComplete }}</span><br />
-                                </div>
+                                
                                 {{-- <div class="col-xl-12 col-sm-14  text-right">
                                     <a class="btn btn-primary mb-0" href="{{ route('compaints-management.create') }}"
                                         target="_blank">+
                                         Add New Complaint</a>
                                 </div> --}}
                             </div>
-                            <div>
-                                ..
-                            </div>
-
-                            {{-- <div class="row align-items-baseline">
-                                <div class="col-md-12 col-lg-6">
-                                    <div class="card shadow eq-card mb-4">
-                                        <div class="card-body mb-n3">
-                                            <div class="row mt-1 align-items-center">
-                                                <span class="h3">Turn Around Time Summary</span>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-dark fw-bold">Complaints Resulotion Detail</th>
-                                                            <th class="text-dark fw-bold">Total Complaints</th>
-                                                            <th class="text-dark fw-bold">Percentage</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($tat_summary_complete as $row)
-                                                            <tr>
-                                                                <td class="text-dark fw-bold">{{ $row->ResolutionDetails }}
-                                                                </td>
-                                                                <td class="text-dark fw-bold">{{ $row->TotalComplaints }}
-                                                                </td>
-                                                                <td class="text-dark fw-bold">{{ $row->Percentage }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div> <!-- .card-body -->
-                                    </div> <!-- .card -->
-                                </div> <!-- .col -->
-                                <div class="col-md-12 col-lg-6">
-                                    <div class="card shadow eq-card mb-4">
-                                        <div class="card-body mb-n3">
-                                            <div class="row mt-1 align-items-center">
-                                                <span class="h3">Aging Summary</span>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-dark fw-bold">Pending Complaints Detail</th>
-                                                            <th class="text-dark fw-bold">Total Pending Complaints</th>
-                                                            <th class="text-dark fw-bold">Percentage</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($tat_summary_pending as $row)
-                                                            <tr>
-                                                                <td class="text-dark fw-bold">{{ $row->Pendingdays }}</td>
-                                                                <td class="text-dark fw-bold">
-                                                                    {{ $row->TotalPendingComplaints }}</td>
-                                                                <td class="text-dark fw-bold">{{ $row->Percentage }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div> <!-- .card-body -->
-                                    </div> <!-- .card -->
-                                </div> <!-- .col -->
-                            </div> <!-- .row -->
-                            <hr />
-                            <div class="chartbox mr-4">
-                                <div id="container2"></div>
-                            </div> --}}
-                        </div> <!-- .card-body -->
-                    </div> <!-- .card -->
+                        </div>
+                    </div>
                 </div>
                 {{-- <div class="row items-align-baseline">
                     <div class="col-md-12 col-lg-6">

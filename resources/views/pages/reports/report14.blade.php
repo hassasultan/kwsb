@@ -23,10 +23,6 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" disabled>
     <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -36,9 +32,10 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     
     <style>
+        /* Table responsive and overflow fixes */
         .table-responsive {
             overflow-x: auto;
-            max-width: 100%;
+            margin-bottom: 1rem;
         }
         
         .table th, .table td {
@@ -46,17 +43,22 @@
             min-width: 120px;
         }
         
-        .table th:first-child, .table td:first-child {
-            min-width: 100px;
-        }
-        
+        /* Export button styles */
         .btn-export {
-            margin: 10px;
+            margin: 5px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
         }
         
         .export-buttons {
             text-align: center;
             margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
         }
         
         @media print {
@@ -67,94 +69,75 @@
     </style>
 </head>
 
-<body class="vertical dark  ">
-    <div id="app" class="wrapper">
-        <div class="container p-4 bg-white  text-center " id="getPrint">
-            <div class="bg-white m-auto">
-                <div class="row">
-                    <div class="col-5">
-                        <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
-                            style="width: 200px;">
-                    </div>
-                    <div class="col-7 text-end" style=" padding-top:2.4rem;">
-                        <h5 class=" fs-1">KW&SC-CRM</h5>
-                        <p style="font-size: 1.2rem"><span class="bg-dark text-white">COMPLAINT TYPE REPORT</span></p>
-                        <h5 style="font-size: 0.8rem">ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}
-                        </h5>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <div class="text-center mt-4">
-                            <b>From {{ \Carbon\Carbon::parse($dateS)->format('d F Y') }} to
-                                {{ \Carbon\Carbon::parse($dateE)->format('d F Y') }}</b>
-                            <br />
-                            @if ($town != null)
-                                <b>Town : {{ $town->town }}</b>
-                            @endif
-                            @if ($subtown != null)
-                                <b>UC : {{ $subtown->title }}</b>
-                            @endif
-                            @if ($type != null)
-                                <b>Complaint Type : {{ $type->title }}</b>
-                            @endif
-                            @if ($source != null)
-                                <b>Source : {{ $source }}</b>
-                            @endif
-                            @if ($prio != null)
-                                <b>Priority : {{ $prio->title }}</b>
-                            @endif
-                            @if ($consumer != null)
-                                <b>Consumer Number : {{ $consumer }}</b>
-                            @endif
+<body class="vertical dark">
+        <div id="app" class="wrapper">
+                <div class="container p-4 bg-white text-center" id="getPrint">
+                    <div class="bg-white m-auto">
+                        <div class="row">
+                            <div class="col-5">
+                                <img src="{{ asset('assets/images/unnamed.png') }}" class="img-fluid" alt="main_logo"
+                                    style="width: 200px;">
+                            </div>
+                            <div class="col-7 text-end" style="padding-top:2.4rem;">
+                            <h5 class=" fs-1">KW&SC-CRM</h5>
+                                <h2 class="mb-4">Complaint-Type Summary Report</h2>
+                                <p style="font-size: 1.2rem">
+                                    <span class="bg-dark text-white">Complaint-Types Wise Summary</span>
+                                </p>
+                                <p>
+                                    <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}
+                                </p>
+                                <h5 style="font-size: 0.8rem">
+                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}
+                                </h5>
+                            </div>
+                            
+                            <!-- Export Buttons -->
+                            <div class="col-12">
+                                <div class="export-buttons">
+                                    <button type="button" onclick="exportToExcel()" class="btn btn-success btn-export">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                                                <th><b>Department</b></th>
+                                                <th><b>Total Complaint</b></th>
+                                                <th><b>Resolved</b></th>
+                                                <th><b>Pending</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($Subtypesummary as $record)
+                                                <tr>
+                                                    <td>{{ $record->Department }}</td>
+                                                    <td>{{ $record->Total_Complaints }}</td>
+                                                    <td>{{ $record->Solved }}</td>
+                                                    <td>{{ $record->Pending }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="4" class="text-center">No records found for the selected dates.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Export Buttons -->
-                        <div class="export-buttons">
-                            <button type="button" onclick="exportToExcel()" class="btn btn-success btn-lg btn-export">
-                                <i class="fas fa-file-excel"></i> Export to Excel
-                            </button>
-                        </div>
-
-                        <div class="table-responsive mt-4">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr style="background-color:#5b9bd5; color: #FFF !important;">
-                                        <th class="text-white">Date</th>
-                                        @foreach (array_unique(array_column($complaints->toArray(), 'type_id')) as $complaintTypeId)
-                                            <th class="text-white">{{ $complaints->firstWhere('type_id', $complaintTypeId)->type->title }}
-                                            </th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($complaints->groupBy('date') as $date => $complaintsByDate)
-                                        <tr>
-                                            <td>{{ $date }}</td>
-                                            @foreach ($complaints->pluck('type')->unique('id') as $complaintType)
-                                                @php
-                                                    $count = $complaintsByDate
-                                                        ->where('type_id', $complaintType->id)
-                                                        ->sum('num_complaints');
-                                                @endphp
-                                                <td>{{ $count ?? 0 }}</td>
-                                            @endforeach
-                                        </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td><strong>Total</strong></td>
-                                        @foreach (array_unique(array_column($complaints->toArray(), 'type_id')) as $complaintTypeId)
-                                            <td><b>{{ $complaints->where('type_id', $complaintTypeId)->sum('num_complaints') }}</b>
-                                            </td>
-                                        @endforeach
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+    {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
+
+
+
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -207,28 +190,20 @@
             print_area.print();
             // print_area.close();
         }
-
+        
+        // Export to Excel function
         function exportToExcel() {
-            // Create a table element for export
-            var table = document.querySelector('table');
-            var html = table.outerHTML;
-            
-            // Create download link
-            var link = document.createElement('a');
-            link.download = 'complaint_type_report.xls';
-            link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
-            link.click();
+            let table = document.querySelector('.table');
+            let html = table.outerHTML;
+            let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+            let downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            downloadLink.href = url;
+            downloadLink.download = 'Complaint_Type_Summary_Report.xls';
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
         }
-
-        // Auto-hide export buttons on print
-        window.addEventListener('beforeprint', function() {
-            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'none');
-        });
-
-        window.addEventListener('afterprint', function() {
-            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'block');
-        });
-
+        
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {

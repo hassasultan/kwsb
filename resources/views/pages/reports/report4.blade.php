@@ -23,6 +23,10 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" disabled>
     <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -30,6 +34,37 @@
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        .table th, .table td {
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        
+        .table th:first-child, .table td:first-child {
+            min-width: 100px;
+        }
+        
+        .btn-export {
+            margin: 10px;
+        }
+        
+        .export-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            .export-buttons {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="vertical dark">
@@ -51,24 +86,34 @@
                                     <strong>Report Duration:</strong> From {{ $dateS }} to {{ $dateE }}
                                 </p>
                                 <h5 style="font-size: 0.8rem">
-                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                                    ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}
                                 </h5>
                             </div>
-                            <div class="table mt-4">
-                                <table class="table table-striped">
+                            
+                            <!-- Export Buttons -->
+                            <div class="col-12">
+                                <div class="export-buttons">
+                                    <button type="button" onclick="exportToExcel()" class="btn btn-success btn-lg btn-export">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive mt-4">
+                                <table class="table table-striped table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th><b>Complaint</b></th>
-                                            <th><b>Complain Type</b></th>
-                                            <th><b>Grievance Type</b></th>
-                                            <th><b>Customer Name</b></th>
-                                            <th><b>Phone</b></th>
-                                            <th><b>Executive Engineer</b></th>
-                                            <th><b>Created Date</b></th>
-                                            <th><b>Resolved Date</b></th>
-                                            <th><b>Priority</b></th>
-                                            <th><b>Turnaround Time<b></th>
-                                            <th><b>Time in Hours</b></th>
+                                        <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                                            <th class="text-white"><b>Complaint</b></th>
+                                            <th class="text-white"><b>Complain Type</b></th>
+                                            <th class="text-white"><b>Grievance Type</b></th>
+                                            <th class="text-white"><b>Customer Name</b></th>
+                                            <th class="text-white"><b>Phone</b></th>
+                                            <th class="text-white"><b>Executive Engineer</b></th>
+                                            <th class="text-white"><b>Created Date</b></th>
+                                            <th class="text-white"><b>Resolved Date</b></th>
+                                            <th class="text-white"><b>Priority</b></th>
+                                            <th class="text-white"><b>Turnaround Time</b></th>
+                                            <th class="text-white"><b>Time in Hours</b></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -83,7 +128,7 @@
                                                 <td>{{ $record->CreatedDate }}</td>
                                                 <td>{{ $record->ResolvedDate }}</td>
                                                 <td>{{ $record->PRIORITY }}</td>
-                                                <td>{{ $record->AgingTime ?? '' }}</td>
+                                                <td>{{ $record->TurnaroundTime ?? '' }}</td>
                                                 <td>{{ $record->TimeInHours ?? '' }}</td>
                                             </tr>
                                         @empty
@@ -98,13 +143,6 @@
                     </div>
                 </div>
             </div>
-
-    {{-- <button type="button"onclick="getPrint()" class="btn btn-primary">print</button> --}}
-
-
-
-
-
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -148,7 +186,7 @@
             var print_area = window.open();
             print_area.document.write('<html>');
             print_area.document.write(
-                '<link rel="dns-prefetch" href="//fonts.gstatic.com"><link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" /><link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" /><link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" /><link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"><link id="pagestyle" href="{{ asset('assets/css/material-dashboard.css?v=3.0.0') }}" rel="stylesheet" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="crossorigin="anonymous" referrerpolicy="no-referrer" /><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />'
+                '<link rel="dns-prefetch" href="//fonts.gstatic.com"><link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" /><link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" /><link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" /><link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"><link id="pagestyle" href="{{ asset('assets/css/material-dashboard.css?v=3.0.0') }}" rel="stylesheet" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="crossorigin="anonymous" referrerpolicy="no-referrer" /><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.css" rel="stylesheet" />'
                 );
             print_area.document.write('<body>');
             print_area.document.write(elem.innerHTML);
@@ -157,6 +195,28 @@
             print_area.print();
             // print_area.close();
         }
+
+        function exportToExcel() {
+            // Create a table element for export
+            var table = document.querySelector('table');
+            var html = table.outerHTML;
+            
+            // Create download link
+            var link = document.createElement('a');
+            link.download = 'tat_filter_report.xls';
+            link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+            link.click();
+        }
+
+        // Auto-hide export buttons on print
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'none');
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'block');
+        });
+
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {

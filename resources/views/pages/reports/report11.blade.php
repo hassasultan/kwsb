@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Executive Engineer Performance Report</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Print-specific Styles */
         @page {
@@ -75,6 +79,30 @@
             background-color: #f2f2f2;
             font-weight: bold;
         }
+        
+        .table-responsive {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        .table th, .table td {
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        
+        .table th:first-child, .table td:first-child {
+            min-width: 100px;
+        }
+        
+        .btn-export {
+            margin: 10px;
+        }
+        
+        .export-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
         @media print {
             body {
                 font-size: 10pt;
@@ -84,6 +112,9 @@
             }
             table {
                 font-size: 9pt;
+            }
+            .export-buttons {
+                display: none !important;
             }
         }
     </style>
@@ -99,7 +130,7 @@
             <div class="header-content">
                 <div class="report-title">KW&SC-CRM</div>
                 <div class="report-subtitle">Executive Engineer Performance Report</div>
-                <div class="report-date">ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y') }}</div>
+                <div class="report-date">ISSUE DATE: {{ \Carbon\Carbon::now()->format('d F Y, h:i A') }}</div>
             </div>
         </div>
 
@@ -111,46 +142,80 @@
             @endif
         </div>
 
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+            <button type="button" onclick="exportToExcel()" class="btn btn-success btn-lg btn-export">
+                <i class="fas fa-file-excel"></i> Export to Excel
+            </button>
+        </div>
+
         <!-- Data Table -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Executive Engineer</th>
-                    <th>Town</th>
-                    <th>Department</th>
-                    <th>Total Complaints Assigned</th>
-                    <th>Pending</th>
-                    <th>Resolved</th>
-                    <th>Percentage Resolved</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($exen_complete_filter as $record)
-                    <tr>
-                        <td>{{ $record->Executive_Engineer }}</td>
-                        <td>{{ $record->Town }}</td>
-                        <td>{{ $record->Department }}</td>
-                        <td>{{ $record->Total_Complaints }}</td>
-                        <td>{{ $record->Pending }}</td>
-                        <td>{{ $record->Solved }}</td>
-                        <td>{{ $record->Percentage_Solved }}</td>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr style="background-color:#5b9bd5; color: #FFF !important;">
+                        <th class="text-white">Executive Engineer</th>
+                        <th class="text-white">Town</th>
+                        <th class="text-white">Department</th>
+                        <th class="text-white">Total Complaints Assigned</th>
+                        <th class="text-white">Pending</th>
+                        <th class="text-white">Resolved</th>
+                        <th class="text-white">Percentage Resolved</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" class="text-center">No records found for the selected dates.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse($exen_complete_filter as $record)
+                        <tr>
+                            <td>{{ $record->Executive_Engineer }}</td>
+                            <td>{{ $record->Town }}</td>
+                            <td>{{ $record->Department }}</td>
+                            <td>{{ $record->Total_Complaints }}</td>
+                            <td>{{ $record->Pending }}</td>
+                            <td>{{ $record->Solved }}</td>
+                            <td>{{ $record->Percentage_Solved }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">No records found for the selected dates.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        // Automatically trigger print when page loads
-        window.onload = function() {
-            setTimeout(function() {
-                window.print();
-            }, 500);
-        };
+        function getPrint() {
+            window.print();
+        }
+
+        function exportToExcel() {
+            // Create a table element for export
+            var table = document.querySelector('table');
+            var html = table.outerHTML;
+            
+            // Create download link
+            var link = document.createElement('a');
+            link.download = 'executive_engineer_performance_filter_report.xls';
+            link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+            link.click();
+        }
+
+        // Auto-hide export buttons on print
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'none');
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.querySelectorAll('.export-buttons').forEach(btn => btn.style.display = 'block');
+        });
+
+        // Automatically trigger print when page loads (optional - can be removed if not needed)
+        // window.onload = function() {
+        //     setTimeout(function() {
+        //         window.print();
+        //     }, 500);
+        // };
     </script>
 </body>
 </html>
