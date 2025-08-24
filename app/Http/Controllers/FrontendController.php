@@ -77,7 +77,7 @@ class FrontendController extends Controller
     public function update_connection_request(Request $request)
     {
         $town = Town::orderBy('town', 'asc')->get();
-        $type = ComplaintType::whereIn('id', [1, 2])->orderBy('title', 'asc')->get();
+        $type = ComplaintType::whereIn('id', [3])->orderBy('title', 'asc')->get();
         $subtype = SubType::orderBy('title', 'asc')->get();
         $prio = Priorities::orderBy('title', 'asc')->get();
         $subtown = SubTown::orderBy('title', 'asc')->get();
