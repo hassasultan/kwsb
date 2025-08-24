@@ -353,6 +353,7 @@
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter CNIC (XXXXX-XXXXXXX-X)..." name="customer_cnic"
+                                                    pattern="^\+92[0-9]{10}$" title="CNIC only contain 13 digits  (e.g., 12345 1234567 1)" />
                                                     value="{{ old('customer_cnic') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
