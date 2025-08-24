@@ -313,6 +313,7 @@
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Name Here..." name="customer_name"
+                                                    pattern="[A-Za-z\s]+" title="Name should only contain letters and spaces"
                                                     value="{{ old('customer_name') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -320,7 +321,8 @@
                                                         class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
+                                                    placeholder="Enter Phone: +92 XXX XXXXXXX" name="phone"
+                                                    pattern="^\+92[0-9]{10}$" title="Phone must start with +92 and contain 12 digits (e.g., +923001234567)" />
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
