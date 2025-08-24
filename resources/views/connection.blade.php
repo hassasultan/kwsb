@@ -932,6 +932,7 @@
                 success: function(data) {
                     $("#sub_town_id").html("");
                     var your_html = "";
+                    your_html += "<option value='' selected disabled>-- Select UC / Mohalla --</option>";
                     $.each(data, function(key, val) {
                         console.log(val);
                         your_html += "<option value=" + val['id'] + ">" + val['title'] +
