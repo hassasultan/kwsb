@@ -168,7 +168,7 @@
                             style="width: 130px; margin-top:-30px;">
                     </div>
                     <div class="col-md-6 pt-3">
-                        <h5 class="fs-1 text-white">REQUEST REDRESSAL MECHANISM
+                        <h5 class="fs-1 text-white">REQUEST FOR NEW CONNECTION
                             <br />
                             <span style="font-size: 0.8rem">KW&SC |
                                 {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
