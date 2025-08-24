@@ -316,7 +316,7 @@
                                                         class="item-required">*</span></label>
                                                 <select name="type_id" id="type_id"
                                                     class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Complaint Type --</option>
+                                                    <option selected disabled>-- Select Type --</option>
 
                                                     @foreach ($type as $row)
                                                         @if ($row->id == 1 || $row->id == 2 || $row->id == 5)
@@ -327,10 +327,10 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Select Grievance<span class="item-required">*</span></label>
+                                                <label>Select Supply Type<span class="item-required">*</span></label>
                                                 <select name="subtype_id" id="subtype_id"
                                                     class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Grievance --</option>
+                                                    <option selected disabled>-- Select Supply Type --</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
