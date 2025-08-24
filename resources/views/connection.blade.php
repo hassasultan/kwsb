@@ -319,7 +319,7 @@
                                                     <option selected disabled>-- Select Complaint Type --</option>
 
                                                     @foreach ($type as $row)
-                                                        @if ($row->id == 14 || $row->id == 15)
+                                                        @if ($row->id == 1 || $row->id == 2 || $row->id == 5)
                                                             <option value="{{ $row->id }}">{{ $row->title }}
                                                             </option>
                                                         @endif
