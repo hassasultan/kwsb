@@ -312,7 +312,7 @@
                                                 <label>Applicant Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Person  Name Here..." name="customer_name"
+                                                    placeholder="Enter Name Here..." name="customer_name"
                                                     value="{{ old('customer_name') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -320,7 +320,7 @@
                                                         class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Phone Number Here..." name="phone"
+                                                    placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
