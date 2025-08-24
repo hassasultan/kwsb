@@ -918,6 +918,7 @@
                 success: function(data) {
                     $("#subtype_id").html("");
                     var your_html = "";
+                    your_html += "<option value='' selected disabled>-- Select Grivence --</option>";
                     $.each(data, function(key, val) {
                         console.log(val);
                         your_html += "<option value=" + val['id'] + ">" + val['title'] +
