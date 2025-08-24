@@ -337,7 +337,7 @@
                                                 <label>Owner Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Person  Name Here..." name="customer_name"
+                                                    placeholder="Enter Name Here..." name="customer_name"
                                                     value="{{ old('customer_name') }}" id="customer-number"
                                                     oninput="validateCustomerName(this)" required />
                                             </div>
@@ -352,7 +352,7 @@
                                                 <label>Owner CNIC<span class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter CNIC Here..." name="customer_cnic"
+                                                    placeholder="Enter CNIC (XXXXX-XXXXXXX-X)..." name="customer_cnic"
                                                     value="{{ old('customer_cnic') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
