@@ -338,6 +338,7 @@
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Name Here..." name="customer_name"
+                                                    pattern="[A-Za-z\s]+" title="Name should only contain letters and spaces"
                                                     value="{{ old('customer_name') }}" id="customer-number"
                                                     oninput="validateCustomerName(this)" required />
                                             </div>
@@ -361,6 +362,7 @@
                                                 <input type="email"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Email Here..." name="email"
+                                                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Enter a valid email address (e.g., user@example.com)"
                                                     value="{{ old('email') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3 d-none" id="business-nature">
