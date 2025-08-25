@@ -315,7 +315,7 @@
                                                 <label>Select Connection Type<span
                                                         class="item-required">*</span></label>
                                                 <select name="type_id" id="type_id" class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Complaint Type --</option>
+                                                    <option selected disabled>-- Select Connection Type --</option>
                                                     @foreach ($type as $row)
                                                         @if (in_array($row->id, [1, 2, 5]))
                                                             <option value="{{ $row->id }}">
