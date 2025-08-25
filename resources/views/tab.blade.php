@@ -245,7 +245,7 @@
                             <div class="card text-center p-4 card-extra-css">
                                 <div class="card-body">
                                     <img src="{{ asset('assets/images/water-tap.png') }}" style="width: 80px;" />
-                                    <p class="card-text mt-3">Add New Connection</p>
+                                    <p class="card-text mt-3">Request A New Connection</p>
                                 </div>
                             </div>
                         </a>

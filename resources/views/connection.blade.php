@@ -168,7 +168,7 @@
                             style="width: 130px; margin-top:-30px;">
                     </div>
                     <div class="col-md-6 pt-3">
-                        <h5 class="fs-1 text-white">REQUEST NEW CONNECTION
+                        <h5 class="fs-1 text-white">REQUEST A NEW CONNECTION
                             <br />
                             <span style="font-size: 0.8rem">KW&SC |
                                 {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
@@ -196,7 +196,7 @@
                             style="width: 180px;">
                     </div>
                     <div class="w-80 pt-3 pl-2">
-                        <h5 class="mobile-heading text-white">REQUEST NEW CONNECTION
+                        <h5 class="mobile-heading text-white">REQUEST A NEW CONNECTION
                             <br />
                             <span style="font-size: 0.6rem">KW&SC |
                                 {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
