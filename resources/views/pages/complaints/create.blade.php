@@ -78,7 +78,7 @@
                                     <div class="form-group col-12 p-3">
                                         <label>Person Phone Number</label>
                                         <input type="tel" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Phone Number Here..." name="phone"
+                                            placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
                                             value="{{ old('phone') }}" />
                                     </div>
                                     <div class="form-group col-12 p-3">

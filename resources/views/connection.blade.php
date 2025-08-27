@@ -168,7 +168,7 @@
                             style="width: 130px; margin-top:-30px;">
                     </div>
                     <div class="col-md-6 pt-3">
-                        <h5 class="fs-1 text-white">REQUEST REDRESSAL MECHANISM
+                        <h5 class="fs-1 text-white">REQUEST A NEW CONNECTION
                             <br />
                             <span style="font-size: 0.8rem">KW&SC |
                                 {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
@@ -196,7 +196,7 @@
                             style="width: 180px;">
                     </div>
                     <div class="w-80 pt-3 pl-2">
-                        <h5 class="mobile-heading text-white">REQUEST REDRESSAL MECHANISM
+                        <h5 class="mobile-heading text-white">REQUEST A NEW CONNECTION
                             <br />
                             <span style="font-size: 0.6rem">KW&SC |
                                 {{ \Carbon\Carbon::now()->format('d F Y') }}</span>
@@ -314,30 +314,36 @@
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Select Connection Type<span
                                                         class="item-required">*</span></label>
-                                                <select name="type_id" id="type_id"
-                                                    class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Complaint Type --</option>
-
+                                                <select name="type_id" id="type_id" class="form-control select2 border-dark" required>
+                                                    <option selected disabled>-- Select Connection Type --</option>
                                                     @foreach ($type as $row)
-                                                        @if ($row->id == 14 || $row->id == 15)
-                                                            <option value="{{ $row->id }}">{{ $row->title }}
+                                                        @if (in_array($row->id, [1, 2, 5]))
+                                                            <option value="{{ $row->id }}">
+                                                                @if ($row->id == 1)
+                                                                    New Connection Sewerage
+                                                                @elseif ($row->id == 2)
+                                                                    New Connection Water
+                                                                @elseif ($row->id == 5)
+                                                                    New Connection Commercial
+                                                                @endif
                                                             </option>
                                                         @endif
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
-                                                <label>Select Grievance<span class="item-required">*</span></label>
+                                                <label>Select Supply Type<span class="item-required">*</span></label>
                                                 <select name="subtype_id" id="subtype_id"
                                                     class="form-control select2 border-dark" required>
-                                                    <option selected disabled>-- Select Grievance --</option>
+                                                    <option selected disabled>-- Select Supply Type --</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Owner Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Person  Name Here..." name="customer_name"
+                                                    placeholder="Enter Name Here..." name="customer_name"
+                                                    pattern="[A-Za-z\s]+" title="Name should only contain letters and spaces"
                                                     value="{{ old('customer_name') }}" id="customer-number"
                                                     oninput="validateCustomerName(this)" required />
                                             </div>
@@ -345,14 +351,15 @@
                                                 <label>Owner Phone Number<span class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Phone Number Here..." name="phone"
+                                                    placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
                                                 <label>Owner CNIC<span class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter CNIC Here..." name="customer_cnic"
+                                                    placeholder="Enter CNIC (XXXXX-XXXXXXX-X)..." name="customer_cnic"
+                                                    pattern="^\+92[0-9]{10}$" title="CNIC only contain 13 digits (e.g., 12345 1234567 1)"
                                                     value="{{ old('customer_cnic') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -360,6 +367,7 @@
                                                 <input type="email"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Email Here..." name="email"
+                                                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Enter a valid email address (e.g., user@example.com)"
                                                     value="{{ old('email') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3 d-none" id="business-nature">
@@ -929,6 +937,7 @@
                 success: function(data) {
                     $("#sub_town_id").html("");
                     var your_html = "";
+                    your_html += "<option value='' selected disabled>-- Select UC / Mohalla --</option>";
                     $.each(data, function(key, val) {
                         console.log(val);
                         your_html += "<option value=" + val['id'] + ">" + val['title'] +
@@ -941,60 +950,76 @@
                 }
             });
         });
-        $("#type_id").on("change", function() {
+        $("#type_id").on("change", function () {
             var type_id = $(this).val();
+
             $.ajax({
                 type: "get",
                 url: "{{ route('subtype.by.type') }}",
-                data: {
-                    'type_id': type_id,
-                },
-                success: function(data) {
+                data: { 'type_id': type_id },
+                success: function (data) {
                     $("#subtype_id").html("");
                     var your_html = "";
-                    your_html += "<option value='' selected disabled>-- Select Grivence --</option>";
-                    $.each(data, function(key, val) {
-                        console.log(val);
-                        your_html += "<option value=" + val['id'] + ">" + val['title'] +
-                            "</option>"
+
+                    // Default placeholder
+                    your_html += "<option value='' selected disabled>-- Select Supply Type --</option>";
+
+                    // Filtering based on type_id
+                    $.each(data, function (key, val) {
+                        if (type_id == 1 && val['id'] == 93) { 
+                            // Sewerage New Connection
+                            your_html += "<option value=" + val['id'] + ">" + val['title'] + "</option>";
+                        }
+                        else if (type_id == 2 && val['id'] == 85) { 
+                            // Water New Connection
+                            your_html += "<option value=" + val['id'] + ">" + val['title'] + "</option>";
+                        }
+                        else if (type_id != 1 && type_id != 2) {
+                            // For other types (like id=5), show all subtypes as normal
+                            your_html += "<option value=" + val['id'] + ">" + val['title'] + "</option>";
+                        }
                     });
-                    $("#subtype_id").append(your_html); //// For Append
+
+                    $("#subtype_id").append(your_html);
+
+                    // Rename dropdown label text properly
+                    if (type_id == 1) {
+                        $("#type_id option:selected").text("New Sewerage Connection");
+                    }
+                    else if (type_id == 2) {
+                        $("#type_id option:selected").text("New Water Connection");
+                    }
                 },
-                error: function() {
+                error: function () {
                     console.log(data);
                 }
             });
         });
+
+
         $("#subtype_id").on("change", function() {
             var subtype_val = $(this).val();
-            if (subtype_val == '59' || subtype_val == '60' || subtype_val == '63' || subtype_val == '64') {
+            if (subtype_val == '95' || subtype_val == '102' || subtype_val == '95' || subtype_val == '102') {
                 $('#business-nature').removeClass('d-none');
-                if (subtype_val == '59' || subtype_val == '63') {
+                if (subtype_val == '95' || subtype_val == '95') {
                     $('#shops-counts label').html("No. of Shops");
                 }
 
 
-                // if(subtype_val != '60' || subtype_val != '64')
-                // {
-                // }
-                // else
-                // {
-                //     $('#shops-counts').addClass('d-none');
-                // }
             } else {
                 $('#business-nature').addClass('d-none');
                 // $('#shops-counts').addClass('d-none');
             }
-            if (subtype_val == '58' || subtype_val == '62') {
+            if (subtype_val == '85' || subtype_val == '93') {
                 $('#shops-counts label').html("No. of Stories");
 
             }
-            if (subtype_val == '58' || subtype_val == '62' || subtype_val == '59' || subtype_val == '63') {
+            if (subtype_val == '85' || subtype_val == '93' || subtype_val == '95' || subtype_val == '95') {
                 $('#shops-counts').removeClass('d-none');
             } else {
                 $('#shops-counts').addClass('d-none');
             }
-            if (subtype_val == '60' || subtype_val == '61' || subtype_val == '64' || subtype_val == '65') {
+            if (subtype_val == '102' || subtype_val == '3' || subtype_val == '102' || subtype_val == '3') {
                 $('#_resType').addClass('d-none');
             } else {
                 $('#_resType').removeClass('d-none');

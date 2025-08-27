@@ -311,7 +311,8 @@
                                                 <label>Applicant Name<span class="item-required">*</span></label>
                                                 <input type="text"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Person  Name Here..." name="customer_name"
+                                                    placeholder="Enter Name Here..." name="customer_name"
+                                                    pattern="[A-Za-z\s]+" title="Name should only contain letters and spaces"
                                                     value="{{ old('customer_name') }}" id="customer-number" oninput="validateCustomerName(this)" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -319,7 +320,8 @@
                                                         class="item-required">*</span></label>
                                                 <input type="tel"
                                                     class="form-control border-bottom border-1 border-dark"
-                                                    placeholder="Enter Phone Number Here..." name="phone"
+                                                    placeholder="Enter Phone: +92 XXX XXXXXXX" name="phone"
+                                                    pattern="^\+92[0-9]{10}$" title="Phone must start with +92 and contain 12 digits (e.g., +923001234567)"
                                                     value="{{ old('phone') }}" required />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -327,6 +329,7 @@
                                                 <input type="email"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     placeholder="Enter Email Here..." name="email"
+                                                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Enter a valid email address (e.g., user@example.com)"
                                                     value="{{ old('email') }}" />
                                             </div>
                                             <div class="form-group col-md-3 p-3">
@@ -891,6 +894,7 @@
                 success: function(data) {
                     $("#sub_town_id").html("");
                     var your_html = "";
+                    your_html += "<option value='' selected disabled>-- Select UC / Mohalla --</option>";
                     $.each(data, function(key, val) {
                         console.log(val);
                         your_html += "<option value=" + val['id'] + ">" + val['title'] +
@@ -914,6 +918,7 @@
                 success: function(data) {
                     $("#subtype_id").html("");
                     var your_html = "";
+                    your_html += "<option value='' selected disabled>-- Select Grivence --</option>";
                     $.each(data, function(key, val) {
                         console.log(val);
                         your_html += "<option value=" + val['id'] + ">" + val['title'] +
