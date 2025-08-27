@@ -17,7 +17,7 @@
                             enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
-                            
+
                             <!-- Customer Information Section -->
                             <div class="row mb-4">
                                 <div class="col-12">
@@ -155,14 +155,14 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             // Initialize subtype dropdown with current complaint's subtype data
             var currentTypeId = $('#type_id').val();
             var currentSubtypeId = '{{ $complaint->subtype_id }}';
-            
+
             if (currentTypeId && currentSubtypeId) {
                 loadSubtypes(currentTypeId, currentSubtypeId);
             }
