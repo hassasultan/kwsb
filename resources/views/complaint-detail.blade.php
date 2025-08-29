@@ -171,7 +171,7 @@
             console.log(complaint);
             document.getElementById('comp_num').innerText = complaint.comp_num;
             document.getElementById('title').innerText = complaint.title;
-            document.getElementById('description').innerText = description;
+            document.getElementById('description').innerText = complaint.description;
             document.getElementById('customer_name').innerText = complaint.customer_name;
             document.getElementById('phone').innerText = complaint.phone;
             document.getElementById('email').innerText = complaint.email;
