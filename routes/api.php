@@ -8,6 +8,7 @@ use App\Http\Controllers\SubTownController;
 use App\Http\Controllers\TownController;
 use App\Http\Controllers\ComplaintTypeController;
 use App\Http\Controllers\SubTypeController;
+use App\Http\Controllers\AnnouncementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::get('/get-types', [ComplaintTypeController::class, 'allTypes']);
 Route::get('/get-subtypes', [SubTypeController::class, 'get_subtype']);
 Route::get('/delete-user', [AuthController::class, 'delete_user']);
 Route::get('/get-customer-complaint', [ComplaintController::class, 'customer_wise_complaints']);
-
+Route::get('/announcement', [AnnouncementController::class, 'index']);
 Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
@@ -57,4 +58,5 @@ Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/device-token', [App\Http\Controllers\Api\DeviceTokenController::class, 'store']);
     Route::delete('/device-token', [App\Http\Controllers\Api\DeviceTokenController::class, 'destroy']);
     Route::get('/device-token', [App\Http\Controllers\Api\DeviceTokenController::class, 'show']);
+
 });
