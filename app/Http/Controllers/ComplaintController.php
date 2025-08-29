@@ -516,7 +516,7 @@ class ComplaintController extends Controller
         LogService::create('Complaint', $complaint->id, auth()->user()->name.' has redirect to the complaint.');
         // dd($department_user->toArray());
         if (auth()->user()->role == 4) {
-            return view('department.pages.complaints.details', compact('complainft', 'department_user'));
+            return view('department.pages.complaints.details', compact('complaint', 'department_user'));
         }
         return view('pages.complaints.details', compact('complaint', 'department_user'));
     }
