@@ -12,9 +12,14 @@ class AnnouncementController extends Controller
 {
     //
     use SaveImage;
-    public function index()
+    public function index(Request $request)
     {
         $announcement = Announcement::first();
+        if($request->has('api'))
+        {
+            $announcement = Announcement::where('status', 1)->first();
+            return response()->json($announcement);
+        }
         return view('pages.announcements.index', compact('announcement'));
     }
 
