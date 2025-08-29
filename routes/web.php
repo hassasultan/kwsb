@@ -102,7 +102,8 @@ Route::prefix('/admin')->group(function () {
         Route::get('/compaints-reports/reports12', [ComplaintController::class, 'generate_report12'])->name('compaints-reports.reports12');
         Route::get('/compaints-reports/reports14', [ComplaintController::class, 'generate_report14'])->name('compaints-reports.reports14');
         Route::get('/compaints-reports/reports15', [ComplaintController::class, 'generate_report15'])->name('compaints-reports.reports15');
-        
+        Route::get('/compaints-reports/reports16', [ComplaintController::class, 'generate_billing_data'])->name('compaints-reports.reports16');
+
         // Bounce Back Routes
         Route::get('/bounce-back', [BounceBackController::class, 'index'])->name('bounce-back.index');
         Route::get('/bounce-back/detail/{id}', [BounceBackController::class, 'detail'])->name('bounce-back.detail');

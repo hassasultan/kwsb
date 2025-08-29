@@ -902,6 +902,34 @@
                 </div>
 
 
+                <div class="col-md-3">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form role="form" method="get" action="{{ route('compaints-reports.reports16') }}"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <h6>Billing Report</h6>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>Consumer No</label>
+                                        <input type="text" class="form-control border-bottom"
+                                            placeholder="Enter Consumer No..." name="consumer_no"
+                                            value="{{ old('consumer_no') }}" required />
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn bg-primary text-white btn-lg w-100">Get Bill</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
 
             </div>
         </div> <!-- /. card-body -->

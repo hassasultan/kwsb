@@ -29,6 +29,7 @@ use App\Services\FileScan;
 use App\Services\FirebaseNotificationService;
 use App\Traits\Loggable;
 use App\Models\logs;
+use Illuminate\Support\Facades\Http;
 
 class ComplaintController extends Controller
 {
@@ -1646,4 +1647,62 @@ ORDER BY
                 'department'
             ));
         }
+
+    public function generate_billing_data(Request $request)
+        {
+            $request->validate([
+                'consumer_no' => 'required|string',
+            ]);
+
+            $consumer_no = $request->consumer_no;
+            $username = 'websiteapikw@sc';
+            $password = 'kW@$c!%23$%26';
+
+            $response = Http::get('https://kwsconline.com:5000/api/BankCollection/GetConsumerBillDetails', [
+                'consumer_no' => $consumer_no,
+                'username' => $username,
+                'password' => $password
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                if ($data['status'] === 'Success' && isset($data['retailBillPrintingComplete'])) {
+                    $bill = $data['retailBillPrintingComplete'];
+
+                    // Extract important info
+                    $consumer = [
+                        'consumer_no'   => $bill['conS_NO'] ?? '',
+                        'name'          => $bill['consumeR_NAME'] ?? '',
+                        'town'          => $bill['towN_NAME'] ?? '',
+                        'address'       => trim(($bill['adD1'] ?? '') . ' ' . ($bill['adD2'] ?? '')),
+                        'bill_period'   => $bill['bilL_PERIOD'] ?? '',
+                        'issue_date'    => $bill['issU_DT'] ?? '',
+                        'due_date'      => $bill['duE_DT'] ?? '',
+                        'payable'       => $bill['payablE_DUE_DATE'] ?? 0,
+                        'after_due'     => $bill['payablE_AFTER_DATE'] ?? 0,
+                    ];
+
+                    // Get current and last month
+                    $current_month = [
+                        'month' => $bill['bilL_PERIOD'] ?? '',
+                        'billed' => $bill['wateR_CURRENT'] ?? 0,
+                        'paid' => $bill['amounT_PAID_12'] ?? 0, // latest entry in history
+                        'status' => ($bill['payablE_DUE_DATE'] ?? 0) > 0 ? 'Unpaid' : 'Paid'
+                    ];
+
+                    $last_month = [
+                        'month' => $bill['billinG_MONTH_1'] ?? '',
+                        'billed' => $bill['amounT_BILLED_1'] ?? 0,
+                        'paid' => $bill['amounT_PAID_1'] ?? 0,
+                        'date' => $bill['paymenT_DATE_1'] ?? '',
+                    ];
+
+                    return view('pages.reports.report16', compact('consumer', 'current_month', 'last_month'));
+                }
+            }
+
+            return view('pages.reports.report16')->withErrors(['error' => 'Unable to fetch billing data']);
+        }
+
 }
