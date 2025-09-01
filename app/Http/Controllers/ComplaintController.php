@@ -57,6 +57,10 @@ class ComplaintController extends Controller
                 })->where(function ($query) use ($request) {
                     $query->where('comp_num', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('phone', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('address', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('landmark', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
                 });
                 // dd($complaint->get()->toArray());
@@ -64,6 +68,10 @@ class ComplaintController extends Controller
                 $complaint = $complaint->where(function ($query) use ($request) {
                     $query->where('comp_num', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('customer_num', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('phone', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('address', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('landmark', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('customer_name', 'LIKE', '%' . $request->search . '%');
                 });
             }
