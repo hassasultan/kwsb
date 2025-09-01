@@ -1,209 +1,325 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <div class="row">
-                            <div class="col-6">
-                                <h6 class="text-white text-capitalize ps-3">Add Complaint</h6>
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h4 class="text-white text-capitalize ps-3 mb-0">
+                                        <i class="fas fa-plus-circle me-2"></i>Add New Complaint
+                                    </h4>
+                                </div>
+                                <!-- <div class="col-6 text-end pe-3">
+                                    <span class="badge bg-light text-dark">Step 1 of 2</span>
+                                </div> -->
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body px-4 pb-2">
-                    <h5>Give Complaint Information...</h5>
-                    <form role="form" method="POST" id="consumerLookupForm">
+                    <div class="card-body px-4 pb-4">
+                        <!-- Consumer Lookup Section -->
+                        <div class="mb-5">
+                            <div class="row align-items-center mb-3">
+                                <div class="col-auto">
+                                    <div class="avatar avatar-sm bg-gradient-info rounded-circle">
+                                        <i class="fas fa-search text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="mb-0 text-gradient text-info">Consumer Lookup</h5>
+                                    <p class="text-sm text-muted mb-0">Enter consumer number to verify billing details</p>
+                                </div>
+                            </div>
+                            
+                            <form role="form" method="POST" id="consumerLookupForm">
+                                @csrf
+                                <div class="row align-items-end">
+                                    <!-- Input -->
+                                    <div class="col-md-5">
+                                        <div class="form-group mb-0">
+                                            <label for="consumer_no" class="form-control-label text-dark font-weight-bold">
+                                                Consumer Number
+                                            </label>
+                                            <div class="input-group input-group-dynamic">
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control border rounded-3 px-3 py-2"
+                                                    placeholder="Enter Consumer Number (e.g., A1234567890)" 
+                                                    name="consumer_no" 
+                                                    id="consumer_no" 
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="col-md-2">
+                                        <button 
+                                            type="button" 
+                                            id="lookupBtn" 
+                                            class="btn btn-primary w-100 py-2 rounded-3"
+                                            aria-label="Lookup Consumer"
+                                        >
+                                            <i class="fas fa-search me-2" aria-hidden="true"></i>
+                                            Lookup Consumer
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <!-- Main Form Section -->
+                        <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
+                        enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="form-group col-8 p-3">
-                                <label>Consumer Number</label>
-                                <input type="text" class="form-control border-bottom border-1 border-dark"
-                                    placeholder="Enter Consumer Number to lookup details..." name="consumer_no" id="consumer_no" required />
-                                <button type="button" id="lookupBtn"
-                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Lookup Consumer</button>
-                            </div>
-                        </div>
-                    </form>
+                            <!-- Consumer Details Section -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="card border shadow-sm h-100">
+                                        <div class="card-header bg-gradient-info text-white py-3">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-user me-2"></i>Consumer Information
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Consumer Number</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_consumer_no" disabled />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Consumer Name</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_consumer_name" disabled />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Address</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_address" disabled />
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <label class="form-control-label text-dark font-weight-bold">Zone</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_zone" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
-                    enctype="multipart/form-data">
-                    @csrf
-                        <div class="row">
-                            <div class="col-6 card-body px-4 pb-2 ">
-                                <div class="row border border-2 border-dark p-2">
-                                    <h5>Consumer Information...</h5>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Consumer #*</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_consumer_no" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Consumer Name*</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_consumer_name" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Address*</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_address" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Zone*</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_zone" disabled />
+                                <div class="col-md-6">
+                                    <div class="card border shadow-sm h-100">
+                                        <div class="card-header bg-gradient-warning text-white py-3">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-file-invoice-dollar me-2"></i>Billing Information
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Current Bill Period</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_bill_period" disabled />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Current Amount Due</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_payable" disabled />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Current Amount After Due</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_after_due" disabled />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Current Month Bill Status</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_current_month_status" disabled />
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <label class="form-control-label text-dark font-weight-bold">Last Month Bill Status</label>
+                                                <input type="text" class="form-control border rounded-3 px-3 py-2 bg-light"
+                                                    value="" id="display_last_month" disabled />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-6 card-body px-4 pb-2 ">
-                                <div class="row border border-2 border-dark p-2">
-                                    <h5>Billing Information...</h5>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Current Bill Period</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_bill_period" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Current Amount Due</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_payable" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Current Amount After Due</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_after_due" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Current Month Bill Status</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_current_month_status" disabled />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Last Month Bill Status</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="" id="display_last_month" disabled />
+                            <!-- Focal Person Information Section -->
+                            <div class="card border shadow-sm mb-4">
+                                <div class="card-header bg-gradient-success text-white py-3">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-user-tie me-2"></i>Focal Person Information
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Person Name</label>
+                                                <div class="input-group input-group-dynamic">
+                                                    <input type="text" class="form-control border rounded-3 px-3 py-2"
+                                                        placeholder="Enter Person Name Here..." name="customer_name"
+                                                        value="{{ old('customer_name') }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Phone Number</label>
+                                                <div class="input-group input-group-dynamic">
+                                                    <input type="tel" class="form-control border rounded-3 px-3 py-2"
+                                                        placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
+                                                        value="{{ old('phone') }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Email Address</label>
+                                                <div class="input-group input-group-dynamic">
+                                                    <input type="email" class="form-control border rounded-3 px-3 py-2"
+                                                        placeholder="Enter Email Here..." name="email" value="{{ old('email') }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Address</label>
+                                                <div class="input-group input-group-dynamic">
+                                                    <input type="text" class="form-control border rounded-3 px-3 py-2"
+                                                        placeholder="Enter Address Here..." name="address" value="{{ old('address') }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-0">
+                                                <label class="form-control-label text-dark font-weight-bold">Nearest Landmark</label>
+                                                <div class="input-group input-group-dynamic">
+                                                    <input type="text" class="form-control border rounded-3 px-3 py-2"
+                                                        placeholder="Enter Nearest Land Mark Here..." name="landmark" value="{{ old('landmark') }}" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-12 card-body px-4 pb-2 border border-2 border-dark mt-3">
-                                <h5>Focal Person Information...</h5>
-                                <div class="row">
-                                    <div class="form-group col-6 p-3">
-                                        <label>Person Name</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Person Name Here..." name="customer_name"
-                                            value="{{ old('customer_name') }}" />
+                            <!-- Complaint Information Section -->
+                            <div class="card border shadow-sm mb-4">
+                                <div class="card-header bg-gradient-danger text-white py-3">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Complaint Information
+                                            </h6>
+                                        </div>
+                                        <!-- <div class="col-auto">
+                                            <span class="badge bg-light text-dark">Step 2 of 2</span>
+                                        </div> -->
                                     </div>
-                                    <div class="form-group col-6 p-3">
-                                        <label>Person Phone Number</label>
-                                        <input type="tel" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
-                                            value="{{ old('phone') }}" />
-                                    </div>
-                                    <div class="form-group col-6 p-3">
-                                        <label>Person Email</label>
-                                        <input type="email" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Email Here..." name="email" value="{{ old('email') }}" />
-                                    </div>
-                                    <div class="form-group col-6 p-3">
-                                        <label>Person Address</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Address Here..." name="address" value="{{ old('address') }}" />
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Person Nearest Land Mark</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Nearest Land Mark Here..." name="landmark" value="{{ old('landmark') }}" />
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Select Town *</label>
+                                                <select name="town_id" id="town_id" class="form-control border rounded-3 px-3 py-2" required>
+                                                    <option disabled selected> -- Select Town Here -- </option>
+                                                    @foreach ($town as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->town }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Select SubTown *</label>
+                                                <select name="sub_town_id" id="sub_town_id" class="form-control border rounded-3 px-3 py-2" required>
+                                                    <option disabled selected> -- Select Subtown Here -- </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Select Type *</label>
+                                                <select name="type_id" id="type_id" class="form-control border rounded-3 px-3 py-2" required>
+                                                    <option disabled selected> -- Select Type Here -- </option>
+                                                    @foreach ($type as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Select Sub Type *</label>
+                                                <select name="subtype_id" id="subtype_id" class="form-control border rounded-3 px-3 py-2" required>
+                                                    <option disabled selected> -- Select SubType Here -- </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Select Priority *</label>
+                                                <select name="prio_id" class="form-control border rounded-3 px-3 py-2" required>
+                                                    <option disabled selected> -- Select Priority Here -- </option>
+                                                    @foreach ($prio as $row)
+                                                        <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Select Source *</label>
+                                                <select name="source" class="form-control border rounded-3 px-3 py-2" required>
+                                                    <option disabled selected> -- Select Source Here -- </option>
+                                                    @foreach ($source as $row)
+                                                        <option value="{{ $row->title }}">{{ $row->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-3">
+                                                <label class="form-control-label text-dark font-weight-bold">Description *</label>
+                                                <textarea class="form-control border rounded-3 px-3 py-2" rows="4" 
+                                                    placeholder="Enter detailed description of the complaint..."
+                                                    name="description" required>{{ old('description') }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-0">
+                                                <label class="form-control-label text-dark font-weight-bold">Attach Picture (Optional)</label>
+                                                <div class="input-group">
+                                                    <input type="file" class="form-control border rounded-3 px-4 py-2"
+                                                        name="image" accept="image/*" />
+                                                </div>
+                                                <small class="text-muted">Supported formats: JPEG, JPG, PNG Max size: 2MB</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-12 card-body px-4 pb-2 border border-2 border-dark mt-3">
-                                <h5>Complaint Information...</h5>
-                                <div class="row">
-                                    <div class="form-group col-12 p-3">
-                                        <label>Select Town*</label>
-                                        <select name="town_id" id="town_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option disabled selected> -- Select Town Here -- </option>
-                                            @foreach ($town as $row)
-                                                <option value="{{ $row->id }}">{{ $row->town }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Select SubTown*</label>
-                                        <select name="sub_town_id" id="sub_town_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option disabled selected> -- Select Subtown Here -- </option>
-                                            {{-- @foreach ($subtown as $row)
-                                                <option value="{{ $row->id }}">({{ $row->town->town }})  {{ $row->title }}</option>
-                                            @endforeach --}}
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Select Type*</label>
-                                        <select name="type_id" id="type_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option disabled selected> -- Select Type Here -- </option>
-                                            @foreach ($type as $row)
-                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Select Sub Type*</label>
-                                        <select name="subtype_id" id="subtype_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option disabled selected> -- Select SubType Here -- </option>
-                                            {{-- @foreach ($subtype as $row)
-                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
-                                            @endforeach --}}
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Select Priority*</label>
-                                        <select name="prio_id" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option disabled selected> -- Select Priority Here -- </option>
-                                            @foreach ($prio as $row)
-                                                <option value="{{ $row->id }}">{{ $row->title }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Select Source*</label>
-                                        <select name="source" class="select2-multiple form-control fs-14  h-50px" required>
-                                            <option disabled selected> -- Select Source Here -- </option>
-                                            @foreach ($source as $row)
-                                                <option value="{{ $row->title }}">{{ $row->title }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    {{-- <div class="form-group col-12 p-3">
-                                        <label>Title*</label>
-                                        <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Sub Town Here..." name="title" required
-                                            value="{{ old('title') }}" />
-                                    </div> --}}
-                                    <div class="form-group col-12 p-3">
-                                        <label>Description*</label>
-                                        <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
-                                            name="description" required>{{ old('description') }}</textarea>
-                                    </div>
-                                    <div class="form-group col-12 p-3">
-                                        <label>Picture</label>
-                                        <input type="file" class="form-control border-bottom border-1 border-dark"
-                                            name="image" value="{{ old('image') }}" />
-                                    </div>
-                                </div>
+                            <!-- Submit Button -->
+                            <div class="text-center mb-4">
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-primary btn-lg px-5 py-3 rounded-3"
+                                    aria-label="Submit Complaint"
+                                >
+                                    <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+                                    Submit Complaint
+                                </button>
                             </div>
-                            <div class="text-center">
-                                <button type="submit"
-                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Create</button>
-                            </div>
-                        </div>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
