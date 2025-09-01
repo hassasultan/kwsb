@@ -1705,4 +1705,93 @@ ORDER BY
             return view('pages.reports.report16')->withErrors(['error' => 'Unable to fetch billing data']);
         }
 
+    public function getConsumerDetails(Request $request)
+    {
+        $request->validate([
+            'consumer_no' => 'required|string',
+        ]);
+
+        $consumer_no = $request->consumer_no;
+        $username = 'websiteapikw@sc';
+        $password = 'kW@$c!%23$%26';
+
+        $response = Http::get('https://kwsconline.com:5000/api/BankCollection/GetConsumerBillDetails', [
+            'consumer_no' => $consumer_no,
+            'username' => $username,
+            'password' => $password
+        ]);
+
+        if ($response->successful()) {
+            $data = $response->json();
+
+            if ($data['status'] === 'Success' && isset($data['retailBillPrintingComplete'])) {
+                $bill = $data['retailBillPrintingComplete'];
+
+                $consumer = [
+                    'consumer_no'   => $bill['conS_NO'] ?? '',
+                    'name'          => $bill['consumeR_NAME'] ?? '',
+                    'address'       => trim(($bill['adD1'] ?? '') . ' ' . ($bill['adD2'] ?? '')),
+                    'bill_period'   => $bill['bilL_PERIOD'] ?? '',
+                    'issue_date'    => $bill['issU_DT'] ?? '',
+                    'due_date'      => $bill['duE_DT'] ?? '',
+                    'payable'       => $bill['payablE_DUE_DATE'] ?? 0,
+                    'after_due'     => $bill['payablE_AFTER_DATE'] ?? 0,
+                    'water_current' => $bill['wateR_CURRENT'] ?? 0,
+                    'water_surcharge' => $bill['wateR_SURCHARGE'] ?? 0,
+                    'water_arrear' => $bill['wateR_ARREAR'] ?? 0,
+                    'sewerage_current' => $bill['seweragE_CURRENT'] ?? 0,
+                    'sewerage_arrear' => $bill['sewwragE_ARREAR'] ?? 0,
+                    'conservancy_current' => $bill['conservancY_CURRENT'] ?? 0,
+                    'conservancy_arrear' => $bill['conservancY_ARREAR'] ?? 0,
+                    'fire_current' => $bill['firE_CURRENT'] ?? 0,
+                    'fire_arrear' => $bill['firE_ARREAR'] ?? 0,
+                    'total_water' => $bill['totaL_WATER'] ?? 0,
+                    'total_sewerage' => $bill['totaL_SEWERAGE'] ?? 0,
+                    'total_conservancy' => $bill['totaL_CONSERVANCY'] ?? 0,
+                    'total_fire' => $bill['totaL_FIRE'] ?? 0,
+                    'bank_charges' => $bill['banK_CHARGES'] ?? 0,
+                    'plot_size' => $bill['ploT_SIZE'] ?? 0,
+                    'flat_size' => $bill['flaT_SIZE'] ?? 0,
+                    'zone_name' => $bill['zonE_NAME'] ?? '',
+                    'last_month_billed' => $bill['amounT_BILLED_12'] ?? 0,
+                    'last_month_paid' => $bill['amounT_PAID_12'] ?? 0,
+                    'last_month_date' => $bill['paymenT_DATE_12'] ?? '',
+                ];
+
+                // Determine current month status from first API data
+                $currentAmountDue = $consumer['payable'] ?? 0;
+                if ($currentAmountDue > 0) {
+                    $consumer['current_month_status'] = 'Unpaid';
+                    $consumer['current_month_amount'] = $currentAmountDue;
+                    $consumer['current_month_surcharge'] = $consumer['after_due'] - $currentAmountDue;
+                } else {
+                    $consumer['current_month_status'] = 'Paid';
+                }
+                
+                // Optional: Try to get additional data from second API as backup
+                $billResponse = Http::get('https://kwsconline.com:5000/api/BankCollection/GetConsumerBill', [
+                    'consumer_no' => $consumer_no,
+                    'username' => $username,
+                    'password' => $password
+                ]);
+
+                if ($billResponse->successful()) {
+                    $billData = $billResponse->json();
+                    if ($billData['status'] === 'Success' && isset($billData['data']) && count($billData['data']) > 0) {
+                        $currentBill = $billData['data'][0];
+                        // Override with API data if available
+                        $consumer['current_month_status'] = $currentBill['billStatus'] ?? $consumer['current_month_status'];
+                        $consumer['current_month_due_date'] = $currentBill['dueDate'] ?? '';
+                        $consumer['current_month_amount'] = $currentBill['amountBeforeDueDate'] ?? $consumer['current_month_amount'];
+                        $consumer['current_month_surcharge'] = $currentBill['surcharge'] ?? $consumer['current_month_surcharge'];
+                    }
+                }
+
+                return response()->json(['status' => 'success', 'consumer' => $consumer]);
+            }
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'Unable to fetch consumer details']);
+    }
+
 }

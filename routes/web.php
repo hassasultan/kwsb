@@ -163,5 +163,7 @@ Route::prefix('/system')->group(function () {
         // Logs Management Routes for System Users
         Route::get('/logs-management', [LogController::class, 'index'])->name('system.logs.index');
         Route::get('/logs-management/{id}/detail', [LogController::class, 'detail'])->name('system.logs.detail');
+        
+        Route::post('/compaints-management/get-consumer-details', [ComplaintController::class, 'getConsumerDetails'])->name('compaints-management.get-consumer-details');
     });
 });

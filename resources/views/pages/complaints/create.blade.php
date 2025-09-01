@@ -14,18 +14,16 @@
                     </div>
                 </div>
                 <div class="card-body px-4 pb-2">
-                    <h5>Give Complaint Informarion...</h5>
-                    <form role="form" method="get" action="{{ route('compaints-management.create') }}"
-                        enctype="multipart/form-data">
+                    <h5>Give Complaint Information...</h5>
+                    <form role="form" method="POST" id="consumerLookupForm">
+                        @csrf
                         <div class="row">
-
                             <div class="form-group col-8 p-3">
-                                <label>Customer Number</label>
+                                <label>Consumer Number</label>
                                 <input type="text" class="form-control border-bottom border-1 border-dark"
-                                    placeholder="Enter Customer Number for search ..." name="search" required
-                                    value="{{ old('search') }}" />
-                                <button type="submit"
-                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Search</button>
+                                    placeholder="Enter Consumer Number to lookup details..." name="consumer_no" id="consumer_no" required />
+                                <button type="button" id="lookupBtn"
+                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Lookup Consumer</button>
                             </div>
                         </div>
                     </form>
@@ -36,57 +34,82 @@
                         <div class="row">
                             <div class="col-6 card-body px-4 pb-2 ">
                                 <div class="row border border-2 border-dark p-2">
-                                    <h5>Consumer Informarion...</h5>
+                                    <h5>Consumer Information...</h5>
                                     <div class="form-group col-12 p-3">
                                         <label>Consumer #*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="@if ($customer != null){{ $customer->customer_id }}@endif" disabled />
+                                            value="" id="display_consumer_no" disabled />
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Consumer Name*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="@if ($customer != null){{ $customer->customer_name }}@endif" disabled />
+                                            value="" id="display_consumer_name" disabled />
                                     </div>
                                     <div class="form-group col-12 p-3">
-                                        <label>Town*</label>
+                                        <label>Address*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="@if ($customer != null){{ $customer->town }}@endif" disabled />
+                                            value="" id="display_address" disabled />
                                     </div>
                                     <div class="form-group col-12 p-3">
-                                        <label>Sub Town*</label>
+                                        <label>Zone*</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            value="@if ($customer != null){{ $customer->sub_town }}@endif" disabled />
+                                            value="" id="display_zone" disabled />
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-6 card-body px-4 pb-2 ">
-                                <div class="row  border border-2 border-dark p-2">
+                                <div class="row border border-2 border-dark p-2">
+                                    <h5>Billing Information...</h5>
                                     <div class="form-group col-12 p-3">
-                                        <label>Consumer #</label>
+                                        <label>Current Bill Period</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Consumer Number Here..." name="customer_num"
-                                            value="{{ old('customer_num') }}" />
+                                            value="" id="display_bill_period" disabled />
                                     </div>
-                                    <h5>Focal Person Informarion...</h5>
                                     <div class="form-group col-12 p-3">
+                                        <label>Current Amount Due</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="" id="display_payable" disabled />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Current Amount After Due</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="" id="display_after_due" disabled />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Current Month Bill Status</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="" id="display_current_month_status" disabled />
+                                    </div>
+                                    <div class="form-group col-12 p-3">
+                                        <label>Last Month Bill Status</label>
+                                        <input type="text" class="form-control border-bottom border-1 border-dark"
+                                            value="" id="display_last_month" disabled />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 card-body px-4 pb-2 border border-2 border-dark mt-3">
+                                <h5>Focal Person Information...</h5>
+                                <div class="row">
+                                    <div class="form-group col-6 p-3">
                                         <label>Person Name</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
-                                            placeholder="Enter Person  Name Here..." name="customer_name"
+                                            placeholder="Enter Person Name Here..." name="customer_name"
                                             value="{{ old('customer_name') }}" />
                                     </div>
-                                    <div class="form-group col-12 p-3">
+                                    <div class="form-group col-6 p-3">
                                         <label>Person Phone Number</label>
                                         <input type="tel" class="form-control border-bottom border-1 border-dark"
                                             placeholder="Enter Phone: +92(XXX) XXXXXXX" name="phone"
                                             value="{{ old('phone') }}" />
                                     </div>
-                                    <div class="form-group col-12 p-3">
+                                    <div class="form-group col-6 p-3">
                                         <label>Person Email</label>
                                         <input type="email" class="form-control border-bottom border-1 border-dark"
                                             placeholder="Enter Email Here..." name="email" value="{{ old('email') }}" />
                                     </div>
-                                    <div class="form-group col-12 p-3">
+                                    <div class="form-group col-6 p-3">
                                         <label>Person Address</label>
                                         <input type="text" class="form-control border-bottom border-1 border-dark"
                                             placeholder="Enter Address Here..." name="address" value="{{ old('address') }}" />
@@ -98,23 +121,18 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-12 card-body px-4 pb-2 border border-2 border-dark mt-3">
-                                <h5>Complaint Informarion...</h5>
+                                <h5>Complaint Information...</h5>
                                 <div class="row">
                                     <div class="form-group col-12 p-3">
                                         <label>Select Town*</label>
                                         <select name="town_id" id="town_id" class="select2-multiple form-control fs-14  h-50px" required>
                                             <option disabled selected> -- Select Town Here -- </option>
                                             @foreach ($town as $row)
-                                                <option value="{{ $row->id }}">{{ $row->town }}
-
-                                                </option>
+                                                <option value="{{ $row->id }}">{{ $row->town }}</option>
                                             @endforeach
                                         </select>
-                                        @if ($customer != null)
-                                            <input type="hidden" name="customer_id"
-                                            value="@if (isset($customer->customer_id)) {{ $customer->id }} @endif" />
-                                        @endif
                                     </div>
                                     <div class="form-group col-12 p-3">
                                         <label>Select SubTown*</label>
@@ -179,12 +197,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- @if ($customer != null) --}}
-                                <div class="text-center">
-                                    <button type="submit"
-                                        class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Create</button>
-                                </div>
-                            {{-- @endif --}}
+                            <div class="text-center">
+                                <button type="submit"
+                                    class="btn btn-lg bg-gradient-primary btn-lg w-20 mt-4 mb-0">Create</button>
+                            </div>
                         </div>
 
                     </form>
@@ -193,8 +209,68 @@
         </div>
     </div>
 @endsection
+
 @section('bottom_script')
     <script>
+        $("#lookupBtn").on("click", function() {
+            var consumerNo = $("#consumer_no").val();
+            if (!consumerNo) {
+                alert('Please enter a consumer number');
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('compaints-management.get-consumer-details') }}",
+                data: {
+                    'consumer_no': consumerNo,
+                    '_token': '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        var consumer = response.consumer;
+                        
+                        // Update consumer information
+                        $("#display_consumer_no").val(consumer.consumer_no);
+                        $("#display_consumer_name").val(consumer.name);
+                        $("#display_address").val(consumer.address);
+                        $("#display_zone").val(consumer.zone_name);
+                        
+                        // Update billing information
+                        $("#display_bill_period").val(consumer.bill_period);
+                        $("#display_payable").val('Rs. ' + consumer.payable);
+                        $("#display_after_due").val('Rs. ' + consumer.after_due);
+                        $("#display_last_month").val('Last Month Billed Amount '+ consumer.last_month_billed + ': Last Month Paid ' + consumer.last_month_paid + ': Date of Payment  ' + consumer.last_month_date);
+                        
+                        // Update current month bill status
+                        if (consumer.current_month_status) {
+                            var statusText = consumer.current_month_status;
+                            if (consumer.current_month_status === 'Unpaid') {
+                                statusText += ' - Rs. ' + consumer.current_month_amount;
+                                if (consumer.current_month_surcharge > 0) {
+                                    statusText += ' + Surcharge: Rs. ' + consumer.current_month_surcharge;
+                                }
+                            } else if (consumer.current_month_status === 'No billing data found') {
+                                statusText = 'No current month billing data found';
+                                console.log('API Debug Info:', consumer.api_debug);
+                            } else if (consumer.current_month_status === 'API call failed') {
+                                statusText = 'Unable to fetch current month status (API Error: ' + consumer.api_error + ')';
+                            }
+                            $("#display_current_month_status").val(statusText);
+                        } else {
+                            $("#display_current_month_status").val('Status not available');
+                        }
+                        
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error occurred while fetching consumer details');
+                }
+            });
+        });
+
         $("#town_id").on("change",function(){
             var town_id = $(this).val();
             $.ajax({
@@ -210,13 +286,14 @@
                             console.log(val);
                             your_html += "<option value="+val['id']+">" +  val['title'] + "</option>"
                         });
-                    $("#sub_town_id").append(your_html); //// For Append
+                    $("#sub_town_id").append(your_html);
                 },
                 error: function() {
                     console.log(data);
                 }
             });
         });
+        
         $("#type_id").on("change",function(){
             var type_id = $(this).val();
             $.ajax({
@@ -232,7 +309,7 @@
                             console.log(val);
                             your_html += "<option value="+val['id']+">" +  val['title'] + "</option>"
                         });
-                    $("#subtype_id").append(your_html); //// For Append
+                    $("#subtype_id").append(your_html);
                 },
                 error: function() {
                     console.log(data);
