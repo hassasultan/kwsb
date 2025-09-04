@@ -90,8 +90,9 @@ class FirebaseNotificationService
             }
 
             // Create message with different platform configurations
+            $includeNotification = empty($stringData['_data_only']) || $stringData['_data_only'] === 'false' || $stringData['_data_only'] === '0';
+
             $message = CloudMessage::new()
-                ->withNotification($notification)
                 ->withData($stringData)
                 ->withAndroidConfig(AndroidConfig::fromArray([
                     'priority' => 'high',
@@ -99,6 +100,10 @@ class FirebaseNotificationService
                         'sound' => 'default',
                     ],
                 ]));
+
+            if ($includeNotification) {
+                $message = $message->withNotification($notification);
+            }
 
             if (is_array($deviceTokens)) {
                 foreach ($deviceTokens as $token) {
