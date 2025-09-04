@@ -77,6 +77,7 @@ class NotificationController extends Controller
 
                 case 'agent':
                     $agent = MobileAgent::with('user')->find($request->recipient_id);
+                    // dd($agent->user->device_token);
                     if ($agent && $agent->user->device_token) {
                         $result = $this->firebaseService->sendNotification(
                             $agent->user->device_token,
@@ -116,6 +117,7 @@ class NotificationController extends Controller
                 return redirect()->route('admin.notification.index')
                     ->with('success', "Notification sent successfully to {$result['success_count']} recipients");
             } else {
+                dd($result);
                 return back()->with('error', 'No recipients found with device tokens');
             }
 
