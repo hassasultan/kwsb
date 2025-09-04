@@ -81,26 +81,10 @@ class FirebaseNotificationService
             $message = CloudMessage::new()
                 ->withNotification($notification)
                 ->withData($data)
-                ->withWebPushConfig(WebPushConfig::fromArray([
-                    'headers' => [
-                        'Urgency' => 'high',
-                    ],
-                ]))
                 ->withAndroidConfig(AndroidConfig::fromArray([
                     'priority' => 'high',
                     'notification' => [
                         'sound' => 'default',
-                    ],
-                ]))
-                ->withApnsConfig(ApnsConfig::fromArray([
-                    'headers' => [
-                        'apns-priority' => '10',
-                    ],
-                    'payload' => [
-                        'aps' => [
-                            'sound' => 'default',
-                            'badge' => 1,
-                        ],
                     ],
                 ]));
 
