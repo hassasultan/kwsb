@@ -8,6 +8,8 @@ use Kreait\Firebase\Messaging\Notification;
 use Kreait\Firebase\Messaging\WebPushConfig;
 use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\ApnsConfig;
+use Kreait\Firebase\Exception\MessagingException;
+use Kreait\Firebase\Exception\FirebaseException;
 use App\Models\Notification as NotificationModel;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -77,10 +79,20 @@ class FirebaseNotificationService
         try {
             $notification = Notification::create($title, $body);
 
+            // Ensure all data values are strings as required by FCM
+            $stringData = [];
+            foreach ($data as $key => $value) {
+                if (is_scalar($value) || $value === null) {
+                    $stringData[$key] = (string) $value;
+                } else {
+                    $stringData[$key] = json_encode($value);
+                }
+            }
+
             // Create message with different platform configurations
             $message = CloudMessage::new()
                 ->withNotification($notification)
-                ->withData($data)
+                ->withData($stringData)
                 ->withAndroidConfig(AndroidConfig::fromArray([
                     'priority' => 'high',
                     'notification' => [
@@ -114,6 +126,14 @@ class FirebaseNotificationService
                 'total' => count($results)
             ]);
 
+        } catch (MessagingException $e) {
+            Log::error('Firebase notification failed (MessagingException): ' . $e->getMessage(), [
+                'errors' => method_exists($e, 'errors') ? $e->errors() : null,
+            ]);
+            throw $e;
+        } catch (FirebaseException $e) {
+            Log::error('Firebase notification failed (FirebaseException): ' . $e->getMessage());
+            throw $e;
         } catch (Exception $e) {
             Log::error('Firebase notification failed: ' . $e->getMessage());
             throw $e;
@@ -143,10 +163,34 @@ class FirebaseNotificationService
                 'message_id' => $result,
                 'error' => null
             ];
+        } catch (MessagingException $e) {
+            Log::error("Failed to send notification to token {$token} (MessagingException): " . $e->getMessage(), [
+                'errors' => method_exists($e, 'errors') ? $e->errors() : null,
+            ]);
+
+            // Log failed notification
+            $this->logNotification($title, $body, $data, $type, $recipientId, $recipientType, $senderId, 'failed', $e->getMessage());
+
+            return [
+                'success' => false,
+                'token' => $token,
+                'message_id' => null,
+                'error' => $e->getMessage()
+            ];
+        } catch (FirebaseException $e) {
+            Log::error("Failed to send notification to token {$token} (FirebaseException): " . $e->getMessage());
+
+            $this->logNotification($title, $body, $data, $type, $recipientId, $recipientType, $senderId, 'failed', $e->getMessage());
+
+            return [
+                'success' => false,
+                'token' => $token,
+                'message_id' => null,
+                'error' => $e->getMessage()
+            ];
         } catch (Exception $e) {
             Log::error("Failed to send notification to token {$token}: " . $e->getMessage());
 
-            // Log failed notification
             $this->logNotification($title, $body, $data, $type, $recipientId, $recipientType, $senderId, 'failed', $e->getMessage());
 
             return [
