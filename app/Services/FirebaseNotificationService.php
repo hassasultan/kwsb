@@ -70,7 +70,7 @@ class FirebaseNotificationService
      * @param int|null $senderId
      * @return array
      */
-    public function sendNotification($deviceTokens, string $title, string $body, array $data = [], string $type = 'general', $recipientId = null, $recipientType = null, $senderId = null)
+    public function sendNotification($deviceTokens, string $title, string $body, array $data = [], string $type = 'general', $recipientId = null, $recipientType = null, $senderId = null,$platform = 'android' )
     {
         $results = [];
         $successCount = 0;
@@ -79,57 +79,68 @@ class FirebaseNotificationService
         try {
             $notification = Notification::create($title, $body);
 
-            // Ensure all data values are strings as required by FCM
-            $stringData = [];
-            foreach ($data as $key => $value) {
-                if (is_scalar($value) || $value === null) {
-                    $stringData[$key] = (string) $value;
-                } else {
-                    $stringData[$key] = json_encode($value);
-                }
-            }
+        // Ensure all data values are strings
+        $stringData = [];
+        foreach ($data as $key => $value) {
+            $stringData[$key] = is_scalar($value) || $value === null
+                ? (string) $value
+                : json_encode($value);
+        }
 
-            // Create message with different platform configurations
-            $includeNotification = empty($stringData['_data_only']) || $stringData['_data_only'] === 'false' || $stringData['_data_only'] === '0';
+        $message = CloudMessage::new()->withData($stringData);
 
-            $message = CloudMessage::new()
-                ->withData($stringData)
-                ->withAndroidConfig(AndroidConfig::fromArray([
-                    'priority' => 'high',
-                    'notification' => [
+        // Platform-specific configs
+        if ($platform === 'android') {
+            $message = $message->withAndroidConfig(AndroidConfig::fromArray([
+                'priority' => 'high',
+                'notification' => [
+                    'sound' => 'default',
+                ],
+            ]));
+        } elseif ($platform === 'ios') {
+            $message = $message->withApnsConfig(ApnsConfig::fromArray([
+                'headers' => ['apns-priority' => '10'],
+                'payload' => [
+                    'aps' => [
                         'sound' => 'default',
+                        'alert' => ['title' => $title, 'body' => $body],
                     ],
-                ]));
+                ],
+            ]));
+        } elseif ($platform === 'web') {
+            $message = $message->withWebPushConfig(WebPushConfig::fromArray([
+                'headers' => ['Urgency' => 'high'],
+                'notification' => [
+                    'title' => $title,
+                    'body' => $body,
+                    'icon' => '/firebase-logo.png',
+                ],
+            ]));
+        }
 
-            if ($includeNotification) {
-                $message = $message->withNotification($notification);
-            }
+        // Attach notification if not data-only
+        $includeNotification = empty($stringData['_data_only'])
+            || $stringData['_data_only'] === 'false'
+            || $stringData['_data_only'] === '0';
 
-            if (is_array($deviceTokens)) {
-                foreach ($deviceTokens as $token) {
-                    $result = $this->sendToToken($message, $token, $title, $body, $data, $type, $recipientId, $recipientType, $senderId);
-                    $results[] = $result;
-                    if ($result['success']) {
-                        $successCount++;
-                    } else {
-                        $failureCount++;
-                    }
-                }
-            } else {
-                $result = $this->sendToToken($message, $deviceTokens, $title, $body, $data, $type, $recipientId, $recipientType, $senderId);
-                $results[] = $result;
-                if ($result['success']) {
-                    $successCount++;
-                } else {
-                    $failureCount++;
-                }
-            }
+        if ($includeNotification) {
+            $message = $message->withNotification($notification);
+        }
 
-            Log::info("Firebase notification sent", [
-                'success_count' => $successCount,
-                'failure_count' => $failureCount,
-                'total' => count($results)
-            ]);
+        // Handle single or multiple tokens
+        $tokens = is_array($deviceTokens) ? $deviceTokens : [$deviceTokens];
+
+        foreach ($tokens as $token) {
+            $result = $this->sendToToken($message, $token, $title, $body, $data, $type, $recipientId, $recipientType, $senderId);
+            $results[] = $result;
+            $result['success'] ? $successCount++ : $failureCount++;
+        }
+
+        Log::info("Firebase notification sent", [
+            'success_count' => $successCount,
+            'failure_count' => $failureCount,
+            'total' => count($results)
+        ]);
 
         } catch (MessagingException $e) {
             Log::error('Firebase notification failed (MessagingException): ' . $e->getMessage(), [

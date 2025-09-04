@@ -87,7 +87,8 @@ class NotificationController extends Controller
                             $request->type,
                             $agent->id,
                             'agent',
-                            Auth::id()
+                            Auth::id(),
+                            'android'
                         );
                     }
                     break;
@@ -98,7 +99,8 @@ class NotificationController extends Controller
                         $request->title,
                         $request->body,
                         $request->data ?? [],
-                        Auth::id()
+                        Auth::id(),
+                        'android'
                     );
                     break;
 
@@ -108,7 +110,8 @@ class NotificationController extends Controller
                         $request->title,
                         $request->body,
                         $request->data ?? [],
-                        Auth::id()
+                        Auth::id(),
+                        'android'
                     );
                     break;
             }
@@ -211,7 +214,8 @@ class NotificationController extends Controller
                         $request->title,
                         $request->body,
                         ['test' => true],
-                        Auth::id()
+                        Auth::id(),
+                        'android'
                     );
                     break;
 
@@ -226,7 +230,8 @@ class NotificationController extends Controller
                             'general',
                             $agent->id,
                             'agent',
-                            Auth::id()
+                            Auth::id(),
+                            'android'
                         );
                     }
                     break;
@@ -237,7 +242,8 @@ class NotificationController extends Controller
                         $request->title,
                         $request->body,
                         ['test' => true],
-                        Auth::id()
+                        Auth::id(),
+                        'android'
                     );
                     break;
 
@@ -247,7 +253,8 @@ class NotificationController extends Controller
                         $request->title,
                         $request->body,
                         ['test' => true],
-                        Auth::id()
+                        Auth::id(),
+                        'android'
                     );
                     break;
             }
