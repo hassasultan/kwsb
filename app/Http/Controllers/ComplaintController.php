@@ -110,12 +110,12 @@ class ComplaintController extends Controller
         if ($request->has('comp_status') && $request->comp_status != null && $request->comp_status != '') {
             $complaint = $complaint->where('status', $request->comp_status);
         }
-        
+
         // New filters
         if ($request->has('source') && $request->source != null && $request->source != '') {
             $complaint = $complaint->where('source', $request->source);
         }
-        
+
         if ($request->has('consumer_number') && $request->consumer_number != null && $request->consumer_number != '') {
             $complaint = $complaint->where(function ($query) use ($request) {
                 $query->where('customer_num', 'LIKE', '%' . $request->consumer_number . '%')
@@ -124,7 +124,7 @@ class ComplaintController extends Controller
                     });
             });
         }
-        
+
         if ($request->has('bounce_back') && $request->bounce_back != null && $request->bounce_back != '') {
             if ($request->bounce_back == '1') {
                 $complaint = $complaint->whereHas('bounceBackComplaints', function ($query) {
@@ -136,22 +136,22 @@ class ComplaintController extends Controller
                 });
             }
         }
-        
+
         if ($request->has('from_date') && $request->from_date != null && $request->from_date != '') {
             $complaint = $complaint->whereDate('created_at', '>=', $request->from_date);
         }
-        
+
         if ($request->has('to_date') && $request->to_date != null && $request->to_date != '') {
             $complaint = $complaint->whereDate('created_at', '<=', $request->to_date);
         }
-        
+
         if (auth()->user()->role == 4) {
             $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             });
             // return true;
         }
-        
+
         $complaint = $complaint->paginate(10)->appends([
             'type_id' => request()->get('type_id'),
             'town' => request()->get('town'),
@@ -375,7 +375,7 @@ class ComplaintController extends Controller
                 return response()->json(['success' => 'No Record Found...'], 500);
             }
             // $type_id = auth('api')->user()->agent->type_id;
-            $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->get();
+            $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->paginate(10);
             return $complaint;
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -1475,34 +1475,34 @@ ORDER BY
 
         // SQL query to fetch data with parameter binding
         $Subtypesummary = DB::select("
-        select 
+        select
                 st.title AS Department ,
                 SUM(
-                    CASE 
-                        WHEN c.status = 1 
-                        AND c.updated_at IS NOT NULL 
-                        AND c.created_at != c.updated_at 
-                        THEN 1 ELSE 0 
+                    CASE
+                        WHEN c.status = 1
+                        AND c.updated_at IS NOT NULL
+                        AND c.created_at != c.updated_at
+                        THEN 1 ELSE 0
                     END
-                ) 
-                + 
+                )
+                +
                 SUM(
-                    CASE 
-                        WHEN c.status = 0 
-                        THEN 1 ELSE 0 
+                    CASE
+                        WHEN c.status = 0
+                        THEN 1 ELSE 0
                     END
                 ) AS Total_Complaints,
-                SUM(CASE 
-                    WHEN c.status = 1 
-                    AND c.updated_at IS NOT NULL 
-                    AND c.created_at != c.updated_at 
-                    THEN 1 ELSE 0 
+                SUM(CASE
+                    WHEN c.status = 1
+                    AND c.updated_at IS NOT NULL
+                    AND c.created_at != c.updated_at
+                    THEN 1 ELSE 0
                 END) AS Solved,
-                SUM(CASE 
-                    WHEN c.status = 0 
-                    THEN 1 ELSE 0 
+                SUM(CASE
+                    WHEN c.status = 0
+                    THEN 1 ELSE 0
                 END) AS Pending
-                from complaint c 
+                from complaint c
                 left JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
             left JOIN mobile_agent m ON ca.agent_id = m.id
             left JOIN users u ON m.user_id = u.id
@@ -1537,7 +1537,7 @@ ORDER BY
 
             // Start building the query with correct column names
             $query = "
-            SELECT 
+            SELECT
                 c.comp_num,
                 ct.title as complain_type,
                 st.title as sub_type,
@@ -1558,12 +1558,12 @@ ORDER BY
                 CASE WHEN c.status = 1 THEN 'Solved' ELSE 'Pending' END AS status,
                 u.name as executive_engineer,
                 d.name as department_name
-            FROM complaint c 
-            LEFT JOIN complaint_types ct ON ct.id = c.type_id 
-            LEFT JOIN sub_types st ON st.id = c.subtype_id 
-            LEFT JOIN priorities p ON p.id = c.prio_id 
-            LEFT JOIN towns t ON t.id = c.town_id 
-            LEFT JOIN subtown st2 ON st2.id = c.sub_town_id 
+            FROM complaint c
+            LEFT JOIN complaint_types ct ON ct.id = c.type_id
+            LEFT JOIN sub_types st ON st.id = c.subtype_id
+            LEFT JOIN priorities p ON p.id = c.prio_id
+            LEFT JOIN towns t ON t.id = c.town_id
+            LEFT JOIN subtown st2 ON st2.id = c.sub_town_id
             LEFT JOIN complaint_assign_agent ca ON c.id = ca.complaint_id
             LEFT JOIN mobile_agent ma ON ma.id = ca.agent_id
             LEFT JOIN users u ON u.id = ma.user_id
@@ -1636,12 +1636,12 @@ ORDER BY
             $departments = Department::orderBy('name', 'asc')->get();
 
             return view('pages.reports.report15', compact(
-                'detailed_report', 
-                'dateE', 
-                'dateS', 
+                'detailed_report',
+                'dateE',
+                'dateS',
                 'towns',
-                'subtowns', 
-                'types', 
+                'subtowns',
+                'types',
                 'subtypes',
                 'sources',
                 'executive_engineers',
@@ -1775,7 +1775,7 @@ ORDER BY
                 } else {
                     $consumer['current_month_status'] = 'Paid';
                 }
-                
+
                 // Optional: Try to get additional data from second API as backup
                 $billResponse = Http::get('https://kwsconline.com:5000/api/BankCollection/GetConsumerBill', [
                     'consumer_no' => $consumer_no,
