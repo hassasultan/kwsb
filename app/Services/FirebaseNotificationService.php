@@ -90,7 +90,6 @@ class FirebaseNotificationService
                     'priority' => 'high',
                     'notification' => [
                         'sound' => 'default',
-                        'priority' => 'high',
                     ],
                 ]))
                 ->withApnsConfig(ApnsConfig::fromArray([
