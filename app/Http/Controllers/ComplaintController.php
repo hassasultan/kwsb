@@ -359,7 +359,7 @@ class ComplaintController extends Controller
         // dd(auth()->user()->id);
         $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio', 'assignedComplaints')->whereHas('assignedComplaints', function ($query) {
             $query->where('agent_id', auth('api')->user()->agent->id);
-        })->where('town_id', $town_id)->where('type_id', $type_id)->get();
+        })->where('town_id', $town_id)->where('type_id', $type_id)->paginate(10);
         return $complaint;
     }
     public function customer_wise_complaints()
@@ -375,7 +375,7 @@ class ComplaintController extends Controller
                 return response()->json(['success' => 'No Record Found...'], 500);
             }
             // $type_id = auth('api')->user()->agent->type_id;
-            $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->paginate(10);
+            $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->get();
             return $complaint;
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
