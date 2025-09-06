@@ -359,7 +359,7 @@ class ComplaintController extends Controller
         // dd(auth()->user()->id);
         $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio', 'assignedComplaints')->whereHas('assignedComplaints', function ($query) {
             $query->where('agent_id', auth('api')->user()->agent->id);
-        })->where('town_id', $town_id)->where('type_id', $type_id)->paginate(10);
+        })->where('town_id', $town_id)->where('type_id', $type_id)->get();
         return $complaint;
     }
     public function customer_wise_complaints()
