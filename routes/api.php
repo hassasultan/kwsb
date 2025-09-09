@@ -39,6 +39,7 @@ Route::get('/get-types', [ComplaintTypeController::class, 'allTypes']);
 Route::get('/get-subtypes', [SubTypeController::class, 'get_subtype']);
 Route::get('/delete-user', [AuthController::class, 'delete_user']);
 Route::get('/get-customer-complaint', [ComplaintController::class, 'customer_wise_complaints']);
+Route::get('/get-customer-complaint/paginate', [ComplaintController::class, 'customer_wise_complaints_paginate']);
 Route::get('/announcement', [AnnouncementController::class, 'index']);
 Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

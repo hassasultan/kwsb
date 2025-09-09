@@ -381,6 +381,25 @@ class ComplaintController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function customer_wise_complaints_paginate()
+    {
+        try {
+            $user = auth('api')->user();
+
+            if (!$user || $user->role != 5) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+            $customer_id = auth('api')->user()->customer->id;
+            if (auth('api')->user()->status == 0) {
+                return response()->json(['success' => 'No Record Found...'], 500);
+            }
+            // $type_id = auth('api')->user()->agent->type_id;
+            $complaint = Complaints::with('town', 'customer', 'type', 'subtype', 'prio')->where('customer_id', $customer_id)->paginate(10);
+            return $complaint;
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
     public function type_wise_complaints()
     {
         $type_id = auth('api')->user()->agent->type_id;
