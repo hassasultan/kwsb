@@ -46,6 +46,7 @@ Route::middleware(['IsMobileAgent'])->group(function () {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::get('/agent-complaints', [ComplaintController::class, 'agent_wise_complaints']);
+    Route::get('/agent-complaints/paginate', [ComplaintController::class, 'agent_wise_complaints_paginate']);
     Route::get('/agent-complaints/counts', [ComplaintController::class, 'agent_wise_complaints_count']);
     Route::get('/agent-complaints/counts/by/complaint-type', [ComplaintController::class, 'type_wise_complaints']);
     Route::get('/agent-complaints/counts/by/subtype', [ComplaintController::class, 'subtype_wise_complaints']);
