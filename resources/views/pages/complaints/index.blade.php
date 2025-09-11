@@ -62,7 +62,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2 class="page-title">Complaint Management</h2>
+                <h2 class="page-title" id="page-title">Complaint Management</h2>
                 {{-- <p> Tables with built-in bootstrap styles </p> --}}
                 <div class="col-12 text-right">
                     <a class="btn btn-primary" href="{{ route('compaints-management.create') }}">add</i>&nbsp;&nbsp;<i
@@ -73,7 +73,7 @@
                         <div class="card shadow">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h5>
+                                    <h5 id="list-title">
                                         Complaints List
                                     </h5>
                                     {{-- <p class="card-text">With supporting text below as a natural lead-in to additional
@@ -282,6 +282,7 @@
             var search = null;
             var town = null;
             var type = null;
+            var type_ids = [];
             var change_status = null;
             var comp_status = null;
             var source = null;
@@ -320,6 +321,28 @@
             }
             $(document).ready(function() {
 
+                // Initialize types from URL param `comp_type_id[]` or repeated `comp_type_id`
+                try {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var arrA = urlParams.getAll('comp_type_id[]');
+                    var arrB = urlParams.getAll('comp_type_id');
+                    var collected = arrA.length ? arrA : arrB;
+                    if (collected.length === 1 && String(collected[0]).indexOf(',') !== -1) {
+                        collected = String(collected[0]).split(',');
+                    }
+                    type_ids = collected.filter(function(v){ return v !== null && v !== ''; }).map(function(v){ return v.trim(); });
+                    if (type_ids.length > 0) {
+                        type = type_ids[0];
+                        $('#type-id').val(type).trigger('change');
+                        // Update headings to Requests if comp_type_id is present
+                        $('#page-title').text('Requests Management');
+                        $('#list-title').text('Requests List');
+                    } else {
+                        $('#page-title').text('Complaint Management');
+                        $('#list-title').text('Complaints List');
+                    }
+                } catch (e) {}
+
                 $("input").keyup(function() {
                     search = $(this).val();
                 });
@@ -328,6 +351,8 @@
                 });
                 $("#type-id").change(function() {
                     type = $(this).val();
+                    type_ids = [];
+                    if (type !== null && type !== '') { type_ids.push(type); }
                 });
                 $("#status-id").change(function() {
                     change_status = $(this).val();
@@ -373,6 +398,7 @@
                     search = null;
                     town = null;
                     type = null;
+                    type_ids = [];
                     change_status = null;
                     comp_status = null;
                     source = null;
@@ -407,6 +433,7 @@
                     search: search,
                     town: town,
                     type_id: type,
+                    comp_type_id: type_ids,
                     status: change_status,
                     comp_status: comp_status,
                     source: source,
@@ -425,6 +452,7 @@
                         search: search,
                         town: town,
                         type_id: type,
+                        comp_type_id: type_ids,
                         status: change_status,
                         comp_status: comp_status,
                         source: source,
@@ -453,6 +481,7 @@
                     status: change_status,
                     town: town,
                     type_id: type,
+                    comp_type_id: type_ids,
                     comp_status: comp_status,
                     source: source,
                     consumer_number: consumer_number,
@@ -470,6 +499,7 @@
                         status: change_status,
                         town: town,
                         type_id: type,
+                        comp_type_id: type_ids,
                         comp_status: comp_status,
                         source: source,
                         consumer_number: consumer_number,

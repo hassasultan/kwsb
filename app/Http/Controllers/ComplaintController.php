@@ -50,6 +50,7 @@ class ComplaintController extends Controller
     {
         // dd($request->all());
         $complaint = Complaints::with('customer', 'town', 'subtown', 'type', 'prio', 'assignedComplaints', 'assignedComplaintsDepartment', 'bounceBackComplaints')->OrderBy('id', 'DESC');
+        $defaultExcluded = [1, 2, 5];
         if ($request->has('search') && $request->search != null && $request->search != '') {
             if (auth()->user()->role == 4) {
                 $complaint = $complaint->whereHas('assignedComplaintsDepartment', function ($query) {
@@ -89,8 +90,23 @@ class ComplaintController extends Controller
         if ($request->has('town') && $request->town != null && $request->town != '') {
             $complaint = $complaint->where('town_id', $request->town);
         }
-        if ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
+        if ($request->has('comp_type_id')) {
+            $ids = $request->get('comp_type_id');
+            if (is_string($ids)) {
+                $ids = array_filter(array_map('trim', explode(',', $ids)));
+            }
+            if (!is_array($ids)) {
+                $ids = [$ids];
+            }
+            $ids = array_values(array_filter($ids, function ($v) { return $v !== null && $v !== ''; }));
+            if (count($ids) > 0) {
+                $complaint = $complaint->whereIn('type_id', $ids);
+            }
+        } elseif ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
             $complaint = $complaint->where('type_id', $request->type_id);
+        } else {
+            // No explicit filters provided; exclude default types [1,2,5]
+            $complaint = $complaint->whereNotIn('type_id', $defaultExcluded);
         }
         if ($request->has('status') && $request->status != null && $request->status != '') {
             if ($request->status == 1 || $request->status == 2) {
@@ -154,6 +170,7 @@ class ComplaintController extends Controller
 
         $complaint = $complaint->paginate(10)->appends([
             'type_id' => request()->get('type_id'),
+            'comp_type_id' => request()->get('comp_type_id'),
             'town' => request()->get('town'),
             'search' => request()->get('search'),
             'source' => request()->get('source'),
@@ -167,7 +184,24 @@ class ComplaintController extends Controller
             return $complaint;
         }
         $town = Town::orderBy('town', 'asc')->get();
-        $comptype = ComplaintType::orderBy('title', 'asc')->get();
+        $comptypeQuery = ComplaintType::orderBy('title', 'asc');
+        if ($request->has('comp_type_id')) {
+            $ids = $request->get('comp_type_id');
+            if (is_string($ids)) {
+                $ids = array_filter(array_map('trim', explode(',', $ids)));
+            }
+            if (!is_array($ids)) {
+                $ids = [$ids];
+            }
+            $ids = array_values(array_filter($ids, function ($v) { return $v !== null && $v !== ''; }));
+            if (count($ids) > 0) {
+                $comptypeQuery = $comptypeQuery->whereIn('id', $ids);
+            }
+        } else {
+            // No comp_type_id in URL: exclude default types [1,2,5]
+            $comptypeQuery = $comptypeQuery->whereNotIn('id', $defaultExcluded);
+        }
+        $comptype = $comptypeQuery->get();
         $sources = \App\Models\Source::orderBy('title', 'asc')->get();
         // dd($complaint->toArray());
         if (auth()->user()->role == 4) {

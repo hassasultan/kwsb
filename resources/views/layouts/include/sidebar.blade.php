@@ -180,6 +180,11 @@
                                     class="ml-1 item-text">Complaints</span>
                             </a>
                         </li>
+                        <li class="nav-item @if (Route::is('compaints-management.index') && request()->get('comp_type_id')) active @endif">
+                            <a class="nav-link" href="{{ url('admin/compaints-management') }}?comp_type_id[]=1&comp_type_id[]=2&comp_type_id[]=5"><span
+                                    class="ml-1 item-text">Requests</span>
+                            </a>
+                        </li>
                     @endcan
                     @can('compaints-type-management.index')
                         <li class="nav-item @if (Route::is('compaints-type-management.index')) active @endif">
