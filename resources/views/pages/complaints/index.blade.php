@@ -524,7 +524,7 @@
             // Function to generate table rows
             function generateTableRows(response) {
                 var html = '';
-                const currentUrl = window.location.href;
+                const currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
                 $.each(response, function(index, row) {
                     html += '<tr>';
                     html += '<td class="w-20">';
