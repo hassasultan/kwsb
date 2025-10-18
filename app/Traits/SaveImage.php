@@ -53,7 +53,7 @@ trait SaveImage
             
             // Sanitize the image before saving
             $sanitizationResult = $this->sanitizeImage($img, $extension);
-            
+            dd($sanitizationResult);
             if ($sanitizationResult['status'] === 'success') {
                 // Move the sanitized image to final location
                 $sanitizedImage = $sanitizationResult['sanitized_image'];
