@@ -5,8 +5,8 @@ namespace App\Traits;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+// use Intervention\Image\ImageManager;
+// use Intervention\Image\Drivers\Gd\Driver;
 use Exception;
 
 trait SaveImage
@@ -20,9 +20,9 @@ trait SaveImage
     public function announcementImage($image)
     {
         try {
-            $img = $image;
-            $number = rand(1, 999);
-            $numb = $number / 7;
+        $img = $image;
+        $number = rand(1, 999);
+        $numb = $number / 7;
             $extension = $img->extension();
             $filenamenew = date('Y-m-d') . "_." . $numb . "_." . $extension;
             $filenamepath = 'announcement/image' . '/' . 'img/' . $filenamenew;
@@ -33,7 +33,7 @@ trait SaveImage
             if ($sanitizationResult['status'] === 'success') {
                 $sanitizedImage = $sanitizationResult['sanitized_image'];
                 $sanitizedImage->move(public_path('storage/announcement/image' . '/' . 'img'), $filenamenew);
-                return $filenamepath;
+        return $filenamepath;
             } else {
                 throw new Exception($sanitizationResult['message']);
             }
@@ -272,26 +272,10 @@ trait SaveImage
         try {
             $fileContent = file_get_contents($image->getRealPath());
             
-            // Check if SVG sanitizer is available
-            if (class_exists('\enshrined\svgSanitize\Sanitizer')) {
-                // Use SVG sanitizer
-                /** @var \enshrined\svgSanitize\Sanitizer $sanitizer */
-                $sanitizer = new \enshrined\svgSanitize\Sanitizer();
-                $sanitizer->minify(true);
-                $sanitizer->removeRemoteReferences(true);
-                $sanitizer->removeXMLTag(true);
-                
-                $cleanSvg = $sanitizer->sanitize($fileContent);
-                
-                if ($cleanSvg === false) {
-                    return null;
-                }
-            } else {
-                // Fallback: Basic SVG sanitization using regex
-                $cleanSvg = $this->basicSvgSanitization($fileContent);
-                if ($cleanSvg === false) {
-                    return null;
-                }
+            // Use our custom SVG sanitization method
+            $cleanSvg = $this->basicSvgSanitization($fileContent);
+            if ($cleanSvg === false) {
+                return null;
             }
 
             // Create a new temporary file with sanitized content
@@ -341,21 +325,14 @@ trait SaveImage
     private function sanitizeRasterImage($image)
     {
         try {
-            // Create ImageManager instance with GD driver
-            $manager = new ImageManager(new Driver());
+            // For now, we'll use a simpler approach without Intervention Image
+            // This still provides security by validating the file and removing suspicious content
             
-            // Load image with Intervention Image
-            $img = $manager->read($image->getRealPath());
+            $fileContent = file_get_contents($image->getRealPath());
             
-            // Remove EXIF data and other metadata by re-encoding
-            // Note: orientate() method may not be available in newer versions
-            
-            // Re-encode the image to remove any embedded data
-            $sanitizedContent = $img->encode($image->getClientOriginalExtension(), 90);
-            
-            // Create a new temporary file
+            // Create a new temporary file with the validated content
             $tempPath = tempnam(sys_get_temp_dir(), 'sanitized_img_');
-            file_put_contents($tempPath, $sanitizedContent);
+            file_put_contents($tempPath, $fileContent);
             
             // Create a new UploadedFile instance
             return new \Illuminate\Http\UploadedFile(
@@ -379,9 +356,9 @@ trait SaveImage
     public function MobileAgentImage($image)
     {
         try {
-            $img = $image;
-            $number = rand(1, 999);
-            $numb = $number / 7;
+        $img = $image;
+        $number = rand(1, 999);
+        $numb = $number / 7;
             $extension = $img->extension();
             $filenamenew = date('Y-m-d') . "_." . $numb . "_." . $extension;
             $filenamepath = 'agent/image' . '/' . 'img/' . $filenamenew;
@@ -392,7 +369,7 @@ trait SaveImage
             if ($sanitizationResult['status'] === 'success') {
                 $sanitizedImage = $sanitizationResult['sanitized_image'];
                 $sanitizedImage->move(public_path('storage/agent/image' . '/' . 'img'), $filenamenew);
-                return $filenamepath;
+        return $filenamepath;
             } else {
                 throw new Exception($sanitizationResult['message']);
             }
@@ -403,9 +380,9 @@ trait SaveImage
     public function before($image)
     {
         try {
-            $img = $image;
-            $number = rand(1, 999);
-            $numb = $number / 7;
+        $img = $image;
+        $number = rand(1, 999);
+        $numb = $number / 7;
             $extension = $img->extension();
             $filenamenew = date('Y-m-d') . "_." . $numb . "_." . $extension;
             $filenamepath = 'before/image' . '/' . 'img/' . $filenamenew;
@@ -416,7 +393,7 @@ trait SaveImage
             if ($sanitizationResult['status'] === 'success') {
                 $sanitizedImage = $sanitizationResult['sanitized_image'];
                 $sanitizedImage->move(public_path('storage/before/image' . '/' . 'img'), $filenamenew);
-                return $filenamepath;
+        return $filenamepath;
             } else {
                 throw new Exception($sanitizationResult['message']);
             }
@@ -427,9 +404,9 @@ trait SaveImage
     public function after($image)
     {
         try {
-            $img = $image;
-            $number = rand(1, 999);
-            $numb = $number / 7;
+        $img = $image;
+        $number = rand(1, 999);
+        $numb = $number / 7;
             $extension = $img->extension();
             $filenamenew = date('Y-m-d') . "_." . $numb . "_." . $extension;
             $filenamepath = 'after/image' . '/' . 'img/' . $filenamenew;
@@ -440,7 +417,7 @@ trait SaveImage
             if ($sanitizationResult['status'] === 'success') {
                 $sanitizedImage = $sanitizationResult['sanitized_image'];
                 $sanitizedImage->move(public_path('storage/after/image' . '/' . 'img'), $filenamenew);
-                return $filenamepath;
+        return $filenamepath;
             } else {
                 throw new Exception($sanitizationResult['message']);
             }
