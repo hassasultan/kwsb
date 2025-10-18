@@ -44,6 +44,7 @@ class ComplaintController extends Controller
             // 'title' => ['required', 'string'],
             'source' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp,svg', 'max:2048'],
         ]);
     }
     public function index(Request $request)
@@ -335,19 +336,32 @@ class ComplaintController extends Controller
             return back()->with('error', $valid->errors());
         }
     }
-    public function testFileUpload(Request $request)
+    public function testImageSanitization(Request $request)
     {
-        try
-        {
+        try {
             if ($request->has('image') && $request->image != NULL) {
-                $image = $this->complaintImage($request->image);
-                return $image;
+                $result = $this->complaintImage($request->image);
+                
+                if (is_string($result)) {
+                    return response()->json([
+                        'status' => 'success',
+                        'message' => 'Image sanitized and saved successfully',
+                        'file_path' => $result
+                    ]);
+                } else {
+                    return $result; // This will be the error response from complaintImage
+                }
             }
-            return false;
-        }
-        catch(Exception $ex)
-        {
-            return $ex->getMessage();
+            
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No image provided'
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Image sanitization test failed: ' . $ex->getMessage()
+            ]);
         }
     }
     public function edit($id)

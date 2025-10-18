@@ -422,12 +422,12 @@
                                                 <textarea class="form-control border-bottom border-1 border-dark" placeholder="Enter Description Here..."
                                                     name="description" required maxlength="350" oninput="validateDescription(this)" id="description-box">{{ old('description') }}</textarea>
                                             </div>
-                                            {{-- <div class="form-group col-md-3 p-3">
+                                            <div class="form-group col-md-3 p-3">
                                                 <label>Picture</label>
                                                 <input type="file"
                                                     class="form-control border-bottom border-1 border-dark"
                                                     name="image" value="{{ old('image') }}" />
-                                            </div> --}}
+                                            </div>
                                             <div class="form-group col-md-3 p-3">
                                                 {!! NoCaptcha::renderJs() !!}
                                                 {!! NoCaptcha::display() !!}

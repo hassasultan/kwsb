@@ -9,6 +9,7 @@
         "anhskohbo/no-captcha": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "haruncpi/laravel-id-generator": "^1.1",
+        "intervention/image": "^3.11",
         "kreait/firebase-php": "^5.26",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
