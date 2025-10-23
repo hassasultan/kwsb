@@ -627,8 +627,12 @@
                     }
                     html += '</td>';
                     html += '<td class="align-middle">';
+                    // Check if we're on request management page
+                    var isRequestPage = window.location.search.includes('comp_type_id');
+                    var requestParam = isRequestPage ? '?from_request=1' : '';
+                    
                     html += row.assigned_complaints == null && row.assigned_complaints_department ==  null ? '<a href="' +
-                        "{{ route('compaints-management.details', '') }}/" + row.id +
+                        "{{ route('compaints-management.details', '') }}/" + row.id + requestParam +
                         '" class="text-secondary font-weight-bold text-xs m-3" data-toggle="tooltip" data-original-title="Edit user">Assign</a>' :
                         row.assigned_complaints != null ?
                         '<a href="{{ route('agent-management.details', '') }}/' + row.assigned_complaints.agent_id +
@@ -641,16 +645,20 @@
                     html += '<span class="text-muted sr-only">Action</span>';
                     html += '</button>';
                     html += '<div class="dropdown-menu dropdown-menu-right shadow">';
+                    // Check if we're on request management page
+                    var isRequestPage = window.location.search.includes('comp_type_id');
+                    var requestParam = isRequestPage ? '?from_request=1' : '';
+                    
                     html += '<a class="dropdown-item" href="' + currentUrl + '/' + row.id +
-                        '/edit"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
+                        '/edit' + requestParam + '"><i class="fe fe-edit-2 fe-12 mr-3 text-muted"></i>Edit</a>';
                     // html += '<a class="dropdown-item" href="#"><i class="fe fe-trash fe-12 mr-3 text-muted"></i>Remove</a>';
                     // if (row.status != 1) {
                         html += '<a class="dropdown-item" href="' +
-                            "{{ route('compaints-management.details', '') }}/" + row.id +
+                            "{{ route('compaints-management.details', '') }}/" + row.id + requestParam +
                             '"><i class="fe fe-flag fe-12 mr-3 text-muted"></i>Detail</a>';
                     // }
                     html += '<a class="dropdown-item" href="' +
-                        "{{ route('compaints-management.logs', '') }}/" + row.id +
+                        "{{ route('compaints-management.logs', '') }}/" + row.id + requestParam +
                         '"><i class="fe fe-activity fe-12 mr-3 text-muted"></i>View Logs</a>';
                     html += '</div>';
                     html += '</td>';

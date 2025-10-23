@@ -116,7 +116,7 @@
                     <p class="text-muted mb-0">Complaint ID: {{ $complaint->comp_num }}</p>
                 </div>
                 <div class="text-right d-flex align-items-center gap-3">
-                    <a href="{{ request()->headers->get('referer') && str_contains(request()->headers->get('referer'), 'comp_type_id') ? route('compaints-management.index', ['comp_type_id' => [1,2,5]]) : route('compaints-management.index') }}" class="btn btn-outline-primary">
+                    <a href="{{ request()->get('from_request') == '1' ? route('compaints-management.index', ['comp_type_id' => [1,2,5]]) : route('compaints-management.index') }}" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-left me-2"></i>Back to List
                     </a>
                     <span class="status-badge 
