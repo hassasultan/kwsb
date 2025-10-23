@@ -102,12 +102,56 @@ class ComplaintController extends Controller
             $ids = array_values(array_filter($ids, function ($v) { return $v !== null && $v !== ''; }));
             if (count($ids) > 0) {
                 $complaint = $complaint->whereIn('type_id', $ids);
+                
+                // Filter by specific subtypes for request management
+                // Define allowed subtypes for each type
+                $allowedSubtypes = [];
+                
+                // Type 1: New Connection Sewerage - only subtype 93
+                if (in_array('1', $ids)) {
+                    $allowedSubtypes[] = 93;
+                }
+                
+                // Type 2: New Connection Water - only subtype 85
+                if (in_array('2', $ids)) {
+                    $allowedSubtypes[] = 85;
+                }
+                
+                // Type 5: New Connection Commercial - only subtypes 95 and 102
+                if (in_array('5', $ids)) {
+                    $allowedSubtypes[] = 95;
+                    $allowedSubtypes[] = 102;
+                }
+                
+                // Type 3: Billing - specific subtypes
+                if (in_array('3', $ids)) {
+                    $allowedSubtypes = array_merge($allowedSubtypes, [6,7,8,9,10,30,31,92,96,99,100,101,106]);
+                }
+                
+                // Apply subtype filter if we have specific subtypes defined
+                if (!empty($allowedSubtypes)) {
+                    $complaint = $complaint->whereIn('subtype_id', $allowedSubtypes);
+                }
             }
         } elseif ($request->has('type_id') && $request->type_id != null && $request->type_id != '') {
             $complaint = $complaint->where('type_id', $request->type_id);
-        } else {
-            // No explicit filters provided; exclude default types [1,2,5]
-            $complaint = $complaint->whereNotIn('type_id', $defaultExcluded);
+        }
+        
+        // Always exclude request subtypes from complaint management (unless it's request management page)
+        if (!$request->has('comp_type_id')) {
+            // Define request subtypes that should be excluded from regular complaint management
+            $requestSubtypes = [
+                // Type 1: New Connection Sewerage - subtype 93
+                93,
+                // Type 2: New Connection Water - subtype 85  
+                85,
+                // Type 5: New Connection Commercial - subtypes 95, 102
+                95, 102,
+                // Type 3: Billing request subtypes
+                6, 7, 8, 9, 10, 30, 31, 92, 96, 99, 100, 101, 106
+            ];
+            
+            $complaint = $complaint->whereNotIn('subtype_id', $requestSubtypes);
         }
         if ($request->has('status') && $request->status != null && $request->status != '') {
             if ($request->status == 1 || $request->status == 2) {
@@ -198,9 +242,31 @@ class ComplaintController extends Controller
             if (count($ids) > 0) {
                 $comptypeQuery = $comptypeQuery->whereIn('id', $ids);
             }
-        } else {
-            // No comp_type_id in URL: exclude default types [1,2,5]
-            $comptypeQuery = $comptypeQuery->whereNotIn('id', $defaultExcluded);
+        }
+        
+        // Always exclude request subtypes from complaint management dropdown (unless it's request management page)
+        if (!$request->has('comp_type_id')) {
+            // Define request subtypes that should be excluded from regular complaint management
+            $requestSubtypes = [
+                // Type 1: New Connection Sewerage - subtype 93
+                93,
+                // Type 2: New Connection Water - subtype 85  
+                85,
+                // Type 5: New Connection Commercial - subtypes 95, 102
+                95, 102,
+                // Type 3: Billing request subtypes
+                6, 7, 8, 9, 10, 30, 31, 92, 96, 99, 100, 101, 106
+            ];
+            
+            // For complaint types dropdown, we need to exclude types that only have request subtypes
+            // But keep types that have both request and regular subtypes
+            $comptypeQuery = $comptypeQuery->where(function($query) use ($requestSubtypes) {
+                $query->whereDoesntHave('complaints', function($q) use ($requestSubtypes) {
+                    $q->whereIn('subtype_id', $requestSubtypes);
+                })->orWhereHas('complaints', function($q) use ($requestSubtypes) {
+                    $q->whereNotIn('subtype_id', $requestSubtypes);
+                });
+            });
         }
         $comptype = $comptypeQuery->get();
         $sources = \App\Models\Source::orderBy('title', 'asc')->get();

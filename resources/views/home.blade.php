@@ -144,9 +144,9 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="d-flex align-items-center">
                                         <div>
-                                            <h2 class="mb-1 fw-bold text-dark">KWSC</h2>
+                                            <h2 class="mb-1 fw-bold text-dark">KW&SC</h2>
                                             <p class="text-muted mb-0">
-                                                <i class="fas fa-building me-1"></i>
+                                                <i class="fas fa-building me-1 text-dark"></i>
                                                 Karachi Water & Sewerage Corporation
                                             </p>
                                         </div>
@@ -224,7 +224,7 @@
                                             @foreach ($tat_summary_complete as $row)
                                                 <tr class="border-bottom">
                                                     <td class="px-4 py-3">
-                                                        <span class="fw-semibold">{{ $row->ResolutionDetails }}</span>
+                                                        <span class="fw-semibold text-dark">{{ $row->ResolutionDetails }}</span>
                                                     </td>
                                                     <td class="px-4 py-3 text-center">
                                                         <span class="badge bg-success text-white fw-semibold fs-6">
@@ -274,7 +274,7 @@
                                             @foreach ($tat_summary_pending as $row)
                                                 <tr class="border-bottom">
                                                     <td class="px-4 py-3">
-                                                        <span class="fw-semibold">{{ $row->Pendingdays }}</span>
+                                                        <span class="fw-semibold text-dark">{{ $row->Pendingdays }}</span>
                                                     </td>
                                                     <td class="px-4 py-3 text-center">
                                                         <span class="badge bg-warning text-dark fw-semibold fs-6">

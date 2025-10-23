@@ -169,7 +169,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>
-                                                        Compaint ID</th>
+                                                        Complaint ID</th>
                                                     <th>
                                                         Consumer Number</th>
                                                     <th>

@@ -644,7 +644,7 @@
             console.log("check");
 
             @if (session('success'))
-                toastr.success('Your Compaint has been Registered Successfully...');
+                toastr.success('Your Complaint has been Registered Successfully...');
                 $('#successModal').modal('show');
                 // toastr.success('{{ session('success') }}');
             @endif

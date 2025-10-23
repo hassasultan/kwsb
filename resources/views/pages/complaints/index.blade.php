@@ -199,7 +199,7 @@
                                                     <th>
                                                         Status</th>
                                                     <th>
-                                                        Bounce Back</th>
+                                                        Re-assigned</th>
                                                     {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Trucks</th> --}}
                                                     <th class="text-secondary opacity-7">Action</th>
                                                 </tr>
@@ -444,15 +444,12 @@
                     page: page
                 });
                 
-                $.ajax({
-                    url: "{{ route('compaints-management.index') }}",
-                    type: "GET",
-                    data: {
+                // Only send comp_type_id if we're actually on request management page
+                var ajaxData = {
                         type: 'ajax',
                         search: search,
                         town: town,
                         type_id: type,
-                        comp_type_id: type_ids,
                         status: change_status,
                         comp_status: comp_status,
                         source: source,
@@ -461,7 +458,17 @@
                         from_date: from_date,
                         to_date: to_date,
                         page: page
-                    },
+                };
+                
+                // Only add comp_type_id if we're on request management page (URL has comp_type_id)
+                if (window.location.search.includes('comp_type_id')) {
+                    ajaxData.comp_type_id = type_ids;
+                }
+                
+                $.ajax({
+                    url: "{{ route('compaints-management.index') }}",
+                    type: "GET",
+                    data: ajaxData,
                     success: function(response) {
                         console.log("Data fetched successfully on click:", response);
                         generateTableRows(response
@@ -490,23 +497,30 @@
                     to_date: to_date
                 });
                 
-                $.ajax({
-                    url: "{{ route('compaints-management.index') }}",
-                    type: "GET",
-                    data: {
+                // Only send comp_type_id if we're actually on request management page
+                var ajaxData = {
                         type: 'ajax',
                         search: search,
                         status: change_status,
                         town: town,
                         type_id: type,
-                        comp_type_id: type_ids,
                         comp_status: comp_status,
                         source: source,
                         consumer_number: consumer_number,
                         bounce_back: bounce_back_status,
                         from_date: from_date,
                         to_date: to_date
-                    },
+                };
+                
+                // Only add comp_type_id if we're on request management page (URL has comp_type_id)
+                if (window.location.search.includes('comp_type_id')) {
+                    ajaxData.comp_type_id = type_ids;
+                }
+                
+                $.ajax({
+                    url: "{{ route('compaints-management.index') }}",
+                    type: "GET",
+                    data: ajaxData,
                     success: function(response) {
                         console.log("Data fetched successfully on document ready:", response);
                         $('#user-table-body').empty(); // Clear existing content
@@ -594,9 +608,9 @@
                         }
 
                         if (row.status == 2) {
-                            html += '<option selected disabled>Work In Progress</option>';
+                            html += '<option selected disabled>WIP</option>';
                         } else {
-                            html += '<option value="2">Work In Progress</option>';
+                            html += '<option value="2">WIP</option>';
                         }
 
                         html += '<option value="0">Pending</option>';

@@ -29,8 +29,8 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <h5 class="mb-0 text-gradient text-info">Consumer Lookup</h5>
-                                    <p class="text-sm text-muted mb-0">Enter consumer number to verify billing details</p>
+                                    <h5 class="mb-0 text-gradient text-info">Consumer Lookup (Optional)</h5>
+                                    <p class="text-sm text-muted mb-0">Enter consumer number to verify billing details (optional)</p>
                                 </div>
                             </div>
                             
@@ -41,7 +41,7 @@
                                     <div class="col-md-5">
                                         <div class="form-group mb-0">
                                             <label for="consumer_no" class="form-control-label text-dark font-weight-bold">
-                                                Consumer Number
+                                                Consumer Number (Optional)
                                             </label>
                                             <div class="input-group input-group-dynamic">
                                                 <input 
@@ -50,7 +50,6 @@
                                                     placeholder="Enter Consumer Number (e.g., A1234567890)" 
                                                     name="consumer_no" 
                                                     id="consumer_no" 
-                                                    required
                                                 />
                                             </div>
                                         </div>
@@ -77,13 +76,16 @@
                         <form role="form" method="POST" action="{{ route('compaints-management.store') }}"
                         enctype="multipart/form-data">
                         @csrf
+                            <!-- Hidden field for consumer number -->
+                            <input type="hidden" name="customer_num" id="customer_num" value="">
+                            
                             <!-- Consumer Details Section -->
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <div class="card border shadow-sm h-100">
                                         <div class="card-header bg-gradient-info text-white py-3">
                                             <h6 class="mb-0">
-                                                <i class="fas fa-user me-2"></i>Consumer Information
+                                                <i class="fas fa-user me-2"></i>Consumer Information (Optional)
                                             </h6>
                                         </div>
                                         <div class="card-body">
@@ -115,7 +117,7 @@
                                     <div class="card border shadow-sm h-100">
                                         <div class="card-header bg-gradient-warning text-white py-3">
                                             <h6 class="mb-0">
-                                                <i class="fas fa-file-invoice-dollar me-2"></i>Billing Information
+                                                <i class="fas fa-file-invoice-dollar me-2"></i>Billing Information (Optional)
                                             </h6>
                                         </div>
                                         <div class="card-body">
@@ -313,6 +315,7 @@
                                     type="submit" 
                                     class="btn btn-primary btn-lg px-5 py-3 rounded-3"
                                     aria-label="Submit Complaint"
+                                    id="submitBtn"
                                 >
                                     <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
                                     Submit Complaint
@@ -331,7 +334,7 @@
         $("#lookupBtn").on("click", function() {
             var consumerNo = $("#consumer_no").val();
             if (!consumerNo) {
-                alert('Please enter a consumer number');
+                alert('Please enter a consumer number to lookup');
                 return;
             }
 
@@ -351,6 +354,9 @@
                         $("#display_consumer_name").val(consumer.name);
                         $("#display_address").val(consumer.address);
                         $("#display_zone").val(consumer.zone_name);
+                        
+                        // Update hidden field for form submission
+                        $("#customer_num").val(consumer.consumer_no);
                         
                         // Update billing information
                         $("#display_bill_period").val(consumer.bill_period);
@@ -431,6 +437,12 @@
                     console.log(data);
                 }
             });
+        });
+        
+        // Form submission validation - Consumer lookup is optional
+        $("form").on("submit", function(e) {
+            // Consumer lookup is optional - no validation needed
+            // Users can create complaints with or without consumer numbers
         });
     </script>
 @endsection

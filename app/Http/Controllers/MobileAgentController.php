@@ -142,11 +142,27 @@ class MobileAgentController extends Controller
             return back()->with('error', $valid->errors());
         }
     }
-    public function detail($id)
+    public function detail($id, Request $request)
     {
-        $agent = MobileAgent::with('assignedComplaints', 'assignedComplaints.complaints', 'assignedComplaints.complaints.town')->find($id);
-        // dd($agent->toArray());
-        return view('pages.agent.details', compact('agent'));
+        $agent = MobileAgent::with(['user', 'town', 'complaint_type'])->find($id);
+        
+        if ($request->type === 'ajax') {
+            // Get paginated assigned complaints for AJAX requests
+            $assignedComplaints = $agent->assignedComplaints()
+                ->with(['complaints.town', 'complaints.subtown', 'complaints.subtype'])
+                ->whereHas('complaints')
+                ->paginate(10);
+                
+            return response()->json($assignedComplaints);
+        }
+        
+        // For initial page load, get first page data
+        $assignedComplaints = $agent->assignedComplaints()
+            ->with(['complaints.town', 'complaints.subtown', 'complaints.subtype'])
+            ->whereHas('complaints')
+            ->paginate(10);
+            
+        return view('pages.agent.details', compact('agent', 'assignedComplaints'));
     }
     public function reset_password(Request $request)
     {

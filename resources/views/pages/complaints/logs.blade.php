@@ -14,8 +14,8 @@
                     <a href="{{ route('compaints-management.details', $complaint->id) }}" class="btn btn-info">
                         <i class="fe fe-eye fe-16 mr-2"></i>View Complaint
                     </a>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
-                        <i class="fe fe-arrow-left fe-16 mr-2"></i>Back
+                    <a href="{{ request()->headers->get('referer') && str_contains(request()->headers->get('referer'), 'comp_type_id') ? route('compaints-management.index', ['comp_type_id' => [1,2,5]]) : route('compaints-management.index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to List
                     </a>
                 </div>
             </div>

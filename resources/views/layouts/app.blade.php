@@ -21,8 +21,8 @@
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
     <!-- App CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme" disabled>
-    <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme">
+    <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme">
+    <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme" disabled>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -39,7 +39,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body class="vertical dark  ">
+<body class="vertical light">
     <div id="app" class="wrapper">
         @include('layouts.include.header')
         @if (auth()->user()->role == 1)

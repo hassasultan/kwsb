@@ -5,8 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Back
+                    <a href="{{ request()->headers->get('referer') && str_contains(request()->headers->get('referer'), 'comp_type_id') ? route('compaints-management.index', ['comp_type_id' => [1,2,5]]) : route('compaints-management.index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to List
                     </a>
                     <h2 class="page-title mb-0">Edit Complaint</h2>
                 </div>
